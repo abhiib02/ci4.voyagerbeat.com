@@ -1,0 +1,2 @@
+<title><?php echo isset($title) ? $title : 'Voyagers Beat | You just pack your bags,Let us do the rest'; ?></title>
+  <link rel="canonical" href="https://voyagersbeat.com/<?php echo isset($canonical) ? $canonical : ''; ?>" />

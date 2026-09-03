@@ -1,0 +1,66 @@
+/* Mega Menu */
+.navbar {
+    anchor-name: --nav-btn;
+  }
+.menu-trigger{
+  interest-delay: 0.01s 0.2s;
+}
+.mega-panel {
+    position-anchor: --nav-btn;
+    position: absolute;
+    top: anchor(center);
+    left: anchor(left);
+    margin: 0;
+    width: calc(100% - 2em);
+    display: none;
+    transition:
+    all 0.3s ease-in-out
+    display 0.3 allow-discrete;
+    animation: fadeOut 0.5s forwards;
+    border:none;
+    padding: 1em;
+    margin: 1em;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    border-radius: var(--theme-border-radius);
+    
+  }
+
+  .mega-panel:popover-open {
+    display: block;
+    animation: fadeIn 0.5s forwards;
+  }
+  @starting-style {
+    .mega-panel{
+        translate: 0 -100%;
+    }
+  }
+
+/* Mega Menu */
+
+/* animation keyframes */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    translate: 0 -1em;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}  
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  to {
+    opacity: 0;
+    translate: 0 -1em;
+  }
+}
+
+/* animation keyframes */

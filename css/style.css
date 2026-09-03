@@ -1,0 +1,30 @@
+:root{
+    --font-family: 'Roboto Condensed', sans-serif;
+    --theme-border-radius: 8px;
+}
+body{
+    font-family: var(--font-family);
+}
+
+
+.grid-center{
+    display: grid;
+    place-items: center;
+}
+/* Square Card */
+
+.square-card {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1/1;
+    background-image: var(--bgUrl, url('https://via.placeholder.com/300'));
+    background-size: cover; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+}
+  
