@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\Package;
+
 class MainController extends BaseController
 {
 
@@ -10,7 +12,10 @@ class MainController extends BaseController
     public $PackageModel, $DestinationModel, $OptionModel, $BookingModel,$CategoryModel;
     public function __construct()
     {
-        $this->session = session();
+        
+        
+        
+        
     }
     
     
@@ -20,6 +25,7 @@ class MainController extends BaseController
         $this->data['description'] = "asd";
         $this->data['canonical'] = "asd";
         $this->data['noindex'] = "asd";
+        
         $this->session->setFlashdata('FlashMessage', ['message' => 'Home Page Loaded', 'status' => 'Success']);
         return $this->Render_Page('home', $this->data);
     }

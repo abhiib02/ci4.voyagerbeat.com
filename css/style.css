@@ -1,30 +1,173 @@
-:root{
-    --font-family: 'Roboto Condensed', sans-serif;
-    --theme-border-radius: 8px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /*outline:1px solid #5005;*/
 }
-body{
-    font-family: var(--font-family);
+@view-transition {
+  navigation: auto;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--maincolor);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--darkcolor);
 }
 
-
-.grid-center{
-    display: grid;
-    place-items: center;
+/* Default (Light) Styles 
+:root {
+        --maincolor: #FFD600;
+        --maincoloroutline: #FFD60033;
+        --maincolor-lite2: #FFD60044;
+        --maincolor-lite: #FFD60088;
+        --invertcolor: #fff;
+        --inverttextcolor: #000;
+        --darkcolor: #000e;
+        --secondcolor: #333;
+        --secondcolor-lite: #3338;
+        --swiper-theme-color: var(--maincolor);
+        --bg-color: #0B0E1A;
+        --bg-color-2: #1C1F2A;
+        --text-color: #ffffff;
+        --primary-color: #FFD600;
+        --themebtnbg: #FFD600;
+            --themebtncolor: #000;
+    }*/
+/* Default (Dark) Styles */
+:root {
+  --font-family: "Roboto Condensed", sans-serif;
+  --theme-border-radius: 8px;
+  --maincolor: #ffd600;
+  --maincoloroutline: #ffd60033;
+  --maincolor-lite2: #ffd60044;
+  --maincolor-lite: #ffd60088;
+  --invertcolor: #fff;
+  --inverttextcolor: #000;
+  --darkcolor: #000e;
+  --secondcolor: #333;
+  --secondcolor-lite: #3338;
+  --swiper-theme-color: var(--maincolor);
+  --bg-color: #0b0e1a;
+  --bg-color-2: #1c1f2a;
+  --text-color: #ffffff;
+  --primary-color: #ffd600;
+  --themebtnbg: #ffd600;
+  --themebtncolor: #000;
 }
-/* Square Card */
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --maincolor: #ffd600;
+    --maincoloroutline: #ffd60033;
+    --maincolor-lite2: #ffd60044;
+    --maincolor-lite: #ffd60088;
+    --invertcolor: #fff;
+    --inverttextcolor: #000;
+    --darkcolor: #000e;
+    --secondcolor: #333;
+    --secondcolor-lite: #3338;
+    --swiper-theme-color: var(--maincolor);
+    --bg-color: #0b0e1a;
+    --bg-color-2: #1c1f2a;
+    --text-color: #ffffff;
+    --primary-color: #ffd600;
+    --themebtnbg: #ffd600;
+    --themebtncolor: #000;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  /* font-family:'Roboto',sans-serif; */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: 14px;
+}
+.grid-center {
+  display: grid;
+  place-items: center;
+}
+
+/* Utility classes */
+.full-vh {
+  height: 100vh;
+}
+/* Utility classes end*/
+
+/* Typography */
+.huge-text {
+  font-size: 10rem;
+}
+.big-text {
+  font-size: 2rem;
+}
+.mid-text {
+  font-size: 1.5rem;
+}
+.small-text {
+  font-size: 1rem;
+}
+/* text-styling*/
+.text-shadow {
+  text-shadow: 0px 0px 5px #00000088;
+}
+/* Typography ends*/
+
+/* buttons */
+.btn-theme {
+  --btn-color: var(--themebtnbg);
+  background: linear-gradient(
+    color-mix(in srgb, var(--btn-color) 100%, black),
+    color-mix(in srgb, var(--btn-color) 75%, black)
+  );
+  color: var(--themebtncolor);
+  border-radius: 10px;
+  border: 0px solid color-mix(in srgb, var(--btn-color) 75%, white);
+  align-content: center;
+}
+
+/* buttons ends*/
 
 .square-card {
-    width: 100%;
-    max-width: 300px;
-    aspect-ratio: 1/1;
-    background-image: var(--bgUrl, url('https://via.placeholder.com/300'));
-    background-size: cover; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1/1;
+  background-image: var(--bgUrl, url("https://via.placeholder.com/300"));
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
-  
+
+.hero-background,
+.custom-background {
+  background-image: var(--bgUrl, url("/assets/hero-images/1.jpg"));
+  background-color: #000000aa;
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}

@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+
+use App\Models\Package;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -40,7 +42,10 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
-         $this->session = service('session');
+        $this->PackageModel = new Package();
+        
+        $this->data['AllPackagesNameAndID'] = $this->PackageModel->getAllPackagesNameAndID();
+        $this->session = service('session');
     }
     protected function Render_Page($view, $data)
     {

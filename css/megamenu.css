@@ -9,9 +9,10 @@
     position-anchor: --nav-btn;
     position: absolute;
     top: anchor(center);
-    left: anchor(left);
+        left: anchor(center);
+    transform: translateX(-50%);
     margin: 0;
-    width: calc(100% - 2em);
+    width: calc(100%);
     display: none;
     transition:
     all 0.3s ease-in-out
