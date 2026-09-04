@@ -40,32 +40,28 @@ $routes->get('category-list', 'DashboardController::categoriesList', ['filter' =
 $routes->get('options-list', 'DashboardController::optionsList', ['filter' => 'AdminAuthGuard']);
 $routes->get('all-bookings', 'DashboardController::BookingsList', ['filter' => 'AdminAuthGuard']);
 $routes->get('import', 'DashboardController::import_package_form', ['filter' => 'AdminAuthGuard']);
-
 $routes->post('/option/(:alpha)', 'OptionsController::save/$1');
 
 
 /*-------------------- packages_routes-----------------*/
 
 $routes->get('packages', 'PackageController::index');
+$routes->get('packages/(:any)', 'PackageController::index/$1');
 $routes->get('package/(:any)', 'PackageController::packageBySlug/$1');
 $routes->get('packageid/(:num)', 'PackageController::packageByID/$1');
 $routes->get('category/(:any)', 'PackageController::packagesByCategory/$1');
-$routes->get('tag/(:alpha)', 'PackageController::packagesByTag/$1');
+$routes->get('tag/(:any)', 'PackageController::packagesByTag/$1');
 $routes->get('nights/(:num)', 'PackageController::packagesByNights/$1');
 $routes->get('badge/(:any)', 'PackageController::packagesByBadge/$1');
+$routes->get('upcoming', 'PackageController::upcoming');
 $routes->get('weekend', 'PackageController::weekendTripsPackages');
 $routes->get('bagpacking', 'PackageController::bagPackingTripsPackages');
 $routes->get('state/(:any)', 'PackageController::packagesByState/$1');
 $routes->get('country/(:any)', 'PackageController::packagesByCountry/$1');
-
-
-
-
-//$routes->get('search', 'PackageController::packagesByName');
+$routes->get('destinations', 'DestinationsController::destinations');
 $routes->get('search', 'PackageController::index');
 
 
-$routes->get('destinations', 'DestinationsController::destinations');
-$routes->get('destination/(:alpha)', 'PackageController::packagesByDestination/$1');
+
 
 /*----------------login and register routes-----------------------*/

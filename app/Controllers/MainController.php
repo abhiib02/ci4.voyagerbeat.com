@@ -20,13 +20,7 @@ class MainController extends BaseController
     
     
     public function index(): string
-    {
-        $this->data['title'] = "asd";
-        $this->data['description'] = "asd";
-        $this->data['canonical'] = "asd";
-        $this->data['noindex'] = "asd";
-        
-        $this->session->setFlashdata('FlashMessage', ['message' => 'Home Page Loaded', 'status' => 'Success']);
+    {   
         return $this->Render_Page('home', $this->data);
     }
 }

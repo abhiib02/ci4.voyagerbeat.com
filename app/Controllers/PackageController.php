@@ -23,25 +23,45 @@ class PackageController extends BaseController
    
 
 
-    public function index()
-    {
+    public function index($locationVar = null)
+    {   $locationVar = urldecode($locationVar);
         $keyword = strip_tags($this->request->getGet("q"));
-        if(is_numeric($keyword)){
-                    
-            $this->data["name"] = "Package ID " . $keyword;
-            $this->data["title"] = $keyword . " Package ID | Voyagers Beat | Live to Travel";
-            $this->data["meta_desc"] = "Package ID " . $keyword . " | Voyagers Beat | we take you to the best possible destination for travel with best services on affordable prices";
-            $this->data["canonical"] = "packages";
-            $this->data["packages"] = $this->PackageModel->getPackageByIDForSearch($keyword);
+
+        if ($locationVar != null) {
+
+            $this->data["packages"] = $this->PackageModel->getPackagesByDestination($locationVar);
+            $this->data["name"] = $locationVar;
+            $this->data["title"] = $locationVar . " Packages | Voyagers Beat | Live to Travel";
+            $this->data["meta_desc"] = $locationVar . " Packages | Voyagers Beat | " . $locationVar . " is the best location to travel with Voyagers beat";
+            $this->data["canonical"] = "packages/" . $locationVar;
+        } else {
+            if(is_numeric($keyword)){
+                        
+                $this->data["name"] = "Package ID " . $keyword;
+                $this->data["title"] = $keyword . " Package ID | Voyagers Beat | Live to Travel";
+                $this->data["meta_desc"] = "Package ID " . $keyword . " | Voyagers Beat | we take you to the best possible destination for travel with best services on affordable prices";
+                $this->data["canonical"] = "packages";
+                $this->data["packages"] = $this->PackageModel->getPackageByIDForSearch($keyword);
+            } else {
+                
+                $this->data["name"] =  "Search Result For ".$keyword;
+                $this->data['title'] =  $keyword . " Packages | Voyagers Beat | Live to Travel";
+                $this->data['meta_desc'] = $keyword . " Packages | Voyagers Beat | " . $keyword . " is the best location to travel with Voyagers beat";;
+                $this->data['canonical'] = "search?q=" . $keyword;
+                $this->data['packages'] = $this->PackageModel->getPackagesByName($keyword);
+            }
         }
-        else{
-            
-            $this->data["name"] =  "Search Result For ".$keyword;
-            $this->data['title'] =  $keyword . " Packages | Voyagers Beat | Live to Travel";
-            $this->data['meta_desc'] = $keyword . " Packages | Voyagers Beat | " . $keyword . " is the best location to travel with Voyagers beat";;
-            $this->data['canonical'] = "search?q=" . $keyword;
-            $this->data['packages'] = $this->PackageModel->getPackagesByName($keyword);
-        }
+        
+        return $this->Render_Page('packages/packages', $this->data);
+    }
+
+    public function upcoming()
+    {
+        $this->data["packages"] = $this->PackageModel->getPackagesByUpcoming();
+        $this->data["name"] = "Upcoming";
+        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
+        $this->data["canonical"] = "upcoming";
 
         return $this->Render_Page('packages/packages', $this->data);
     }
@@ -89,87 +109,73 @@ class PackageController extends BaseController
         }
 
         $this->data['packages'] = $this->PackageModel->getPackagesByDestination($slug);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = $slug . ' Packages';
-        $this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;;
+        $this->data["name"] = $slug." Packages";
+        $this->data["title"] = $slug." Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = $slug." Packages | Voyagers Beat | ".$slug." is the best location to travel with Voyagers beat";
+        $this->data["canonical"] = "upcoming";
 
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
     public function packagesByName()
     {
         $searchString = htmlspecialchars(strip_tags($this->request->getVar('keyword')));
 
         $this->data['packages'] = $this->PackageModel->getPackagesByName($searchString);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        //$this->data['pageBannerText'] = $slug . ' Packages';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
+        $this->data["name"] = "Upcoming";
+        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
+        $this->data["canonical"] = "upcoming";
 
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
     public function packagesByCategory($Category)
     {
         
         $this->data['packages'] = $this->PackageModel->getPackagesByCategory($Category);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = $Category.' Packages';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
+        $this->data["name"] = $Category;
+        $this->data["title"] = $Category." Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = $Category." Packages | Voyagers Beat | ".$Category." Package best to travel with Voyagers beat";
+        $this->data["canonical"] = "category/".$Category;
         
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
     public function packagesByBadge($Badge)
     {
         
         $this->data['packages'] = $this->PackageModel->getPackagesByBadge($Badge);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
+        $this->data['title'] = $Badge .' Packages | Voyagers Beat | Live to Travel';
+        $this->data['name'] = $Badge;
+        $this->data['meta_desc'] = $Badge."     Packages. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";;
         $this->data['canonical'] = '';
         $this->data['image'] = '';
         $this->data['noindex'] = '';
         $this->data['pageBannerText'] = $Badge.' Packages';
         //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
         
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
     public function packagesByState($State)
     {
         
         $this->data['packages'] = $this->PackageModel->getPackagesByState($State);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = $State.' Packages';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
+        $this->data["name"] = "Upcoming";
+        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
+        $this->data["canonical"] = "upcoming";
         
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
 
     public function packagesByCountry($Country)
     {
         
         $this->data['packages'] = $this->PackageModel->getPackagesByCountry($Country);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = $Country.' Packages';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
+        $this->data["name"] = "Upcoming";
+        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
+        $this->data["canonical"] = "upcoming";
         
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
 
     
@@ -178,30 +184,24 @@ class PackageController extends BaseController
         $tag = htmlspecialchars($tag);
 
         $this->data['packages'] = $this->PackageModel->getPackagesByTag($tag);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = 'Packages With '.$tag.' Tag';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
+        $this->data['title'] = $tag.' Packages | Voyagers Beat | Live to Travel';
+        $this->data['name'] = $tag;
+        $this->data['meta_desc'] = 'We take you to the best possible destination for travel with best services on affordable prices';
+        $this->data['canonical'] = 'tag/'.$tag;
 
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
     public function packagesByNights($nights)
     {
         $nights = htmlspecialchars($nights).'N';
 
         $this->data['packages'] = $this->PackageModel->getPackagesByNights($nights);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = 'Packages With '.$nights.' Nights';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
+        $this->data["name"] = $nights."inghts";
+        $this->data["title"] = $nights." Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
+        $this->data["canonical"] = "upcoming";
 
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
 
     public function weekendTripsPackages()
@@ -213,15 +213,12 @@ class PackageController extends BaseController
         $pack_1n = $this->PackageModel->getPackagesByNights($nights1);
 
         $this->data['packages'] = array_merge($pack_2n,$pack_1n);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = 'Weekend Packages';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
+        $this->data['title'] = 'Weekend Packages | 2N/3D Packages | Voyagers Beat | Live to Travel';
+        $this->data['name'] = 'Weekend';
+        $this->data['meta_desc'] = 'Weekend Getaways, Budget Weekend Trips and Treks planned from major cities New Delhi , Travel with the community #voyagersbeat';
+        $this->data['canonical'] = 'weekend/';
         
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
 
     public function bagPackingTripsPackages()
@@ -235,15 +232,12 @@ class PackageController extends BaseController
         $pack_3n = $this->PackageModel->getPackagesByNights($nights3);
 
         $this->data['packages'] = array_merge($pack_5n,$pack_4n,$pack_3n);
-        $this->data['title'] = '';
-        $this->data['description'] = '';
-        $this->data['canonical'] = '';
-        $this->data['image'] = '';
-        $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = 'Bagpacking Trips';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
+        $this->data["name"] = "Upcoming";
+        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
+        $this->data["canonical"] = "upcoming";
         
-        return $this->Render_Page('packages', $this->data);
+        return $this->Render_Page('packages/packages', $this->data);
     }
 
     

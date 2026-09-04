@@ -29,8 +29,8 @@
         <li class="nav-item dropdown">
           <button class="nav-link dropdown-toggle menu-trigger" popovertarget="honeymoon-dropdown">Honeymoon</button>
         </li>
-        <li class="nav-item dropdown">
-          <button class="nav-link dropdown-toggle menu-trigger" popovertarget="upcoming-dropdown">Upcoming</button>
+        <li class="nav-item">
+          <a class="nav-link" href="/upcoming">Upcoming</a>
         </li>
         <li class="nav-item dropdown">
           <button class="nav-link dropdown-toggle menu-trigger" popovertarget="more-dropdown">More</button>
@@ -110,14 +110,7 @@
                   <div class="square-card">Card 1</div>
                 </div>
                 </div>
-        <div id="upcoming-dropdown" class="mega-panel container" popover>
-          <div class="d-flex justify-content-around">
-                  <div class="square-card">Card 1</div>
-                  <div class="square-card">Card 1</div>
-                  <div class="square-card">Card 1</div>
-                  <div class="square-card">Card 1</div>
-                </div>
-                </div>
+        
         <div id="more-dropdown" class="mega-panel container" popover>
           <div class="d-flex justify-content-around">
                   <div class="square-card">Card 1</div>

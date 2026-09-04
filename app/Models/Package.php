@@ -9,14 +9,14 @@ class Package extends Model
     public function insertPackage($data)
     {
         $db = \Config\Database::connect();
-        return $db->table('packages')->insert($data);
+        return $db->table('Packages')->insert($data);
         
     }
 
     public function UpdatePackage($id, $data)
     {
         $db      = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->where(["PACKAGE_ID" => $id]);
         $builder->set($data);
         $builder->update();
@@ -25,7 +25,7 @@ class Package extends Model
     public function getAllPackages()
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->orderBy('updated_at','DESC');
         $query = $builder->get();
@@ -35,8 +35,9 @@ class Package extends Model
     public function getAllPackagesNameAndID()
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('PACKAGE_ID,PACKAGE_NAME');
+        $builder->where('HIDDEN', 0);
         $builder->orderBy('updated_at','DESC');
         $query = $builder->get();
         $result = $query->getResult();
@@ -46,7 +47,7 @@ class Package extends Model
     public function getAllPackagesCount()
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $query = $builder->get();
         $result = $query->getNumRows();
@@ -55,7 +56,7 @@ class Package extends Model
     public function getAllHoneymoonPackages()
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('CATEGORY', 'honeymoon');
         $query = $builder->get();
@@ -66,7 +67,7 @@ class Package extends Model
     public function isSlugExist($slug)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('SLUG', $slug);
         $query = $builder->get();
@@ -79,7 +80,7 @@ class Package extends Model
     public function getIDfromSlug($slug)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('PACKAGE_ID');
         $builder->where('SLUG', $slug);
         $query = $builder->get();
@@ -89,7 +90,7 @@ class Package extends Model
     public function isPackageExist($ID)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('PACKAGE_ID', $ID);
         $query = $builder->get();
@@ -103,7 +104,7 @@ class Package extends Model
     public function getPackageBySlug($slug)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('SLUG', $slug);
         $query = $builder->get();
@@ -113,7 +114,7 @@ class Package extends Model
     public function getPackagesByDestination($destination)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('LOCATION', $destination);
         $query = $builder->get();
@@ -123,7 +124,7 @@ class Package extends Model
     public function getPackageByID($ID)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('PACKAGE_ID', $ID);
         $query = $builder->get();
@@ -133,7 +134,7 @@ class Package extends Model
     public function getPackageByIDForSearch($ID)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('PACKAGE_ID', $ID);
         $query = $builder->get();
@@ -143,9 +144,21 @@ class Package extends Model
     public function getPackagesByName($name)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->like("PACKAGE_NAME", htmlspecialchars($name));
+        $query = $builder->get();
+        $result = $query->getResult();
+        return $result;
+    }
+    public function getPackagesByUpcoming()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('Packages');
+        $builder->select('*');
+        $builder->where('UPCOMING', 1);
+        $builder->where('HIDDEN', 0);
+        $builder->orderBy('updated_at','DESC');
         $query = $builder->get();
         $result = $query->getResult();
         return $result;
@@ -153,7 +166,7 @@ class Package extends Model
     public function getPackagesByCategory($Cat)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('CATEGORY', $Cat);
         $query = $builder->get();
@@ -163,7 +176,7 @@ class Package extends Model
     public function getPackagesByBadge($Badge)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('BADGE', $Badge);
         $query = $builder->get();
@@ -173,7 +186,7 @@ class Package extends Model
     public function getPackagesByState($State)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('STATE', $State);
         $query = $builder->get();
@@ -183,7 +196,7 @@ class Package extends Model
     public function getPackagesByCountry($Country)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->where('COUNTRY', $Country);
         $query = $builder->get();
@@ -194,7 +207,7 @@ class Package extends Model
     public function getPackagesByTag($tag)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->like("TAGS", htmlspecialchars($tag));
         $query = $builder->get();
@@ -204,7 +217,7 @@ class Package extends Model
     public function getPackagesByNights($nights)
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('*');
         $builder->like("STAY", htmlspecialchars($nights));
         $query = $builder->get();
@@ -214,7 +227,7 @@ class Package extends Model
     public function getAllDistinctTags()
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('TAGS');
         $query = $builder->get();
         $result = $query->getResultArray();
@@ -233,7 +246,7 @@ class Package extends Model
     public function getAllDistinctBadges()
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('BADGE');
         $builder->distinct();
         $builder->where('BADGE IS NOT NULL');
@@ -249,7 +262,7 @@ class Package extends Model
     public function getAllDistinctStates()
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('STATE');
         $builder->distinct();
         $builder->where('STATE IS NOT NULL');
@@ -265,7 +278,7 @@ class Package extends Model
     public function getAllDistinctCountry()
     {
         $db = \Config\Database::connect();
-        $builder = $db->table('packages');
+        $builder = $db->table('Packages');
         $builder->select('COUNTRY');
         $builder->distinct();
         $builder->where('COUNTRY IS NOT NULL');
@@ -285,7 +298,7 @@ class Package extends Model
     {
         if ($this->isPackageExist($ID)) {
             $db = \Config\Database::connect();
-            $builder = $db->table('packages');
+            $builder = $db->table('Packages');
             $builder->where('ID', $ID);
             $builder->delete();
             return 1;

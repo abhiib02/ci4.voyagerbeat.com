@@ -56,15 +56,15 @@
 </div>
  <div class="layers-container">
  <div class="layers">
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/KWtRwcP/lbottom.png'); --mul:0;"></div>
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/9rt74xN/l7.png'); --mul:0;"></div>
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/9nptWzg/l6.png');--mul:0.001;"></div>
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/YbM9JzS/l5.png');--mul:0.001;"></div>
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/rpk0Jf0/l4.png');--mul:0.0015;"></div>
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/4syJpTF/l3.png');--mul:0.02;"></div>
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/GCwgs3j/l2.png');--mul:0.025;"></div>
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/9492Pjz/l1.png');--mul:0.035;"></div>
-        <div class="layer custom-bg" style="--url:url('https://i.ibb.co/8xNHwNW/l0.png');--mul:0.045;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/lbottom.png'); --mul:0;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/l7.png'); --mul:0;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/l6.png');--mul:0.001;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/l5.png');--mul:0.001;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/l4.png');--mul:0.0015;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/l3.png');--mul:0.02;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/l2.png');--mul:0.025;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/l1.png');--mul:0.035;"></div>
+        <div class="layer custom-bg" style="--url:url('assets/not-found/l0.png');--mul:0.045;"></div>
     </div>
     </div>
  
