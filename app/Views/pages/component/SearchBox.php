@@ -7,7 +7,7 @@
             <form action="/search" method="get">
                 <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class='bx bx-search'></i></span>
-                <input type="text" class="form-control searchBoxInput" placeholder="Search" aria-label="Search" name="q" aria-describedby="Search" autofocus>
+                <input type="text" class="form-control searchBoxInput" placeholder="Search" aria-label="Search" name="q" aria-describedby="Search" autofocus autocomplete="off">
                 <button class="btn btn-theme" type="submit" id="button-addon2">Search</button>
                 </div>
             </form>

@@ -11,8 +11,10 @@ use Config\Services;
 class LoginController extends BaseController
 {
     protected $helpers = ['form'];
-    public $data = [];
-    public $PackageModel, $DestinationModel, $OptionModel;
+    public array $data = [];
+    public Package $PackageModel;
+    public Option $OptionModel;
+    // public Destination $DestinationModel;
     public function __construct()
     {
         // $this->PackageModel = new Package();
@@ -27,8 +29,10 @@ class LoginController extends BaseController
     {
         $this->data['noindex'] = 1;
 
-        if ($this->session->has('logged_in') == true) {
+        if ($this->AuthCheckAdmin()) {
             return redirect()->route('dashboard');
+        } elseif ($this->AuthCheck()) {
+            return redirect()->route('account');
         } else {
             return $this->Render_Page('login', $this->data);
         }
@@ -77,14 +81,11 @@ class LoginController extends BaseController
 
         $this->session->set($LoggedInData);
 
-        if($isAdmin){
+        if ($isAdmin) {
             return redirect()->route('dashboard');
-        }else{
+        } else {
             return redirect()->route('account');
         }
-        
-        
-        
     }
 
     public function googleloginValidation()
@@ -108,7 +109,7 @@ class LoginController extends BaseController
         $InvalidTokenerror = $data->error ?? 0;
         //print_r($data->email);
         if ($InvalidTokenerror) {
-            $this->session->setFlashdata('FlashMessage', ['message' => $data->error , 'status' => 'danger']);
+            $this->session->setFlashdata('FlashMessage', ['message' => $data->error, 'status' => 'danger']);
             return redirect()->to('/login');
         }
         $email = $data->email;
@@ -127,7 +128,7 @@ class LoginController extends BaseController
             'isadmin' => $isAdmin,
         ];
         $this->session->set($LoggedInData);
-        if(!$isAdmin){
+        if (!$isAdmin) {
             return redirect()->route('account');
         }
         return redirect()->route('dashboard');
@@ -136,8 +137,8 @@ class LoginController extends BaseController
     public function logout()
     {
         $this->session = Services::session();
-        if ($this->session->has('logged_in') == true) {
-            $LoggedInData = ['id', 'name', 'email', 'logged_in', 'isadmin'];
+        if ($this->AuthCheck() || $this->AuthCheckAdmin()) {
+            $LoggedInData = ['id', 'name', 'email', 'logged_in', 'isadmin', 'role'];
             $this->session->remove($LoggedInData);
             return redirect()->route('login');
         } else {

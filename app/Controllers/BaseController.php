@@ -7,6 +7,7 @@ use App\Models\Package;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Session\Session;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -27,7 +28,9 @@ abstract class BaseController extends Controller
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
 
-    protected $session;
+    protected Session $session;
+    protected Package $PackageModel;
+    protected array $data = [];
 
     /**
      * @return void
@@ -38,14 +41,31 @@ abstract class BaseController extends Controller
         // Caution: Do not put the this below the parent::initController() call below.
         // $this->helpers = ['form', 'url'];
 
+
         // Caution: Do not edit this line.
         parent::initController($request, $response, $logger);
 
+
+        $this->session = service('session');
+
         // Preload any models, libraries, etc, here.
         $this->PackageModel = new Package();
-        
         $this->data['AllPackagesNameAndID'] = $this->PackageModel->getAllPackagesNameAndID();
-        $this->session = service('session');
+
+        \Config\Services::renderer()->setData([
+            'isAdmin' => $this->AuthCheckAdmin(),
+            'isUser'  => $this->AuthCheck(),
+        ]);
+    }
+    protected function AuthCheckAdmin()
+    {
+        $condition = ($this->session->has('logged_in') && $this->session->get('role') == 1);
+        return ($condition) ? 1 : 0;
+    }
+    protected function AuthCheck()
+    {
+        $condition = ($this->session->has('logged_in') && $this->session->get('role') == 0);
+        return ($condition) ? 1 : 0;
     }
     protected function Render_Page($view, $data)
     {
@@ -54,11 +74,18 @@ abstract class BaseController extends Controller
             view('pages/' . $view, $data) .
             view('layout/footer', $data);
     }
+    protected function Render_Page_Admin_dashboard($view, $data)
+    {
+        return
+            view('dashboard/admin/layout/dashboard-header', $data) .
+            view('dashboard/admin/' . $view, $data) .
+            view('dashboard/admin/layout/dashboard-footer', $data);
+    }
     protected function Render_Page_dashboard($view, $data)
     {
         return
-            view('dashboard/layout/dashboard-header', $data) .
-            view('dashboard/pages/' . $view, $data) .
-            view('dashboard/layout/dashboard-footer', $data);
+            view('dashboard/user/layout/dashboard-header', $data) .
+            view('dashboard/user/' . $view, $data) .
+            view('dashboard/user/layout/dashboard-footer', $data);
     }
 }

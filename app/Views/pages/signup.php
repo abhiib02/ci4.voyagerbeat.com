@@ -1,0 +1,73 @@
+<div class="container-fluid">
+    <div class="row full-vh custom-background" style="--bgUrl:url(/assets/backgrounds/1.jpg);">
+        <div class="col-lg-12 grid-center ">
+            <div class="card theme-card p-4 w-25 mx-auto">
+                <div class="text-center">
+                    <img src="<?= env('app.LogoPath') ?>" width="100px" alt="voyagersbeat.logo">
+                    <hr>
+                    <h4 class="fw-bold">Create your Account</h4>
+
+                </div>
+                <!--    <div class="grid-center">-->
+                <!--<div id="g_id_onload" data-client_id="1010170602006-kb84cpoucj3kqkeanl4v38bf31gp80f1.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-login_uri="<?= env('app.baseURL') ?>/signup" data-auto_prompt="false">-->
+                <!--</div>-->
+                <!--<div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signup_with" data-size="large" data-logo_alignment="left">-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="divider-text"><span>Use Email</span></div>
+                <form action="/signupvalidation" class="" method="post">
+                    <div class=" mb-3">
+                        <label for="floatingInput">Name</label>
+                        <input type="text" class="form-control " id="floatingInput" name="name" placeholder="Name" required>
+                    </div>
+                    <div class=" mb-3">
+                        <label for="floatingInput">Email address</label>
+                        <input type="email" class="form-control " id="floatingInput" name="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class=" mb-3 ">
+                        <label for="floatingInput">Password</label>
+                        <input type="password" class="form-control" minlength="8" id="password" name="password" required oninput="handlePasswordEvents()">
+                        <small class="">( Password Length must be more than 8 Characters )</small>
+                    </div>
+                    <div class=" mb-3 ">
+                        <label for="floatingInput">Confirm Password</label>
+                        <input type="password" class="form-control" minlength="8" id="cpassword" name="cpassword" required oninput="handlePasswordEvents()">
+                    </div>
+                    <div id="match" class="hide mb-3">
+                    </div>
+                    <button type="submit" id="submit" class="btn btn-sm btn-success">Sign up</button>
+                    <a href="/login" class="btn btn-sm btn-outline-dark">Login</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    function togglePass() {
+        let password = document.querySelector('#password');
+        return password.type == "password" ? password.type = "text" : password.type = "password";
+    }
+
+    function handlePasswordEvents() {
+        checkcpass();
+    }
+
+    function checkcpass() {
+        let password = document.querySelector('#password');
+        let cpassword = document.querySelector('#cpassword');
+        let feedback = document.querySelector('#match');
+        let submit = document.querySelector('#submit');
+        if (password.value != cpassword.value) {
+            feedback.classList.remove('hide');
+            feedback.textContent = 'Password is not matching';
+            feedback.classList.add('text-danger');
+            submit.setAttribute('disabled', '');
+        } else {
+            feedback.classList.add('hide');
+            feedback.textContent = '';
+            feedback.classList.add('text-danger');
+            submit.removeAttribute('disabled', '');
+        }
+    }
+</script>

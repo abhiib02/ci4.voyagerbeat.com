@@ -13,27 +13,23 @@ use Config\Services;
 class RegisterController extends BaseController
 {
     protected $helpers = ['form'];
-    public $data = [];
-    public $PackageModel, $DestinationModel, $OptionModel;
-    public function __construct()
-    {
-        $this->PackageModel = new Package();
-        $this->DestinationModel = new Destination();
-        $this->data['Destinations'] = $this->DestinationModel->getAllDestinations();
-        $this->OptionModel = new Option();
-        $this->data['Contact'] = $this->OptionModel->getOptionValue('contact');
-    }
+    public array $data = [];
+    public Package $PackageModel;
+    public Option $OptionModel;
+    public User $UserModel;
+    // public Destination $DestinationModel;
+    // public Booking $BookingModel;
+    // public Category $CategoryModel;
+    public function __construct() {}
     public function index()
     {
         $this->data['noindex'] = 1;
-        $session = Services::session();
-        if ($session->has('logged_in') == true) {
+        if ($this->AuthCheckAdmin()) {
             return redirect()->route('dashboard');
+        } elseif ($this->AuthCheck()) {
+            return redirect()->route('account');
         } else {
-            return
-                view('layout/header-no-icon', $this->data) .
-                view('dashboard/signup') .
-                view('layout/footer', $this->data);
+            return $this->Render_Page('signup', $this->data);
         }
     }
     public function SignupValidation()
@@ -41,8 +37,8 @@ class RegisterController extends BaseController
         $session = Services::session();
         $UserModel = new User();
         $queryData = [
-            "NAME" => $this->request->getPost('name'),
-            "EMAIL" => $this->request->getPost('email'),
+            "USER_NAME" => $this->request->getPost('name'),
+            "USER_EMAIL" => $this->request->getPost('email'),
         ];
         $password = $this->request->getPost('password');
         $cpassword = $this->request->getPost('cpassword');
@@ -60,7 +56,7 @@ class RegisterController extends BaseController
             return redirect()->to('/signup');
         }
         // check user exist
-        $userExist = $UserModel->isUserExist($queryData['EMAIL']);
+        $userExist = $UserModel->isUserExist($queryData['USER_EMAIL']);
         if ($userExist) {
             $session->setFlashdata('FlashMessage', ['message' => 'User Already Exist', 'status' => 'warning']);
             return redirect()->to('/login');
@@ -94,7 +90,7 @@ class RegisterController extends BaseController
         $InvalidTokenerror = $data->error ?? 0;
 
         if ($InvalidTokenerror) {
-            $session->setFlashdata('FlashMessage', ['message' =>  $data->error , 'status' => 'warning']);
+            $session->setFlashdata('FlashMessage', ['message' =>  $data->error, 'status' => 'warning']);
             return redirect()->to('/login');
         }
 
@@ -109,8 +105,8 @@ class RegisterController extends BaseController
             return redirect()->to('/login');
         }
 
-        $queryData['NAME'] = $name;
-        $queryData['EMAIL'] = $email;
+        $queryData['USER_NAME'] = $name;
+        $queryData['USER_EMAIL'] = $email;
         $queryData['PASSWORD'] = password_hash((string) $password, PASSWORD_DEFAULT);
 
         $UserModel->insertUser($queryData);

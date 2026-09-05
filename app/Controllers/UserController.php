@@ -7,23 +7,27 @@ use App\Models\User;
 use App\Models\Package;
 use App\Models\Destination;
 use App\Models\Option;
+use CodeIgniter\Session\Session;
 
 use Config\Services;
 
 class UserController extends BaseController
 {
     protected $helpers = ['form'];
-    public $UserModel;
-    protected $EmailController, $session;
-    public $PackageModel, $DestinationModel, $OptionModel;
-    public $data = [];
+    public array $data = [];
+    public Package $PackageModel;
+    public Option $OptionModel;
+    public User $UserModel;
+    protected EmailController $EmailController;
+    // public Destination $DestinationModel;
+    // public Booking $BookingModel;
+    // public Category $CategoryModel;
+
     public function __construct()
     {
         $this->UserModel = new User();
         $this->EmailController = new EmailController();
         $this->PackageModel = new Package();
-        $this->DestinationModel = new Destination();
-        $this->data['Destinations'] = $this->DestinationModel->getAllDestinations();
         $this->OptionModel = new Option();
         $this->data['Contact'] = $this->OptionModel->getOptionValue('contact');
         $this->data['permanentAdmins'] = explode(',', $this->OptionModel->getOptionValue('permanentAdminIDs'));
@@ -38,7 +42,7 @@ class UserController extends BaseController
         $id = $this->request->getPost('id');
         $this->UserModel->MakeAdmin($id);
         $this->session->setFlashdata('FlashMessage', ['message' => 'UserID:' . $id . ' Admin Granted', 'status' => 'info']);
-        return redirect()->to('/users');
+        return redirect()->to('/dashboard/users-list');
     }
 
     public function removeAdmin()
@@ -46,12 +50,13 @@ class UserController extends BaseController
         $id = $this->request->getPost('id');
         if (in_array($id, $this->data['permanentAdmins'])) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'Cant Revoke Admin of this user', 'status' => 'danger']);
-            return redirect()->to('/users');
+            return redirect()->to('/dashboard/users-list');
         }
         $modelMsg = $this->UserModel->RemoveAdmin($id);
         $this->session->setFlashdata('FlashMessage', ['message' => 'UserID:' . $id . ' ' . 'Admin Permission Revoked', 'status' => 'Warning']);
-        return redirect()->to('/users');
+        return redirect()->to('/dashboard/users-list');
     }
+
     public function changePassword()
     {
         $id = $this->request->getPost('id');
@@ -63,10 +68,7 @@ class UserController extends BaseController
 
     public function forgotpass()
     {
-        return
-            view('layout/header', $this->data) .
-            view('dashboard/forgot-password', $this->data) .
-            view('layout/footer', $this->data);
+        return $this->Render_page('forgot-password', $this->data);
     }
     public function generateMD5Token($email)
     {
@@ -101,10 +103,7 @@ class UserController extends BaseController
         }
         $this->data["token"] = $token;
 
-        return
-            view("layout/header", $this->data) .
-            view("dashboard/reset-password", $this->data) .
-            view("layout/footer", $this->data);
+        return $this->Render_page('reset-password', $this->data);
     }
 
     public function reset()
@@ -130,10 +129,10 @@ class UserController extends BaseController
         $id = $this->request->getPost('id');
         if (in_array($id, $this->data['permanentAdmins'])) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'Cannot Delete This User', 'status' => 'danger']);
-            return redirect()->to('/users');
+            return redirect()->to('/dashboard/users-list');
         }
         $modelMsg = $this->UserModel->delUser($id);
         $this->session->setFlashdata('FlashMessage', ['message' => 'User Deleted', 'status' => 'danger']);
-        return redirect()->to('/users');
+        return redirect()->to('/dashboard/users-list');
     }
 }

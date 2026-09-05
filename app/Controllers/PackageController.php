@@ -3,55 +3,77 @@
 namespace App\Controllers;
 
 use App\Models\Package;
+use App\Models\Option;
+
 
 
 class PackageController extends BaseController
 {
 
-    public $data = [];
-    public $PackageModel, $DestinationModel, $OptionModel, $BookingModel, $CategoryModel;
+    public array $data = [];
+    public Package $PackageModel;
+    public Option $OptionModel;
+    // public Booking $BookingModel;
+    // public Category $CategoryModel;
+    // public Destination $DestinationModel;
     public function __construct()
     {
         helper('json');
         $this->PackageModel = new Package();
-        
+
         $this->data['States'] = $this->PackageModel->getAllDistinctStates();
         $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
-        
     }
 
-   
+
 
 
     public function index($locationVar = null)
-    {   $locationVar = urldecode($locationVar);
-        $keyword = strip_tags($this->request->getGet("q"));
+    {
+        $locationVar = $locationVar ? urldecode($locationVar) : null;
+        $keyword = trim(strip_tags((string) $this->request->getGet("q")));
 
-        if ($locationVar != null) {
-
-            $this->data["packages"] = $this->PackageModel->getPackagesByDestination($locationVar);
-            $this->data["name"] = $locationVar;
-            $this->data["title"] = $locationVar . " Packages | Voyagers Beat | Live to Travel";
-            $this->data["meta_desc"] = $locationVar . " Packages | Voyagers Beat | " . $locationVar . " is the best location to travel with Voyagers beat";
-            $this->data["canonical"] = "packages/" . $locationVar;
-        } else {
-            if(is_numeric($keyword)){
-                        
-                $this->data["name"] = "Package ID " . $keyword;
-                $this->data["title"] = $keyword . " Package ID | Voyagers Beat | Live to Travel";
-                $this->data["meta_desc"] = "Package ID " . $keyword . " | Voyagers Beat | we take you to the best possible destination for travel with best services on affordable prices";
-                $this->data["canonical"] = "packages";
-                $this->data["packages"] = $this->PackageModel->getPackageByIDForSearch($keyword);
-            } else {
-                
-                $this->data["name"] =  "Search Result For ".$keyword;
-                $this->data['title'] =  $keyword . " Packages | Voyagers Beat | Live to Travel";
-                $this->data['meta_desc'] = $keyword . " Packages | Voyagers Beat | " . $keyword . " is the best location to travel with Voyagers beat";;
-                $this->data['canonical'] = "search?q=" . $keyword;
-                $this->data['packages'] = $this->PackageModel->getPackagesByName($keyword);
-            }
+        // 1. Location in URL param
+        if (!empty($locationVar)) {
+            $packages = $this->PackageModel->getPackagesByDestination($locationVar);
+            $name = $locationVar;
+            $title = "{$locationVar} Packages | Voyagers Beat | Live to Travel";
+            $metaDesc = "{$locationVar} Packages | Voyagers Beat | {$locationVar} is the best location to travel with Voyagers beat";
+            $canonical = "packages/" . $locationVar;
         }
-        
+        // 2. Search query is numeric (Package ID)
+        elseif (is_numeric($keyword)) {
+            $packages = $this->PackageModel->getPackageByIDForSearch($keyword);
+            $name = "Package ID " . $keyword;
+            $title = "{$keyword} Package ID | Voyagers Beat | Live to Travel";
+            $metaDesc = "Package ID {$keyword} | Voyagers Beat | we take you to the best possible destination for travel with best services on affordable prices";
+            $canonical = "packages";
+        }
+        // 3. Search query string provided
+        elseif (!empty($keyword)) {
+            $packages = $this->PackageModel->getPackagesByName($keyword);
+            $name = "Search Result For " . $keyword;
+            $title = "{$keyword} Packages | Voyagers Beat | Live to Travel";
+            $metaDesc = "{$keyword} Packages | Voyagers Beat | {$keyword} is the best location to travel with Voyagers beat";
+            $canonical = "search?q=" . urlencode($keyword);
+        }
+        // 4. Default case (No location, no search query)
+        else {
+            $packages = $this->PackageModel->getAllPackages(); // Replace with your model's default retrieval method
+            $name = "All Packages";
+            $title = "All Packages | Voyagers Beat | Live to Travel";
+            $metaDesc = "Explore all available travel packages with Voyagers Beat.";
+            $canonical = "packages";
+        }
+
+        $this->data = array_merge($this->data ?? [], [
+            'packages'  => $packages,
+            'name'      => $name,
+            'title'     => $title,
+            'meta_desc' => $metaDesc,
+            'canonical' => $canonical,
+        ]);
+
         return $this->Render_Page('packages/packages', $this->data);
     }
 
@@ -66,16 +88,16 @@ class PackageController extends BaseController
         return $this->Render_Page('packages/packages', $this->data);
     }
 
-    public function packageByID($ID)
+    public function packageByID(int $ID)
     {
 
-        
+
         if (!$this->PackageModel->isPackageExist($ID)) {
             return redirect()->to('/packages');
         }
-        
+
         $this->data['package'] = $this->PackageModel->getPackageByID($ID);
-        
+
         $this->data['title'] = $this->data['package']->PACKAGE_NAME;
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
@@ -83,15 +105,14 @@ class PackageController extends BaseController
         $this->data['noindex'] = "";
 
         return $this->Render_Page('packages/package_detail', $this->data);
-        
     }
-    public function packageBySlug($slug)
+    public function packageBySlug(string $slug)
     {
 
         if (!$this->PackageModel->isSlugExist($slug)) {
             return redirect()->to('/packages');
         }
-        
+
         $this->data['package'] = $this->PackageModel->getPackageBySlug($slug);
         $this->data['title'] = $this->data['package']->PACKAGE_NAME;
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
@@ -99,9 +120,8 @@ class PackageController extends BaseController
         $this->data['image'] = base_url() . 'upload/package_images/' . $this->data['package']->PACKAGE_IMAGE;
         $this->data['noindex'] = "";
         return $this->Render_Page('packages/package_detail', $this->data);
-        
     }
-    public function packagesByDestination($slug)
+    public function packagesByDestination(string $slug)
     {
 
         if (!$this->DestinationModel->isSlugExist($slug)) {
@@ -109,9 +129,9 @@ class PackageController extends BaseController
         }
 
         $this->data['packages'] = $this->PackageModel->getPackagesByDestination($slug);
-        $this->data["name"] = $slug." Packages";
-        $this->data["title"] = $slug." Packages | Voyagers Beat | Live to Travel";
-        $this->data["meta_desc"] = $slug." Packages | Voyagers Beat | ".$slug." is the best location to travel with Voyagers beat";
+        $this->data["name"] = $slug . " Packages";
+        $this->data["title"] = $slug . " Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = $slug . " Packages | Voyagers Beat | " . $slug . " is the best location to travel with Voyagers beat";
         $this->data["canonical"] = "upcoming";
 
         return $this->Render_Page('packages/packages', $this->data);
@@ -128,76 +148,122 @@ class PackageController extends BaseController
 
         return $this->Render_Page('packages/packages', $this->data);
     }
-    public function packagesByCategory($Category)
+    public function packagesByCategory(string $Category)
     {
-        
+
         $this->data['packages'] = $this->PackageModel->getPackagesByCategory($Category);
         $this->data["name"] = $Category;
-        $this->data["title"] = $Category." Packages | Voyagers Beat | Live to Travel";
-        $this->data["meta_desc"] = $Category." Packages | Voyagers Beat | ".$Category." Package best to travel with Voyagers beat";
-        $this->data["canonical"] = "category/".$Category;
-        
+        $this->data["title"] = $Category . " Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = $Category . " Packages | Voyagers Beat | " . $Category . " Package best to travel with Voyagers beat";
+        $this->data["canonical"] = "category/" . $Category;
+
         return $this->Render_Page('packages/packages', $this->data);
     }
-    public function packagesByBadge($Badge)
+    public function packagesByBadge(string $Badge)
     {
-        
+
         $this->data['packages'] = $this->PackageModel->getPackagesByBadge($Badge);
-        $this->data['title'] = $Badge .' Packages | Voyagers Beat | Live to Travel';
+        $this->data['title'] = $Badge . ' Packages | Voyagers Beat | Live to Travel';
         $this->data['name'] = $Badge;
-        $this->data['meta_desc'] = $Badge."     Packages. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";;
+        $this->data['meta_desc'] = $Badge . "     Packages. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";;
         $this->data['canonical'] = '';
         $this->data['image'] = '';
         $this->data['noindex'] = '';
-        $this->data['pageBannerText'] = $Badge.' Packages';
+        $this->data['pageBannerText'] = $Badge . ' Packages';
         //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
-        
+
         return $this->Render_Page('packages/packages', $this->data);
     }
-    public function packagesByState($State)
+    public function packagesByState(string $State)
     {
-        
+
         $this->data['packages'] = $this->PackageModel->getPackagesByState($State);
         $this->data["name"] = "Upcoming";
         $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
         $this->data["canonical"] = "upcoming";
-        
+
         return $this->Render_Page('packages/packages', $this->data);
     }
 
-    public function packagesByCountry($Country)
+    public function packagesByCountry(string $Country)
     {
-        
+
         $this->data['packages'] = $this->PackageModel->getPackagesByCountry($Country);
         $this->data["name"] = "Upcoming";
         $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
         $this->data["canonical"] = "upcoming";
-        
+
         return $this->Render_Page('packages/packages', $this->data);
     }
 
-    
-    public function packagesByTag($tag)
+
+    function TripTypeMeta(string $var)
+    {
+        $TripType = [
+
+            "bike" => "Bike Trip is one of the best routes that you can take  to visit the place  from Delhi. Checkout bike itinerary,#voyagersbeat",
+
+            "road" => "Best road trip from Delhi, Spiti, Manali,leh and many more  with experts enjoy your road trip with your loved ones .#voyagersbeat ",
+
+            "treks" => "have your list handy of  treks in India, we hope you tick most of them off your list this season #voyagersbeat",
+
+            "chilledout" => "have your list handy of Chill out places  in India, we hope you tick most of them off your list this season #voyagersbeat",
+
+            "backpack" => "have your list handy of backpacking places  in India, we hope you tick most of them off your list this season #voyagersbeat",
+
+            "party" => "have your list handy of party places in India, we hope you tick most of them off your list this season #voyagersbeat",
+
+            "xmas-new-year" => " have your list handy of festive destinations in India? We hope you get to explore most of them this holiday season! #voyagersbeat",
+
+            "corporate" => "There are many locations in India  which are famous for corporate outing and team building activities.#voyagersbeat",
+
+            "family-trip" => "Start the journey of Second inning of your life with .#voyagersbeat",
+
+            "honeymoon" => "Where Love Meets Adventure! ❤️✨ .voyagersbeat",
+
+        ];
+
+        return array_key_exists($var, $TripType) ? $TripType[$var] : null;
+    }
+
+    public function packagesByType(string $trip_type)
+    {
+
+        if ($trip_type != null && $this->TripTypeMeta($trip_type)) {
+            $this->data["meta_desc"] = $this->TripTypeMeta($trip_type);
+            $this->data["canonical"] = "type/" . $trip_type;
+            $this->data["name"] = $trip_type;
+            $this->data["title"] = $trip_type . " Packages | Voyagers Beat | Live to Travel";
+            $this->data["packages"] = $this->PackageModel->getPackageByType($trip_type);
+        } else {
+            return $this->index();
+        }
+        return $this->Render_Page('packages/packages', $this->data);
+    }
+
+
+
+    public function packagesByTag(string $tag)
     {
         $tag = htmlspecialchars($tag);
 
         $this->data['packages'] = $this->PackageModel->getPackagesByTag($tag);
-        $this->data['title'] = $tag.' Packages | Voyagers Beat | Live to Travel';
+        $this->data['title'] = $tag . ' Packages | Voyagers Beat | Live to Travel';
         $this->data['name'] = $tag;
         $this->data['meta_desc'] = 'We take you to the best possible destination for travel with best services on affordable prices';
-        $this->data['canonical'] = 'tag/'.$tag;
+        $this->data['canonical'] = 'tag/' . $tag;
 
         return $this->Render_Page('packages/packages', $this->data);
     }
-    public function packagesByNights($nights)
+    public function packagesByNights(int $nights)
     {
-        $nights = htmlspecialchars($nights).'N';
+        $nights = htmlspecialchars($nights) . 'N';
 
         $this->data['packages'] = $this->PackageModel->getPackagesByNights($nights);
-        $this->data["name"] = $nights."inghts";
-        $this->data["title"] = $nights." Packages | Voyagers Beat | Live to Travel";
+        $this->data["name"] = $nights . "inghts";
+        $this->data["title"] = $nights . " Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
         $this->data["canonical"] = "upcoming";
 
@@ -212,12 +278,12 @@ class PackageController extends BaseController
         $pack_2n = $this->PackageModel->getPackagesByNights($nights2);
         $pack_1n = $this->PackageModel->getPackagesByNights($nights1);
 
-        $this->data['packages'] = array_merge($pack_2n,$pack_1n);
+        $this->data['packages'] = array_merge($pack_2n, $pack_1n);
         $this->data['title'] = 'Weekend Packages | 2N/3D Packages | Voyagers Beat | Live to Travel';
         $this->data['name'] = 'Weekend';
         $this->data['meta_desc'] = 'Weekend Getaways, Budget Weekend Trips and Treks planned from major cities New Delhi , Travel with the community #voyagersbeat';
         $this->data['canonical'] = 'weekend/';
-        
+
         return $this->Render_Page('packages/packages', $this->data);
     }
 
@@ -231,16 +297,16 @@ class PackageController extends BaseController
         $pack_4n = $this->PackageModel->getPackagesByNights($nights4);
         $pack_3n = $this->PackageModel->getPackagesByNights($nights3);
 
-        $this->data['packages'] = array_merge($pack_5n,$pack_4n,$pack_3n);
+        $this->data['packages'] = array_merge($pack_5n, $pack_4n, $pack_3n);
         $this->data["name"] = "Upcoming";
         $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
         $this->data["canonical"] = "upcoming";
-        
+
         return $this->Render_Page('packages/packages', $this->data);
     }
 
-    
+
 
 
     public function add_package_process()
@@ -248,7 +314,7 @@ class PackageController extends BaseController
 
 
         $Featured_Image = $this->request->getFile('featured_image');
-        
+
         $inputFile = $this->validate([
             'featured_image' => [
                 'uploaded[featured_image]',
@@ -263,7 +329,7 @@ class PackageController extends BaseController
         $Featured_Image->move('upload/package_images/', $newName);
 
         $pdf = $this->request->getFile('pdf');
-        if($pdf->getSize() > 0){
+        if ($pdf->getSize() > 0) {
             $inputPDF = $this->validate([
                 'pdf' => [
                     'uploaded[pdf]',
@@ -274,14 +340,13 @@ class PackageController extends BaseController
                 $this->session->setFlashdata('FlashMessage', ['message' => 'File is Invalid.', 'status' => 'Danger']);
                 return redirect()->to('/packages-list');
             };
-            $newPDFName = $this->request->getPost('slug').'-'.$pdf->getRandomName();
+            $newPDFName = $this->request->getPost('slug') . '-' . $pdf->getRandomName();
             $pdf->move('upload/package_pdf/', $newPDFName);
-        }
-        else{
+        } else {
             $newPDFName = '';
         }
-        
-        
+
+
 
         $rules = [
             'name' => 'required',
@@ -327,7 +392,7 @@ class PackageController extends BaseController
             'VIDEOS' => $this->request->getPost('videos'),
             'MISC' => $this->request->getPost('misc'),
         ];
-        
+
         if ($this->PackageModel->isSlugExist($this->request->getPost('slug'))) {
             $DataArr['SLUG'] = $this->request->getPost('slug') . date('his');
         }
@@ -406,7 +471,7 @@ class PackageController extends BaseController
             $newName = $Featured_Image->getRandomName();
             $Featured_Image->move('upload/package_images/', $newName);
             $DataArr['FEATURED_IMAGE'] = $newName;
-            $oldimagePath = 'upload/package_images/'.$this->request->getPost('featured_image_old');
+            $oldimagePath = 'upload/package_images/' . $this->request->getPost('featured_image_old');
             if (!is_dir($oldimagePath) && file_exists($oldimagePath)) {
                 unlink($oldimagePath);
             }
@@ -423,10 +488,10 @@ class PackageController extends BaseController
         if (!$inputPDF) {
         }
         if ($pdf->getSize() > 0) {
-            $newPDFName = $this->request->getPost('slug').'-'.$pdf->getRandomName();
+            $newPDFName = $this->request->getPost('slug') . '-' . $pdf->getRandomName();
             $pdf->move('upload/package_pdf/', $newPDFName);
             $DataArr['PDF'] = $newPDFName;
-            $oldpdfPath = 'upload/package_pdf/'.$this->request->getPost('pdf_old');
+            $oldpdfPath = 'upload/package_pdf/' . $this->request->getPost('pdf_old');
             if (!is_dir($oldpdfPath) && file_exists($oldpdfPath)) {
                 unlink($oldpdfPath);
             }
@@ -441,8 +506,8 @@ class PackageController extends BaseController
     public function delete_package_process()
     {
         $id = $this->request->getPost('id');
-        $imagePath = 'upload/package_images/'.$this->request->getPost('image');
-        $pdfPath = 'upload/package_pdf/'.$this->request->getPost('pdf');
+        $imagePath = 'upload/package_images/' . $this->request->getPost('image');
+        $pdfPath = 'upload/package_pdf/' . $this->request->getPost('pdf');
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -456,10 +521,11 @@ class PackageController extends BaseController
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package ID:' . $id . ' Deleted', 'status' => 'Danger']);
         return redirect()->to('/packages-list');
     }
-    public function import_package_process(){
-        helper(['dateFormat','itinerary']);
-       $Imported_json = $this->request->getFile('imported_json');
-        
+    public function import_package_process()
+    {
+        helper(['dateFormat', 'itinerary']);
+        $Imported_json = $this->request->getFile('imported_json');
+
         $inputJSON = $this->validate([
             'imported_json' => [
                 'uploaded[imported_json]',
@@ -471,31 +537,30 @@ class PackageController extends BaseController
             $this->session->setFlashdata('FlashMessage', ['message' => 'File is Invalid.', 'status' => 'Danger']);
             return redirect()->to('/packages-list');
         };
-       
+
         $json = file_get_contents($Imported_json);
 
         $obj  = json_decode($json);
-        
-        if($obj[0]->PACKAGE_PDF != ""){
-            $PDF = 'https://voyagersbeat.com/pdf/'.$obj[0]->PACKAGE_PDF;
-        }
-        else{
+
+        if ($obj[0]->PACKAGE_PDF != "") {
+            $PDF = 'https://voyagersbeat.com/pdf/' . $obj[0]->PACKAGE_PDF;
+        } else {
             $PDF = "";
         }
-        
-        $slug = strtolower(str_replace(" ","-",$obj[0]->PACKAGE_NAME));
+
+        $slug = strtolower(str_replace(" ", "-", $obj[0]->PACKAGE_NAME));
         if ($this->PackageModel->isSlugExist($slug)) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'Package Already Exist.', 'status' => 'Danger']);
             return redirect()->to('/packages-list');
         }
 
-        $nights = substr($obj[0]->PACKAGE_DAYS,0,1);
-        
-        
-        
-        $stay = $nights."N/".($nights+1)."D";
+        $nights = substr($obj[0]->PACKAGE_DAYS, 0, 1);
 
-        
+
+
+        $stay = $nights . "N/" . ($nights + 1) . "D";
+
+
 
         $OBJIMGARR = [
             $obj[0]->IMAGE_1,
@@ -504,14 +569,14 @@ class PackageController extends BaseController
             $obj[0]->IMAGE_4
         ];
 
-        $ImagesArr=[];
+        $ImagesArr = [];
 
-        foreach($OBJIMGARR as $Image){
-            if($Image!=''){
-                array_push($ImagesArr,$Image);
+        foreach ($OBJIMGARR as $Image) {
+            if ($Image != '') {
+                array_push($ImagesArr, $Image);
             }
         }
-        
+
         $OBJPrice = [
             ["sharing" => $obj[0]->INFO_P1, "price" => $obj[0]->PRICE_1],
             ["sharing" => $obj[0]->INFO_P2, "price" => $obj[0]->PRICE_2],
@@ -520,25 +585,25 @@ class PackageController extends BaseController
             ["sharing" => $obj[0]->INFO_P5, "price" => $obj[0]->PRICE_5],
         ];
 
-        $Price=[];
+        $Price = [];
 
-        foreach($OBJPrice as $row){
-            if(($row['price'] != "") &&($row['price'] != "0")){
-                array_push($Price,$row);
+        foreach ($OBJPrice as $row) {
+            if (($row['price'] != "") && ($row['price'] != "0")) {
+                array_push($Price, $row);
             }
         }
 
-        $vb_datesArr = explode(',',$obj[0]->DATES);
+        $vb_datesArr = explode(',', $obj[0]->DATES);
         $Dates = [];
-        foreach($vb_datesArr as $date){
-            array_push($Dates,["date" => formatDateRange($date)]);
+        foreach ($vb_datesArr as $date) {
+            array_push($Dates, ["date" => formatDateRange($date)]);
         }
         $raw = $obj[0]->PACK_IT;
         $itinerary = mergeTitleandDesc($raw);
-        
 
-        
-        
+
+
+
         $DataArr = [
             'NAME' => $obj[0]->PACKAGE_NAME,
             'SLUG' => $slug,
@@ -568,14 +633,12 @@ class PackageController extends BaseController
             'VIDEOS' => '',
             'MISC' => $obj[0]->PACKAGE_MISC,
         ];
-        
-       
+
+
         $this->PackageModel->insertPackage($DataArr);
         $ID = $this->PackageModel->getIDfromSlug($DataArr['SLUG'])[0]->ID;
-        
+
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package Imported Sucessfully.', 'status' => 'success']);
         return redirect()->to("/update-package/$ID");
-        
     }
 }
-

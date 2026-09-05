@@ -30,9 +30,29 @@ $routes->get('resetform', 'UserController::resetform');
 $routes->post('reset', 'UserController::reset');
 
 /*----------------admin routes-----------------------*/
-
 $routes->get('dashboard', 'DashboardController::AdminDashboard', ['filter' => 'AdminAuthGuard']);
+$routes->get('dashboard/(:any)', 'DashboardController::AdminDashboard/$1', ['filter' => 'AdminAuthGuard']);
+
+/*-------------user management ROUTES-------------*/
+$routes->post('change-password', 'UserController::changePassword', ['filter' => 'AdminAuthGuard']);
+$routes->post('delete-user', 'UserController::deleteUser', ['filter' => 'AdminAuthGuard']);
+$routes->post('makeAdmin', 'UserController::makeAdmin', ['filter' => 'AdminAuthGuard']);
+$routes->post('removeAdmin', 'UserController::removeAdmin', ['filter' => 'AdminAuthGuard']);
+
+/*-------------Coupon management ROUTES-------------*/
+$routes->post('UpdateCoupon', 'CouponController::updateCoupon', ['filter' => 'AdminAuthGuard']);
+$routes->post('deleteCoupon', 'CouponController::removeCoupon', ['filter' => 'AdminAuthGuard']);
+
+
+
+
+
+
+/*--------------- User Routes------------------*/
 $routes->get('account', 'DashboardController::UserDashboard', ['filter' => 'AuthGuard']);
+$routes->get('account/(:any)', 'DashboardController::UserDashboard/$1', ['filter' => 'AuthGuard']);
+
+
 $routes->get('users', 'DashboardController::users', ['filter' => 'AdminAuthGuard']);
 $routes->get('packages-list', 'DashboardController::packagesList', ['filter' => 'AdminAuthGuard']);
 $routes->get('destination-list', 'DashboardController::destinationsList', ['filter' => 'AdminAuthGuard']);
@@ -50,6 +70,7 @@ $routes->get('packages/(:any)', 'PackageController::index/$1');
 $routes->get('package/(:any)', 'PackageController::packageBySlug/$1');
 $routes->get('packageid/(:num)', 'PackageController::packageByID/$1');
 $routes->get('category/(:any)', 'PackageController::packagesByCategory/$1');
+$routes->get('type/(:any)', 'PackageController::packagesByType/$1');
 $routes->get('tag/(:any)', 'PackageController::packagesByTag/$1');
 $routes->get('nights/(:num)', 'PackageController::packagesByNights/$1');
 $routes->get('badge/(:any)', 'PackageController::packagesByBadge/$1');
@@ -58,10 +79,7 @@ $routes->get('weekend', 'PackageController::weekendTripsPackages');
 $routes->get('bagpacking', 'PackageController::bagPackingTripsPackages');
 $routes->get('state/(:any)', 'PackageController::packagesByState/$1');
 $routes->get('country/(:any)', 'PackageController::packagesByCountry/$1');
-$routes->get('destinations', 'DestinationsController::destinations');
 $routes->get('search', 'PackageController::index');
-
-
 
 
 /*----------------login and register routes-----------------------*/

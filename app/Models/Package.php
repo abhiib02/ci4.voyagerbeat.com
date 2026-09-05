@@ -10,7 +10,6 @@ class Package extends Model
     {
         $db = \Config\Database::connect();
         return $db->table('Packages')->insert($data);
-        
     }
 
     public function UpdatePackage($id, $data)
@@ -27,23 +26,34 @@ class Package extends Model
         $db = \Config\Database::connect();
         $builder = $db->table('Packages');
         $builder->select('*');
-        $builder->orderBy('updated_at','DESC');
+        $builder->orderBy('updated_at', 'DESC');
         $query = $builder->get();
         $result = $query->getResult();
         return $result;
     }
+    public function getAllPackagesForAdminDashboard()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('Packages');
+        $builder->select('PACKAGE_ID,SLUG,PACKAGE_NAME,LOCATION,updated_at');
+        $builder->orderBy('updated_at', 'DESC');
+        $query = $builder->get();
+        $result = $query->getResult();
+        return $result;
+    }
+
     public function getAllPackagesNameAndID()
     {
         $db = \Config\Database::connect();
         $builder = $db->table('Packages');
         $builder->select('PACKAGE_ID,PACKAGE_NAME');
         $builder->where('HIDDEN', 0);
-        $builder->orderBy('updated_at','DESC');
+        $builder->orderBy('updated_at', 'DESC');
         $query = $builder->get();
         $result = $query->getResult();
         return $result;
     }
-    
+
     public function getAllPackagesCount()
     {
         $db = \Config\Database::connect();
@@ -111,6 +121,16 @@ class Package extends Model
         $result = $query->getRow();
         return $result;
     }
+    public function getPackageByType($type)
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('Packages');
+        $builder->select('*');
+        $builder->where('PACKAGE_TYPE', $type);
+        $query = $builder->get();
+        $result = $query->getResult();
+        return $result;
+    }
     public function getPackagesByDestination($destination)
     {
         $db = \Config\Database::connect();
@@ -158,7 +178,7 @@ class Package extends Model
         $builder->select('*');
         $builder->where('UPCOMING', 1);
         $builder->where('HIDDEN', 0);
-        $builder->orderBy('updated_at','DESC');
+        $builder->orderBy('updated_at', 'DESC');
         $query = $builder->get();
         $result = $query->getResult();
         return $result;
@@ -203,7 +223,7 @@ class Package extends Model
         $result = $query->getResultObject();
         return $result;
     }
-    
+
     public function getPackagesByTag($tag)
     {
         $db = \Config\Database::connect();
@@ -238,7 +258,7 @@ class Package extends Model
                 $allTags = array_merge($allTags, $tags);
             }
         }
-        
+
         $distinctTags = array_unique($allTags);
         sort($distinctTags);
         return $distinctTags;
@@ -253,8 +273,8 @@ class Package extends Model
         $query = $builder->get();
         $result = $query->getResultObject();
         $BadgesArr = [];
-        foreach($result as $row){
-            array_push($BadgesArr,$row->BADGE);
+        foreach ($result as $row) {
+            array_push($BadgesArr, $row->BADGE);
         }
         sort($BadgesArr);
         return $BadgesArr;
@@ -269,8 +289,8 @@ class Package extends Model
         $query = $builder->get();
         $result = $query->getResultObject();
         $StatesArr = [];
-        foreach($result as $row){
-            array_push($StatesArr,$row->STATE);
+        foreach ($result as $row) {
+            array_push($StatesArr, $row->STATE);
         }
         sort($StatesArr);
         return $StatesArr;
@@ -285,9 +305,9 @@ class Package extends Model
         $query = $builder->get();
         $result = $query->getResultObject();
         $CountryArr = [];
-        foreach($result as $row){
-            array_push($CountryArr,$row->COUNTRY);
-        }   
+        foreach ($result as $row) {
+            array_push($CountryArr, $row->COUNTRY);
+        }
         sort($CountryArr);
         return $CountryArr;
     }

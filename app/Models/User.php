@@ -146,7 +146,7 @@ class User extends Model
         $db = \Config\Database::connect();
         $builder = $db->table('users');
         $builder->set("PASSWORD_RESET_TOKEN", $token);
-        $builder->where('EMAIL', $email);
+        $builder->where('USER_EMAIL', $email);
         $builder->update();
     }
     public function isTokenExist($token)
@@ -172,7 +172,7 @@ class User extends Model
         $result = $query->getRow();
         return $result->ROLE;
     }
-    
+
     public function MakeAdmin($id)
     {
         $db = \Config\Database::connect();

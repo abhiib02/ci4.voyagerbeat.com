@@ -25,10 +25,10 @@
         <a href="/">Home</a> |
         <a href="/about">About Us</a> | 
         <a href="/destinations">Destinations</a> | 
-        <?php if((session()->get('logged_in') == 1) && (session()->get('isadmin') == 0)):?>
+        <?php if($isAdmin):?>
             <a href="/account">Dashboard</a> | 
             <a href="/logout">Logout</a> 
-        <?php elseif((session()->get('logged_in') == 1) && (session()->get('isadmin') == 1)):?>
+        <?php elseif($isUser):?>
             <a href="/dashboard">Dashboard</a> | 
             <a href="/logout">Logout</a> 
         <?php else:?>

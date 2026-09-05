@@ -3,24 +3,25 @@
 namespace App\Controllers;
 
 use App\Models\Package;
+use App\Models\Option;
+use App\Models\User;
 
 class MainController extends BaseController
 {
 
-    public $data = [];
-    protected $session;
-    public $PackageModel, $DestinationModel, $OptionModel, $BookingModel,$CategoryModel;
-    public function __construct()
-    {
-        
-        
-        
-        
-    }
-    
-    
+    public array $data = [];
+    public Package $PackageModel;
+    public Option $OptionModel;
+    public User $UserModel;
+    // public Destination $DestinationModel;
+    // public Booking $BookingModel;
+    // public Category $CategoryModel;
+
+
+    public function __construct() {}
+
     public function index(): string
-    {   
+    {
         return $this->Render_Page('home', $this->data);
     }
 }
