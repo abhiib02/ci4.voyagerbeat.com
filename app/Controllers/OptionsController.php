@@ -9,12 +9,18 @@ use Config\Services;
 class OptionsController extends BaseController
 {
 
+    protected Option $OptionModel;
+
+    public function __construct()
+    {
+        $this->OptionModel = new Option();
+    }
+
     public function save(string $name)
     {
         $value = $this->request->getPost($name);
-        $Option = new Option();
-        $Option->saveOption($name, $value);
-        $this->session->setFlashdata('FlashMessage', ['message' => 'Option Saved', 'status' => 'Success']);
-        return redirect()->to('/options-list');
+
+        $this->OptionModel->saveOption($name, $value);
+        return $this->RedirectWithToast('Option Saved', 'Success', '/dashboard/option-list');
     }
 }
