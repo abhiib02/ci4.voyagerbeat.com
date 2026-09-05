@@ -41,13 +41,8 @@ class CouponController extends BaseController
         return $this->response->setJSON($codeDetails);
     }
 
-    public function createNewCoupon()
+    public function createCoupon()
     {
-        $session = session();
-
-        if ((int) $session->get('role') !== 1 || ! $session->get('logged_in')) {
-            return redirect()->to(base_url());
-        }
 
         $data = [
             'Coupon_Code'  => $this->request->getPost('code'),
@@ -56,9 +51,9 @@ class CouponController extends BaseController
             'Coupon_Count' => $this->request->getPost('count'),
         ];
 
-        $this->CouponModel->createNewCoupon($data);
+        $this->CouponModel->addCoupon($data);
 
-        return redirect()->to(base_url('dashboard/coupons'));
+        return $this->RedirectWithtoast('Coupon Created', 'success', 'dashboard/coupons');
     }
 
     public function UpdateCoupon()
@@ -76,7 +71,7 @@ class CouponController extends BaseController
 
         $this->CouponModel->updateCoupon($couponID, $data);
 
-        return redirect()->to('dashboard/coupons');
+        return $this->RedirectWithtoast('Coupon Updated', 'info', 'dashboard/coupons');
     }
 
     public function removeCoupon()
@@ -85,6 +80,7 @@ class CouponController extends BaseController
 
         $this->CouponModel->deleteCoupon($couponID);
 
-        return redirect()->to('dashboard/coupons');
+
+        return $this->RedirectWithtoast('Coupon Deleted', 'danger', 'dashboard/coupons');
     }
 }

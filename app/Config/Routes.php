@@ -40,8 +40,10 @@ $routes->post('makeAdmin', 'UserController::makeAdmin', ['filter' => 'AdminAuthG
 $routes->post('removeAdmin', 'UserController::removeAdmin', ['filter' => 'AdminAuthGuard']);
 
 /*-------------Coupon management ROUTES-------------*/
+$routes->post('createCoupon', 'CouponController::createCoupon', ['filter' => 'AdminAuthGuard']);
 $routes->post('UpdateCoupon', 'CouponController::updateCoupon', ['filter' => 'AdminAuthGuard']);
 $routes->post('deleteCoupon', 'CouponController::removeCoupon', ['filter' => 'AdminAuthGuard']);
+
 
 
 

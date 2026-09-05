@@ -88,4 +88,12 @@ abstract class BaseController extends Controller
             view('dashboard/user/' . $view, $data) .
             view('dashboard/user/layout/dashboard-footer', $data);
     }
+    protected function RedirectWithtoast($message, $status, $redirect)
+    {
+        // $redirect contains . then it is a named route
+        $this->session->setFlashdata('FlashMessage', ['message' => $message, 'status' => $status]);
+        return (str_contains($redirect, '.'))
+            ? redirect()->to(route_to($redirect))
+            : redirect()->to($redirect);
+    }
 }

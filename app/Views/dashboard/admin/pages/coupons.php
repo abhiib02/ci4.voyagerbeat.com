@@ -6,10 +6,9 @@
         <button type="button" class="waves-effect  btn btn-sm btn-success  white-text" onclick="openModel('codeCreate')">Create Code</button>
         <br>
         <br>
-        <!-- <dialog id="codeCreate" class="classic-center" style="height:300px; padding: 10px;">
-            <?php //include('coupon-create.php'); 
-            ?>
-        </dialog> -->
+        <dialog id="codeCreate" class="classic-center" style="height:300px; padding: 10px;">
+            <?= view('dashboard/admin/pages/coupon-partials/coupon-create') ?>
+        </dialog>
 
         <table class="sortable table" id="datatable">
             <thead>
@@ -40,7 +39,7 @@
 
 
                             <dialog id="codeupd<?php echo $coupon->Coupon_ID; ?>" class="classic-center" style="height:300px; padding: 10px;">
-                                <?= view('dashboard/admin/pages/coupon-update', ['coupon' => $coupon]) ?>
+                                <?= view('dashboard/admin/pages/coupon-partials/coupon-update', ['coupon' => $coupon]) ?>
                             </dialog>
 
                             <form action="/deleteCoupon" id="delcode<?= $coupon->Coupon_ID ?>" method="post">

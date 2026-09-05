@@ -41,20 +41,17 @@ class UserController extends BaseController
     {
         $id = $this->request->getPost('id');
         $this->UserModel->MakeAdmin($id);
-        $this->session->setFlashdata('FlashMessage', ['message' => 'UserID:' . $id . ' Admin Granted', 'status' => 'info']);
-        return redirect()->to('/dashboard/users-list');
+        return $this->RedirectWithtoast('UserID:' . $id . ' Admin Granted', 'info', '/dashboard/users-list');
     }
 
     public function removeAdmin()
     {
         $id = $this->request->getPost('id');
         if (in_array($id, $this->data['permanentAdmins'])) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Cant Revoke Admin of this user', 'status' => 'danger']);
-            return redirect()->to('/dashboard/users-list');
+            return $this->RedirectWithtoast('Cant Revoke Admin of this user', 'danger', '/dashboard/users-list');
         }
         $modelMsg = $this->UserModel->RemoveAdmin($id);
-        $this->session->setFlashdata('FlashMessage', ['message' => 'UserID:' . $id . ' ' . 'Admin Permission Revoked', 'status' => 'Warning']);
-        return redirect()->to('/dashboard/users-list');
+        return $this->RedirectWithtoast('UserID:' . $id . ' ' . 'Admin Permission Revoked', 'Warning', '/dashboard/users-list');
     }
 
     public function changePassword()
@@ -62,8 +59,7 @@ class UserController extends BaseController
         $id = $this->request->getPost('id');
         $password = $this->request->getPost('password');
         $this->UserModel->changePasswordByAdmin($id, $password);
-        $this->session->setFlashdata('FlashMessage', ['message' => 'UserID:' . $id . ' Password Changed', 'status' => 'Success']);
-        return redirect()->to('/users');
+        return $this->RedirectWithtoast('UserID:' . $id . ' Password Changed', 'Success', '/dashboard/users-list');
     }
 
     public function forgotpass()
@@ -81,14 +77,12 @@ class UserController extends BaseController
         $email = $this->request->getPost("email");
         $userExist = $this->UserModel->isUserExist($email);
         if (!$userExist) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'User Does not Exist', 'status' => 'danger']);
-            return redirect()->to('/forgot_password_form');
+            return $this->RedirectWithtoast('User Does not Exist', 'danger', '/dashboard/forgot_password_form');
         }
         $generatedToken = $this->generateMD5Token($email);
         $this->UserModel->insertPasswordResetTokenToEmail($email, $generatedToken);
         $this->EmailController->reset_password_mail($email, $generatedToken);
-        $this->session->setFlashdata('FlashMessage', ['message' => 'Reset Password Link Sent to Mail', 'status' => 'Success']);
-        return redirect()->to('/login');
+        return $this->RedirectWithtoast('Reset Password Link Sent to Mail', 'info', '/login');
     }
 
     public function resetform()
@@ -98,8 +92,7 @@ class UserController extends BaseController
         $token = $this->request->getVar('token');
         $tokenExist = $UserModel->isTokenExist($token);
         if (!$tokenExist) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Invalid Link', 'status' => 'danger']);
-            return redirect()->to('/login');
+            return $this->RedirectWithtoast('Invalid Link', 'danger', '/login');
         }
         $this->data["token"] = $token;
 
@@ -115,24 +108,20 @@ class UserController extends BaseController
             'password' => 'required|min_length[8]',
         ]);
         if (!$rules) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Password Must be 8 Characters long', 'status' => 'Danger']);
-            return redirect()->to('/resetform?token=' . $token);
+            return $this->RedirectWithtoast('Password Must be 8 Characters long', 'Danger', '/resetform?token=' . $token);
         }
         $newhash = password_hash((string) $password, PASSWORD_DEFAULT);
         $UserModel->resetpassword($token, $newhash);
-        $this->session->setFlashdata('FlashMessage', ['message' => 'Password Reset Successfully', 'status' => 'success']);
-        return redirect()->to('/login');
+        return $this->RedirectWithtoast('Password Reset Successfully', 'success', 'login');
     }
 
     public function deleteUser()
     {
         $id = $this->request->getPost('id');
         if (in_array($id, $this->data['permanentAdmins'])) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Cannot Delete This User', 'status' => 'danger']);
-            return redirect()->to('/dashboard/users-list');
+            return $this->RedirectWithtoast('Cannot Delete This User', 'danger', '/dashboard/users-list');
         }
         $modelMsg = $this->UserModel->delUser($id);
-        $this->session->setFlashdata('FlashMessage', ['message' => 'User Deleted', 'status' => 'danger']);
-        return redirect()->to('/dashboard/users-list');
+        return $this->RedirectWithtoast('User Deleted', 'danger', '/dashboard/users-list');
     }
 }

@@ -82,20 +82,26 @@ class DashboardController extends BaseController
 
 
 
-    protected function PagesScan($DirectoryPath)
+    protected function PagesScan(string $directoryPath): array
     {
         helper('filesystem');
 
-        // Path to the views subfolder
-        $path = APPPATH . $DirectoryPath;
+        $basePath = APPPATH . trim($directoryPath, '/') . '/';
+        $map      = directory_map($basePath, 1);
 
-        // Get array of files (the '1' limits scan to top-level folder only, non-recursive)
-        $files = directory_map($path, 1);
+        if (! is_array($map)) {
+            return [];
+        }
 
-        // Optional: Clean up extensions (.php) if you only want page names for routes/views
-        $pageNames = array_map(function ($file) {
-            return pathinfo($file, PATHINFO_FILENAME);
-        }, $files);
+        $pageNames = [];
+
+        foreach ($map as $file) {
+            // Skip subdirectories (directory_map returns subfolders as arrays or non-file paths)
+            if (is_string($file) && is_file($basePath . $file)) {
+                $pageNames[] = pathinfo($file, PATHINFO_FILENAME);
+            }
+        }
+
         return $pageNames;
     }
 
