@@ -8,7 +8,7 @@
             <a class="btn btn-sm btn-secondary" href="/hidden">Hidden packages</a>
         </div>
         <br>
-        <table id="datatable" class="sortable table">
+        <table id="" class="sortable table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -30,5 +30,9 @@
                 <?php } ?>
             </tbody>
         </table>
+        <!-- Pagination Links -->
+        <div class="pagination">
+            <?= $pager->links() ?>
+        </div>
     </div>
 </div>

@@ -7,7 +7,7 @@
 
     </div>
     <div class="card-body">
-        <table class="sortable table" id="datatable">
+        <table class="sortable table" id="">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -48,16 +48,16 @@
                         <td><?= $booking->adults; ?></td>
                         <td>
                             <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
-                                <button onclick='showTravelers(<?= $booking->pax_details; ?>)'>Show</button>
-                                <dialog class="border-1 rounded" id="travelers-dialog">
+                                <button class="btn btn-sm  btn-outline-dark" onclick='showTravelers(<?= $booking->pax_details; ?>,<?= $booking->ID; ?>)'>Show</button>
+                                <dialog class="border-1 rounded" id="travelers-dialog-<?= $booking->ID; ?>">
                                     <p class="fs-4"><?= $booking->name; ?>'s Travel Buddies</p>
 
                                     <hr>
-                                    <ol class="list-group list-group-numbered" id="output">
+                                    <ol class="list-group list-group-numbered" id="output-dialog-<?= $booking->ID; ?>">
 
                                     </ol>
                                     <hr>
-                                    <button class="btn btn-dark" onclick="document.querySelector('#travelers-dialog').close();">Close</button>
+                                    <button class="btn btn-dark" onclick="document.querySelector('#travelers-dialog-<?= $booking->ID; ?>').close();">Close</button>
                                 </dialog>
                             <?php else: ?>
                                 No details available
@@ -76,12 +76,16 @@
                 <?php } ?>
             </tbody>
         </table>
+        <!-- Pagination Links -->
+        <div class="pagination">
+            <?= $pager->links() ?>
+        </div>
     </div>
 </div>
 
 <script>
-    function showTravelers(data) {
-        document.getElementById("travelers-dialog").showModal();
+    function showTravelers(data, id) {
+        document.getElementById(`travelers-dialog-${id}`).showModal();
         let travelers = {};
 
         // Group data
@@ -116,8 +120,7 @@
                   </li>
          `;
         }
-
         // Show output
-        document.getElementById("output").innerHTML = result;
+        document.getElementById(`output-dialog-${id}`).innerHTML = result;
     }
 </script>

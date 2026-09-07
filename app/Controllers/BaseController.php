@@ -76,17 +76,19 @@ abstract class BaseController extends Controller
     }
     protected function Render_Page_Admin_dashboard($view, $data)
     {
+        $mergedData = array_merge($this->data, $data);
         return
-            view('dashboard/admin/layout/dashboard-header', $data) .
-            view('dashboard/admin/' . $view, $data) .
-            view('dashboard/admin/layout/dashboard-footer', $data);
+            view('dashboard/admin/layout/dashboard-header', $mergedData) .
+            view('dashboard/admin/' . $view, $mergedData) .
+            view('dashboard/admin/layout/dashboard-footer', $mergedData);
     }
     protected function Render_Page_dashboard($view, $data)
     {
+        $mergedData = array_merge($this->data, $data);
         return
-            view('dashboard/user/layout/dashboard-header', $data) .
-            view('dashboard/user/' . $view, $data) .
-            view('dashboard/user/layout/dashboard-footer', $data);
+            view('dashboard/user/layout/dashboard-header', $mergedData) .
+            view('dashboard/user/' . $view, $mergedData) .
+            view('dashboard/user/layout/dashboard-footer', $mergedData);
     }
     protected function RedirectWithtoast($message, $status, $redirect)
     {

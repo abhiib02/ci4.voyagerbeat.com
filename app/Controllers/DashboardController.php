@@ -63,10 +63,12 @@ class DashboardController extends BaseController
                 $this->data['Options'] = $this->OptionModel->getAllOptions();
             case 'packages-list':
                 $this->data['Packages'] = $this->PackageModel->getAllPackagesForAdminDashboard();
+                $this->data['pager'] = $this->PackageModel->pager;
             case 'users-list':
                 $this->data['Users'] = $this->UserModel->getAllUsers();
             case 'all-bookings':
-                $this->data['Bookings'] = $this->BookingModel->getAllBookings();
+                $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard();
+                $this->data['pager'] = $this->BookingModel->pager;
             case 'coupons':
                 $this->data['Coupons'] = $this->CouponModel->getAllCoupons();
         }

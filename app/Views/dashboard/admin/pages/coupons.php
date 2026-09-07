@@ -4,10 +4,17 @@
     </div>
     <div class="card-body">
         <button type="button" class="waves-effect  btn btn-sm btn-success  white-text" onclick="openModel('codeCreate')">Create Code</button>
-        <br>
-        <br>
-        <dialog id="codeCreate" class="classic-center" style="height:300px; padding: 10px;">
-            <?= view('dashboard/admin/pages/coupon-partials/coupon-create') ?>
+        <dialog id="codeCreate" class="">
+            <div class="card">
+                <div class="card-header">Create Coupon Code</div>
+                <div class="card-body">
+                    <?= view('dashboard/admin/pages/coupon-partials/coupon-create') ?>
+                </div>
+            </div>
+
+
+
+
         </dialog>
 
         <table class="sortable table" id="datatable">
@@ -34,18 +41,21 @@
                         <td>
 
                             <button type="button" class="waves-effect  btn btn-sm btn-primary white-text" onclick="openModel('codeupd<?php echo $coupon->Coupon_ID; ?>')">Update Code</button>
+                            <button onclick="deleteCodeconfirm(<?= $coupon->Coupon_ID; ?>)" class="btn btn-sm btn-danger mx-1">Delete</button>
 
-
-
-
-                            <dialog id="codeupd<?php echo $coupon->Coupon_ID; ?>" class="classic-center" style="height:300px; padding: 10px;">
-                                <?= view('dashboard/admin/pages/coupon-partials/coupon-update', ['coupon' => $coupon]) ?>
+                            <dialog id="codeupd<?php echo $coupon->Coupon_ID; ?>">
+                                <div class="card">
+                                    <div class="card-header">Update Coupon Code</div>
+                                    <div class="card-body">
+                                        <?= view('dashboard/admin/pages/coupon-partials/coupon-update', ['coupon' => $coupon]) ?>
+                                    </div>
+                                </div>
                             </dialog>
 
                             <form action="/deleteCoupon" id="delcode<?= $coupon->Coupon_ID ?>" method="post">
                                 <input type="hidden" name="id" value="<?= $coupon->Coupon_ID ?>">
                             </form>
-                            <button onclick="deleteCodeconfirm(<?= $coupon->Coupon_ID; ?>)" class="btn btn-sm btn-danger mx-1">Delete</button>
+
 
                         </td>
                     </tr>

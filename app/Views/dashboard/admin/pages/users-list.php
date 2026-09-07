@@ -24,14 +24,15 @@
                         <td><?= $user->USER_CONTACT ?></td>
                         <td><?= $user->ROLE ?></td>
                         <td>
+                            <button class="btn btn-sm btn-primary" onclick='editUserRole(<?= $user->USER_ID ?>)'><?= ($user->ROLE == 0) ? 'Make Admin' : 'Make Customer'; ?></button>
+                            <button onclick="deleteUserconfirm(<?= $user->USER_ID; ?>)" class="btn btn-sm btn-danger mx-1">Delete</button>
                             <form action="<?= ($user->ROLE == 0) ? '/makeAdmin' : '/removeAdmin' ?>" id="editUserRole<?= $user->USER_ID; ?>" method="post">
                                 <input type="hidden" name="id" value="<?= $user->USER_ID; ?>">
                             </form>
-                            <button class="btn btn-sm btn-primary" onclick='editUserRole(<?= $user->USER_ID ?>)'><?= ($user->ROLE == 0) ? 'Make Admin' : 'Make Customer'; ?></button>
                             <form action="/delete-user" id="deluser<?= $user->USER_ID; ?>" method="post">
                                 <input type="hidden" name="id" value="<?= $user->USER_ID; ?>">
                             </form>
-                            <button onclick="deleteUserconfirm(<?= $user->USER_ID; ?>)" class="btn btn-sm btn-danger mx-1">Delete</button>
+
                         </td>
                     </tr>
                 <?php } ?>
