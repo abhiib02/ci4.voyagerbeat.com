@@ -36,8 +36,8 @@
         --secondcolor: #030303;
         --secondcolor-lite: #3338;
         --swiper-theme-color: var(--maincolor);
-        --bg-color: #ffffff;
-        --bg-color-2: #1C1F2A;
+        --bg-color: #f5f5f5;
+        --bg-color-2: #fff;
         --text-color: #000000;
         --primary-color: #FFD600;
         --themebtnbg: #FFD600;
@@ -179,3 +179,10 @@ body {
 .bgColorTheme {
   background-color: var(--maincolor);
 }
+
+
+.flex_wrap_section {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }

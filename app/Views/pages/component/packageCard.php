@@ -1,50 +1,119 @@
-<?php
-$DatesArr = json_decode($package->DATES);
-// $has_dates = ($package->CUSTOM_DATES == NULL) && ($package->DATES != '') && ($package->DATES != '[]');
-// if($has_dates){
-//     $cal_date="02";
-//     $cal_month="Mar";
-// // $cal_date = explode('/',upcomingDates($DatesArr))[0];
-// // $cal_month = explode('/',upcomingDates($DatesArr))[1];
-// }
-// $leastPrice = ($package->CUSTOM_PRICE != '') ? 'Price on Request' : 'from ₹'.json_decode($package->PRICE)[0]->price;
-// $totalDates = count($DatesArr);
+<?php helper('custom'); ?>
 
-?>
+<div class="travel_card_new" data-filter="<?= strtolower($package->PACKAGE_TYPE); ?>|<?= strtolower($package->TAGS); ?>|<?= strtolower($package->LOCATION); ?>|<?= strtolower($package->STATE); ?>|<?= strtolower($package->WEEKEND); ?>|<?= ($package->UPCOMING) ? "upcoming" : "" ?>" title="<?= $package->PACKAGE_ID; ?>">
+    <section class="image">
+        <a disabledtarget="__blank" class="" href="/package/<?php echo $package->SLUG; ?>" aria-label="<?= strtoupper($package->PACKAGE_NAME); ?>">
+            <img
+                src="<?= $package->PACKAGE_THUMBNAIL ?>"
+                title="<?= strtoupper($package->PACKAGE_NAME); ?>"
+                alt="<?= $package->PACKAGE_ID; ?>|<?= strtoupper($package->PACKAGE_NAME); ?>"
+                loading="lazy">
+        </a>
 
-<?php
-    if(str_contains($package->PACKAGE_IMAGE,'http') && !str_contains($package->PACKAGE_IMAGE,'drive.google.com')){
-        $Package_image = $package->PACKAGE_IMAGE;
-    }
-    elseif(str_contains($package->PACKAGE_IMAGE,'drive.google.com')){
-      $id = explode('/',$package->PACKAGE_IMAGE)[5];
-      $Package_image = "https://lh3.googleusercontent.com/d/{$id}=w1920";
-    }else{
-      $Package_image = '/upload/package_images/'.$package->PACKAGE_IMAGE;
-    }
-    ?>
+        <?php
+        $All_Dates = explode(",", $package->DATES);
+        $Month_Array = explode(",", $package->DATES);
+        $Month_Array = array_values(array_filter($Month_Array));
+        $unique_arr = array();
 
-<a href="/package/<?=$package->SLUG?>"
-                   class="col-lg-3 col-md-4 col-sm-6 package-card text-decoration-none my-2 packageTypeItem package-card-scroll-anim px-5 position-relative"
-                   data-packagename="<?=$package->PACKAGE_NAME?>"
-                   >
-                   <span class="position-absolute badge text-bg-warning fs-6" style="top: 0px;border-radius:0.2rem 0 10px 0; z-index:1;"><?=$package->BADGE?></span>
-                   <span class="position-absolute badge text-bg-dark fs-6" style="top: 30px;border-radius: 0rem 10px 10px 0;z-index: 1;translate: 0;"><?=$package->DURATION?></span>
-                    <div class="card h-100 border-0 shadow-sm">
-                        
-                             <img src="<?=$Package_image?>"
-                                        class="card-img-top"
-                                        alt="<?=$package->PACKAGE_NAME?>"
-                                        style="aspect-ratio:1; object-fit: cover;"
-                                        loading="lazy">
+        for ($i = 0; $i < (count($Month_Array) - 1); $i++) {
+            array_push($unique_arr, get_Month(extract_month($Month_Array[$i])));
+        }
+        $unique_arr = array_values(array_unique($unique_arr));
+        $months_to_show =  array_filter($unique_arr);
+        ?>
 
-                        <div class="card-body d-flex gap-2">
-                            
-                            
-                            <div>
-                                <p class="fw-bold card-title m-0"> <?=$package->PACKAGE_NAME?></p>
-                               
-                            </div>
-                        </div>
+
+
+        <ul class="months">
+            <?php if (!empty($months_to_show)): ?>
+                <?php foreach ($months_to_show as $index => $month): ?>
+                    <?php if ($index < 4): ?>
+                        <li class="mon-pill"><?= $month ?></li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </ul>
+    </section>
+    <section class="detail">
+        <div>
+            <div class="title "><a disabledtarget="__blank" href="/package/<?= $package->SLUG; ?>"><?= strtoupper($package->PACKAGE_NAME); ?></a></div>
+            <div class="desc"><a disabledtarget="__blank" href="/package/<?= $package->SLUG; ?>">
+                    <div class="loc-dur">
+                        <span style="white-space: nowrap;text-overflow: ellipsis;overflow: clip;display: inline-block;max-width: 90px;"><?= $package->LOCATION ?></span>
+                        <span>•</span>
+                        <span><?= convertDuration($package->PACKAGE_DAYS) ?></span>
                     </div>
+                </a></div>
+        </div>
+        <div class="desc">
+            <div class="price">
+                <a disabledtarget="__blank" href="/package/<?= $package->SLUG; ?>">
+                    <?php if ($package->REQUEST_PRICE) : ?>
+                        Price on Request
+                    <?php else: ?>
+                        Starts @ <b>₹<?= $package->PRICE_1; ?></b>
+                    <?php endif; ?>
+
                 </a>
+            </div>
+        </div>
+        <?php if ($package->BADGE): ?>
+            <div class="badge"><?= $package->BADGE ?></div>
+        <?php endif; ?>
+
+        <?php // if($package->PACKAGE_PDF){ echo '<div class="btn pdf_btn"><a class="" aria-label="Download pdf of '.$package->PACKAGE_NAME.'" rel=”nofollow” href="../../pdf/'.$package->PACKAGE_PDF.'" download><i class="icon-file-pdf"></i></a></div>';}
+        ?>
+
+        <?php if ($isAdmin): ?>
+            <a href="/voyagersbeat/download_json_package/<?= $package->PACKAGE_ID ?>" class="btn export_btn"><i class='bx bx-export'></i></a>
+        <?php endif; ?>
+
+        <div class="btn dates_btn"><i class="bx bx-calendar"></i></div>
+
+        <?php if ($package->FAVORITE_COUNT == 0): ?>
+            <div class="chip-btn like"
+                data-count="<?= (int)$package->FAVORITE_COUNT; ?>"
+                data-id="<?= $package->PACKAGE_ID; ?>"
+                style="display:flex;justify-content: center;" onclick="toggleFav(<?= $package->PACKAGE_ID; ?>, this)">
+                <i class="bx bx-heart"></i>
+                <span class="like_count" id="lc<?= $package->PACKAGE_ID; ?>">
+                    <?= (int)$package->FAVORITE_COUNT; ?>
+                </span>
+            </div>
+        <?php else: ?>
+            <div class="chip-btn like like2"
+                data-count="<?= (int)$package->FAVORITE_COUNT; ?>"
+                data-id="<?= $package->PACKAGE_ID; ?>"
+                style="display:flex;justify-content: center;" onclick="toggleFav(<?= $package->PACKAGE_ID; ?>, this)">
+                <i class="bx bx-heart"></i>
+                <span class="like_count" id="lc<?= $package->PACKAGE_ID; ?>">
+                    <?= (int)$package->FAVORITE_COUNT; ?>
+                </span>
+            </div>
+        <?php endif; ?>
+
+        <div class="dates">
+            <ul style="display: grid;place-items: center;">
+
+                <?php
+                if (count($All_Dates) > 0) {
+                    for ($i = 0; $i < (count($All_Dates)); $i++) {
+                        if ($i < 10) {
+                ?>
+                            <li class="chip bg-main"><?= $All_Dates[$i]; ?></li>
+                    <?php }
+                    }
+                } else { ?>
+                    <li class="chip bg-main"><?= $package->DATES; ?></li>
+                <?php } ?>
+
+            </ul>
+
+
+
+
+
+        </div>
+    </section>
+</div>

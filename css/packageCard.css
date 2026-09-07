@@ -1,0 +1,329 @@
+.travel_card_new{
+  --packageCardBG: var(--bg-color-2);
+  --outline: var(--maincoloroutline);
+    container-name: packageCard;
+    container-type: inline-size;
+    position: relative;
+    width:100%;
+    max-width: 370px;    
+    height: 287px;
+    margin: 0px 0px 30px;
+    background: var(--packageCardBG);
+    outline: var(--outline) solid 1px;
+    transition: 0.3s;
+    border-radius: 10px;
+    & a{
+       text-decoration:none;
+      color: var(--text-color);
+    }
+    & .image{
+      position: relative;
+      height: 70%;
+      & img {
+         width: 100%;
+         height: 100%;
+         aspect-ratio: 16 / 9;
+         object-fit: cover;
+         border-radius: 10px;
+      }
+      & .months{
+         position: absolute;
+         display: flex;
+         justify-content: flex-start;
+         bottom: 0px;
+         width: 100%;
+         padding: 0px 0px 10px;
+         margin:0;
+      }
+     & .mon-pill {
+         list-style-type: none;
+         display: grid;
+         place-items: center;
+         background: var(--invertcolor);
+         color:var(--inverttextcolor);
+         width: 40px;
+         height: 20px;
+         margin: 0px 5px;
+         border-radius: 10px;
+         font-size: 0.9em;
+      }
+    }
+    & .detail{
+      padding: 0px 10px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:3px 0px;
+      & .title {
+        padding: 5px 0px 0px;
+        font-size: 1em;
+        width: 100%;
+        min-height: 32px;
+        height: auto;
+        font-weight: bold;
+        text-transform: uppercase;
+        overflow: hidden;
+        line-height: normal;
+      }
+      & .loc-dur{
+        padding:0;
+      }
+      & .price {
+         padding: 0px;
+         font-size: 1em;
+         font-weight: bold;
+      }
+    }
+  & .btn {
+       display: grid;
+       place-items: center;
+       border-radius: 40px;
+       width: 40px;
+       height: 40px;
+       background: rgb(255, 255, 255);
+       box-shadow: rgb(85, 85, 85) 0px 0px 5px;
+       position: absolute;
+       padding: 0px;
+       color: rgb(0, 0, 0);
+      & > * {
+           font-size: 1.5rem;
+           line-height: 0;
+      }
+    }
+  & .chip-btn{
+    padding:2px 10px;
+    border:0px;
+    background:var(--maincolor);
+    cursor:pointer;
+    width:fit-content;
+    & > *{
+      pointer-events:none;
+      user-select:none;
+    }
+  }
+  & .pdf_btn {
+     top: 10px;
+     left: 3%;
+  }
+  & .dates_btn {
+     top: 10px;
+     right: 10px;
+     z-index: 3;
+  }
+  & .export_btn {
+     top: 10px;
+     left: 10px;
+     z-index: 0;
+  }
+  & .like{
+     display: grid;
+     place-items: center;
+     bottom: 3%;
+     right: 10px;
+     font-size: 1rem;
+     position: absolute;
+     border-radius: 50px;
+     color: rgb(0, 0, 0);
+     box-shadow: rgba(0, 0, 0, 0.333) 0px 0px 5px;
+  }
+  
+  & .dates {
+     position: absolute;
+     display: grid;
+     place-items: center;
+     width: 100%;
+     height: 100%;
+     top: 0px;
+     left: 0px;
+     border-radius: 10px;
+     background: white;
+     transform: scale(1);
+     opacity: 0;
+     z-index: 2;
+     transition: 0.1s;
+     pointer-events: none;
+    & ul{
+      list-style:none;
+      padding:0;
+    }
+    }
+  & .dates_btn:hover ~ .dates{    
+     opacity: 1;
+  }
+  & .chip {
+     height: 20px;
+     color: rgba(0, 0, 0, 0.6);
+     align-content:center;
+     padding: 0px 12px;
+     border-radius: 16px;
+     margin-bottom: 4px;
+     line-height: inherit;
+     background:var(--maincolor);
+     font-weight:bold;
+     font-size:.75rem;
+    }
+    & .badge {
+     display: grid;
+     place-items: center;
+     border-radius: 0px 0px 10px 10px;
+     background: var(--maincolor);
+     position: absolute;
+     padding: 5px;
+     top: 0px;
+     left: 50%;
+     translate: -50%;
+     color: rgb(0, 0, 0);
+     font-weight: bold;
+     user-select: none;
+     pointer-events: none;
+    }
+  }
+
+
+@container packageCard (width < 300px){
+  .travel_card_new{
+    & .detail{
+      & .title {
+         text-align:center;
+      }
+      & .loc-dur{
+        text-align:center;        
+      }
+      & .price {
+         text-align:center;
+      }
+    }
+    & .like{
+      display:none !important;
+    }
+  }
+}
+
+/*
+@media (width <= 480px) {
+
+  .travel_card_new{
+    display:flex;
+    flex-direction:row;
+    max-width:352px;
+    height:123px;
+
+    & .image{
+      position: relative;
+      height: 100%;
+      width: auto;
+      aspect-ratio: 4 / 3;
+      & img{
+         height: 100%;
+         aspect-ratio: 1;
+         object-fit: cover;
+         border-radius: 10px;
+      }
+      & .months{
+        display:none;
+      }
+    }
+    & .detail{
+      flex-grow:1;
+      padding:10px;
+      & .title{
+        padding:0px;
+      }
+    }
+    & .dates_btn{
+      display:none;
+    }
+    & .badge{
+      display:none;
+    }
+    & .like{
+     bottom: 8%;
+     right: 10px;
+   }
+  }
+  .swiper-slide > .travel_card_new {
+  display:block ;
+   width:100% ;
+   height: 287px;
+   & .image{
+      position: relative;
+      height: 70%;
+      width: 100%;
+      & img{
+         height: 100%;
+         aspect-ratio: 1;
+         object-fit: cover;
+         border-radius: 10px;
+      }
+    }
+    & .detail{
+        flex-grow:1;
+        padding:10px;
+        & .title{
+            padding:0px;
+            max-height: 32px;
+            height: auto;
+        }
+        }
+}
+}*/
+ .travel_card_new:nth-child(4n+1) {
+     animation-duration: auto;
+     animation-timing-function: linear;
+     animation-iteration-count: 1;
+     animation-direction: normal;
+     animation-fill-mode: both;
+     animation-play-state: running;
+     animation-name: post-col-anim1;
+     animation-delay: 0s;
+     animation-timeline: view();
+     animation-range: entry 10% cover 30%;
+}
+ .travel_card_new:nth-child(4n+2) {
+     animation-duration: auto;
+     animation-timing-function: linear;
+     animation-iteration-count: 1;
+     animation-direction: normal;
+     animation-fill-mode: both;
+     animation-play-state: running;
+     animation-name: post-col-anim1;
+     animation-delay: 0.1s;
+     animation-timeline: view();
+     animation-range: entry 10% cover 30%;
+}
+ .travel_card_new:nth-child(4n+3) {
+     animation-duration: auto;
+     animation-timing-function: linear;
+     animation-iteration-count: 1;
+     animation-direction: normal;
+     animation-fill-mode: both;
+     animation-play-state: running;
+     animation-name: post-col-anim1;
+     animation-delay: 0.2s;
+     animation-timeline: view();
+     animation-range: entry 10% cover 30%;
+}
+ .travel_card_new:nth-child(4n+4) {
+     animation-duration: auto;
+     animation-timing-function: linear;
+     animation-iteration-count: 1;
+     animation-direction: normal;
+     animation-fill-mode: both;
+     animation-play-state: running;
+     animation-name: post-col-anim1;
+     animation-delay: 0.3s;
+     animation-timeline: view();
+     animation-range: entry 10% cover 30%;
+}
+ /* @keyframes post-col-anim1 {
+     0% {
+         translate: 0px 50%;
+         scale: 1;
+         opacity: 0;
+    }
+     100% {
+         translate: 0%;
+         scale: 1;
+         opacity: 1;
+    }
+} */
