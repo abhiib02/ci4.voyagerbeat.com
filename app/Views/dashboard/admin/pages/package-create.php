@@ -1,0 +1,1026 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<style>
+    .date_input_group {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px 10px;
+        margin: 1rem 0;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+</style>
+
+<div class="container">
+
+    <form action="/createPackageProcess" method="post" enctype="multipart/form-data">
+
+        <div class="p-1 sticky-top d-flex justify-content-between" style="top: -2px;">
+
+            <div class="btn-group" role="group" aria-label="Basic example">
+
+                <a type="button" href="#Summaryadd" class="btn btn-sm btn-primary">Summary</a>
+
+                <a type="button" href="#highlight" class="btn btn-sm btn-primary">Highlight</a>
+
+                <a type="button" href="#Inclusionadd" class="btn btn-sm btn-primary">Inclusion</a>
+
+                <a type="button" href="#Exclusionadd" class="btn btn-sm btn-primary">Exclusion</a>
+
+                <a type="button" href="#Itineraryadd" class="btn btn-sm btn-primary">Itinerary</a>
+
+                <a type="button" href="#Datesadd" class="btn btn-sm btn-primary">Trips Dates</a>
+
+                <a type="button" href="#Costadd" class="btn btn-sm btn-primary">Sharing</a>
+
+                <a type="button" href="#Miscupdate" class="btn btn-sm btn-primary">Misc</a>
+
+                <a type="button" href="#Terms" class="btn btn-sm btn-primary">Terms & Condition</a>
+
+            </div>
+
+            <div class="btn-group" role="group" aria-label="Basic example">
+
+                <input type="submit" id="add_pack_btn" value="Add package" class="btn btn-sm btn-success">
+
+
+
+                <a href="packages" class="btn btn-sm btn-danger">Cancel</a>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="container">
+
+            <div class="row">
+
+                <div id="Summaryadd" class="scroll-margin-top col-lg-12">
+
+                    <div class="row">
+
+                        <h3>Package Detail</h3>
+
+                        <hr>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="text" id="package_name" name="package_name" placeholder=""
+
+                                    required />
+
+                                <label for="first_name">Package Name *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" id="package_slug" type="text" name="slug" placeholder=""
+
+                                    required />
+
+                                <label for="package_slug">Package Slug *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <select name="days" class="form-select" id="" required>
+
+                                    <option value="" disabled selected>---- Select Days ----</option>
+
+                                    <?php for ($i = 1; $i <= 15; $i++): ?>
+
+                                        <option value="<?= $i ?> <?= ($i == 1) ? 'Night' : 'Nights' ?> / <?= $i + 1 ?> Days"><?= $i ?> <?= ($i == 1) ? 'Night' : 'Nights' ?> / <?= $i + 1 ?> Days</option>
+
+                                    <?php endfor; ?>
+
+                                </select>
+
+                                <label for="days">Package days *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="file" id="pdf" name="pdf">
+
+                                <label for="Itinerary" class="form-label">Itinerery PDF</label>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="text" placeholder="paste link here"
+
+                                    name="WHATSAPP_LINK" />
+
+                                <label for="days">Whatsapp_link</label>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="text" name="PICKNDROP" placeholder="PICK TO DROP" />
+
+                                <label for="days">Pick and drop</label>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="number" name="duration"
+
+                                    placeholder="Package Duration" />
+
+                                <label for="days">Package Duration</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="text" placeholder="" name="Location"
+
+                                    list="DestinationList" />
+
+                                <datalist id="DestinationList">
+
+                                    <option value="Delhi">Delhi</option>
+
+                                    <option value="Kareri">Kareri</option>
+
+                                    <option value="Kasol">Kasol</option>
+
+                                    <option value="Manali">Manali</option>
+
+                                    <option value="Jaisalmer">Jaisalmer</option>
+
+                                    <option value="Pushkar">Pushkar</option>
+
+                                    <option value="Mcleodganj">Mcleodganj</option>
+
+                                    <option value="Leh">Leh</option>
+
+                                    <option value="Goa">Goa</option>
+
+                                    <option value="Chopta">Chopta</option>
+
+                                    <option value="Tirthan">Tirthan</option>
+
+                                    <option value="Narkanda">Narkanda</option>
+
+                                    <option value="Prashar">Prashar</option>
+
+                                    <option value="Spiti">Spiti</option>
+
+                                    <option value="Rishikesh">Rishikesh</option>
+
+                                    <option value="Kedarnath">Kedarnath</option>
+
+                                    <option value="Uttarakhand">Uttarakhand</option>
+
+                                    <option value="Kedarkantha">Kedarkantha</option>
+
+                                </datalist>
+
+                                <label for="Location">City *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <select id="state" class="form-select" name="State" required>
+
+                                    <option value="" disabled selected>------------Select state------------</option>
+
+                                    <option value="International">------------ International ------------</option>
+
+                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+
+                                    <option value="Assam">Assam</option>
+
+                                    <option value="Bihar">Bihar</option>
+
+                                    <option value="Chandigarh">Chandigarh</option>
+
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+
+                                    <option value="damananddiu">Dadra and Nagar Haveli and Daman and Diu</option>
+
+                                    <option value="Delhi">Delhi</option>
+
+                                    <option value="Goa">Goa</option>
+
+                                    <option value="Gujarat">Gujarat</option>
+
+                                    <option value="Haryana">Haryana</option>
+
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+
+                                    <option value="Jammu_Kashmir">Jammu & Kashmir</option>
+
+                                    <option value="Jharkhand">Jharkhand</option>
+
+                                    <option value="Karnataka">Karnataka</option>
+
+                                    <option value="Kerala">Kerala</option>
+
+                                    <option value="Ladakh">Ladakh</option>
+
+                                    <option value="Lakshadweep">Lakshadweep</option>
+
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+
+                                    <option value="Maharashtra">Maharashtra</option>
+
+                                    <option value="Manipur">Manipur</option>
+
+                                    <option value="Meghalaya">Meghalaya</option>
+
+                                    <option value="Mizoram">Mizoram</option>
+
+                                    <option value="Nagaland">Nagaland</option>
+
+                                    <option value="Odisha">Odisha</option>
+
+                                    <option value="Puducherry">Puducherry</option>
+
+                                    <option value="Punjab">Punjab</option>
+
+                                    <option value="Rajasthan">Rajasthan</option>
+
+                                    <option value="Sikkim">Sikkim</option>
+
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+
+                                    <option value="Telangana">Telangana</option>
+
+                                    <option value="Tripura">Tripura</option>
+
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+
+                                    <option value="Uttarakhand">Uttarakhand</option>
+
+                                    <option value="West Bengal">West Bengal</option>
+
+                                </select>
+
+                                <label for="state">State</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input type="text" class="form-control" name="Country" placeholder="" id="Country"
+
+                                    list="CountryList" />
+
+                                <datalist id="CountryList">
+
+                                    <?php foreach ($Countries as $country): ?>
+
+                                        <option value="<?= $country ?>"><?= $country ?></option>
+
+                                    <?php endforeach; ?>
+
+                                </datalist>
+
+
+
+                                <label for="Country">Country</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <select id="type" class="form-select" name="type" required>
+
+                                    <option value="" disabled selected>------------Select Type------------</option>
+
+
+
+                                    <option value="Bike">Bike</option>
+
+                                    <option value="Road">Road Trip</option>
+
+                                    <option value="Party">Party</option>
+
+                                    <option value="xmas-new-year">Xmas & New Year</option>
+
+                                    <option value="Treks">Treks</option>
+
+                                    backpack
+
+                                    <option value="Backpack">backpack</option>
+
+                                    <option value="Corporate">Corporate</option>
+
+                                    <option value="ChilledOut">Chill Out</option>
+
+                                    <option value="family-trip">Family trip</option>
+
+                                    <option value="spiritual">Spiritual Trip</option>
+
+                                    <option value="honeymoon">Honeymoon</option>
+
+                                </select>
+
+                                <label for="type">Trip Type *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+
+
+                                <select id="Hidden" class="form-select" name="HIDDEN">
+
+                                    <option value="0">Default (NO)</option>
+
+                                    <option value="1">YES</option>
+
+                                    <option value="0">NO</option>
+
+                                </select>
+
+                                <label for="Hidden">Hide Package</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <select id="c_date" class="form-select" name="CUSTOM_TRIP">
+
+                                    <option value="0">Default (NO)</option>
+
+                                    <option value="1">YES</option>
+
+                                    <option value="0">NO</option>
+
+                                </select>
+
+                                <label for="c_date">Custom Dates Availiable</label>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <select id="WEEKEND" class="form-select" name="WEEKEND" required>
+
+                                    <option value="" disabled selected>Yes or No</option>
+
+                                    <option value="Yes">YES</option>
+
+                                    <option value="No">NO</option>
+
+                                </select>
+
+                                <label for="WEEKEND">WEEKEND Trips *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <select id="UPCOMING" class="form-select" name="UPCOMING" required>
+
+                                    <option value="" disabled selected>Yes or No</option>
+
+
+
+                                    <option value="1">YES</option>
+
+                                    <option value="0">NO</option>
+
+                                </select>
+
+                                <label for="UPCOMING">Upcoming Trips *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="number" id="BookingAmount" placeholder="BookingAmount"
+
+                                    name="BOOKING_AMOUNT" />
+
+                                <label for="BookingAmount">Booking Amount</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="text" placeholder="paste link here" name="image"
+
+                                    required />
+
+                                <label for="IMAGE_1">Package image *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="number" placeholder="SPACIAL_OFFER"
+
+                                    name="SPACIAL_OFFER" />
+
+                                <label for="SPACIAL_OFFER">SPACIAL_OFFER ( % )</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" minlength="70" maxlength="150" type="text"
+
+                                    placeholder="meta_desc" name="META_DESC" required />
+
+                                <label for="meta_desc">Meta Description *</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="text"
+
+                                    placeholder="HOTEL_IMG_LINK" name="HOTEL_IMG_LINK" />
+
+                                <label for="HOTEL_IMG_LINK">Hotel Image Drive Link</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="text" id="tags" placeholder="tag1,tag2,tag3, .." name="tags" />
+
+                                <label for="tags">Tags</label>
+
+                            </div>
+
+                            <small>
+
+                                Used Tags (For New Tag add Comma and Just Type) Example : tag1,tag2,New tag3
+
+                            </small>
+
+                            <br>
+
+                            <div>
+
+
+
+                                <?php foreach ($UsedTags as $TAG) : ?>
+
+                                    <span class="badge rounded-pill text-bg-dark tag" onclick="addTag('<?= $TAG ?>');" role="button"><?= $TAG ?></span>
+
+                                <?php endforeach; ?>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" type="text" id="badge" placeholder="Badge" name="badge" />
+
+                                <label for="badge">Badge</label>
+
+                            </div>
+
+                            <small>
+
+                                Used Badges (For New Badge Just Type)
+
+                            </small>
+
+                            <br>
+
+                            <div>
+
+                                <?php foreach ($UsedBadges as $BADGE) : ?>
+
+                                    <span class="badge rounded-pill text-bg-dark " onclick="addBadge('<?= $BADGE ?>');" role="button"><?= $BADGE ?></span>
+
+                                <?php endforeach; ?>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <hr>
+
+                <div id="highlight" class="scroll-margin-top col-lg-12">
+
+                    <h3>Trip Highlight</h3>
+
+                    <hr>
+
+                    <textarea style="resize: none;" class="materialize-textarea" rows="40" cols="50"
+
+                        placeholder="ex. trip highlight 1^trip highlight 1" name="TRIP_HIGHLIGHT"></textarea>
+
+                    <br>
+
+                </div>
+
+                <div id="Inclusionadd" class="col-lg-6">
+
+                    <h3>Trip Inclusion *</h3>
+
+                    <hr>
+
+                    <textarea style="resize: none;" class="materialize-textarea" rows="40" cols="50"
+
+                        placeholder="ex. inclusion1^Inclusion2" name="Inclusion"></textarea><br>
+
+                </div>
+
+                <div id="Exclusionadd" class=" col-lg-6">
+
+                    <h3>Trip Exclusion *</h3>
+
+                    <hr>
+
+
+
+                    <textarea style="resize: none;" class="materialize-textarea" rows="40" cols="50"
+
+                        placeholder="ex. Exclusion1^Exclusion2" name="Exclusion"></textarea><br>
+
+                </div>
+
+                <div id="Itineraryadd" class="scroll-margin-top col-lg-12">
+
+
+
+                    <h3>Trip Itinerary *</h3>
+
+                    <hr>
+
+                    <textarea style="resize: none;" rows="20" cols="50" name="it" id="add-package-itinerary" class=""
+
+                        placeholder="Ex. DAY1^DAY2^DAY3" hidden></textarea><br>
+
+                    <textarea id="iti" style="display:none;"></textarea>
+
+                    <div id="day_inputs" class="row"></div>
+
+                    <br>
+
+                    <button class="btn btn-primary" type="button" onclick="addDay()">Add Day</button>
+
+                    <button class="btn btn-secondary" type="button" onclick="removeDay()">Remove Days</button>
+
+
+
+                    <br>
+
+                    <br>
+
+
+
+                </div>
+
+                <div id="Datesadd" class="scroll-margin-top col-lg-12">
+
+                    <h3>Trip Dates </h3>
+
+                    <hr>
+
+                    <div class="btn-group" role="group" aria-label="Basic example">
+
+                        <a type="button" class="btn btn-primary submit">Refresh Dates</a>
+
+                        <a type="button" class="btn btn-success add">Add Date</a>
+
+                        <a type="button" class="btn btn-secondary remove">Remove Date</a>
+
+                    </div>
+
+                    <div class="">
+
+                        <div class="date_input_group"></div>
+
+                        <details>
+
+                            <summary>Open Dates Textarea</summary>
+
+                            <textarea required name="DATES" class="dates_string form-control " style="height: auto;" rows="2"
+
+                                cols="24"></textarea>
+
+                        </details>
+
+
+
+                    </div>
+
+                    <br>
+
+                </div>
+
+                <div id="Costadd" class="scroll-margin-top col-lg-12">
+
+                    <h3>Sharing </h3>
+
+                    <hr>
+
+                    <label for="">Price On Request</label>
+
+                    <select id="REQUEST_PRICE" class="form-select" name="REQUEST_PRICE" required>
+
+                        <option value="0">------------Price On Request ( Default No)------------</option>
+
+                        <option value="1">YES</option>
+
+                        <option value="0">NO</option>
+
+                    </select>
+
+                    <br>
+
+                    <div class="row">
+
+                        <div class="col-lg-2">
+
+                            <label for="">Disabled</label>
+
+                            <input class="form-control" type="text" disabled>
+
+
+
+                            <input class="form-control" type="text" placeholder="INFO_P1 *" name="INFO_P1" required>
+
+
+
+                            <input class="form-control" type="text" placeholder="INFO_P2" name="INFO_P2">
+
+
+
+                            <input class="form-control" type="text" placeholder="INFO_P3" name="INFO_P3">
+
+
+
+                            <input class="form-control" type="text" placeholder="INFO_P4" name="INFO_P4">
+
+
+
+                            <input class="form-control" type="text" placeholder="INFO_P5" name="INFO_P5">
+
+                        </div>
+
+                        <div class="col-lg-2">
+
+                            <label for="">Selling Price</label>
+
+                            <input class="form-control" type="text" placeholder="Selling Price" name="" disabled>
+
+
+
+                            <input class="form-control" type="number" id="s1" placeholder="S_PRICE_1" name="S_PRICE_1">
+
+
+
+
+
+                            <input class="form-control" type="number" id="s2" placeholder="S_PRICE_2" name="S_PRICE_2">
+
+
+
+
+
+                            <input class="form-control" type="number" id="s3" placeholder="S_PRICE_3" name="S_PRICE_3">
+
+
+
+
+
+                            <input class="form-control" type="number" id="s4" placeholder="S_PRICE_4" name="S_PRICE_4">
+
+
+
+
+
+                            <input class="form-control" type="number" id="s5" placeholder="S_PRICE_5" name="S_PRICE_5">
+
+
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <label for="HEAD_PRICE">Offer Price *</label>
+
+                            <input class="form-control" type="text" placeholder="Column Name" value="Prices"
+
+                                name="HEAD_PRICE" required>
+
+
+
+                            <input class="form-control" type="number" id="p1" placeholder="PRICE_1 *" name="PRICE_1"
+
+                                required>
+
+
+
+                            <input class="form-control" type="number" id="p2" placeholder="PRICE_2" name="PRICE_2">
+
+
+
+                            <input class="form-control" type="number" id="p3" placeholder="PRICE_3" name="PRICE_3">
+
+
+
+                            <input class="form-control" type="number" id="p4" placeholder="PRICE_4" name="PRICE_4">
+
+
+
+                            <input class="form-control" type="number" id="p5" placeholder="PRICE_5" name="PRICE_5">
+
+                        </div>
+
+                        <div class="col-lg-3">
+
+                            <label for="HEAD_PRICE">Self Travel Price *</label>
+
+                            <input class="form-control" type="text" placeholder="Column Name" value="0"
+
+                                name="HEAD_WTPRICE" required>
+
+
+
+                            <input class="form-control" type="number" placeholder="WT_PRICE_1 " value="0"
+
+                                name="WT_PRICE_1" required>
+
+
+
+                            <input class="form-control" type="number" placeholder="WT_PRICE_2" value="0"
+
+                                name="WT_PRICE_2">
+
+
+
+                            <input class="form-control" type="number" placeholder="WT_PRICE_3" value="0"
+
+                                name="WT_PRICE_3">
+
+
+
+                            <input class="form-control" type="number" placeholder="WT_PRICE_4" value="0"
+
+                                name="WT_PRICE_4">
+
+
+
+                            <input class="form-control" type="number" placeholder="WT_PRICE_5" value="0"
+
+                                name="WT_PRICE_5">
+
+
+
+
+
+                        </div>
+
+                        <div class="col-lg-2">
+
+                            <label for="HEAD_PRICE">Self Travel Price 2 </label>
+
+                            <input class="form-control" type="text" placeholder="Column Name" value=""
+
+                                name="HEAD_WT2PRICE">
+
+
+
+                            <input class="form-control" type="number" placeholder="WT2_PRICE_1 " value="0"
+
+                                name="WT2_PRICE_1">
+
+
+
+                            <input class="form-control" type="number" placeholder="WT2_PRICE_2" value="0"
+
+                                name="WT2_PRICE_2">
+
+
+
+                            <input class="form-control" type="number" placeholder="WT2_PRICE_3" value="0"
+
+                                name="WT2_PRICE_3">
+
+
+
+                            <input class="form-control" type="number" placeholder="WT2_PRICE_4" value="0"
+
+                                name="WT2_PRICE_4">
+
+
+
+                            <input class="form-control" type="number" placeholder="WT2_PRICE_5" value="0"
+
+                                name="WT2_PRICE_5">
+
+
+
+
+
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                </div>
+
+                <div id="Miscupdate" class="">
+
+                    <h3>Misc Info </h3>
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-lg-6">
+
+                            <textarea style="resize: none;" rows="20" cols="50" name="PACKAGE_MISC"
+
+                                class="materialize-textarea" placeholder="MISC INFO"></textarea>
+
+                        </div>
+
+
+
+                        <div class="col-lg-6">
+
+                            <label for="IMAGE_1">Package photo/video(youtube) link 1</label>
+
+                            <input class="form-control" type="text" placeholder="paste link here" name="IMAGE_1">
+
+                            <label for="IMAGE_2">Package photo/video(youtube) link 2</label>
+
+                            <input class="form-control" type="text" placeholder="paste link here" name="IMAGE_2">
+
+                            <label for="IMAGE_3">Package photo/video(youtube) link 3</label>
+
+                            <input class="form-control" type="text" placeholder="paste link here" name="IMAGE_3">
+
+                            <label for="IMAGE_4">Package photo/video(youtube) link 4</label>
+
+                            <input class="form-control" type="text" placeholder="paste link here" name="IMAGE_4">
+
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                </div>
+
+                <div id="Terms" class="">
+
+                    <div class="">
+
+                        <h3>Terms & Condition</h3>
+
+                        <hr>
+
+                        <textarea style="resize: none;" rows="20" cols="50" name="PACKAGE_TNC" class="materialize-textarea" placeholder="Terms & Condition"></textarea>
+
+                    </div>
+
+                    <br>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.2/tinymce.min.js" referrerpolicy="no-referrer"></script>
+<script src="/js/tinymce_init_script.js"></script>
+<script src="/js/date_input_script.js"></script>
+<script src="/js/slug_script.js"></script>
+<script src="/js/selling_price_script.js"></script>
+<script src="/js/itinerary_script.js"></script>
+<script src="/js/tags_badges_script.js"></script>
+<script src="/js/json_util__script.js"></script>

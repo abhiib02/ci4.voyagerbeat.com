@@ -118,10 +118,10 @@
 
 <div id="more-dropdown" class="mega-panel container" popover>
   <?php if ($isAdmin): ?>
-    <a href="/account">Account</a> |
+    <a href="/dashboard">Dashboard</a> |
     <a href="/logout">Logout</a>
   <?php elseif ($isUser): ?>
-    <a href="/dashboard">Dashboard</a> |
+    <a href="/account">Account</a> |
     <a href="/logout">Logout</a>
   <?php else: ?>
     <a href="/login">Login</a>

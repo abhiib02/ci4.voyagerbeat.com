@@ -44,8 +44,10 @@ $routes->post('createCoupon', 'CouponController::createCoupon', ['filter' => 'Ad
 $routes->post('UpdateCoupon', 'CouponController::updateCoupon', ['filter' => 'AdminAuthGuard']);
 $routes->post('deleteCoupon', 'CouponController::removeCoupon', ['filter' => 'AdminAuthGuard']);
 
-
-
+/*-------------------- packages management ROUTES-----------------*/
+$routes->post('createPackageProcess', 'PackageController::add_package_process', ['filter' => 'AdminAuthGuard']);
+$routes->get('package-edit/(:num)', 'PackageController::update_package_form/$1', ['filter' => 'AdminAuthGuard']);
+$routes->post('update_package_process', 'PackageController::update_package_process', ['filter' => 'AdminAuthGuard']);
 
 
 

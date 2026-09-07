@@ -1,30 +1,29 @@
+<!-------Meta Tags----------->
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="view-transition" content="same-origin" />
+
+<meta name="p:domain_verify" content="4d8b4adf78ab58b1c006fbcc8a1c6e6e" />
+<meta name="facebook-domain-verification" content="xmc5nhcysb61ozaj9kez66sv9cmgl4" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta http-equiv="Cache-Control" content="public" />
+<meta property="og:title" content="<?= isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let us do the rest.'; ?>">
+<meta name="twitter:title" content="<?= isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let us do the rest.'; ?>">
+<meta name="description" content="<?= isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
+<meta property="og:description" content="<?= isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
+<meta name="twitter:description" content="<?= isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
+<meta property="og:image" content="<?= isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png'; ?>">
+<meta name="twitter:image" content="<?= isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png'; ?>">
+<meta property="og:url" content="http://voyagersbeat.com">
+<meta name="twitter:card" content="http://voyagersbeat.com">
+<meta property="og:type" content="Travel and Tourism" />
 
 <!-------Meta Tags----------->
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
-  <meta name="view-transition" content="same-origin" />
-
-  <meta name="p:domain_verify" content="4d8b4adf78ab58b1c006fbcc8a1c6e6e" />
-  <meta name="facebook-domain-verification" content="xmc5nhcysb61ozaj9kez66sv9cmgl4" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta http-equiv="Cache-Control" content="public" />
-  <meta property="og:title" content="<?php echo isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let us do the rest.'; ?>">
-  <meta name="twitter:title" content="<?php echo isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let us do the rest.'; ?>">
-  <meta name="description" content="<?php echo isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
-  <meta property="og:description" content="<?php echo isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
-  <meta name="twitter:description" content="<?php echo isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
-  <meta property="og:image" content="<?php echo isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png'; ?>">
-  <meta name="twitter:image" content="<?php echo isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png'; ?>">
-  <meta property="og:url" content="http://voyagersbeat.com">
-  <meta name="twitter:card" content="http://voyagersbeat.com">
-  <meta property="og:type" content="Travel and Tourism" />
-
-  <!-------Meta Tags----------->
 
 
-  
-  <!-- <script>
+<!-- <script>
     /* Partytown 0.7.5 - MIT builder.io */ ! function(t, e, n, i, r, o, a, d, s, c, p, l) {
       function u() {
         l || (l = 1, "/" == (a = (o.lib || "/js/partytown/") + (o.debug ? "debug/" : ""))[0] && (s = e.querySelectorAll('script[type="text/partytown"]'), i != t ? i.dispatchEvent(new CustomEvent("pt1", {

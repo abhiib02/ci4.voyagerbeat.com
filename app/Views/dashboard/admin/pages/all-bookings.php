@@ -50,14 +50,17 @@
                             <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
                                 <button class="btn btn-sm  btn-outline-dark" onclick='showTravelers(<?= $booking->pax_details; ?>,<?= $booking->ID; ?>)'>Show</button>
                                 <dialog class="border-1 rounded" id="travelers-dialog-<?= $booking->ID; ?>">
-                                    <p class="fs-4"><?= $booking->name; ?>'s Travel Buddies</p>
-
-                                    <hr>
-                                    <ol class="list-group list-group-numbered" id="output-dialog-<?= $booking->ID; ?>">
-
-                                    </ol>
-                                    <hr>
-                                    <button class="btn btn-dark" onclick="document.querySelector('#travelers-dialog-<?= $booking->ID; ?>').close();">Close</button>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="fw-bold"><?= $booking->name; ?>'s Travel Buddies</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <ol class="list-group list-group-numbered" id="output-dialog-<?= $booking->ID; ?>"></ol>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#travelers-dialog-<?= $booking->ID; ?>').close();">Close</button>
+                                        </div>
+                                    </div>
                                 </dialog>
                             <?php else: ?>
                                 No details available

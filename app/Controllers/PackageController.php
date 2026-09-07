@@ -306,27 +306,21 @@ class PackageController extends BaseController
         return $this->Render_Page('packages/packages', $this->data);
     }
 
-
-
+    public function update_package_form($id)
+    {
+        $this->data['package'] = $this->PackageModel->getPackageByID($id);
+        $this->data['UsedTags'] = $this->PackageModel->getAllDistinctTags();
+        $this->data['UsedTags'] = $this->PackageModel->getAllDistinctTags();
+        $this->data['UsedBadges'] = $this->PackageModel->getAllDistinctBadges();
+        $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
+        return
+            view('dashboard/admin/layout/empty-header', $this->data) .
+            view('dashboard/admin/pages/package-form/package-update', $this->data) .
+            view('dashboard/admin/layout/empty-footer', $this->data);
+    }
 
     public function add_package_process()
     {
-
-
-        $Featured_Image = $this->request->getFile('featured_image');
-
-        $inputFile = $this->validate([
-            'featured_image' => [
-                'uploaded[featured_image]',
-                'mime_in[featured_image,image/png,image/jpg,image/jpeg,,image/webp]',
-            ]
-        ]);
-        if (!$inputFile) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Image is Invalid.', 'status' => 'Danger']);
-            return redirect()->to('/packages-list');
-        };
-        $newName = $Featured_Image->getRandomName();
-        $Featured_Image->move('upload/package_images/', $newName);
 
         $pdf = $this->request->getFile('pdf');
         if ($pdf->getSize() > 0) {
@@ -346,162 +340,201 @@ class PackageController extends BaseController
             $newPDFName = '';
         }
 
-
-
         $rules = [
-            'name' => 'required',
+            'package_name' => 'required',
             'slug' => 'required',
-            'destination' => 'required',
-            'state' => 'required',
-            'country' => 'required',
-            'description' => 'required|max_length[255]',
-            'is_international' => 'required',
-            'category' => 'required',
-            'booking_amount' => 'required',
-            'price' => 'required',
-            'stay' => 'required',
-            'itinerary' => 'required',
+            'Location' => 'required',
+            'State' => 'required',
+            'Country' => 'required',
+            'META_DESC' => 'required|max_length[255]',
+            'type' => 'required',
+            'BOOKING_AMOUNT' => 'required',
+            'PRICE_1' => 'required',
+            'days' => 'required',
+            'it' => 'required',
             'duration' => 'required',
         ];
         $DataArr = [
-            'NAME' => $this->request->getPost('name'),
-            'SLUG' => $this->request->getPost('slug'),
-            'CATEGORY' => $this->request->getPost('category'),
-            'TAGS' =>  strtolower($this->request->getPost('tags')),
-            'IS_INTERNATIONAL' => $this->request->getPost('is_international'),
-            'DESTINATION' => $this->request->getPost('destination'),
-            'STATE' => $this->request->getPost('state'),
-            'COUNTRY' => $this->request->getPost('country'),
-            'DESCRIPTION' => $this->request->getPost('description'),
-            'PRICE' => $this->request->getPost('price'),
-            'STAY' => $this->request->getPost('stay'),
-            'BADGE' => $this->request->getPost('badge'),
-            'BOOKING_AMOUNT' => $this->request->getPost('booking_amount'),
-            'CONTACT' => $this->request->getPost('contact_number'),
-            'CUSTOM_DATES' => $this->request->getPost('custom_dates'),
-            'CUSTOM_PRICE' => $this->request->getPost('custom_price'),
-            'FEATURED_IMAGE' => $newName,
-            'PDF' => $newPDFName,
-            'HIGHLIGHTS' => $this->request->getPost('highlights'),
-            'INCLUSION' => $this->request->getPost('inclusion'),
-            'EXCLUSION' => $this->request->getPost('exclusion'),
-            'ITINERARY' => $this->request->getPost('itinerary'),
-            'DATES' => $this->request->getPost('dates'),
-            'DURATION' => $this->request->getPost('duration'),
-            'IMAGES' => $this->request->getPost('images'),
-            'VIDEOS' => $this->request->getPost('videos'),
-            'MISC' => $this->request->getPost('misc'),
+            'PACKAGE_NAME'      => $this->request->getPost('package_name'),
+            'SLUG'      => $this->request->getPost('slug'),
+            'PACKAGE_PDF'       => $newPDFName,
+            'PICKNDROP'         => $this->request->getPost('PICKNDROP'),
+            'PACKAGE_DAYS'      => $this->request->getPost('days'),
+            'DURATION'          => $this->request->getPost('duration'),
+            'PACKAGE_TYPE'      => $this->request->getPost('type'),
+            'TAGS'              => $this->request->getPost('tags'),
+            'BADGE'             => $this->request->getPost('badge'),
+            'WEEKEND'           => $this->request->getPost('WEEKEND'),
+            'WHATSAPP_LINK'     => $this->request->getPost('WHATSAPP_LINK'),
+            'HOTEL_IMG_LINK'    => $this->request->getPost('HOTEL_IMG_LINK'),
+            'HIDDEN'            => $this->request->getPost('HIDDEN'),
+            'CUSTOM_TRIP'       => $this->request->getPost('CUSTOM_TRIP'),
+            'UPCOMING'          => $this->request->getPost('UPCOMING'),
+            'INCLUSION'         => $this->request->getPost('Inclusion'),
+            'EXCLUSION'         => $this->request->getPost('Exclusion'),
+            'LOCATION'          => $this->request->getPost('Location'),
+            'STATE'             => $this->request->getPost('State'),
+            'COUNTRY'           => $this->request->getPost('Country'),
+            'TRIP_HIGHLIGHT'    => $this->request->getPost('TRIP_HIGHLIGHT'),
+            'META_DESC'         => $this->request->getPost('META_DESC'),
+            'PACKAGE_IMAGE'     => $this->request->getPost('image'),
+            'IMAGE_1'           => $this->request->getPost('IMAGE_1'),
+            'IMAGE_2'           => $this->request->getPost('IMAGE_2'),
+            'IMAGE_3'           => $this->request->getPost('IMAGE_3'),
+            'IMAGE_4'           => $this->request->getPost('IMAGE_4'),
+            'PACKAGE_MISC'      => $this->request->getPost('PACKAGE_MISC'),
+            'PACKAGE_TNC'       => $this->request->getPost('PACKAGE_TNC'),
+            'PACK_IT'           => $this->request->getPost('it'),
+            'SPACIAL_OFFER'     => $this->request->getPost('SPACIAL_OFFER'),
+            'BOOKING_AMOUNT'    => $this->request->getPost('BOOKING_AMOUNT'),
+            'REQUEST_PRICE'     => $this->request->getPost('REQUEST_PRICE'),
+            'HEAD_PRICE'        => $this->request->getPost('HEAD_PRICE'),
+            'HEAD_WTPRICE'      => $this->request->getPost('HEAD_WTPRICE'),
+            'HEAD_WT2PRICE'     => $this->request->getPost('HEAD_WT2PRICE'),
+            'PRICE_1'           => $this->request->getPost('PRICE_1'),
+            'PRICE_2'           => $this->request->getPost('PRICE_2'),
+            'PRICE_3'           => $this->request->getPost('PRICE_3'),
+            'PRICE_4'           => $this->request->getPost('PRICE_4'),
+            'PRICE_5'           => $this->request->getPost('PRICE_5'),
+            'S_PRICE_1'         => $this->request->getPost('S_PRICE_1'),
+            'S_PRICE_2'         => $this->request->getPost('S_PRICE_2'),
+            'S_PRICE_3'         => $this->request->getPost('S_PRICE_3'),
+            'S_PRICE_4'         => $this->request->getPost('S_PRICE_4'),
+            'S_PRICE_5'         => $this->request->getPost('S_PRICE_5'),
+            'WT_PRICE_1'        => $this->request->getPost('WT_PRICE_1'),
+            'WT_PRICE_2'        => $this->request->getPost('WT_PRICE_2'),
+            'WT_PRICE_3'        => $this->request->getPost('WT_PRICE_3'),
+            'WT_PRICE_4'        => $this->request->getPost('WT_PRICE_4'),
+            'WT_PRICE_5'        => $this->request->getPost('WT_PRICE_5'),
+            'WT2_PRICE_1'       => $this->request->getPost('WT2_PRICE_1'),
+            'WT2_PRICE_2'       => $this->request->getPost('WT2_PRICE_2'),
+            'WT2_PRICE_3'       => $this->request->getPost('WT2_PRICE_3'),
+            'WT2_PRICE_4'       => $this->request->getPost('WT2_PRICE_4'),
+            'WT2_PRICE_5'       => $this->request->getPost('WT2_PRICE_5'),
+            'INFO_P1'           => $this->request->getPost('INFO_P1'),
+            'INFO_P2'           => $this->request->getPost('INFO_P2'),
+            'INFO_P3'           => $this->request->getPost('INFO_P3'),
+            'INFO_P4'           => $this->request->getPost('INFO_P4'),
+            'INFO_P5'           => $this->request->getPost('INFO_P5'),
+            'DATES'             => $this->request->getPost('DATES'),
         ];
 
         if ($this->PackageModel->isSlugExist($this->request->getPost('slug'))) {
             $DataArr['SLUG'] = $this->request->getPost('slug') . date('his');
         }
         if (!$this->validate($rules)) {
-            //print_r($this->validate($rules));
             print_r($this->validator->listErrors());
             exit;
-            //$this->session->setFlashdata('FlashMessage', ['message' => 'Please Check All Field Before submit', 'status' => 'warning']);
-            //return redirect()->to('/packages-list');
         } else {
             $this->PackageModel->insertPackage($DataArr);
         }
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package Added Sucessfully.', 'status' => 'success']);
-        return redirect()->to('/packages-list');
+        return redirect()->to('/dashboard/packages-list');
     }
     public function update_package_process()
     {
-        $ID = $this->request->getPost('id');
+        $ID = $this->request->getPost('PACKAGE_ID');
         $DataArr = [
-            'NAME' => $this->request->getPost('name'),
-            'SLUG' => $this->request->getPost('slug'),
-            'CATEGORY' => $this->request->getPost('category'),
-            'TAGS' => strtolower($this->request->getPost('tags')),
-            'IS_INTERNATIONAL' => $this->request->getPost('is_international'),
-            'DESTINATION' => $this->request->getPost('destination'),
-            'STATE' => $this->request->getPost('state'),
-            'COUNTRY' => $this->request->getPost('country'),
-            'DESCRIPTION' => $this->request->getPost('description'),
-            'PRICE' => $this->request->getPost('price'),
-            'STAY' => $this->request->getPost('stay'),
-            'BADGE' => $this->request->getPost('badge'),
-            'BOOKING_AMOUNT' => $this->request->getPost('booking_amount'),
-            'CONTACT' => $this->request->getPost('contact_number'),
-            'CUSTOM_DATES' => $this->request->getPost('custom_dates'),
-            'CUSTOM_PRICE' => $this->request->getPost('custom_price'),
-            'HIGHLIGHTS' => $this->request->getPost('highlights'),
-            'INCLUSION' => $this->request->getPost('inclusion'),
-            'EXCLUSION' => $this->request->getPost('exclusion'),
-            'ITINERARY' => $this->request->getPost('itinerary'),
-            'DATES' => $this->request->getPost('dates'),
-            'DURATION' => $this->request->getPost('duration'),
-            'IMAGES' => $this->request->getPost('images'),
-            'VIDEOS' => $this->request->getPost('videos'),
-            'MISC' => $this->request->getPost('misc'),
+            'PACKAGE_NAME'      => $this->request->getPost('package_name'),
+            'SLUG'      => $this->request->getPost('slug'),
+            'PICKNDROP'         => $this->request->getPost('PICKNDROP'),
+            'PACKAGE_DAYS'      => $this->request->getPost('days'),
+            'DURATION'          => $this->request->getPost('duration'),
+            'PACKAGE_TYPE'      => $this->request->getPost('type'),
+            'TAGS'              => $this->request->getPost('tags'),
+            'BADGE'             => $this->request->getPost('badge'),
+            'WEEKEND'           => $this->request->getPost('WEEKEND'),
+            'WHATSAPP_LINK'     => $this->request->getPost('WHATSAPP_LINK'),
+            'HOTEL_IMG_LINK'    => $this->request->getPost('HOTEL_IMG_LINK'),
+            'HIDDEN'            => $this->request->getPost('HIDDEN'),
+            'CUSTOM_TRIP'       => $this->request->getPost('CUSTOM_TRIP'),
+            'UPCOMING'          => $this->request->getPost('UPCOMING'),
+            'INCLUSION'         => $this->request->getPost('Inclusion'),
+            'EXCLUSION'         => $this->request->getPost('Exclusion'),
+            'LOCATION'          => $this->request->getPost('Location'),
+            'STATE'             => $this->request->getPost('State'),
+            'COUNTRY'           => $this->request->getPost('Country'),
+            'TRIP_HIGHLIGHT'    => $this->request->getPost('TRIP_HIGHLIGHT'),
+            'META_DESC'         => $this->request->getPost('META_DESC'),
+            'PACKAGE_IMAGE'     => $this->request->getPost('image'),
+            'IMAGE_1'           => $this->request->getPost('IMAGE_1'),
+            'IMAGE_2'           => $this->request->getPost('IMAGE_2'),
+            'IMAGE_3'           => $this->request->getPost('IMAGE_3'),
+            'IMAGE_4'           => $this->request->getPost('IMAGE_4'),
+            'PACKAGE_MISC'      => $this->request->getPost('PACKAGE_MISC'),
+            'PACKAGE_TNC'       => $this->request->getPost('PACKAGE_TNC'),
+            'PACK_IT'           => $this->request->getPost('it'),
+            'SPACIAL_OFFER'     => $this->request->getPost('SPACIAL_OFFER'),
+            'BOOKING_AMOUNT'    => $this->request->getPost('BOOKING_AMOUNT'),
+            'REQUEST_PRICE'     => $this->request->getPost('REQUEST_PRICE'),
+            'HEAD_PRICE'        => $this->request->getPost('HEAD_PRICE'),
+            'HEAD_WTPRICE'      => $this->request->getPost('HEAD_WTPRICE'),
+            'HEAD_WT2PRICE'     => $this->request->getPost('HEAD_WT2PRICE'),
+            'PRICE_1'           => $this->request->getPost('PRICE_1'),
+            'PRICE_2'           => $this->request->getPost('PRICE_2'),
+            'PRICE_3'           => $this->request->getPost('PRICE_3'),
+            'PRICE_4'           => $this->request->getPost('PRICE_4'),
+            'PRICE_5'           => $this->request->getPost('PRICE_5'),
+            'S_PRICE_1'         => $this->request->getPost('S_PRICE_1'),
+            'S_PRICE_2'         => $this->request->getPost('S_PRICE_2'),
+            'S_PRICE_3'         => $this->request->getPost('S_PRICE_3'),
+            'S_PRICE_4'         => $this->request->getPost('S_PRICE_4'),
+            'S_PRICE_5'         => $this->request->getPost('S_PRICE_5'),
+            'WT_PRICE_1'        => $this->request->getPost('WT_PRICE_1'),
+            'WT_PRICE_2'        => $this->request->getPost('WT_PRICE_2'),
+            'WT_PRICE_3'        => $this->request->getPost('WT_PRICE_3'),
+            'WT_PRICE_4'        => $this->request->getPost('WT_PRICE_4'),
+            'WT_PRICE_5'        => $this->request->getPost('WT_PRICE_5'),
+            'WT2_PRICE_1'       => $this->request->getPost('WT2_PRICE_1'),
+            'WT2_PRICE_2'       => $this->request->getPost('WT2_PRICE_2'),
+            'WT2_PRICE_3'       => $this->request->getPost('WT2_PRICE_3'),
+            'WT2_PRICE_4'       => $this->request->getPost('WT2_PRICE_4'),
+            'WT2_PRICE_5'       => $this->request->getPost('WT2_PRICE_5'),
+            'INFO_P1'           => $this->request->getPost('INFO_P1'),
+            'INFO_P2'           => $this->request->getPost('INFO_P2'),
+            'INFO_P3'           => $this->request->getPost('INFO_P3'),
+            'INFO_P4'           => $this->request->getPost('INFO_P4'),
+            'INFO_P5'           => $this->request->getPost('INFO_P5'),
+            'DATES'             => $this->request->getPost('DATES'),
         ];
 
 
         $isValid = $this->validateData($DataArr, [
-            'name' => 'required',
+            'package_name' => 'required',
             'slug' => 'required',
-            'destination' => 'required',
-            'state' => 'required',
-            'country' => 'required',
-            'description' => 'required|max_length[255]',
-            'is_international' => 'required',
-            'category' => 'required',
-            'booking_amount' => 'required',
-            'price' => 'required',
-            'stay' => 'required',
+            'Location' => 'required',
+            'State' => 'required',
+            'Country' => 'required',
+            'META_DESC' => 'required|max_length[255]',
+            'type' => 'required',
+            'BOOKING_AMOUNT' => 'required',
+            'PRICE_1' => 'required',
+            'days' => 'required',
+            'it' => 'required',
             'duration' => 'required',
-            'itinerary' => 'required',
         ]);
         if (!$isValid) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'Check All Fields Before Submit', 'status' => 'Warning']);
         }
-        $Featured_Image = $this->request->getFile('featured_image');
-        $inputFile = $this->validate([
-            'featured_image' => [
-                'uploaded[featured_image]',
-                'mime_in[featured_image,image/png,image/jpg,image/jpeg,image/webp]',
-            ]
-        ]);
-        if (!$inputFile) {
-        }
-        if ($Featured_Image->getSize() > 0) {
-            $newName = $Featured_Image->getRandomName();
-            $Featured_Image->move('upload/package_images/', $newName);
-            $DataArr['FEATURED_IMAGE'] = $newName;
-            $oldimagePath = 'upload/package_images/' . $this->request->getPost('featured_image_old');
-            if (!is_dir($oldimagePath) && file_exists($oldimagePath)) {
-                unlink($oldimagePath);
-            }
-        } else {
-            $DataArr['FEATURED_IMAGE'] = $this->request->getPost('featured_image_old');
-        }
+
         $pdf = $this->request->getFile('pdf');
-        $inputPDF = $this->validate([
-            'pdf' => [
-                'uploaded[pdf]',
-                'mime_in[application/pdf]',
-            ]
-        ]);
-        if (!$inputPDF) {
-        }
-        if ($pdf->getSize() > 0) {
-            $newPDFName = $this->request->getPost('slug') . '-' . $pdf->getRandomName();
-            $pdf->move('upload/package_pdf/', $newPDFName);
-            $DataArr['PDF'] = $newPDFName;
-            $oldpdfPath = 'upload/package_pdf/' . $this->request->getPost('pdf_old');
-            if (!is_dir($oldpdfPath) && file_exists($oldpdfPath)) {
-                unlink($oldpdfPath);
+        if ($pdf && $pdf->isValid() && !$pdf->hasMoved()) {
+            if ($pdf->getSize() > 0) {
+                $newPDFName = $this->request->getPost('slug') . '-' . $pdf->getRandomName();
+                $pdf->move('upload/package_pdf/', $newPDFName);
+                $DataArr['PACKAGE_PDF'] = $newPDFName;
+
+                // Clean up old PDF if it exists
+                $oldpdfPath = 'upload/package_pdf/' . $this->request->getPost('pdf_old');
+                if (!is_dir($oldpdfPath) && file_exists($oldpdfPath)) {
+                    unlink($oldpdfPath);
+                }
             }
-        } else {
-            $DataArr['PDF'] = $this->request->getPost('pdf_old');
         }
 
         $this->PackageModel->UpdatePackage($ID, $DataArr);
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package ID:' . $ID . ' Update', 'status' => 'info']);
-        return redirect()->to('/packages-list');
+        return redirect()->to('/dashboard/packages-list');
     }
     public function delete_package_process()
     {

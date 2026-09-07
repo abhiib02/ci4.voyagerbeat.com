@@ -6,6 +6,43 @@ use CodeIgniter\Model;
 
 class User extends Model
 {
+    protected $table            = 'users';
+    protected $primaryKey       = 'USER_ID';
+    protected $useAutoIncrement = true;
+    protected $returnType       = 'object';
+    protected $useSoftDeletes   = false;
+    protected $protectFields    = true;
+
+    protected $allowedFields    = [
+        'USER_NAME',
+        'ROLE',
+        'USER_EMAIL',
+        'USER_CONTACT',
+        'PASSWORD',
+        'PASSWORD_RESET_TOKEN',
+        'LOGIN_STATUS',
+        'Created_at',
+    ];
+
+    // Dates
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'Created_at';
+    protected $updatedField  = '';
+
+    // Validation Rules
+    protected $validationRules = [
+        'USER_NAME'            => 'required',
+        'ROLE'                 => 'required|integer',
+        'USER_EMAIL'           => 'required|valid_email|max_length[255]|is_unique[users.USER_EMAIL,USER_ID,{USER_ID}]',
+        'USER_CONTACT'         => 'required',
+        'PASSWORD'             => 'required|min_length[6]',
+        'PASSWORD_RESET_TOKEN' => 'permit_empty',
+        'LOGIN_STATUS'         => 'required|integer',
+    ];
+    protected $validationMessages   = [];
+    protected $skipValidation       = false;
+    protected $cleanValidationRules = true;
 
     public function __construct()
     {
@@ -64,6 +101,16 @@ class User extends Model
         $builder = $db->table('users');
         $builder->select("*");
         $builder->where('EMAIL', $email);
+        $query = $builder->get();
+        $result = $query->getRow();
+        return $result;
+    }
+    public function getUserByID($id)
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $builder->select("*");
+        $builder->where('USER_ID', $id);
         $query = $builder->get();
         $result = $query->getRow();
         return $result;

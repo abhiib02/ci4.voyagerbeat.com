@@ -43,9 +43,9 @@
 /* Active page state */
 .pagination li.active a,
 .pagination li.active span {
-    background-color: #0d6efd;
-    color: #ffffff;
-    border-color: #0d6efd;
+    background-color: var(--maincolor);
+    color: #000000;
+    border-color: var(--maincolor);;
     cursor: default;
 }
 

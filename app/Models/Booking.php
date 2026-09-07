@@ -112,4 +112,16 @@ class Booking extends Model
         $result = $query->getResult();
         return $result;
     }
+    public function getUserBookingsCountByEmail(string $email): int
+    {
+        return $this->where('email', $email)->countAllResults();
+    }
+    public function getBookingWherePaxEmailExist(string $email): array
+    {
+        return $this->like('pax_details', $email, 'both')->findAll();
+    }
+    public function getBookingCountWherePaxEmailExist(string $email): int
+    {
+        return $this->like('pax_details', $email, 'both')->countAllResults();
+    }
 }

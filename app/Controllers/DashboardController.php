@@ -61,24 +61,46 @@ class DashboardController extends BaseController
         switch ($pageName) {
             case 'option-list':
                 $this->data['Options'] = $this->OptionModel->getAllOptions();
+                break;
             case 'packages-list':
                 $this->data['Packages'] = $this->PackageModel->getAllPackagesForAdminDashboard();
                 $this->data['pager'] = $this->PackageModel->pager;
+                break;
+            case 'package-create':
+                $this->data['UsedTags'] = $this->PackageModel->getAllDistinctTags();
+                $this->data['UsedBadges'] = $this->PackageModel->getAllDistinctBadges();
+                $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
+                break;
             case 'users-list':
                 $this->data['Users'] = $this->UserModel->getAllUsers();
+                break;
             case 'all-bookings':
                 $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard();
                 $this->data['pager'] = $this->BookingModel->pager;
+                break;
             case 'coupons':
                 $this->data['Coupons'] = $this->CouponModel->getAllCoupons();
+                break;
         }
 
         return $this->Render_Page_Admin_dashboard('/admin-dashboard', $this->data);
     }
     public function UserDashboard($pageName = null)
     {
+
+        $this->data['User'] = $this->UserModel->getUserByID((int) $this->data['id']);
         $this->data['pagenames'] = $this->PagesScan('Views/dashboard/user/pages/');
         $this->data['pagename'] = $pageName;
+        $this->data['CustomerBookingsCount'] = $this->BookingModel->getUserBookingsCountByEmail($this->data['email']);
+        $this->data['CustomerAsTravelBuddyCount'] = $this->BookingModel->getBookingCountWherePaxEmailExist($this->data['email']);
+        switch ($pageName) {
+            case 'bookings':
+                $this->data['CustomerBookings'] = $this->BookingModel->getUserBookingsByEmail($this->data['email']);
+                break;
+            case 'travelbuddy':
+                $this->data['CustomerAsTravelBuddy'] = $this->BookingModel->getUserBookingsByEmail($this->data['email']);
+                break;
+        }
         return $this->Render_Page_dashboard('user-dashboard', $this->data);
     }
 
@@ -107,81 +129,7 @@ class DashboardController extends BaseController
         return $pageNames;
     }
 
-    public function users()
-    {
-        $UserModel = new User();
-        $this->data['users'] = $UserModel->getAllUsers();
 
-        return
-            view('layout/header-2', $this->data) .
-            view('dashboard/admin-dashboard-header') .
-            view('dashboard/users', $this->data) .
-            view('dashboard/admin-dashboard-footer') .
-            view('layout/footer', $this->data);
-    }
-    public function packagesList()
-    {
-        $PackageModel = new Package();
-        $this->data['packages'] = $PackageModel->getAllPackages();
-        return
-            view('layout/header-2', $this->data) .
-            view('dashboard/admin-dashboard-header') .
-            view('dashboard/packages_list', $this->data) .
-            view('dashboard/admin-dashboard-footer') .
-            view('layout/footer', $this->data);
-    }
-    public function destinationsList()
-    {
-
-        return
-            view('layout/header-2', $this->data) .
-            view('dashboard/admin-dashboard-header') .
-            view('dashboard/destination_list', $this->data) .
-            view('dashboard/admin-dashboard-footer') .
-            view('layout/footer', $this->data);
-    }
-    public function categoriesList()
-    {
-        return
-            view('layout/header-2', $this->data) .
-            view('dashboard/admin-dashboard-header') .
-            view('dashboard/categories_list', $this->data) .
-            view('dashboard/admin-dashboard-footer') .
-            view('layout/footer', $this->data);
-    }
-
-    public function optionsList()
-    {
-
-        // $this->data['Options'] = $OptionModel->getAllOptions();
-
-        return $this->Render_Page_dashboard('option-list', $this->data);
-    }
-    public function BookingsList()
-    {
-
-        // $this->data['Bookings'] = $BookingModel->getAllBookings();
-        return
-            view('layout/header-2', $this->data) .
-            view('dashboard/admin-dashboard-header') .
-            view('dashboard/bookings_list', $this->data) .
-            view('dashboard/admin-dashboard-footer');
-    }
-
-
-    public function add_package_form()
-    {
-
-        $this->data['noindex'] = 1;
-        $this->data['UsedTags'] = $this->PackageModel->getAllDistinctTags();
-        $this->data['UsedBadges'] = $this->PackageModel->getAllDistinctBadges();
-        return
-            view('layout/header-2', $this->data) .
-            view('dashboard/admin-dashboard-header') .
-            view('dashboard/add-package-form', $this->data) .
-            view('dashboard/admin-dashboard-footer') .
-            view('layout/footer', $this->data);
-    }
     public function update_package_form($id)
     {
         $PackageModel = new Package();
