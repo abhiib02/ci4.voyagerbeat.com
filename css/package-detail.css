@@ -27,7 +27,7 @@
 .package-grid-container {  display: grid;
   grid-template-columns: 1.5fr 0.5fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
-  gap: 0px 0px;
+  gap: 10px;
   grid-auto-flow: row;
   grid-template-areas:
     "quick-info cta-buttons"
@@ -53,3 +53,23 @@
 .customer-reviews { grid-area: customer-reviews; }
 
 .side { grid-area: side; }
+
+
+.icon-card-package {
+      width: 80px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      transition: all 0.3s ease;
+      padding: 10px 0;
+    & img{
+      width:50%;
+      aspect-ratio: 1;
+    }
+    & *{
+      color: var(--text-color);
+    }
+}
+
+

@@ -48,17 +48,21 @@ $TAGS = explode(',', $package->TAGS);
         </div>
     </section>
     <div class="container">
-        <div class="package-grid-container">
+        <div class="package-grid-container mt-2">
             <div class="cta-buttons">
-                <?= view('pages/packages/component/button-group') ?>
+                <?= view('pages/packages/component/button-group', ['package' => $package]) ?>
             </div>
             <div class="quick-info">
-                <?= view('pages/packages/component/quick-info') ?>
+                <?= view('pages/packages/component/quick-info', ['package' => $package]) ?>
             </div>
-            <div class="details"></div>
+            <div class="details">
+
+            </div>
             <div class="photos"></div>
             <div class="customer-reviews"></div>
-            <div class="side"></div>
+            <div class="side">
+                <?= view('pages/component/packageDetailsQueryForm') ?>
+            </div>
         </div>
 
     </div>

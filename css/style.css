@@ -196,3 +196,11 @@ body {
 .text-red{
   color: #f44336;
 }
+/*----------- Custom Styling ------------------*/
+.style-border{
+  box-shadow: 0px 0 1px var(--maincolor), 0px 0 1px var(--maincolor)
+}
+.outline-card{
+  border: 1px solid color-mix(in srgb, var(--secondcolor-lite) 50%, transparent);
+    border-radius: 10px;
+}
