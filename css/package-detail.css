@@ -1,0 +1,55 @@
+.images-grid {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "image-2 image-1 image-1 image-1 image-1"
+    "image-3 image-1 image-1 image-1 image-1"
+    "image-4 image-1 image-1 image-1 image-1"
+    "image-5 image-1 image-1 image-1 image-1";
+}
+
+.rounded{
+    border-radius: 5px;
+    overflow: clip;
+}
+.image-1 { grid-area: image-1;}
+
+.image-2 { grid-area: image-2; }
+
+.image-3 { grid-area: image-3; }
+
+.image-4 { grid-area: image-4; }
+
+.image-5 { grid-area: image-5; }
+
+.package-grid-container {  display: grid;
+  grid-template-columns: 1.5fr 0.5fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "quick-info cta-buttons"
+    "details side"
+    "photos side"
+    "customer-reviews side";
+  @media (width < 992px) {
+    &{
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.quick-info { grid-area: quick-info; }
+
+.cta-buttons { grid-area: cta-buttons; }
+
+.details { grid-area: details; }
+
+.photos { grid-area: photos; }
+
+.customer-reviews { grid-area: customer-reviews; }
+
+.side { grid-area: side; }

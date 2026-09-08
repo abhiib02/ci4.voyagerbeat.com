@@ -16,7 +16,7 @@
     <h1 class="py-4">Editing <?= $package->PACKAGE_NAME ?> Package</h1>
     <form action="/update_package_process" method="post" enctype="multipart/form-data">
         <input type="hidden" name="PACKAGE_ID" value="<?= $package->PACKAGE_ID ?>">
-
+        <?= csrf_field() ?>
         <div class="p-1 sticky-top d-flex justify-content-between" style="top: -3px;">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <a type="button" href="#Summaryadd" class="btn btn-sm btn-theme">Summary</a>

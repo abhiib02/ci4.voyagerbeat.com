@@ -123,10 +123,11 @@ class Package extends Model
         return $this->insert($data);
     }
 
-    public function UpdatePackage(int $id, array $data): bool
+    public function UpdatePackage($id, $data)
     {
-        return $this->update($id, $data);
+        return (bool) $this->builder()->where(["PACKAGE_ID" => $id])->set($data)->update();
     }
+
 
     public function getAllPackages(string $direction = 'DESC', int $perPage = 15, string $group = 'default'): array
     {

@@ -485,7 +485,33 @@ class PackageController extends BaseController
     }
     public function update_package_process()
     {
+
         $ID = $this->request->getPost('PACKAGE_ID');
+
+        // 1. Validate incoming POST request directly
+        $rules = [
+            'package_name'   => 'required',
+            'slug'           => 'required',
+            'Location'       => 'required',
+            'State'          => 'required',
+            'Country'        => 'required',
+            'META_DESC'      => 'required|max_length[255]',
+            'type'           => 'required',
+            'BOOKING_AMOUNT' => 'required',
+            'PRICE_1'        => 'required',
+            'days'           => 'required',
+            'it'             => 'required',
+            'duration'       => 'required',
+        ];
+
+        if (! $this->validate($rules)) {
+            session()->setFlashdata('FlashMessage', [
+                'message' => 'Check All Fields Before Submit',
+                'status'  => 'Warning',
+            ]);
+
+            return redirect()->back()->withInput();
+        }
         $DataArr = [
             'PACKAGE_NAME'      => $this->request->getPost('package_name'),
             'SLUG'      => $this->request->getPost('slug'),
@@ -551,23 +577,7 @@ class PackageController extends BaseController
         ];
 
 
-        $isValid = $this->validateData($DataArr, [
-            'package_name' => 'required',
-            'slug' => 'required',
-            'Location' => 'required',
-            'State' => 'required',
-            'Country' => 'required',
-            'META_DESC' => 'required|max_length[255]',
-            'type' => 'required',
-            'BOOKING_AMOUNT' => 'required',
-            'PRICE_1' => 'required',
-            'days' => 'required',
-            'it' => 'required',
-            'duration' => 'required',
-        ]);
-        if (!$isValid) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Check All Fields Before Submit', 'status' => 'Warning']);
-        }
+
 
         $pdf = $this->request->getFile('pdf');
         if ($pdf && $pdf->isValid() && !$pdf->hasMoved()) {
