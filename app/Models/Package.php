@@ -118,324 +118,183 @@ class Package extends Model
     protected $cleanValidationRules = true;
 
 
-    public function insertPackage($data)
+    public function insertPackage(array $data)
     {
-        $db = \Config\Database::connect();
-        return $db->table('Packages')->insert($data);
+        return $this->insert($data);
     }
 
-    public function UpdatePackage($id, $data)
+    public function UpdatePackage(int $id, array $data): bool
     {
-        $db      = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->where(["PACKAGE_ID" => $id]);
-        $builder->set($data);
-        $builder->update();
+        return $this->update($id, $data);
     }
 
-    public function getAllPackages()
+    public function getAllPackages(string $direction = 'DESC'): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->orderBy('updated_at', 'DESC');
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->orderBy('updated_at', $direction)->findAll();
     }
+
     public function getAllPackagesForAdminDashboard(int $perPage = 15, string $group = 'default'): array
     {
-        return $this->select('PACKAGE_ID, SLUG, PACKAGE_NAME, LOCATION, updated_at')
-            ->orderBy('updated_at', 'DESC')
-            ->paginate($perPage, $group);
+        return $this->select('PACKAGE_ID, SLUG, PACKAGE_NAME, LOCATION, updated_at')->orderBy('updated_at', 'DESC')->paginate($perPage, $group);
     }
 
-    public function getAllPackagesNameAndID()
+    public function getAllPackagesNameAndID(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('PACKAGE_ID,PACKAGE_NAME');
-        $builder->where('HIDDEN', 0);
-        $builder->orderBy('updated_at', 'DESC');
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->select('PACKAGE_ID, PACKAGE_NAME')->where('HIDDEN', 0)->orderBy('updated_at', 'DESC')->findAll();
     }
 
-    public function getAllPackagesCount()
+    public function getAllPackagesCount(): int
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $query = $builder->get();
-        $result = $query->getNumRows();
-        return $result;
+        return $this->countAllResults();
     }
-    public function getAllHoneymoonPackages()
+    public function getAllHoneymoonPackages(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('CATEGORY', 'honeymoon');
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->where('CATEGORY', 'honeymoon')->findAll();
     }
 
-    public function isSlugExist($slug)
+    public function isSlugExist(string $slug): bool
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('SLUG', $slug);
-        $query = $builder->get();
-        $result = $query->getRowArray();
-        if ($result !== null) {
-            return 1;
-        }
-        return 0;
+        return $this->where('SLUG', $slug)->countAllResults() > 0;
     }
-    public function getIDfromSlug($slug)
+    public function getIDfromSlug(string $slug)
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('PACKAGE_ID');
-        $builder->where('SLUG', $slug);
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        $package = $this->select('PACKAGE_ID')->where('SLUG', $slug)->first();
+        return $package ? $package->PACKAGE_ID : null;
     }
-    public function isPackageExist($ID)
+    public function isPackageExist(int $ID): bool
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('PACKAGE_ID', $ID);
-        $query = $builder->get();
-        $result = $query->getRowArray();
-        if ($result !== null) {
-            return 1;
-        }
-        return 0;
+        return $this->where('PACKAGE_ID', $ID)->countAllResults() > 0;
     }
-
-    public function getPackageBySlug($slug)
+    public function getPackageBySlug(string $slug)
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('SLUG', $slug);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result;
+        return $this->where('SLUG', $slug)->first();
     }
-    public function getPackageByType($type)
+    public function getPackageByType(string $type): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('PACKAGE_TYPE', $type);
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->where('PACKAGE_TYPE', $type)->findAll();
     }
-    public function getPackagesByDestination($destination)
+    public function getPackagesByDestination(string $destination): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('LOCATION', $destination);
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->where('LOCATION', $destination)->findAll();
     }
     public function getHiddenPackages(string $direction = 'ASC'): array
     {
         return $this->where('HIDDEN', 1)->orderBy('updated_at', $direction)->findAll();
     }
-    public function getPackageByID($ID)
+    public function getPackageByID(int $ID)
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('PACKAGE_ID', $ID);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result;
+        return $this->find($ID);
     }
-    public function getPackageByIDForSearch($ID)
+    public function getPackageByIDForSearch(int $ID): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('PACKAGE_ID', $ID);
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->where('PACKAGE_ID', $ID)->findAll();
     }
-    public function getPackagesByName($name)
+    public function getPackagesByName(string $name): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->like("PACKAGE_NAME", htmlspecialchars($name));
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->like('PACKAGE_NAME', $name)->findAll();
     }
-    public function getPackagesByUpcoming()
+    public function getPackagesByUpcoming(string $direction = 'DESC'): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('UPCOMING', 1);
-        $builder->where('HIDDEN', 0);
-        $builder->orderBy('updated_at', 'DESC');
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->where('UPCOMING', 1)->where('HIDDEN', 0)->orderBy('updated_at', $direction)->findAll();
     }
-    public function getPackagesByCategory($Cat)
+    public function getPackagesByCategory(string $Cat): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('CATEGORY', $Cat);
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->where('CATEGORY', $Cat)->findAll();
     }
-    public function getPackagesByBadge($Badge)
+    public function getPackagesByBadge(string $Badge): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('BADGE', $Badge);
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->where('BADGE', $Badge)->findAll();
     }
-    public function getPackagesByState($State)
+    public function getPackagesByState(string $State): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('STATE', $State);
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->where('STATE', $State)->findAll();
     }
-    public function getPackagesByCountry($Country)
+    public function getPackagesByCountry(string $Country): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->where('COUNTRY', $Country);
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->where('COUNTRY', $Country)->findAll();
     }
 
-    public function getPackagesByTag($tag)
+    public function getPackagesByTag(string $tag): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->like("TAGS", htmlspecialchars($tag));
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->like('TAGS', $tag)->findAll();
     }
-    public function getPackagesByNights($nights)
+    public function getPackagesByNights(string $nights): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('*');
-        $builder->like("STAY", htmlspecialchars($nights));
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->like('STAY', $nights)->findAll();
     }
-    public function getAllDistinctTags()
+    public function getAllDistinctTags(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('TAGS');
-        $query = $builder->get();
-        $result = $query->getResultArray();
+        $rows = $this->select('TAGS')->where('TAGS IS NOT NULL')->findAll();
         $allTags = [];
-        foreach ($result as $row) {
-            if (!empty($row['TAGS'])) {
-                $tags = array_map('trim', explode(',', $row['TAGS']));
+
+        foreach ($rows as $row) {
+            $tagString = is_object($row) ? $row->TAGS : ($row['TAGS'] ?? '');
+            if (!empty($tagString)) {
+                $tags = array_map('trim', explode(',', $tagString));
                 $allTags = array_merge($allTags, $tags);
             }
         }
-
-        $distinctTags = array_unique($allTags);
+        $distinctTags = array_values(array_unique(array_filter($allTags)));
         sort($distinctTags);
+
         return $distinctTags;
     }
-    public function getAllDistinctBadges()
+    public function getAllDistinctBadges(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('BADGE');
-        $builder->distinct();
-        $builder->where('BADGE IS NOT NULL');
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        $BadgesArr = [];
-        foreach ($result as $row) {
-            array_push($BadgesArr, $row->BADGE);
-        }
-        sort($BadgesArr);
-        return $BadgesArr;
+        $rows = $this->select('BADGE')
+            ->distinct()
+            ->where('BADGE IS NOT NULL')
+            ->where("BADGE != ''")
+            ->findAll();
+
+        $badges = array_map(static function ($row) {
+            return is_object($row) ? $row->BADGE : $row['BADGE'];
+        }, $rows);
+
+        sort($badges);
+
+        return $badges;
     }
-    public function getAllDistinctStates()
+    public function getAllDistinctStates(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('STATE');
-        $builder->distinct();
-        $builder->where('STATE IS NOT NULL');
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        $StatesArr = [];
-        foreach ($result as $row) {
-            array_push($StatesArr, $row->STATE);
-        }
-        sort($StatesArr);
-        return $StatesArr;
+        $rows = $this->select('STATE')
+            ->distinct()
+            ->where('STATE IS NOT NULL')
+            ->where("STATE != ''")
+            ->findAll();
+
+        $states = array_map(static function ($row) {
+            return is_object($row) ? $row->STATE : $row['STATE'];
+        }, $rows);
+
+        sort($states);
+
+        return $states;
     }
-    public function getAllDistinctCountry()
+    public function getAllDistinctCountry(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('Packages');
-        $builder->select('COUNTRY');
-        $builder->distinct();
-        $builder->where('COUNTRY IS NOT NULL');
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        $CountryArr = [];
-        foreach ($result as $row) {
-            array_push($CountryArr, $row->COUNTRY);
-        }
-        sort($CountryArr);
-        return $CountryArr;
+        $rows = $this->select('COUNTRY')
+            ->distinct()
+            ->where('COUNTRY IS NOT NULL')
+            ->where("COUNTRY != ''")
+            ->findAll();
+
+        $countries = array_map(static function ($row) {
+            return is_object($row) ? $row->COUNTRY : $row['COUNTRY'];
+        }, $rows);
+
+        sort($countries);
+
+        return $countries;
     }
 
 
 
-    public function deletePackageByID($ID)
+    public function deletePackageByID(int $ID): bool
     {
-        if ($this->isPackageExist($ID)) {
-            $db = \Config\Database::connect();
-            $builder = $db->table('Packages');
-            $builder->where('ID', $ID);
-            $builder->delete();
-            return 1;
-        } else {
-            return 0;
+        if ($this->find($ID) !== null) {
+            return (bool) $this->delete($ID);
         }
+        return false;
     }
 }
