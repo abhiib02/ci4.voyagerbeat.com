@@ -15,7 +15,25 @@
 <?php endif; ?>
 <div class="seperator"></div>
 <section class="">
-    <div class="container  my-2">
+    <div class="container">
+        <div class=" my-3">
+            <label>Filter by Month</label>
+            <select class="form-select " name="Month" id="month_filter">
+                <option value="All">All</option>
+                <option value="Jan">January</option>
+                <option value="Feb">February</option>
+                <option value="Mar">March</option>
+                <option value="Apr">April</option>
+                <option value="May">May</option>
+                <option value="Jun">June</option>
+                <option value="Jul">July</option>
+                <option value="Aug">August</option>
+                <option value="Sep">September</option>
+                <option value="Oct">October</option>
+                <option value="Nov">November</option>
+                <option value="Dec">December</option>
+            </select>
+        </div>
         <div class="flex_wrap_section">
             <?php if (count($packages) > 0) : ?>
                 <?php foreach ($packages as $package) : ?>

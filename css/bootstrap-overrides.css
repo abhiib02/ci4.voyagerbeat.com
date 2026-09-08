@@ -1,4 +1,4 @@
-.form-control:focus {
+.form-select:focus,.form-control:focus {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
   border-color: var(--maincolor);

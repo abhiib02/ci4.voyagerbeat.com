@@ -3,3 +3,4 @@
 <script src="/js/autoFocus.js"></script>
 <script src="/js/ImgPlaceholder.js"></script>
 <script src="/js/add_to_favorite.js"></script>
+<script src="/js/month-filter.js"></script>
