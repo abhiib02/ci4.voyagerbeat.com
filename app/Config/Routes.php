@@ -52,6 +52,8 @@ $routes->post('update_package_process', 'PackageController::update_package_proce
 
 
 
+
+
 /*--------------- User Routes------------------*/
 $routes->get('account', 'DashboardController::UserDashboard', ['filter' => 'AuthGuard']);
 $routes->get('account/(:any)', 'DashboardController::UserDashboard/$1', ['filter' => 'AuthGuard']);
@@ -83,6 +85,7 @@ $routes->get('weekend', 'PackageController::weekendTripsPackages');
 $routes->get('bagpacking', 'PackageController::bagPackingTripsPackages');
 $routes->get('state/(:any)', 'PackageController::packagesByState/$1');
 $routes->get('country/(:any)', 'PackageController::packagesByCountry/$1');
+$routes->get('hidden', 'PackageController::hiddenPackages');
 $routes->get('search', 'PackageController::index');
 
 

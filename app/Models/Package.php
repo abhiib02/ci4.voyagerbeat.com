@@ -249,6 +249,10 @@ class Package extends Model
         $result = $query->getResultObject();
         return $result;
     }
+    public function getHiddenPackages(string $direction = 'ASC'): array
+    {
+        return $this->where('HIDDEN', 1)->orderBy('updated_at', $direction)->findAll();
+    }
     public function getPackageByID($ID)
     {
         $db = \Config\Database::connect();

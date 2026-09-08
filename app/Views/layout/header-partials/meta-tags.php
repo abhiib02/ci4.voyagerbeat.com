@@ -15,6 +15,10 @@
 <meta name="twitter:description" content="<?= isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
 <meta property="og:image" content="<?= isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png'; ?>">
 <meta name="twitter:image" content="<?= isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png'; ?>">
+<?php if (isset($noindex) && $noindex == 1): ?>
+  <meta name="robots" content="noindex" />
+<?php endif; ?>
+<meta name="robots" content="noindex" />
 <meta property="og:url" content="http://voyagersbeat.com">
 <meta name="twitter:card" content="http://voyagersbeat.com">
 <meta property="og:type" content="Travel and Tourism" />

@@ -197,6 +197,17 @@ class PackageController extends BaseController
 
         return $this->Render_Page('packages/packages', $this->data);
     }
+    public function hiddenPackages()
+    {
+
+        $this->data['packages'] = $this->PackageModel->getHiddenPackages();
+        $this->data["name"] = "Hidden";
+        $this->data["title"] = "Hidden Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "";
+        $this->data['noindex'] = 1;
+
+        return $this->Render_Page('packages/packages', $this->data);
+    }
 
 
     function TripTypeMeta(string $var)
