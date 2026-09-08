@@ -93,17 +93,13 @@ class Package extends Model
     // Validation
     protected $validationRules      = [
         'LOCATION'          => 'required',
+        'STATE'             => 'required',
         'COUNTRY'           => 'required',
         'PICKNDROP'         => 'required',
-        'WHATSAPP_LINK'     => 'required',
         'PACKAGE_DAYS'      => 'required',
         'STAY'              => 'required',
         'DURATION'          => 'required|integer',
         'PACKAGE_TYPE'      => 'required',
-        'CATEGORY'          => 'required',
-        'TAGS'              => 'required',
-        'BADGE'             => 'required',
-        'FAVORITE_COUNT'    => 'required|integer',
         'WEEKEND'           => 'required',
         'INCLUSION'         => 'required',
         'EXCLUSION'         => 'required',

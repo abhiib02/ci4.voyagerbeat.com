@@ -7,32 +7,45 @@ use CodeIgniter\Model;
 class Option extends Model
 {
 
+    protected $table            = 'options_table';
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
+    protected $returnType       = 'object';
+    protected $useSoftDeletes   = false;
+    protected $protectFields    = true;
 
-    public function getAllOptions()
+    // Allowed fields for insert/update operations
+    protected $allowedFields    = [
+        'name',
+        'value',
+    ];
+
+    // Dates
+    protected $useTimestamps = false;
+
+    // Validation rules
+    protected $validationRules      = [
+        'name'  => 'required|max_length[255]',
+        'value' => 'required',
+    ];
+    protected $validationMessages   = [];
+    protected $skipValidation       = false;
+    protected $cleanValidationRules = true;
+
+    public function getAllOptions(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('options_table');
-        $builder->select("*");
-        $query = $builder->get();
-        $result = $query->getResultObject();
-        return $result;
+        return $this->findAll();
     }
-    public function getOptionValue($name)
+    public function getOptionValue(string $name): ?string
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('options_table');
-        $builder->select("*");
-        $builder->where('name', $name);
-        $query = $builder->get();
-        $result = $query->getRowObject();
-        return $result->value;
+        $result = $this->where('name', $name)->first();
+
+        return $result ? $result->value : null;
     }
-    public function saveOption($name, $value)
+    public function saveOption(string $name, string $value): bool
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('options_table');
-        $builder->set("value", $value);
-        $builder->where('name', $name);
-        $builder->update();
+        return (bool) $this->where('name', $name)
+            ->set('value', $value)
+            ->update();
     }
 }

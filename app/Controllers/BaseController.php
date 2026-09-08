@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 
 use App\Models\Package;
+use App\Models\Option;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -30,6 +31,7 @@ abstract class BaseController extends Controller
 
     protected Session $session;
     protected Package $PackageModel;
+    protected Option $OptionModel;
     protected array $data = [];
 
     /**
@@ -50,7 +52,9 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
         $this->PackageModel = new Package();
+        $this->OptionModel = new Option();
         $this->data['AllPackagesNameAndID'] = $this->PackageModel->getAllPackagesNameAndID();
+        $this->data['defaultContact'] = $this->OptionModel->getOptionValue('contact');
 
         \Config\Services::renderer()->setData([
             'isAdmin' => $this->AuthCheckAdmin(),

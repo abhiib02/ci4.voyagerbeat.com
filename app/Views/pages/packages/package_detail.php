@@ -52,7 +52,9 @@ $TAGS = explode(',', $package->TAGS);
             <div class="cta-buttons">
                 <?= view('pages/packages/component/button-group') ?>
             </div>
-            <div class="quick-info"></div>
+            <div class="quick-info">
+                <?= view('pages/packages/component/quick-info') ?>
+            </div>
             <div class="details"></div>
             <div class="photos"></div>
             <div class="customer-reviews"></div>

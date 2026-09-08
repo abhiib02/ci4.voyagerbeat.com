@@ -598,23 +598,31 @@ class PackageController extends BaseController
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package ID:' . $ID . ' Update', 'status' => 'info']);
         return redirect()->to('/dashboard/packages-list');
     }
+    public function duplicate_package_process(int $PACKAGE_ID)
+    {
+
+        $package = $this->PackageModel->getPackageByID($PACKAGE_ID);
+        $packageData = (array) $package;
+        unset($packageData['PACKAGE_ID']);
+        $packageData['SLUG'] =  $packageData['SLUG'] . '-' . date("hidmy");
+        $packageData['PACKAGE_NAME']  =  $packageData['PACKAGE_NAME']  . '-copy';
+        $this->PackageModel->insertPackage($packageData);
+        return redirect()->to('/package/' . $packageData['SLUG']);
+    }
+
     public function delete_package_process()
     {
         $id = $this->request->getPost('id');
-        $imagePath = 'upload/package_images/' . $this->request->getPost('image');
         $pdfPath = 'upload/package_pdf/' . $this->request->getPost('pdf');
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
         if (!is_dir($pdfPath) && file_exists($pdfPath)) {
             unlink($pdfPath);
         }
         if (!$this->PackageModel->deletePackageByID($id)) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'Danger']);
-            return redirect()->to('/packages-list');
+            return redirect()->to('/dashboard/packages-list');
         }
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package ID:' . $id . ' Deleted', 'status' => 'Danger']);
-        return redirect()->to('/packages-list');
+        return redirect()->to('/dashboard/packages-list');
     }
     public function import_package_process()
     {
