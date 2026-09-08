@@ -3,7 +3,21 @@
 // Data Formatting
 $TAGS = explode(',', $package->TAGS);
 ?>
+<div>
 
+    <div itemscope itemtype="<?= base_url(); ?>">
+
+        <meta itemprop="name" content="<?= $package->PACKAGE_NAME; ?>" />
+
+        <meta itemprop="url" content="<?= '/package/' . $package->SLUG; ?>" />
+
+        <meta itemprop="description" content="<?= $package->META_DESC; ?>" />
+
+        <meta itemprop="datePublished" content="<?= $package->updated_at; ?>" />
+
+    </div>
+
+</div>
 <div class="">
     <section class="package-hero custom-background" style="--bgUrl:url('<?= $package->PACKAGE_IMAGE ?>')">
         <div class="container text-white">
