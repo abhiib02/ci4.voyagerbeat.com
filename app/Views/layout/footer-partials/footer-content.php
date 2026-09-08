@@ -16,30 +16,30 @@
                         <i class="lab la-youtube fs-3"></i>
                     </a>
                 </div>
-            
+
             </div>
         </div>
     </div>
     <br>
     <div class="text-center">
         <a href="/">Home</a> |
-        <a href="/about">About Us</a> | 
-        <a href="/destinations">Destinations</a> | 
-        <?php if($isAdmin):?>
-            <a href="/account">Dashboard</a> | 
-            <a href="/logout">Logout</a> 
-        <?php elseif($isUser):?>
-            <a href="/dashboard">Dashboard</a> | 
-            <a href="/logout">Logout</a> 
-        <?php else:?>
-            <a href="/login">Login</a> 
-        <?php endif;?>
+        <a href="/about">About Us</a> |
+        <a href="/destinations">Destinations</a> |
+        <?php if ($isAdmin): ?>
+            <a href="/dashboard">Dashboard</a> |
+            <a href="/logout">Logout</a>
+        <?php elseif ($isUser): ?>
+            <a href="/account">Account</a> |
+            <a href="/logout">Logout</a>
+        <?php else: ?>
+            <a href="/login">Login</a>
+        <?php endif; ?>
     </div>
     <br>
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center fw-bold">
-                <p>&copy; <?php echo date("Y"); ?> <?=env('app.name')?>. All rights reserved.</p>
+                <p>&copy; <?php echo date("Y"); ?> <?= env('app.name') ?>. All rights reserved.</p>
             </div>
             <div class="col-md-6 text-center  fw-bold">
                 <p><a href="https://bhardwaj.netlify.app/" class="text-decoration-none text-dark">Designed and Developed By</a> Abhishek</p>

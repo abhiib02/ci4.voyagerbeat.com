@@ -20,7 +20,6 @@ class PackageController extends BaseController
     {
         helper('json');
         $this->PackageModel = new Package();
-
         $this->data['States'] = $this->PackageModel->getAllDistinctStates();
         $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
     }
@@ -59,7 +58,8 @@ class PackageController extends BaseController
         }
         // 4. Default case (No location, no search query)
         else {
-            $packages = $this->PackageModel->getAllPackages(); // Replace with your model's default retrieval method
+            $packages = $this->PackageModel->getAllPackages();
+            $this->data['pager'] = $this->PackageModel->pager;
             $name = "All Packages";
             $title = "All Packages | Voyagers Beat | Live to Travel";
             $metaDesc = "Explore all available travel packages with Voyagers Beat.";
@@ -80,6 +80,7 @@ class PackageController extends BaseController
     public function upcoming()
     {
         $this->data["packages"] = $this->PackageModel->getPackagesByUpcoming();
+        $this->data['pager'] = $this->PackageModel->pager;
         $this->data["name"] = "Upcoming";
         $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
@@ -90,14 +91,11 @@ class PackageController extends BaseController
 
     public function packageByID(int $ID)
     {
-
-
         if (!$this->PackageModel->isPackageExist($ID)) {
             return redirect()->to('/packages');
         }
 
         $this->data['package'] = $this->PackageModel->getPackageByID($ID);
-
         $this->data['title'] = $this->data['package']->PACKAGE_NAME;
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
@@ -108,7 +106,6 @@ class PackageController extends BaseController
     }
     public function packageBySlug(string $slug)
     {
-
         if (!$this->PackageModel->isSlugExist($slug)) {
             return redirect()->to('/packages');
         }
@@ -123,7 +120,6 @@ class PackageController extends BaseController
     }
     public function packagesByDestination(string $slug)
     {
-
         if (!$this->DestinationModel->isSlugExist($slug)) {
             return redirect()->to('/destinations');
         }
@@ -170,7 +166,6 @@ class PackageController extends BaseController
         $this->data['image'] = '';
         $this->data['noindex'] = '';
         $this->data['pageBannerText'] = $Badge . ' Packages';
-        //$this->data['pageBannerImage'] = $this->DestinationModel->getDestinationBySlug($slug)->IMAGE;
 
         return $this->Render_Page('packages/packages', $this->data);
     }
@@ -233,9 +228,7 @@ class PackageController extends BaseController
             "family-trip" => "Start the journey of Second inning of your life with .#voyagersbeat",
 
             "honeymoon" => "Where Love Meets Adventure! ❤️✨ .voyagersbeat",
-
         ];
-
         return array_key_exists($var, $TripType) ? $TripType[$var] : null;
     }
 
@@ -253,8 +246,6 @@ class PackageController extends BaseController
         }
         return $this->Render_Page('packages/packages', $this->data);
     }
-
-
 
     public function packagesByTag(string $tag)
     {
@@ -317,7 +308,7 @@ class PackageController extends BaseController
         return $this->Render_Page('packages/packages', $this->data);
     }
 
-    public function update_package_form($id)
+    public function update_package_form(int $id)
     {
         $this->data['package'] = $this->PackageModel->getPackageByID($id);
         $this->data['UsedTags'] = $this->PackageModel->getAllDistinctTags();
@@ -329,7 +320,57 @@ class PackageController extends BaseController
             view('dashboard/admin/pages/package-form/package-edit', $this->data) .
             view('dashboard/admin/layout/empty-footer', $this->data);
     }
+    //////////////// Extra Functions //////////////////////////
 
+    public function GetLikedPackages()
+    {
+        $this->data["packages"] = $this->PackageModel->getPackagesByLikes();
+        $this->data['pager'] = $this->PackageModel->pager;
+        $this->data["name"] = "Traveler Favorites";
+        $this->data["title"] = "Traveler Favorites Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
+        $this->data["canonical"] = "Favorites";
+
+        return $this->Render_Page('packages/packages', $this->data);
+    }
+
+
+    public function GetFavoriteCount(int $PACKAGE_ID)
+    {
+        $count = $this->PackageModel->getFavoritecount($PACKAGE_ID);
+
+        return $this->response->setJSON([
+            'package_id' => $PACKAGE_ID,
+            'Count'      => $count,
+        ]);
+    }
+
+    public function IncreaseFavoriteCount(int $PACKAGE_ID)
+    {
+        //$CurrentCount = $this->PackageModel->getFavoritecount($PACKAGE_ID);
+
+        $this->PackageModel->UpdateFavoriteCount($PACKAGE_ID, 1);
+
+        return $this->response->setJSON([
+            "package_id" => $PACKAGE_ID,
+            "message" => "Added To Favorites",
+
+        ]);
+    }
+    public function DecreaseFavoriteCount(int $PACKAGE_ID)
+    {
+        $CurrentCount = $this->PackageModel->getFavoritecount($PACKAGE_ID);
+        if ($CurrentCount > 0) {
+            $this->PackageModel->UpdateFavoriteCount($PACKAGE_ID, -1);
+        }
+        return $this->response->setJSON([
+            "package_id" => $PACKAGE_ID,
+            "message" => "Removed From Favorites",
+        ]);
+    }
+
+
+    //////////////// Process Functions /////////////////////////
     public function add_package_process()
     {
 

@@ -110,6 +110,9 @@ body {
 .full-vh {
   height: 100vh;
 }
+.hide{
+  display: none;
+}
 
 /* Utility classes end*/
 
@@ -186,3 +189,7 @@ body {
     justify-content: space-evenly;
     flex-wrap: wrap;
   }
+
+.text-red{
+  color: #f44336;
+}

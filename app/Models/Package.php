@@ -128,9 +128,9 @@ class Package extends Model
         return $this->update($id, $data);
     }
 
-    public function getAllPackages(string $direction = 'DESC'): array
+    public function getAllPackages(string $direction = 'DESC', int $perPage = 15, string $group = 'default'): array
     {
-        return $this->orderBy('updated_at', $direction)->findAll();
+        return $this->orderBy('PACKAGE_ID', $direction)->paginate($perPage, $group);
     }
 
     public function getAllPackagesForAdminDashboard(int $perPage = 15, string $group = 'default'): array
@@ -140,7 +140,7 @@ class Package extends Model
 
     public function getAllPackagesNameAndID(): array
     {
-        return $this->select('PACKAGE_ID, PACKAGE_NAME')->where('HIDDEN', 0)->orderBy('updated_at', 'DESC')->findAll();
+        return $this->select('PACKAGE_ID, PACKAGE_NAME')->where('HIDDEN', 0)->orderBy('PACKAGE_ID', 'DESC')->findAll();
     }
 
     public function getAllPackagesCount(): int
@@ -179,8 +179,9 @@ class Package extends Model
     }
     public function getHiddenPackages(string $direction = 'ASC'): array
     {
-        return $this->where('HIDDEN', 1)->orderBy('updated_at', $direction)->findAll();
+        return $this->where('HIDDEN', 1)->orderBy('PACKAGE_ID', $direction)->findAll();
     }
+
     public function getPackageByID(int $ID)
     {
         return $this->find($ID);
@@ -193,9 +194,9 @@ class Package extends Model
     {
         return $this->like('PACKAGE_NAME', $name)->findAll();
     }
-    public function getPackagesByUpcoming(string $direction = 'DESC'): array
+    public function getPackagesByUpcoming(string $direction = 'DESC', int $perPage = 15, string $group = 'default'): array
     {
-        return $this->where('UPCOMING', 1)->where('HIDDEN', 0)->orderBy('updated_at', $direction)->findAll();
+        return $this->where('UPCOMING', 1)->where('HIDDEN', 0)->orderBy('PACKAGE_ID', 'DESC')->paginate($perPage, $group);
     }
     public function getPackagesByCategory(string $Cat): array
     {
@@ -212,6 +213,13 @@ class Package extends Model
     public function getPackagesByCountry(string $Country): array
     {
         return $this->where('COUNTRY', $Country)->findAll();
+    }
+    public function getPackagesByLikes(int $perPage = 15, string $group = 'default'): array
+    {
+        return $this->where('FAVORITE_COUNT >', 0)
+            ->where('HIDDEN', 0)
+            ->orderBy('FAVORITE_COUNT', 'DESC')
+            ->paginate($perPage, $group);
     }
 
     public function getPackagesByTag(string $tag): array
@@ -288,7 +296,20 @@ class Package extends Model
         return $countries;
     }
 
+    public function getFavoritecount(int $ID): int
+    {
+        $package = $this->select('FAVORITE_COUNT')->find($ID);
 
+        if ($package === null) {
+            return 0;
+        }
+        return (int) (is_object($package) ? $package->FAVORITE_COUNT : ($package['FAVORITE_COUNT'] ?? 0));
+    }
+
+    public function UpdateFavoriteCount(int $ID, int $Value): int
+    {
+        return (bool) $this->builder()->where('PACKAGE_ID', $ID)->set('FAVORITE_COUNT', 'FAVORITE_COUNT + ' . $Value, false)->update();
+    }
 
     public function deletePackageByID(int $ID): bool
     {

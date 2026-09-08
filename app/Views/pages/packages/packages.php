@@ -1,8 +1,15 @@
 <?php if (count($packages) > 0) : ?>
-    <div class="container-fluid py-5 bg-black text-light">
+    <div class="container-fluid pt-5 bg-black text-light">
         <div class="container py-5 text-center">
             <h1 class="huge-heading text-capitalize "><?= isset($name) ? $name : 'All '; ?> Packages</h1>
             <?php if (isset($meta_desc)): ?><p><?= $meta_desc; ?></p><?php endif; ?>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-sm btn-outline-light" disabled><?= count($packages) ?> Packages</button>
+                &nbsp;
+                <button type="button" class="btn btn-sm btn-outline-light showFav" onclick="showFavOnly()"><i class="bx bxs-heart text-red"></i> Show Favorites</button>
+                &nbsp;
+                <a href="/travelerFavorites" type="button" class="btn btn-sm btn-outline-light">Traveler Favorites</a>
+            </div>
         </div>
     </div>
 <?php endif; ?>
@@ -31,5 +38,11 @@
                 </div>
             <?php endif; ?>
         </div>
+        <!-- Pagination Links -->
+        <?php if (isset($pager)): ?>
+            <div class="pagination">
+                <?= $pager->links() ?>
+            </div>
+        <?php endif; ?>
     </div>
 </section>

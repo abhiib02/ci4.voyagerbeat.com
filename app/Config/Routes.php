@@ -87,6 +87,8 @@ $routes->get('state/(:any)', 'PackageController::packagesByState/$1');
 $routes->get('country/(:any)', 'PackageController::packagesByCountry/$1');
 $routes->get('hidden', 'PackageController::hiddenPackages');
 $routes->get('search', 'PackageController::index');
+$routes->get('travelerFavorites', 'PackageController::GetLikedPackages');
 
-
-/*----------------login and register routes-----------------------*/
+$routes->get('api/getFavorite/(:num)', 'PackageController::GetFavoriteCount/$1');
+$routes->get('api/IncFavorite/(:num)', 'PackageController::IncreaseFavoriteCount/$1');
+$routes->get('api/DecFavorite/(:num)', 'PackageController::DecreaseFavoriteCount/$1');
