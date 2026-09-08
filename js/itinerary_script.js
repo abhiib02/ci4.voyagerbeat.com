@@ -26,7 +26,7 @@ function addDay() {
     
     dayDesc.id = editorId;
 
-    dayTitle.setAttribute('class', `col-lg-4 col-md-4 col-sm-4 dayTitle autosize`);
+    dayTitle.setAttribute('class', `col-lg-4 col-md-4 col-sm-4 dayTitle autosize  form-control my-2`);
 
     dayDesc.setAttribute('class', `col-lg-8 col-md-8 col-sm-8 dayDesc autosize materialize-textarea`);
 
@@ -176,11 +176,11 @@ function generateItineraryInputsFromData(data, target) {
         const editorId = `day_editor_${index}`;
         dayDesc.id = editorId;
 
-        dayTitle.setAttribute('class', `col-lg-4 col-md-4 col-sm-4 dayTitle autosize`);
+        dayTitle.setAttribute('class', `col-lg-4 col-md-4 col-sm-4 dayTitle autosize form-control my-2`);
 
         dayTitle.setAttribute('data-day', `${index}`);
 
-        dayDesc.setAttribute('class', `col-lg-8 col-md-8 col-sm-8 dayDesc autosize materialize-textarea tinymce_daydesc`);
+        dayDesc.setAttribute('class', `col-lg-8 col-md-8 col-sm-8 dayDesc autosize materialize-textarea tinymce_daydesc `);
 
         dayTitle.setAttribute('PLACEHOLDER', `Day ${index}`);
 

@@ -130,20 +130,7 @@ class DashboardController extends BaseController
     }
 
 
-    public function update_package_form($id)
-    {
-        $PackageModel = new Package();
-        $this->data['Package'] = $PackageModel->getPackageByID($id);
-        $this->data['noindex'] = 1;
-        $this->data['UsedTags'] = $PackageModel->getAllDistinctTags();
-        $this->data['UsedBadges'] = $PackageModel->getAllDistinctBadges();
-        return
-            view('layout/header-2', $this->data) .
-            view('dashboard/admin-dashboard-header') .
-            view('dashboard/update-package-form', $this->data) .
-            view('dashboard/admin-dashboard-footer') .
-            view('layout/footer', $this->data);
-    }
+
     public function import_package_form()
     {
 

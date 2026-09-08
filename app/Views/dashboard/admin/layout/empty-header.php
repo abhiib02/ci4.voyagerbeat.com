@@ -7,3 +7,4 @@
 </head>
 
 <body>
+    <?= view('dashboard/admin/layout/component/top-nav') ?>

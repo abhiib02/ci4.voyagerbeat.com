@@ -13,20 +13,21 @@
     }
 </style>
 <div class="container">
+    <h1 class="py-4">Editing <?= $package->PACKAGE_NAME ?> Package</h1>
     <form action="/update_package_process" method="post" enctype="multipart/form-data">
         <input type="hidden" name="PACKAGE_ID" value="<?= $package->PACKAGE_ID ?>">
 
-        <div class="p-1 sticky-top d-flex justify-content-between">
+        <div class="p-1 sticky-top d-flex justify-content-between" style="top: -3px;">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <a type="button" href="#Summaryadd" class="btn btn-sm btn-primary">Summary</a>
-                <a type="button" href="#highlight" class="btn btn-sm btn-primary">Highlight</a>
-                <a type="button" href="#Inclusionadd" class="btn btn-sm btn-primary">Inclusion</a>
-                <a type="button" href="#Exclusionadd" class="btn btn-sm btn-primary">Exclusion</a>
-                <a type="button" href="#Itineraryadd" class="btn btn-sm btn-primary">Itinerary</a>
-                <a type="button" href="#Datesadd" class="btn btn-sm btn-primary">Trips Dates</a>
-                <a type="button" href="#Costadd" class="btn btn-sm btn-primary">Sharing</a>
-                <a type="button" href="#Miscupdate" class="btn btn-sm btn-primary">Misc</a>
-                <a type="button" href="#Terms" class="btn btn-sm btn-primary">Terms & Condition</a>
+                <a type="button" href="#Summaryadd" class="btn btn-sm btn-theme">Summary</a>
+                <a type="button" href="#highlight" class="btn btn-sm btn-theme">Highlight</a>
+                <a type="button" href="#Inclusionadd" class="btn btn-sm btn-theme">Inclusion</a>
+                <a type="button" href="#Exclusionadd" class="btn btn-sm btn-theme">Exclusion</a>
+                <a type="button" href="#Itineraryadd" class="btn btn-sm btn-theme">Itinerary</a>
+                <a type="button" href="#Datesadd" class="btn btn-sm btn-theme">Trips Dates</a>
+                <a type="button" href="#Costadd" class="btn btn-sm btn-theme">Sharing</a>
+                <a type="button" href="#Miscupdate" class="btn btn-sm btn-theme">Misc</a>
+                <a type="button" href="#Terms" class="btn btn-sm btn-theme">Terms & Condition</a>
             </div>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <input type="submit" id="add_pack_btn" value="Update package" class="btn btn-sm btn-success">

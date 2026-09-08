@@ -315,7 +315,7 @@ class PackageController extends BaseController
         $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
         return
             view('dashboard/admin/layout/empty-header', $this->data) .
-            view('dashboard/admin/pages/package-form/package-update', $this->data) .
+            view('dashboard/admin/pages/package-form/package-edit', $this->data) .
             view('dashboard/admin/layout/empty-footer', $this->data);
     }
 
