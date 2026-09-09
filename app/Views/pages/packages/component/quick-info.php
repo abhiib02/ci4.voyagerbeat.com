@@ -1,4 +1,4 @@
-<div class="container text-center ">
+<div class="container text-center mb-2">
     <div class="row style-border outline-card">
         <div class="col-lg-4 col-6">
             <div class="card border-0 shadow-sm rounded-3 my-2">

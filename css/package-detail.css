@@ -38,14 +38,10 @@
 .package-grid-container {
   display: grid;
   grid-template-columns: 1.5fr 0.5fr;
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: 1fr;
   gap: 10px;
   grid-auto-flow: row;
-  grid-template-areas:
-    "quick-info cta-buttons"
-    "details side"
-    "photos side"
-    "customer-reviews side";
+  grid-template-areas: "main-content sidebar";
   @media (width < 992px) {
     & {
       display: flex;
@@ -54,28 +50,11 @@
   }
 }
 
-.quick-info {
-  grid-area: quick-info;
+.sidebar {
+  grid-area: sidebar;
 }
-
-.cta-buttons {
-  grid-area: cta-buttons;
-}
-
-.details {
-  grid-area: details;
-}
-
-.photos {
-  grid-area: photos;
-}
-
-.customer-reviews {
-  grid-area: customer-reviews;
-}
-
-.side {
-  grid-area: side;
+.main-content {
+  grid-area: main-content;
 }
 
 .icon-card-package {
@@ -105,7 +84,28 @@
   .date-anim {
     transition: all 0.3s ease;
     transition-delay: calc(sibling-index() * 10ms);
-    translate: 100%;
+    translate: 0 100%;
     opacity: 0;
+  }
+}
+
+/* container size override */
+/* Change container width globally on large desktops */
+@media (width >= 1200px) {
+  .container {
+    max-width: 1000px; /* Adjust to your preferred size */
+  }
+}
+
+/* Change container width globally on extra-large desktops */
+@media (width >= 1400px) {
+  .container {
+    max-width: 1250px;
+  }
+}
+
+@media (width >= 1900px) {
+  .container {
+    max-width: 1650px;
   }
 }

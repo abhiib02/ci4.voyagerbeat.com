@@ -44,6 +44,7 @@
   --primary-color: #ffd600;
   --themebtnbg: #ffd600;
   --themebtncolor: #000;
+  --theme-border-radius: 10px;
   color-scheme: light;
 }
 /* Default (Dark) Styles */
@@ -88,6 +89,7 @@
     --primary-color: #ffd600;
     --themebtnbg: #ffd600;
     --themebtncolor: #000;
+    --theme-border-radius: 10px;
     color-scheme: dark;
   }
 }
@@ -206,4 +208,11 @@ body {
 .outline-card {
   border: 1px solid color-mix(in srgb, var(--secondcolor-lite) 50%, transparent);
   border-radius: 10px;
+}
+.circle {
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.bg-theme {
+  background: var(--maincolor);
 }

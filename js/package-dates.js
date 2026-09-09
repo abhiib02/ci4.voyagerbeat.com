@@ -20,11 +20,15 @@ dateElements.forEach((element) => {
     date: onlyDate,
     surcharge: DateSurcharge,
   };
-  groupedDates[monthIndex].push(dateWithSurcharge);
+  if (onlyDate != null) {
+    groupedDates[monthIndex].push(dateWithSurcharge);
+  }
 });
 // Enable available month buttons
 Object.keys(groupedDates).forEach((monthIndex) => {
-  buttons[monthIndex].removeAttribute("hidden");
+  if (buttons[monthIndex] != undefined) {
+    buttons[monthIndex].removeAttribute("hidden");
+  }
 });
 
 // Button click events
