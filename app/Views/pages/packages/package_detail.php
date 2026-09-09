@@ -101,17 +101,21 @@ $TAGS = explode(',', $package->TAGS);
                         <div class="tab-pane fade" id="in-ex-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <h5 class="">Trip Inclusion</h5>
-                                    <hr>
-                                    <div class="wysiwyg">
-                                        <?= $package->INCLUSION ?>
+                                    <div class="alert alert-success">
+                                        <h5 class="">Trip Inclusion</h5>
+                                        <hr>
+                                        <div class="wysiwyg">
+                                            <?= $package->INCLUSION ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <h5 class="">Trip Exclusion</h5>
-                                    <hr>
-                                    <div class="wysiwyg">
-                                        <?= $package->EXCLUSION ?>
+                                    <div class="alert alert-danger">
+                                        <h5 class="">Trip Exclusion</h5>
+                                        <hr>
+                                        <div class="wysiwyg">
+                                            <?= $package->EXCLUSION ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -154,6 +158,106 @@ $TAGS = explode(',', $package->TAGS);
                             <hr>
                             <div class="wysiwyg">
                                 <?= $package->PACKAGE_MISC ?>
+                            </div>
+                            <div class="additional">
+                                <b>Things To Carry</b>
+
+                                <hr />
+
+                                <table class="table" style="--bs-table-bg:#00000000;">
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Gadgets</b></td>
+
+                                            <td>: Camera , Cell phones , Power Bank</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Gears</b></td>
+
+                                            <td>: A rucksack bag and a day pack , 3-litre water bladder or water bottle</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Clothes</b></td>
+
+                                            <td>
+                                                : A sun cap and a woolen cap , UV protected sunglasses , One cotton long sleeves and 2 short sleeve
+                                                t-shirt , 1 fleece jacket , 1 heavy Thick jacket/down jacket , 1 pair of gloves At least 2 long pants
+                                                (trek pants and cargo pants are favourable) , 4 sets of undergarments , 2 pair of socks , A small towel
+                                                , A rain jacket or a poncho
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Footwear</b></td>
+
+                                            <td>: Above-the-ankle waterproof and breathable hiking boots with good grip , Flip flops/sandals</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Medication</b></td>
+
+                                            <td>
+                                                : Glucose powder , Medicines for headaches, diarrhoea, muscular pain, motion and altitude sickness ,
+                                                Dettol , Bandages , Cotton
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Personal Accessories</b></td>
+
+                                            <td>
+                                                : Toothpaste , toothbrush , Paper soap & sanitizer , Sunscreen minimum of spf40 , lip balm , cold creams
+                                                , Body spray
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><b>Misc</b></td>
+
+                                            <td>LED torch light</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <b>Advisory</b>
+
+                                <ul class="advisory ">
+                                    <li>Carry minimum weight.</li>
+
+                                    <li>Please take care of Precautions needed for COVID-19 Pandemic.</li>
+
+                                    <li>Do not litter.</li>
+
+                                    <li>Alcohol and smoking is at their own risk.</li>
+
+                                    <li>The decision of the trek leader will be final and binding.</li>
+
+                                    <li>Delays may occur due to weather conditions & Traffic Conditions.</li>
+
+                                    <li>
+                                        Any person with health conditions like Asthma etc. is advised not to go for this expedition. However, if they so
+                                        decide, it is at their own risk.
+                                    </li>
+
+                                    <li>Do not wander off on your own.</li>
+
+                                    <li>Please take care of your baggage.</li>
+
+                                    <li>
+                                        Please keep yourself hydrated throughout the trek and fuel yourself with some energy bars, protein bars, or any
+                                        snacks to maintain the energy level.
+                                    </li>
+
+                                    <li>
+                                        Involve yourself in some physical activities like jumping, running, stretching, as it increases the stamina and
+                                        strength of the body.
+                                    </li>
+
+                                    <li>People with any physical ailments are advised not to come on the trek.</li>
+                                </ul>
+
                             </div>
                         </div>
                         <div class="tab-pane fade" id="tnc-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
