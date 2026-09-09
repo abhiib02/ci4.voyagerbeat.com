@@ -1,4 +1,4 @@
-<div class=" style-border outline-card p-2">
+<div class=" style-border outline-card p-2 h-100 align-content-center">
     <?php if ($isAdmin): ?>
         <div class="btn-group w-100 mb-1" role="group" aria-label="Basic example">
             <a href="/package-edit/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-sm btn-primary d-flex justify-content-center" title="Edit"><i class='bx bxs-edit fs-4'></i></a>
@@ -27,6 +27,6 @@
 
 
         <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-info mb-1">Check Offer</a>
-        <button type="button" class="btn btn-primary mb-1" disabled>View Hotel Images</button>
+        <!-- <button type="button" class="btn btn-primary mb-1" disabled>View Hotel Images</button> -->
     </div>
 </div>

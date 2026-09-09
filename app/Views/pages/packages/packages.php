@@ -64,3 +64,4 @@
         <?php endif; ?>
     </div>
 </section>
+<script src="/js/month-filter.js"></script>

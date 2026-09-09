@@ -56,7 +56,86 @@ $TAGS = explode(',', $package->TAGS);
                 <?= view('pages/packages/component/quick-info', ['package' => $package]) ?>
             </div>
             <div class="details">
+                <div class="facilities">
+                    <?= view('pages/packages/component/quick-info2') ?>
+                </div>
 
+                <ul class="nav nav-pills nav-fill gap-2 p-1 small outline-card style-border rounded-3 mb-2" id="pillNav" role="tablist" style="">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-3" id="home-tab" data-bs-toggle="tab" data-bs-target="#highlight-tab-pane" type="button" role="tab" aria-selected="true">Highlight</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-3 " id="profile-tab" data-bs-toggle="tab" data-bs-target="#in-ex-tab-pane" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Inclusion / Exclusion</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-3 active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#itinerary-tab-pane" type="button" role="tab" aria-selected="false">Itinerary</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-3" id="contact-tab" data-bs-toggle="tab" data-bs-target="#date-cost-tab-pane" type="button" role="tab" aria-selected="false">Date & Cost</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-3" id="contact-tab" data-bs-toggle="tab" data-bs-target="#misc-tab-pane" type="button" role="tab" aria-selected="false">Misc</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-3" id="contact-tab" data-bs-toggle="tab" data-bs-target="#tnc-tab-pane" type="button" role="tab" aria-selected="false">Terms & Condition</button>
+                    </li>
+                </ul>
+                <div class="tab-content outline-card style-border p-2" id="pillNavContent">
+                    <div class="tab-pane fade" id="highlight-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                        <h5 class="">Trip Highlight</h5>
+                        <hr>
+                        <div class="wysiwyg">
+                            <?= $package->TRIP_HIGHLIGHT ?>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="in-ex-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5 class="">Trip Inclusion</h5>
+                                <hr>
+                                <div class="wysiwyg">
+                                    <?= $package->INCLUSION ?>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h5 class="">Trip Exclusion</h5>
+                                <hr>
+                                <div class="wysiwyg">
+                                    <?= $package->EXCLUSION ?>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade show active" id="itinerary-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                        <?php $itiArr = json_decode($package->PACK_IT) ?>
+                        <div class="accordion" id="ItineraryAccordion">
+                            <?php foreach ($itiArr as $index => $day): ?>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-<?= $index ?>" aria-expanded="false" aria-controls="collapseOne">
+                                            <?= $day->dayTitle ?>
+                                        </button>
+                                    </h2>
+                                    <div id="day-<?= $index ?>" class="accordion-collapse collapse">
+                                        <div class="accordion-body">
+                                            <div class="wysiwyg">
+                                                <?= $day->dayDesc ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="date-cost-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+
+                        <?= view('pages/packages/component/dates-section', ['package' => $package]) ?>
+                    </div>
+                    <div class="tab-pane fade" id="misc-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">..5.</div>
+                    <div class="tab-pane fade" id="tnc-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">..6.</div>
+                </div>
             </div>
             <div class="photos"></div>
             <div class="customer-reviews"></div>
@@ -67,3 +146,7 @@ $TAGS = explode(',', $package->TAGS);
 
     </div>
 </div>
+<script>
+    const PackageDates = '<?= $package->DATES ?>';
+</script>
+<script src="/js/package-dates.js"></script>

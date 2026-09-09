@@ -12,4 +12,5 @@
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/packageCard.css">
 <link rel="stylesheet" href="/css/pagination.css">
+<link rel="stylesheet" href="/css/tinymce-reset.css">
 <link rel="stylesheet" href="/css/resets.css">
