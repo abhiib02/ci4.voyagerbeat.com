@@ -96,6 +96,7 @@ class PackageController extends BaseController
         }
 
         $this->data['package'] = $this->PackageModel->getPackageByID($ID);
+        $this->data['similarPackages'] = $this->PackageModel->getSimilarPackages($this->data['package']->LOCATION, $this->data['package']->PACKAGE_TYPE);
         $this->data['title'] = $this->data['package']->PACKAGE_NAME;
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
@@ -111,6 +112,7 @@ class PackageController extends BaseController
         }
 
         $this->data['package'] = $this->PackageModel->getPackageBySlug($slug);
+        $this->data['similarPackages'] = $this->PackageModel->getSimilarPackages($this->data['package']->LOCATION, $this->data['package']->PACKAGE_TYPE);
         $this->data['title'] = $this->data['package']->PACKAGE_NAME;
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;

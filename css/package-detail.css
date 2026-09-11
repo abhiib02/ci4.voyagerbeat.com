@@ -93,7 +93,7 @@
 /* Change container width globally on large desktops */
 @media (width >= 1200px) {
   .container {
-    max-width: 1000px; /* Adjust to your preferred size */
+    max-width: 1200px; /* Adjust to your preferred size */
   }
 }
 

@@ -2,7 +2,7 @@
 <hr>
 <?php if (!$package->REQUEST_PRICE): ?>
 
-    <table class="table outline-card ">
+    <table class="table outline-card rounded-3">
 
         <thead style="background:var(--maincolor-lite);">
 

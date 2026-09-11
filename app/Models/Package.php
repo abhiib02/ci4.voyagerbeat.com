@@ -199,6 +199,12 @@ class Package extends Model
     {
         return $this->where('CATEGORY', $Cat)->findAll();
     }
+    public function getSimilarPackages(string $location, string $type): array
+    {
+        $builder = $this->select('PACKAGE_NAME,PACKAGE_DAYS,PACKAGE_IMAGE,SLUG,PRICE_1,REQUEST_PRICE')->groupStart()->where('LOCATION', $location)->orWhere('PACKAGE_TYPE', $type)->groupEnd()->where('HIDDEN', '0');
+
+        return $builder->orderBy('PACKAGE_ID', 'DESC')->findAll(8);
+    }
     public function getPackagesByBadge(string $Badge): array
     {
         return $this->where('BADGE', $Badge)->findAll();

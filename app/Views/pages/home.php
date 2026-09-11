@@ -14,7 +14,7 @@
                     <div class="w-50">
                         <div class="input-group mb-3 bg-white rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#SearchBox">
                             <input type="text" class="form-control rounded-pill border-0" placeholder="Where do you want to go?" aria-label="Where do you want to go?" aria-describedby="button-addon2" readonly>
-                            <button class="btn btn-theme rounded-pill" type="submit" role="button" id="search-explore">Explore</button>
+                            <button class="btn btn-theme btn-voyagers rounded-pill" type="submit" role="button" id="search-explore">Explore</button>
                         </div>
                     </div>
 

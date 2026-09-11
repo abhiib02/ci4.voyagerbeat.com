@@ -33,3 +33,19 @@ function getMonthNumber(n) {
 
   return months[n] || null;
 }
+
+function getSharingTermNumber(Term) {
+  const SharingTerm = {
+    quad: 4,
+    triple: 3,
+    double: 2,
+  };
+
+  return SharingTerm[Term] || 1;
+}
+
+function stripTags(htmlString) {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = htmlString;
+  return tempDiv.textContent || tempDiv.innerText || "";
+}

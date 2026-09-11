@@ -33,7 +33,7 @@
 
         <!-- Submit Button -->
         <div class="mt-2">
-            <button type="submit" class="btn btn-theme fw-bold text-dark px-4 py-2 text-uppercase rounded-3">
+            <button type="submit" class="btn btn-theme btn-voyager fw-bold text-dark px-4 py-2 text-uppercase rounded-3">
                 Get a Free Quote
             </button>
         </div>

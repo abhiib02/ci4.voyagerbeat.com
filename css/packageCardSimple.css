@@ -1,0 +1,32 @@
+.package_image_card {
+  --default: url("https://voyagersbeat.com/img/signup-bg.webp");
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  width: 235px;
+  max-width: 300px;
+  aspect-ratio: 9/13;
+  background:
+    var(--url, var(--default)),
+    linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 50%);
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 10px;
+  border: 1px solid var(--primary-color);
+
+  text-decoration: none;
+  & p {
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+    color: #fff;
+  }
+  & .corner-box {
+    margin: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

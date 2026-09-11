@@ -29,20 +29,21 @@
   --font-family: "Roboto Condensed", sans-serif;
   --font-size: 14px;
   --maincolor: #ffd600;
-  --maincoloroutline: #ffd60033;
+  --secondaryColor: #e2a438;
+  --maincoloroutline: #e0bf1233;
+  --border-color-notheme: #b4b7bb;
   --maincolor-lite2: #ffd60044;
   --maincolor-lite: #ffd60088;
   --invertcolor: #fff;
   --inverttextcolor: #000;
   --darkcolor: #000e;
   --secondcolor: #030303;
-  --secondcolor-lite: #3338;
+  --secondcolor-lite: #888888;
   --swiper-theme-color: var(--maincolor);
   --bg-color: #f5f5f5;
   --bg-color-2: #fff;
   --text-color: #000000;
   --primary-color: #ffd600;
-  --themebtnbg: #ffd600;
   --themebtncolor: #000;
   --theme-border-radius: 10px;
   color-scheme: light;
@@ -74,7 +75,7 @@
     --font-family: "Roboto Condensed", sans-serif;
     --font-size: 14px;
     --maincolor: #ffd600;
-    --maincoloroutline: #ffd60033;
+    --maincoloroutline: #e0bf12;
     --maincolor-lite2: #ffd60044;
     --maincolor-lite: #ffd60088;
     --invertcolor: #fff;
@@ -87,7 +88,7 @@
     --bg-color-2: #1c1f2a;
     --text-color: #ffffff;
     --primary-color: #ffd600;
-    --themebtnbg: #ffd600;
+
     --themebtncolor: #000;
     --theme-border-radius: 10px;
     color-scheme: dark;
@@ -140,19 +141,65 @@ body {
 .text-shadow {
   text-shadow: 0px 0px 5px #00000088;
 }
+.text-theme {
+  color: var(--maincolor);
+}
+.text-theme-secondary {
+  color: var(--secondaryColor);
+}
 /* Typography ends*/
 
 /* buttons */
+
+.btn-voyager {
+  --bs-btn-bg: var(--maincolor);
+  --bs-btn-color: var(--themebtncolor);
+}
+.btn-outline-voyagers {
+  --bs-btn-color: var(--text-color);
+  --bs-btn-border-color: var(--secondaryColor);
+  --bs-btn-hover-color: var(--text-color);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--bs-btn-border-color) 20%, white);
+  --bs-btn-hover-border-color: var(--secondaryColor);
+  --bs-btn-focus-shadow-rgb: 33, 37, 41;
+  --bs-btn-active-color: var(--text-color);
+  --bs-btn-active-bg: var(--bs-btn-hover-bg);
+  --bs-btn-active-border-color: var(--bs-btn-active-color);
+  --bs-btn-active-shadow: inset 0 3px 5px var(--bs-btn-hover-bg);
+}
 .btn-theme {
-  --btn-color: var(--themebtnbg);
+  --btn-bg-color: var(--bs-btn-bg);
+  --btn-color: var(--bs-btn-color);
   background: linear-gradient(
-    color-mix(in srgb, var(--btn-color) 100%, black),
-    color-mix(in srgb, var(--btn-color) 75%, black)
+    color-mix(in srgb, var(--btn-bg-color) 100%, black),
+    color-mix(in srgb, var(--btn-bg-color) 75%, black)
   );
-  color: var(--themebtncolor);
+  color: var(--btn-color);
   border-radius: 10px;
-  border: 0px solid color-mix(in srgb, var(--btn-color) 75%, white);
+  border: 0px solid color-mix(in srgb, var(--btn-bg-color) 75%, white);
   align-content: center;
+}
+.btn-theme:hover {
+  --btn-bg-color: var(--bs-btn-bg);
+  background: linear-gradient(
+    color-mix(in srgb, var(--btn-bg-color) 75%, black),
+    color-mix(in srgb, var(--btn-bg-color) 50%, black)
+  );
+  color: var(--btn-color);
+}
+
+.btn-theme-2 {
+  --btn-bg-color: var(--bs-btn-bg);
+  --btn-color: var(--bs-btn-color);
+  background: color-mix(in srgb, var(--btn-bg-color) 50%, white);
+  outline: 1px solid var(--btn-bg-color);
+  color: color-mix(in srgb, var(--btn-bg-color) 10%, black);
+}
+.btn-theme-2:hover {
+  --btn-bg-color: var(--bs-btn-bg);
+  --btn-color: var(--bs-btn-color);
+  background: color-mix(in srgb, var(--btn-bg-color) 10%, white);
+  color: color-mix(in srgb, var(--btn-bg-color) 0%, black);
 }
 
 /* buttons ends*/
@@ -202,12 +249,15 @@ body {
 /*----------- Custom Styling ------------------*/
 .style-border {
   box-shadow:
-    0px 0 1px var(--maincolor),
-    0px 0 1px var(--maincolor);
+    0px 0 0px var(--maincolor),
+    0px 0 0px var(--maincolor);
 }
 .outline-card {
-  border: 1px solid color-mix(in srgb, var(--secondcolor-lite) 50%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--border-color-notheme) 50%, transparent);
   border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 2px var(--border-color-notheme);
 }
 .circle {
   aspect-ratio: 1;
@@ -215,4 +265,7 @@ body {
 }
 .bg-theme {
   background: var(--maincolor);
+}
+.inset-shadow {
+  box-shadow: inset 0 0 10px var(--maincolor);
 }

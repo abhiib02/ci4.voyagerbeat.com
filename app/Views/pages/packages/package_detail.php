@@ -29,20 +29,13 @@ $TAGS = explode(',', $package->TAGS);
                         <hr>
                         <p><?= $package->META_DESC ?></p>
                         <div class="my-2">
-                            <span class="badge rounded-pill text-bg-light"><?= $package->PACKAGE_TYPE ?></span>
-                            <span class="badge rounded-pill text-bg-warning"><?= $package->BADGE ?></span>
+                            <a href="/type/<?= urlencode($package->PACKAGE_TYPE) ?>"><span class=" badge rounded-pill text-bg-light"><?= $package->PACKAGE_TYPE ?></span></a>
+                            <a href="/badge/<?= urlencode($package->BADGE) ?>" class="text-decoration-none"><span class="badge rounded-pill text-bg-warning"><?= $package->BADGE ?></span></a>
                             <?php foreach ($TAGS as $tag): ?>
-                                <span class="badge rounded-pill">#<?= $tag ?></span>
+                                <a href="/tag/<?= $tag ?>" class="text-decoration-none"><span class="badge rounded-pill">#<?= $tag ?></span></a>
                             <?php endforeach; ?>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <?php if ($package->PACKAGE_PDF): ?>
-                                    <button data-href="/upload/package_pdf/<?= $package->PACKAGE_PDF; ?>" onclick="downloadURI('/upload/package_pdf/<?= $package->PACKAGE_PDF; ?>','')" type="button" class="btn btn-warning"><i class='bx bxs-download'></i> Download PDF</button>
-                                <?php endif; ?>
-                                <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-success" style="width:250px;">Book Now</a>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -51,14 +44,16 @@ $TAGS = explode(',', $package->TAGS);
     <div class="container">
         <div class="package-grid-container mt-2">
             <div class="sidebar">
-                <div class="cta-buttons">
-                    <?= view('pages/packages/component/button-group', ['package' => $package]) ?>
-                </div>
-                <div class="cost-sidebar">
-                    <?= view('pages/packages/component/cost-section-sidebar', ['package' => $package]) ?>
-                </div>
-                <div class="sidebar-form">
-                    <?= view('pages/component/packageDetailsQueryForm') ?>
+                <div class="sticky-top" style="top:67px;">
+                    <div class="cta-buttons">
+                        <?= view('pages/packages/component/button-group', ['package' => $package]) ?>
+                    </div>
+                    <div class="cost-sidebar">
+                        <?= view('pages/packages/component/cost-section-sidebar', ['package' => $package]) ?>
+                    </div>
+                    <div class="sidebar-form">
+                        <?= view('pages/component/packageDetailsQueryForm') ?>
+                    </div>
                 </div>
             </div>
             <div class="main-content">
@@ -273,11 +268,26 @@ $TAGS = explode(',', $package->TAGS);
                 <div class="why-voyagers">
                     <?= view('pages/packages/component/why-voyager-info') ?>
                 </div>
+                <div class="similar-packages outline-card style-border p-2">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>More Trips Like This</h5>
+                            <p>Exciting Group Departures Coming Your Way</p>
+                        </div>
+                        <div>
+                            <button id="carousel-prevBtn" class="btn btn-sm btn-dark"><i class='bx bx-left-arrow-alt'></i></button>
+                            <button id="carousel-nextBtn" class="btn btn-sm btn-dark"><i class='bx bx-right-arrow-alt'></i></button>
+                        </div>
+                    </div>
+                    <?= view('pages/packages/component/similar-packages', ['similarPackages' => $similarPackages]) ?>
+                </div>
             </div>
         </div>
+
     </div>
 </div>
 <script>
     const PackageDates = '<?= $package->DATES ?>';
 </script>
 <script src="/js/package-dates.js"></script>
+<script src="/js/similar-package.js"></script>

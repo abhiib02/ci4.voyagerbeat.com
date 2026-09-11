@@ -27,3 +27,8 @@
 .nav-pills .nav-link {
   color: var(--text-color);
 }
+
+.btn-group-vertical > .btn,
+.btn-group > .btn {
+  flex: stretch;
+}
