@@ -1,19 +1,8 @@
 <div class=" style-border outline-card p-2 h-100 align-content-center  mb-2">
 
 
-    <?php if ($isAdmin): ?>
-        <div class="btn-group w-100 mb-1" role="group" aria-label="Basic example">
-            <a href="/package-edit/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-sm btn-primary d-flex justify-content-center" title="Edit"><i class='bx bxs-edit fs-4'></i></a>
-            &nbsp;
-            <form action="/delete_package_process" method="post" id="package_delete_form">
-                <input type="hidden" name="id" value="<?= $package->PACKAGE_ID ?>">
-                <input type="hidden" name="pdf" value="<?= $package->PACKAGE_PDF ?>">
-            </form>
-            <button type="submit" class="btn btn-sm btn-danger d-flex justify-content-center" form="package_delete_form" title="Delete"><i class='bx bxs-trash fs-4'></i></button>
-            &nbsp;
-            <a href="/duplicate_package_process/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-sm btn-dark d-flex justify-content-center" title="Duplicate"><i class='bx bxs-duplicate fs-4'></i></a>
-        </div>
-    <?php endif; ?>
+    <?= view('pages/packages/component/admin-actions', ['package' => $package]) ?>
+
     <div class="d-flex mb-1">
         <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-lg btn-theme btn-success w-100" style="width:250px;">Book Now <i class='bx bx-right-arrow-alt'></i></a>
     </div>
