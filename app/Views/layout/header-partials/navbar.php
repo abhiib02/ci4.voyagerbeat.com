@@ -46,41 +46,57 @@
 <div id="family-trips-dropdown" class="mega-panel" popover>
   <div class="menu-panel p-3">
     <div class="row g-3">
-      <div class="col-7">
+      <div class="col-6">
         <a href="#" class="icon-menu">
           <div class="icon">
-            <i class='bx bx-map-pin fs-3'></i>
+            <i class='bx bx-map-pin'></i>
           </div>
-
-          Kerala
-
-        </a>
-        <a href="#">
-          <span class="ico"><i class="fa-solid fa-umbrella-beach"></i></span>
-          <span>Andaman <span class="meta d-block">Islands, scuba & beach resorts</span></span>
-        </a>
-        <a href="#">
-          <span class="ico"><i class="fa-solid fa-om"></i></span>
-          <span>Char Dham Yatra <span class="meta d-block">Pilgrimage circuit, Himalayas</span></span>
-        </a>
-        <a href="#">
-          <span class="ico"><i class="fa-solid fa-mountain"></i></span>
-          <span>Ooty <span class="meta d-block">Hill station, toy train, gardens</span></span>
-        </a>
-        <a href="#">
-          <span class="ico"><i class="fa-solid fa-mug-hot"></i></span>
-          <span>Coorg <span class="meta d-block">Coffee estates & misty hills</span></span>
-        </a>
-      </div>
-      <div class="col-5">
-        <div class="promo-panel">
           <div>
-            <span class="badge mb-2" style="background:var(--marigold); color:#2A1B04; font-size:.65rem;">LIMITED OFFER</span>
-            <p class="fraunces fw-semibold mb-1" style="font-size:1.15rem;">Kerala Family Special</p>
-            <p class="mb-0" style="font-size:.8rem; color:#CFE6DE;">Flat 15% off + free airport pickup, this month only.</p>
+          <p class="">Kerala</p>
+          <sub>Backwaters, tea gardens & Munnar</sub>
           </div>
-          <a href="#" class="btn btn-sm mt-3" style="background:#fff; color:var(--teal-deep); font-weight:700; width:fit-content;">Explore offer</a>
-        </div>
+        </a>
+        <a href="#" class="icon-menu">
+          <div class="icon">
+            <i class='bx bx-map-pin'></i>
+          </div>
+          <div>
+          <p class="">Andaman</p>
+          <sub>Islands, scuba & beach resorts</sub>
+          </div>
+        </a>
+        <a href="#" class="icon-menu">
+          <div class="icon">
+            <i class='bx bx-map-pin'></i>
+          </div>
+          <div>
+          <p class="">Char Dham Yatra </p>
+          <sub>Pilgrimage circuit, Himalayas</sub>
+          </div>
+        </a>
+        <a href="#" class="icon-menu">
+          <div class="icon">
+            <i class='bx bx-map-pin'></i>
+          </div>
+          <div>
+          <p class="">Ooty</p>
+          <sub>Hill station, toy train, gardens</sub>
+          </div>
+        </a>
+        <a href="#" class="icon-menu">
+          <div class="icon">
+            <i class='bx bx-map-pin'></i>
+          </div>
+          <div>
+          <p class="">Coorg</p>
+          <sub>Coffee estates & misty hills</sub>
+          </div>
+        </a>
+        
+        
+      </div>
+      <div class="col-6">
+        <div class="card h-100"></div>
       </div>
     </div>
   </div>

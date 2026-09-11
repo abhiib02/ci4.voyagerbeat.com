@@ -73,7 +73,6 @@
     color: var(--text-color);
   }
 }
-
 .date-anim {
   transition: all 0.5s ease;
   transition-delay: calc(sibling-index() * 100ms);
@@ -88,6 +87,7 @@
     opacity: 0;
   }
 }
+
 
 /* container size override */
 /* Change container width globally on large desktops */
