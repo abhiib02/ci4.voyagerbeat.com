@@ -18,24 +18,24 @@
         <input type="hidden" name="PACKAGE_ID" value="<?= $package->PACKAGE_ID ?>">
         <?= csrf_field() ?>
         <div class="p-1 sticky-top d-flex justify-content-between" style="top: -3px;">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <a type="button" href="#Summaryadd" class="btn btn-sm btn-theme">Summary</a>
-                <a type="button" href="#highlight" class="btn btn-sm btn-theme">Highlight</a>
-                <a type="button" href="#Inclusionadd" class="btn btn-sm btn-theme">Inclusion</a>
-                <a type="button" href="#Exclusionadd" class="btn btn-sm btn-theme">Exclusion</a>
-                <a type="button" href="#Itineraryadd" class="btn btn-sm btn-theme">Itinerary</a>
-                <a type="button" href="#Datesadd" class="btn btn-sm btn-theme">Trips Dates</a>
-                <a type="button" href="#Costadd" class="btn btn-sm btn-theme">Sharing</a>
-                <a type="button" href="#Miscupdate" class="btn btn-sm btn-theme">Misc</a>
-                <a type="button" href="#Terms" class="btn btn-sm btn-theme">Terms & Condition</a>
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <a type="button" href="#Summaryadd" class="btn btn-primary">Summary</a>
+                <a type="button" href="#highlight" class="btn btn-primary">Highlight</a>
+                <a type="button" href="#Inclusionadd" class="btn btn-primary">Inclusion</a>
+                <a type="button" href="#Exclusionadd" class="btn btn-primary">Exclusion</a>
+                <a type="button" href="#Itineraryadd" class="btn btn-primary">Itinerary</a>
+                <a type="button" href="#Datesadd" class="btn btn-primary">Trips Dates</a>
+                <a type="button" href="#Costadd" class="btn btn-primary">Sharing</a>
+                <a type="button" href="#Miscupdate" class="btn btn-primary">Misc</a>
+                <a type="button" href="#Terms" class="btn btn-primary">Terms & Condition</a>
             </div>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <input type="submit" id="add_pack_btn" value="Update package" class="btn btn-sm btn-success">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                <input type="submit" id="add_pack_btn" value="Update package" class="btn btn-success">
 
                 <?php if (request()->getGet('Adminlist') == '1'): ?>
-                    <a href="/dashboard/packages-list" class="btn btn-sm btn-danger">Cancel</a>
+                    <a href="/dashboard/packages-list" class="btn  btn-danger">Cancel</a>
                 <?php else: ?>
-                    <a href="/package/<?= $package->SLUG ?>" class="btn btn-sm btn-danger">Cancel</a>
+                    <a href="/package/<?= $package->SLUG ?>" class="btn btn-danger">Cancel</a>
                 <?php endif; ?>
 
             </div>

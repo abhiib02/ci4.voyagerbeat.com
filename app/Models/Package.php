@@ -127,7 +127,7 @@ class Package extends Model
 
     public function getAllPackages(string $direction = 'DESC', int $perPage = 15, string $group = 'default'): array
     {
-        return $this->orderBy('PACKAGE_ID', $direction)->paginate($perPage, $group);
+        return $this->where('HIDDEN', 0)->orderBy('PACKAGE_ID', $direction)->paginate($perPage, $group);
     }
 
     public function getAllPackagesForAdminDashboard(int $perPage = 15, string $group = 'default'): array
@@ -144,9 +144,13 @@ class Package extends Model
     {
         return $this->countAllResults();
     }
+    public function getAllShowPackagesCount(): int
+    {
+        return $this->where('HIDDEN', 0)->countAllResults();
+    }
     public function getAllHoneymoonPackages(): array
     {
-        return $this->where('CATEGORY', 'honeymoon')->findAll();
+        return $this->where('CATEGORY', 'honeymoon')->where('HIDDEN', 0)->findAll();
     }
 
     public function isSlugExist(string $slug): bool
@@ -168,7 +172,7 @@ class Package extends Model
     }
     public function getPackageByType(string $type): array
     {
-        return $this->where('PACKAGE_TYPE', $type)->findAll();
+        return $this->where('PACKAGE_TYPE', $type)->where('HIDDEN', 0)->findAll();
     }
     public function getPackagesByDestination(string $destination): array
     {
@@ -197,7 +201,7 @@ class Package extends Model
     }
     public function getPackagesByCategory(string $Cat): array
     {
-        return $this->where('CATEGORY', $Cat)->findAll();
+        return $this->where('CATEGORY', $Cat)->where('HIDDEN', 0)->findAll();
     }
     public function getSimilarPackages(string $location, string $type): array
     {
@@ -207,15 +211,15 @@ class Package extends Model
     }
     public function getPackagesByBadge(string $Badge): array
     {
-        return $this->where('BADGE', $Badge)->findAll();
+        return $this->where('BADGE', $Badge)->where('HIDDEN', 0)->findAll();
     }
     public function getPackagesByState(string $State): array
     {
-        return $this->where('STATE', $State)->findAll();
+        return $this->where('STATE', $State)->where('HIDDEN', 0)->findAll();
     }
     public function getPackagesByCountry(string $Country): array
     {
-        return $this->where('COUNTRY', $Country)->findAll();
+        return $this->where('COUNTRY', $Country)->where('HIDDEN', 0)->findAll();
     }
     public function getPackagesByLikes(int $perPage = 15, string $group = 'default'): array
     {
@@ -227,11 +231,11 @@ class Package extends Model
 
     public function getPackagesByTag(string $tag): array
     {
-        return $this->like('TAGS', $tag)->findAll();
+        return $this->like('TAGS', $tag)->where('HIDDEN', 0)->findAll();
     }
     public function getPackagesByNights(string $nights): array
     {
-        return $this->like('STAY', $nights)->findAll();
+        return $this->like('STAY', $nights)->where('HIDDEN', 0)->findAll();
     }
     public function getAllDistinctTags(): array
     {

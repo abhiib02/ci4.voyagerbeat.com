@@ -4,7 +4,7 @@
             <h1 class="huge-heading text-capitalize "><?= isset($name) ? $name : 'All '; ?> Packages</h1>
             <?php if (isset($meta_desc)): ?><p><?= $meta_desc; ?></p><?php endif; ?>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-sm btn-outline-light" disabled><?= count($packages) ?> Packages</button>
+                <button type="button" class="btn btn-sm btn-outline-light" disabled><?= $TotalPackageCount ?> Packages</button>
                 &nbsp;
                 <button type="button" class="btn btn-sm btn-outline-light showFav" onclick="showFavOnly()"><i class="bx bxs-heart text-red"></i> Show Favorites</button>
                 &nbsp;

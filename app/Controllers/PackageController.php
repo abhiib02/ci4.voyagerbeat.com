@@ -21,6 +21,7 @@ class PackageController extends BaseController
         helper('json');
         $this->PackageModel = new Package();
         $this->data['States'] = $this->PackageModel->getAllDistinctStates();
+        $this->data['TotalPackageCount'] = $this->PackageModel->getAllShowPackagesCount();
         $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
     }
 
@@ -236,7 +237,7 @@ class PackageController extends BaseController
 
     public function packagesByType(string $trip_type)
     {
-
+        $trip_type = strtolower($trip_type);
         if ($trip_type != null && $this->TripTypeMeta($trip_type)) {
             $this->data["meta_desc"] = $this->TripTypeMeta($trip_type);
             $this->data["canonical"] = "type/" . $trip_type;
