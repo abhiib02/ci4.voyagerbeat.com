@@ -43,27 +43,45 @@
       </li>
     </ul>
 </nav>
-<div id="family-trips-dropdown" class="mega-panel container" popover>
-  <div class="d-flex justify-content-center">
-    <div class="col-lg-2">
-      <div class="square-card" style="--bgUrl: url('https://lh3.googleusercontent.com/d/1sGKAIBBoAXOYG-29rM-qOmI374qtskt0=w640');"></div>
-      <h3>Kerala</h3>
-    </div>
-    <div class="col-lg-2">
-      <div class="square-card" style="--bgUrl: url('https://lh3.googleusercontent.com/d/1z1b5dKMK4gowagM7j4pTmAcYtzqHskp3=w640');"></div>
-      <h3>Andaman</h3>
-    </div>
-    <div class="col-lg-2">
-      <div class="square-card" style="--bgUrl: url('https://lh3.googleusercontent.com/d/1X__P9Rk1V3ljI1HFH7hh1GAN2zH1LwDt=w640');"></div>
-      <h3>Coorg</h3>
-    </div>
-    <div class="col-lg-2">
-      <div class="square-card" style="--bgUrl: url('https://lh3.googleusercontent.com/d/1AmqWsPu_SHB_dXe9bKzAEXO_3VscA8YB=w640');"></div>
-      <h3>Ooty</h3>
-    </div>
-    <div class="col-lg-2">
-      <div class="square-card" style="--bgUrl: url('https://lh3.googleusercontent.com/d/1uhJfHS3E4njHawp0eSuOfZCFmRnauF=w640');"></div>
-      <h3>Dham Yatra</h3>
+<div id="family-trips-dropdown" class="mega-panel" popover>
+  <div class="menu-panel p-3">
+    <div class="row g-3">
+      <div class="col-7">
+        <a href="#" class="icon-menu">
+          <div class="icon">
+            <i class='bx bx-map-pin fs-3'></i>
+          </div>
+
+          Kerala
+
+        </a>
+        <a href="#">
+          <span class="ico"><i class="fa-solid fa-umbrella-beach"></i></span>
+          <span>Andaman <span class="meta d-block">Islands, scuba & beach resorts</span></span>
+        </a>
+        <a href="#">
+          <span class="ico"><i class="fa-solid fa-om"></i></span>
+          <span>Char Dham Yatra <span class="meta d-block">Pilgrimage circuit, Himalayas</span></span>
+        </a>
+        <a href="#">
+          <span class="ico"><i class="fa-solid fa-mountain"></i></span>
+          <span>Ooty <span class="meta d-block">Hill station, toy train, gardens</span></span>
+        </a>
+        <a href="#">
+          <span class="ico"><i class="fa-solid fa-mug-hot"></i></span>
+          <span>Coorg <span class="meta d-block">Coffee estates & misty hills</span></span>
+        </a>
+      </div>
+      <div class="col-5">
+        <div class="promo-panel">
+          <div>
+            <span class="badge mb-2" style="background:var(--marigold); color:#2A1B04; font-size:.65rem;">LIMITED OFFER</span>
+            <p class="fraunces fw-semibold mb-1" style="font-size:1.15rem;">Kerala Family Special</p>
+            <p class="mb-0" style="font-size:.8rem; color:#CFE6DE;">Flat 15% off + free airport pickup, this month only.</p>
+          </div>
+          <a href="#" class="btn btn-sm mt-3" style="background:#fff; color:var(--teal-deep); font-weight:700; width:fit-content;">Explore offer</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

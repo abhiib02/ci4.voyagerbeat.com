@@ -23,7 +23,9 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--darkcolor);
 }
-
+input[type="radio"] {
+  accent-color: var(--secondaryColor);
+}
 /* Default (Light) Styles  */
 :root {
   --font-family: "Roboto Condensed", sans-serif;
@@ -201,7 +203,18 @@ body {
   background: color-mix(in srgb, var(--btn-bg-color) 10%, white);
   color: color-mix(in srgb, var(--btn-bg-color) 0%, black);
 }
-
+.btn-outline-whatsapp {
+  --bs-btn-color: #37C572;
+  --bs-btn-border-color: #37C572;
+  --bs-btn-hover-color: var(--text-color);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--bs-btn-border-color) 20%, white);
+  --bs-btn-hover-border-color: #37C572;
+  --bs-btn-focus-shadow-rgb: 33, 37, 41;
+  --bs-btn-active-color: var(--text-color);
+  --bs-btn-active-bg: var(--bs-btn-hover-bg);
+  --bs-btn-active-border-color: var(--bs-btn-active-color);
+  --bs-btn-active-shadow: inset 0 3px 5px var(--bs-btn-hover-bg);
+}
 /* buttons ends*/
 
 .square-card {

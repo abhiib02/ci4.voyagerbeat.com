@@ -1,37 +1,20 @@
 <?php if (!$package->REQUEST_PRICE): ?>
+
     <style>
-        .options {
-            display: flex;
-            gap: 10px;
-            margin-top: 2px;
-            margin-bottom: 10px;
+        .cost-sidebar-radio {
+            position: relative;
+            width: fit-content;
 
-            & .option {
-                flex: 1;
-
-                & label {
-                    width: 100%;
-                }
+            &>input[type="radio"] {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                visibility: hidden;
             }
-        }
 
-
-
-        .option label {
-            cursor: pointer;
-        }
-
-        #priceResult {
-            display: none;
-        }
-
-        #priceOptions {
-            display: none;
-        }
-
-        .option>label>input[type="radio"] {
-            visibility: hidden;
-            display: none;
+            &:has(input[type="radio"]:checked) {
+                outline: 2px solid var(--secondaryColor);
+            }
         }
 
         .bed-dot {
@@ -58,35 +41,32 @@
 
         }
 
-        /* .option>label:has(input[name="sharing"]:checked) {
-            color: var(--bs-btn-hover-color);
-            background-color: var(--bs-btn-hover-bg);
-            border-color: var(--bs-btn-hover-border-color);
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 2px;
+            margin-bottom: 10px;
+
+            & .option {
+                flex: auto;
+
+                & label {
+                    width: 100%;
+                }
+            }
         }
-
-
-        .option>label:has(input[name="priceType"]:checked) {
-            color: var(--bs-btn-hover-color);
-            background-color: var(--bs-btn-hover-bg);
-            border-color: var(--bs-btn-hover-border-color);
-        } */
     </style>
-
-
     <div class="outline-card style-border mb-2 p-2">
-
-        <div class="section">
-            <em>Choose your room sharing</em>
-            <div id="sharingOptions" class="options"></div>
-        </div>
-
-        <div id="priceOptions" class="section">
-            <em>Choose Boarding</em>
-            <div id="priceTypeOptions" class="options"></div>
-        </div>
-
-        <div id="priceResult" class="">
-        </div>
+        <!-- Layer 1: Room Sharing Options -->
+         <em>Choose your room sharing</em>
+        <div id="sharingOptions" class="options "></div>
+        <hr>
+        <!-- Layer 2: Route / Price Options -->
+         <em>Choose Boarding</em>
+        <div id="priceOptions" class="options"></div>
+        <!-- Final Output Section -->
+        <div id="output"></div>
     </div>
 
     <script src="/js/util-script.js"></script>
@@ -131,114 +111,66 @@
             echo implode(",\n", $info_blocks);
             ?>
         ];
+        const sharingDiv = document.getElementById("sharingOptions");
+        const priceDiv = document.getElementById("priceOptions");
+        const outputDiv = document.getElementById("output");
 
+        // Function to render Layer 2 & output
+        function renderPrices(objIndex) {
+            const obj = CostingObject[objIndex];
+            const keys = Object.keys(obj).filter(k => k !== "value" && k !== "label");
 
-        const sharingOptions = document.getElementById("sharingOptions");
-        const priceOptions = document.getElementById("priceOptions");
-        const priceTypeOptions = document.getElementById("priceTypeOptions");
-        const priceResult = document.getElementById("priceResult");
-
-
-        // Create first-level radio buttons
-        CostingObject.forEach((item, index) => {
-
-            const wrapper = document.createElement("div");
-            let sharingName = item.label.split(' ')[0].toLowerCase();
-            wrapper.className = "option";
-
-            let beddot = '';
-            const count = getSharingTermNumber(sharingName);
-            for (let i = 0; i < count; i++) {
-                beddot += '<span class="bed-dot"></span>';
-            }
-
-            wrapper.innerHTML = `
-                <label class="btn btn-outline-voyagers sharing">
-                    <div>
-                    ${beddot ?? ''}
-                    </div>
-                    <input
-                        type="radio"
-                        name="sharing"
-                        value="${index}"
-                    >
-                    ${item.label.split(' ')[0]}
-                </label>
-            `;
-
-            sharingOptions.appendChild(wrapper);
-        });
-
-
-        // When sharing is selected
-        sharingOptions.addEventListener("change", function(event) {
-            document.querySelector('label.sharing.active')?.classList.remove('active');
-            const selectedIndex = event.target.value;
-            const selectedObject = CostingObject[selectedIndex];
-            event.target.parentElement.classList.add('active');
-            // Clear previous price options
-            priceTypeOptions.innerHTML = "";
-            priceResult.style.display = "none";
-
-            // Get all keys except value and label
-            Object.keys(selectedObject).forEach(key => {
-
-                if (key === "value" || key === "label") {
-                    return;
-                }
-
-                const wrapper = document.createElement("div");
-                wrapper.className = "option";
-
-                wrapper.innerHTML = `
-                
-                    <label class="btn btn-outline-voyagers btn-sm priceType">
-                        <i class='bx bx-transfer-alt fs-3 text-theme-secondary'></i>
+            priceDiv.innerHTML = keys.map((key, i) => `
+        <label class="btn btn-outline-voyagers cost-sidebar-radio">
+        <i class='bx bx-transfer-alt fs-3 text-theme-secondary'></i>
                         <br>
-                        <input
-                            type="radio"
-                            name="priceType"
-                            value="${key}"
-                        >
-                        ${key.split('<br>')[1] ?? ''}
-                    </label>
-                `;
+          <input type="radio" name="pricing" data-key="${key}" value="${obj[key]}" ${i === 0 ? 'checked' : ''}>
+          ${key.split('<br>')[1]}
+        </label>
+      `).join('');
 
-                priceTypeOptions.appendChild(wrapper);
-            });
+            updateOutput();
+        }
 
-            priceOptions.style.display = "block";
-        });
+        // Function to update the final output text
+        
 
+        // Render Layer 1 (Sharing options)
+        sharingDiv.innerHTML = CostingObject.map((item, i) => `
+      <label class="btn btn-outline-voyagers cost-sidebar-radio">
+        ${Array.from({ length: getSharingTermNumber(item.label.split(' ')[0].toLowerCase()) }, (_, i) => `<span class="bed-dot"></span>`).join('')}
+        <br>
+        <input type="radio" name="sharing" value="${i}" ${i === 0 ? 'checked' : ''} class="">
+        ${item.label}
+      </label>
+    `).join('');
 
-        // When price type is selected
-        priceTypeOptions.addEventListener("change", function(event) {
+        // Event delegation for radio changes
+        sharingDiv.addEventListener("change", e => renderPrices(e.target.value));
+        priceDiv.addEventListener("change", updateOutput);
 
-            document.querySelector('label.priceType.active')?.classList.remove('active');
-            const selectedIndex = document.querySelector(
-                'input[name="sharing"]:checked'
-            ).value;
-            document.querySelector('label:has(input[name="priceType"]:checked)')?.classList.add('active');
-            const selectedObject = CostingObject[selectedIndex];
+        // Initialize with first item
 
-            const selectedKey = event.target.value;
-            const selectedPrice = Number(selectedObject[selectedKey]);
-            const selectedPriceWithGST = Math.round(selectedPrice + (selectedPrice * 0.05));
-            const OnlyGST = Math.round(selectedPrice * 0.05);
-            priceResult.innerHTML = `
-            <em>Costing summary</em>
+        function updateOutput() {
+            const checkedPrice = priceDiv.querySelector('input[name="pricing"]:checked');
+            if (checkedPrice) {
+                let Cost = checkedPrice.value;
+                let GSTonCost = Math.round(checkedPrice.value*0.05);
+                let CostWithGST = Math.round(Number(Cost) + Number(GSTonCost));
+                outputDiv.innerHTML = `
+                <em>Costing summary</em>
             <div class="border rounded-3 p-3 m-2">
                 <p class="d-flex justify-content-between border-bottom m-0 py-2">
-                    <span class="text-secondary">${stripTags(selectedKey)}</span>
-                    <span class="fw-bold">₹${selectedPrice}</span>
+                    <span class="text-secondary">${stripTags(checkedPrice.dataset.key)}</span>
+                    <span class="fw-bold">₹${Cost}</span>
                 </p>
                 <p class="d-flex justify-content-between border-bottom  m-0 py-2">
                     <span class="text-secondary">GST @ 5%</span>
-                    <span class="fw-bold">₹${OnlyGST}</span>
+                    <span class="fw-bold">₹${GSTonCost}</span>
                 </p>
                 <p class="d-flex justify-content-between m-0 py-2 fs-5">
                     <span class="text-secondary">Total per person</span>
-                    <span class="fw-bold">₹${selectedPriceWithGST}</span>
+                    <span class="fw-bold">₹${CostWithGST}</span>
                 </p>
             </div>
             
@@ -248,11 +180,11 @@
                     <div>
                         <em class="text-secondary">Pay Full</em><br>
                         <span class="fw-bold fs-3">
-                        ₹${selectedPriceWithGST}</span>
+                        ₹${CostWithGST}</span>
                     </div>
                     </a>
-                ${(AdvanceBookingAmount == 0) ? `` : `
-                <a href="/book/${PackageID}" class="card px-2 card btn btn-outline-dark  flex-fill">
+                ${(AdvanceBookingAmount == 0 ) ? `` : `
+                <a href="/book/${PackageID  }" class="card px-2 card btn btn-outline-dark  flex-fill">
                     <div>
                         <em class="text-secondary">Pay Advance</em><br>
                         <span class="fw-bold fs-3">₹${AdvanceBookingAmount}</span>
@@ -260,164 +192,12 @@
                     </a>
                 `}
                 
-            </div>
-            `;
+            </div>`;
+            }
+        }
 
-            priceResult.style.display = "block";
-        });
+        renderPrices(0);
     </script>
 
 <?php endif; ?>
 
-
-<!--
-<ul class="nav nav-pills nav-fill gap-2 p-1 small  rounded-3" id="CostsTabNav" role="tablist">
-            phpStartTag : if (!empty($package->INFO_P1)):  : phpEndTag
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active rounded-3 border" id="info_p1_tab" data-bs-toggle="tab" data-bs-target="#info_p1" type="button" role="tab" aria-selected="true">
-                         phpEchoTag :  explode(' ', $package->INFO_P1)[0]  : phpEndTag
-                    </button>
-                </li>
-            phpStartTag : endif;  : phpEndTag
-            phpStartTag : if (!empty($package->INFO_P2)):  : phpEndTag
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-3 border" id="info_p2_tab" data-bs-toggle="tab" data-bs-target="#info_p2" type="button" role="tab" aria-selected="false">
-                         phpEchoTag :  explode(' ', $package->INFO_P2)[0]  : phpEndTag
-                    </button>
-                </li>
-            phpStartTag : endif;  : phpEndTag
-            phpStartTag : if (!empty($package->INFO_P3)):  : phpEndTag
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-3 border" id="info_p3_tab" data-bs-toggle="tab" data-bs-target="#info_p3" type="button" role="tab" aria-selected="false">
-                         phpEchoTag :  explode(' ', $package->INFO_P3)[0]  : phpEndTag
-                    </button>
-                </li>
-            phpStartTag : endif;  : phpEndTag
-            phpStartTag : if (!empty($package->INFO_P4)):  : phpEndTag
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-3 border" id="info_p4_tab" data-bs-toggle="tab" data-bs-target="#info_p4" type="button" role="tab" aria-selected="false">
-                         phpEchoTag :  explode(' ', $package->INFO_P4)[0]  : phpEndTag
-                    </button>
-                </li>
-            phpStartTag : endif;  : phpEndTag
-            phpStartTag : if (!empty($package->INFO_P5)):  : phpEndTag
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link rounded-3 border" id="info_p5_tab" data-bs-toggle="tab" data-bs-target="#info_p5" type="button" role="tab" aria-selected="false">
-                         phpEchoTag :  explode(' ', $package->INFO_P5)[0]  : phpEndTag
-                    </button>
-                </li>
-            phpStartTag : endif;  : phpEndTag
-        </ul>
-        <hr>
-        <div class="tab-content px-3" id="CostsTabNavContent">
-            <div class="tab-pane fade active show" id="info_p1" role="tabpanel" aria-labelledby="info_p1-tab" tabindex="0">
-                phpStartTag : if (!empty($package->HEAD_PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->PRICE_1 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WTPRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WTPRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT_PRICE_1 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WT2PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WT2PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT2_PRICE_1 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-
-            </div>
-            <div class="tab-pane fade" id="info_p2" role="tabpanel" aria-labelledby="info_p2-tab" tabindex="0">
-                phpStartTag : if (!empty($package->HEAD_PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->PRICE_2 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WTPRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WTPRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT_PRICE_2 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WT2PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WT2PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT2_PRICE_2 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-
-            </div>
-            <div class="tab-pane fade" id="info_p3" role="tabpanel" aria-labelledby="info_p3-tab" tabindex="0">
-                phpStartTag : if (!empty($package->HEAD_PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->PRICE_3 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WTPRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WTPRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT_PRICE_3 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WT2PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WT2PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT2_PRICE_3 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-
-            </div>
-            <div class="tab-pane fade" id="info_p4" role="tabpanel" aria-labelledby="info_p4-tab" tabindex="0">
-                phpStartTag : if (!empty($package->HEAD_PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->PRICE_4 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WTPRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WTPRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT_PRICE_4 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WT2PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WT2PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT2_PRICE_4 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-
-            </div>
-            <div class="tab-pane fade" id="info_p5" role="tabpanel" aria-labelledby="info_p5-tab" tabindex="0">
-                phpStartTag : if (!empty($package->HEAD_PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  $package->HEAD_PRICE  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->PRICE_5 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WTPRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WTPRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT_PRICE_5 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-                phpStartTag : if (!empty($package->HEAD_WT2PRICE)):  : phpEndTag
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="m-0"> phpEchoTag :  strip_tags($package->HEAD_WT2PRICE)  : phpEndTag</p>
-                        <p class="fw-bold fs-3 m-0">₹ phpEchoTag :  $package->WT2_PRICE_5 ?? ''  : phpEndTag</p>
-                    </div>
-                phpStartTag : endif;  : phpEndTag
-
-            </div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center px-3">
-            <p></p>
-            <p class="fw-bold text-secondary">+ 5% GST</p>
-        </div>
--->

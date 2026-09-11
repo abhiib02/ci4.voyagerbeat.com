@@ -8,19 +8,17 @@
 .mega-panel {
   position-anchor: --nav-btn;
   position: fixed;
-  top: anchor(center);
+  top: anchor(bottom);
   left: anchor(center);
   transform: translateX(-50%);
-  margin: 0;
-  width: calc(100%);
+  width: clamp(400px, 100%, 900px);
   display: none;
+  opacity: 0;
   transition: all 0.3s ease-in-out display 0.3 allow-discrete;
   animation: fadeOut 0.5s forwards;
   border: none;
-  padding: 1em;
-  margin: 1em;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-  border-radius: var(--theme-border-radius);
+  margin: 0 1em 1em 1em;
+  border-radius: 0 0 var(--theme-border-radius) var(--theme-border-radius);
 }
 
 .mega-panel:popover-open {
@@ -40,25 +38,45 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    translate: 0 -1em;
   }
 
   to {
     opacity: 1;
-    translate: 0 0;
   }
 }
 
 @keyframes fadeOut {
   from {
     opacity: 1;
-    translate: 0 0;
   }
 
   to {
     opacity: 0;
-    translate: 0 -1em;
   }
 }
 
 /* animation keyframes */
+
+.icon-menu {
+  display: block;
+  transition: all 0.3s ease;
+  height: auto;
+  max-height: 50px;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  outline: 1px solid color-mix(in srgb, var(--secondaryColor) 30%, white);
+  border-radius: var(--theme-border-radius);
+  & > .icon {
+    width: 30px;
+    height: auto;
+    aspect-ratio: 1;
+    padding: 0.1rem;
+    background-color: var(--secondaryColor);
+    border-radius: var(--theme-border-radius);
+    color: white;
+  }
+  &:hover {
+    background-color: color-mix(in srgb, var(--secondaryColor) 30%, white);
+    outline: 1px solid var(--secondaryColor);
+  }
+}
