@@ -10,4 +10,8 @@
 
 <body>
     <main>
-        <?= view('layout/header-partials/navbar') ?>
+        <?php if (isMobileDevice()): ?>
+            <?= view('layout/header-partials/nav-mobile') ?>
+        <?php else: ?>
+            <?= view('layout/header-partials/navbar') ?>
+        <?php endif; ?>

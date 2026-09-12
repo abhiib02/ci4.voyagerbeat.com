@@ -22,6 +22,10 @@ class MainController extends BaseController
 
     public function index(): string
     {
-        return $this->Render_Page('home', $this->data);
+        if (isMobileDevice()) {
+            return $this->Render_Page('home-mobile', $this->data);
+        } else {
+            return $this->Render_Page('home', $this->data);
+        }
     }
 }
