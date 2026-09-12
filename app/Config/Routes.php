@@ -92,6 +92,7 @@ $routes->get('category/(:any)', 'PackageController::packagesByCategory/$1');
 $routes->get('type/(:any)', 'PackageController::packagesByType/$1');
 $routes->get('tag/(:any)', 'PackageController::packagesByTag/$1');
 $routes->get('nights/(:num)', 'PackageController::packagesByNights/$1');
+$routes->get('nights/(:num)/(:any)', 'PackageController::packagesByNightsbyLocation/$1/$2');
 $routes->get('badge/(:any)', 'PackageController::packagesByBadge/$1');
 
 $routes->get('upcoming', 'PackageController::upcoming');

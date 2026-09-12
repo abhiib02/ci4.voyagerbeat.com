@@ -33,6 +33,7 @@ abstract class BaseController extends Controller
     protected Package $PackageModel;
     protected Option $OptionModel;
     protected array $data = [];
+    protected array $navbardata = [];
 
     /**
      * @return void
@@ -41,7 +42,7 @@ abstract class BaseController extends Controller
     {
         // Load here all helpers you want to be available in your controllers that extend BaseController.
         // Caution: Do not put the this below the parent::initController() call below.
-        // $this->helpers = ['form', 'url'];
+        $this->helpers = ['country'];
 
 
         // Caution: Do not edit this line.
@@ -55,6 +56,14 @@ abstract class BaseController extends Controller
         $this->OptionModel = new Option();
         $this->data['AllPackagesNameAndID'] = $this->PackageModel->getAllPackagesNameAndID();
         $this->data['defaultContact'] = $this->OptionModel->getOptionValue('contact');
+        $this->data['navDataLadakh'] = $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'leh');
+        $this->data['navDataSpiti'] = $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'spiti');
+        $this->data['navDataInternational'] = $this->PackageModel->getAllDistinctCountry();
+        $this->data['navDataPackageType'] = $this->PackageModel->getAllDistinctType();
+        $this->data['navDataHoneymoon'] = $this->PackageModel->getPackagesByTagForNav('honeymoon');
+
+
+
 
         \Config\Services::renderer()->setData([
             'isAdmin' => $this->AuthCheckAdmin(),

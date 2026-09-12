@@ -5,8 +5,7 @@
   /*outline:1px solid #5005;*/
 }
 @view-transition {
-  navigation: auto;
-  types: slide, forwards;
+  /* navigation: auto; */
 }
 
 ::-webkit-scrollbar {
@@ -49,6 +48,7 @@ input[type="radio"] {
   --themebtncolor: #000;
   --theme-border-radius: 10px;
   color-scheme: light;
+  --defaultBg: url("/assets/hero-images/1.jpg");
 }
 /* Default (Dark) Styles */
 /* :root {
@@ -204,11 +204,11 @@ body {
   color: color-mix(in srgb, var(--btn-bg-color) 0%, black);
 }
 .btn-outline-whatsapp {
-  --bs-btn-color: #37C572;
-  --bs-btn-border-color: #37C572;
+  --bs-btn-color: #37c572;
+  --bs-btn-border-color: #37c572;
   --bs-btn-hover-color: var(--text-color);
   --bs-btn-hover-bg: color-mix(in srgb, var(--bs-btn-border-color) 20%, white);
-  --bs-btn-hover-border-color: #37C572;
+  --bs-btn-hover-border-color: #37c572;
   --bs-btn-focus-shadow-rgb: 33, 37, 41;
   --bs-btn-active-color: var(--text-color);
   --bs-btn-active-bg: var(--bs-btn-hover-bg);
@@ -248,6 +248,9 @@ body {
 }
 .bgColorTheme {
   background-color: var(--maincolor);
+}
+.bgSecondaryTheme {
+  background-color: var(--secondaryColor);
 }
 
 .flex_wrap_section {

@@ -164,7 +164,7 @@ class PackageController extends BaseController
         $this->data['packages'] = $this->PackageModel->getPackagesByBadge($Badge);
         $this->data['title'] = $Badge . ' Packages | Voyagers Beat | Live to Travel';
         $this->data['name'] = $Badge;
-        $this->data['meta_desc'] = $Badge . "     Packages. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";;
+        $this->data['meta_desc'] = $Badge . " Packages. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";;
         $this->data['canonical'] = '';
         $this->data['image'] = '';
         $this->data['noindex'] = '';
@@ -176,10 +176,10 @@ class PackageController extends BaseController
     {
 
         $this->data['packages'] = $this->PackageModel->getPackagesByState($State);
-        $this->data["name"] = "Upcoming";
-        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
+        $this->data["name"] = $State;
+        $this->data["title"] = "$State Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
-        $this->data["canonical"] = "upcoming";
+        $this->data["canonical"] = "/state/$State";
 
         return $this->Render_Page('packages/packages', $this->data);
     }
@@ -188,10 +188,10 @@ class PackageController extends BaseController
     {
 
         $this->data['packages'] = $this->PackageModel->getPackagesByCountry($Country);
-        $this->data["name"] = "Upcoming";
-        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
-        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
-        $this->data["canonical"] = "upcoming";
+        $this->data["name"] = $Country;
+        $this->data["title"] = "$Country Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "#voyagersbeat";
+        $this->data["canonical"] = "/country/$Country";
 
         return $this->Render_Page('packages/packages', $this->data);
     }
@@ -264,16 +264,31 @@ class PackageController extends BaseController
     }
     public function packagesByNights(int $nights)
     {
+        $numNights = $nights;
         $nights = htmlspecialchars($nights) . 'N';
 
         $this->data['packages'] = $this->PackageModel->getPackagesByNights($nights);
-        $this->data["name"] = $nights . "inghts";
+        $this->data["name"] = $numNights . "Nights";
         $this->data["title"] = $nights . " Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
-        $this->data["canonical"] = "upcoming";
+        $this->data["canonical"] = "nights/$numNights";
 
         return $this->Render_Page('packages/packages', $this->data);
     }
+    public function packagesByNightsbyLocation(int $nights, string $locationVar)
+    {
+        $numNights = $nights;
+        $nights = htmlspecialchars($nights) . 'N';
+
+        $this->data['packages'] = $this->PackageModel->getPackagesByNightsandLocation($nights, $locationVar);
+        $this->data["name"] = "Week end ";
+        $this->data["title"] = $numNights . " Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
+        $this->data["canonical"] = "nights/$numNights/$locationVar";
+
+        return $this->Render_Page('packages/packages', $this->data);
+    }
+
 
     public function weekendTripsPackages()
     {

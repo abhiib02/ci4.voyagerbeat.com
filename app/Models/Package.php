@@ -124,6 +124,10 @@ class Package extends Model
         return (bool) $this->builder()->where(["PACKAGE_ID" => $id])->set($data)->update();
     }
 
+    public function getPackagesByField(string $selectString, string $whereColumn, string $whereData)
+    {
+        return $this->select($selectString)->where($whereColumn, $whereData)->where('HIDDEN', 0)->findAll();;
+    }
 
     public function getAllPackages(string $direction = 'DESC', int $perPage = 15, string $group = 'default'): array
     {
@@ -237,6 +241,10 @@ class Package extends Model
     {
         return $this->like('STAY', $nights)->where('HIDDEN', 0)->findAll();
     }
+    public function getPackagesByNightsandLocation(string $nights, string $location): array
+    {
+        return $this->where('LOCATION', $location)->like('STAY', $nights)->where('HIDDEN', 0)->findAll();
+    }
     public function getAllDistinctTags(): array
     {
         $rows = $this->select('TAGS')->where('TAGS IS NOT NULL')->findAll();
@@ -253,6 +261,22 @@ class Package extends Model
         sort($distinctTags);
 
         return $distinctTags;
+    }
+    public function getAllDistinctType(): array
+    {
+        $rows = $this->select('PACKAGE_TYPE')
+            ->distinct()
+            ->where('PACKAGE_TYPE IS NOT NULL')
+            ->where("PACKAGE_TYPE != ''")
+            ->findAll();
+
+        $types = array_map(static function ($row) {
+            return is_object($row) ? $row->PACKAGE_TYPE : $row['PACKAGE_TYPE'];
+        }, $rows);
+
+        sort($types);
+
+        return $types;
     }
     public function getAllDistinctBadges(): array
     {
@@ -303,6 +327,7 @@ class Package extends Model
         return $countries;
     }
 
+
     public function getFavoritecount(int $ID): int
     {
         $package = $this->select('FAVORITE_COUNT')->find($ID);
@@ -324,5 +349,12 @@ class Package extends Model
             return (bool) $this->delete($ID);
         }
         return false;
+    }
+    /// Custom Functions with Exact Details For Which Use
+
+    // Function to get honeymoon packages
+    public function getPackagesByTagForNav(string $tag): array
+    {
+        return $this->select('PACKAGE_NAME,SLUG,PACKAGE_DAYS')->like('TAGS', $tag)->where('HIDDEN', 0)->limit(6)->find();
     }
 }

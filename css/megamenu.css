@@ -19,6 +19,7 @@
   border: none;
   margin: 0 1em 1em 1em;
   border-radius: 0 0 var(--theme-border-radius) var(--theme-border-radius);
+  overflow: hidden;
 }
 
 .mega-panel:popover-open {
@@ -68,12 +69,12 @@
   border-radius: var(--theme-border-radius);
   text-decoration: none;
   align-items: center;
-  color:var(--textcolor);
+  color: var(--textcolor);
   margin-bottom: 10px;
   width: 100%;
-  & p{
+  & p {
     border-bottom: 1px solid var(--secondaryColor);
-    margin:0;
+    margin: 0;
     font-weight: bold;
   }
   & .icon {
@@ -81,12 +82,15 @@
     height: 40px;
     aspect-ratio: 1/1;
     padding: 0.1rem;
+    background-image: var(--iconbg);
+    background-size: cover;
+    background-position: center;
     background-color: var(--secondaryColor);
     border-radius: var(--theme-border-radius);
     color: white;
     display: grid;
     place-items: center;
-    margin-right:10px;
+    margin-right: 10px;
     font-size: 1rem;
   }
   &:hover {
@@ -95,11 +99,11 @@
   }
 }
 .icon-menu {
-    transition: all 0.3s ease;
-    transition-delay: calc(sibling-index() * 10ms);
-    translate: 0 0;
-    opacity: 1;
-  }
+  transition: all 0.3s ease;
+  transition-delay: calc(sibling-index() * 10ms);
+  translate: 0 0;
+  opacity: 1;
+}
 @starting-style {
   .icon-menu {
     transition: all 1s ease;
@@ -109,13 +113,24 @@
   }
 }
 
- .promo-panel{
-    background:linear-gradient(160deg,#20544A,#20544A);
-    border-radius:.9rem;
-    color:#fff;
-    padding:1.2rem;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-  }
+.hover-panel {
+  background: var(--hover-panel-bg, var(--defaultBg)), #00000088;
+  background-blend-mode: overlay;
+  color: #fff;
+  height: 100%;
+  background-size: cover;
+  overflow: clip;
+  border-radius: var(--theme-border-radius);
+  padding: 1rem;
+  font-size: 2rem;
+}
+.promo-panel {
+  background: linear-gradient(160deg, #20544a, #20544a);
+  border-radius: 0.9rem;
+  color: #fff;
+  padding: 1.2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
