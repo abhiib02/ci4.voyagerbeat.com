@@ -5,7 +5,7 @@
     </a>
     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link" href="#">Awards & Recognition</a>
+        <a class="nav-link" href="/recognition">Awards & Recognition</a>
       </li>
       <li class="nav-item dropdown ">
         <button class="nav-link dropdown-toggle menu-trigger" popovertarget="family-trips-dropdown">Family Trips</button>
