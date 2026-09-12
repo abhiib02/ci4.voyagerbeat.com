@@ -379,9 +379,7 @@
           <a class="list-group-item list-group-item-action" href="/packages">
             Packages
           </a>
-          <a class="list-group-item list-group-item-action" href="/packages">
-            Join Our Team
-          </a>
+
           <a class="list-group-item list-group-item-action" href="/travelerFavorites">
             Traveler Favorites
           </a>
@@ -403,7 +401,29 @@
             <a class="list-group-item list-group-item-action" href="/login">
               Login
             </a>
+            <a class="list-group-item list-group-item-action" href="/Signup">
+              Signup
+            </a>
           <?php endif; ?>
+        </ul>
+      </div>
+      <div class="col-6">
+        <ul class="list-group">
+          <a class="list-group-item list-group-item-action" href="/blogs">
+            Contact Us
+          </a>
+          <a class="list-group-item list-group-item-action" href="/packages">
+            introduction
+          </a>
+          <a class="list-group-item list-group-item-action" href="/packages">
+            Who We Are?
+          </a>
+          <a class="list-group-item list-group-item-action" href="/travelerFavorites">
+            Write for Us
+          </a>
+          <a class="list-group-item list-group-item-action" href="/packages">
+            Join Our Team
+          </a>
         </ul>
       </div>
     </div>
