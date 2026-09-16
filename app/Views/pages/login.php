@@ -3,7 +3,7 @@
 
         <div class="col-lg-12 grid-center">
 
-            <div class="card theme-card p-4 w-25 mx-auto">
+            <div class="card theme-card p-4 mx-auto">
                 <div class="text-center">
                     <img src="<?= env('app.LogoPath') ?>" width="100px" alt="voyagersbeatlogo">
                     <hr>
@@ -39,8 +39,8 @@
                     <hr>
                     <div class="d-flex justify-content-between">
                         <div>
-                            <button type="submit" class="btn btn-sm btn-success">Sign In</button>
-                            <a href="/forgot_password_form" class="btn btn-sm btn-outline-dark">Forgot Password ?</a>
+                            <button type="submit" class="btn btn-sm btn-success">Sign In</button><br>
+                            <a href="/forgot_password_form" class="btn btn-sm btn-light">Forgot Password ?</a>
                         </div>
                         <div>
                             <a href="/signup" class="btn btn-sm btn-dark ">Sign Up</a>
