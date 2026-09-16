@@ -103,8 +103,11 @@ class PackageController extends BaseController
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
         $this->data['image'] = base_url() . 'upload/package_images/' . $this->data['package']->PACKAGE_IMAGE;
         $this->data['noindex'] = "";
-
-        return $this->Render_Page('packages/package_detail', $this->data);
+        if (isMobileDevice()) {
+            return $this->Render_Page('packages/package_detail_mobile', $this->data);
+        } else {
+            return $this->Render_Page('packages/package_detail', $this->data);
+        }
     }
     public function packageBySlug(string $slug)
     {
@@ -119,7 +122,11 @@ class PackageController extends BaseController
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
         $this->data['image'] = base_url() . 'upload/package_images/' . $this->data['package']->PACKAGE_IMAGE;
         $this->data['noindex'] = "";
-        return $this->Render_Page('packages/package_detail', $this->data);
+        if (isMobileDevice()) {
+            return $this->Render_Page('packages/package_detail_mobile', $this->data);
+        } else {
+            return $this->Render_Page('packages/package_detail', $this->data);
+        }
     }
     public function packagesByDestination(string $slug)
     {

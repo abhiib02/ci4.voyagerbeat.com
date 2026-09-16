@@ -1,6 +1,8 @@
 <div class="fixed-top">
     <div class="topbar text-center py-2 bgColorTheme px-2">
-        <img src="<?= env('app.LogoPath') ?>" alt="<?= env('app.name') ?>" width="50px" height="auto">
+        <a href="/">
+            <img src="<?= env('app.LogoPath') ?>" alt="<?= env('app.name') ?>" width="50px" height="auto">
+        </a>
     </div>
 </div>
 <nav class="fixed-bottom" style="z-index: 1100;" id="mobile-nav">

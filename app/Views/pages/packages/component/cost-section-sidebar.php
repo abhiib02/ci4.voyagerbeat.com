@@ -121,7 +121,7 @@
             const keys = Object.keys(obj).filter(k => k !== "value" && k !== "label");
 
             priceDiv.innerHTML = keys.map((key, i) => `
-        <label class="btn btn-outline-voyagers cost-sidebar-radio">
+        <label class="btn btn-outline-voyagers cost-sidebar-radio flex-fill">
         <i class='bx bx-transfer-alt fs-3 text-theme-secondary'></i>
                         <br>
           <input type="radio" name="pricing" data-key="${key}" value="${obj[key]}" ${i === 0 ? 'checked' : ''}>
@@ -137,7 +137,7 @@
 
         // Render Layer 1 (Sharing options)
         sharingDiv.innerHTML = CostingObject.map((item, i) => `
-      <label class="btn btn-outline-voyagers cost-sidebar-radio">
+      <label class="btn btn-outline-voyagers cost-sidebar-radio flex-fill">
         ${Array.from({ length: getSharingTermNumber(item.label.split(' ')[0].toLowerCase()) }, (_, i) => `<span class="bed-dot"></span>`).join('')}
         <br>
         <input type="radio" name="sharing" value="${i}" ${i === 0 ? 'checked' : ''} class="">
