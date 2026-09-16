@@ -23,6 +23,8 @@ class MainController extends BaseController
     public function index(): string
     {
         if (isMobileDevice()) {
+            $this->data['packages'] = $this->PackageModel->getAllPackagesInMobile();
+            $this->data['pager'] = $this->PackageModel->pager;
             return $this->Render_Page('home-mobile', $this->data);
         } else {
             return $this->Render_Page('home', $this->data);

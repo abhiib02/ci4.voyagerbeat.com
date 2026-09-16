@@ -126,12 +126,16 @@ class Package extends Model
 
     public function getPackagesByField(string $selectString, string $whereColumn, string $whereData)
     {
-        return $this->select($selectString)->where($whereColumn, $whereData)->where('HIDDEN', 0)->findAll();;
+        return $this->select($selectString)->where($whereColumn, $whereData)->where('HIDDEN', 0)->findAll();
     }
 
     public function getAllPackages(string $direction = 'DESC', int $perPage = 15, string $group = 'default'): array
     {
         return $this->where('HIDDEN', 0)->orderBy('PACKAGE_ID', $direction)->paginate($perPage, $group);
+    }
+    public function getAllPackagesInMobile(string $direction = 'DESC'): array
+    {
+        return $this->where('HIDDEN', 0)->orderBy('PACKAGE_ID', $direction)->find();
     }
 
     public function getAllPackagesForAdminDashboard(int $perPage = 15, string $group = 'default'): array

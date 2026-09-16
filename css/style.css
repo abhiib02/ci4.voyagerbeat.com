@@ -2,7 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /*outline:1px solid #5005;*/
 }
 @view-transition {
   /* navigation: auto; */
@@ -123,7 +122,9 @@ body {
 .hide {
   display: none;
 }
-
+.scroll-margin {
+  margin-top: 60px;
+}
 /* Utility classes end*/
 
 /* Typography */
@@ -252,7 +253,9 @@ body {
 .bgSecondaryTheme {
   background-color: var(--secondaryColor);
 }
-
+.bg-whatsapp {
+  background: #37c572;
+}
 .flex_wrap_section {
   display: flex;
   justify-content: space-evenly;
@@ -284,4 +287,146 @@ body {
 }
 .inset-shadow {
   box-shadow: inset 0 0 10px var(--maincolor);
+}
+
+.categories-wrapper {
+  @media (width < 992px) {
+    width: 100%;
+    overflow-x: scroll;
+  }
+}
+
+.categories {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  @media (width < 992px) {
+    justify-content: start;
+    width: max-content;
+  }
+}
+
+.border-sq-button {
+  border: 2px solid color-mix(in srgb, var(--circle-color) 80%, black);
+  aspect-ratio: 1/1;
+  width: auto;
+  height: 75px;
+  overflow: clip;
+  padding: 10px 15px;
+  border-radius: 15px;
+  color: color-mix(in srgb, var(--circle-color) 50%, black);
+  background: var(--bg-color-2);
+  display: grid;
+  place-items: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.circle-with-text {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  width: 40px;
+  background: var(--circle-color);
+  text-align: center;
+  align-content: center;
+}
+.flex_wrap_section {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.activeFilter {
+  background: color-mix(in srgb, var(--circle-color) 50%, black);
+  color: #fff;
+  border-color: var(--circle-color);
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+/*----------- Social Colors ------------------*/
+.fb-bg {
+  background: #1877f2;
+}
+.whatsapp-bg {
+  background: #37c572;
+}
+.insta-bg {
+  background:
+    radial-gradient(
+      circle farthest-corner at 35% 90%,
+      #fec564,
+      transparent 50%
+    ),
+    radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 0 -25%,
+      #5258cf,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at 20% -50%,
+      #5258cf,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at 100% 0,
+      #893dc2,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at 60% -20%,
+      #893dc2,
+      transparent 50%
+    ),
+    radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent),
+    linear-gradient(
+      #6559ca,
+      #bc318f 30%,
+      #e33f5f 50%,
+      #f77638 70%,
+      #fec66d 100%
+    );
+}
+.youtube-bg {
+  background: #ff0000;
+}
+.snapchat-bg {
+  background: #fffc00;
+  text-shadow: 0px 0px 2px #000;
+}
+.linkedin-bg {
+  background: #0a66c2;
+}
+@media (width < 1020px) {
+  #desktop-nav {
+    display: none;
+  }
+}
+.hide,
+.hide-on-pc {
+  display: none;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-device-pixel-ratio: 2) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+@media (width < 992px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
 }

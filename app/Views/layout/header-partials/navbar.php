@@ -1,59 +1,4 @@
-<?php
-if (! function_exists('seasonNav')) {
-  function seasonNav()
-  {
-    $monthNumber = date("m");
-    $monthNavArr = array(
-      '01' => '
-      <li class="nav-item">
-        <a class="nav-link" href="/packages/Kedarkantha">Kedarkantha</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/tags/holi">Holi Trips</a>
-      </li>
-    ',
-      '02' => '
-      <li class="nav-item">
-        <a class="nav-link" href="/packages/Kedarkantha">Kedarkantha</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/tags/holi">Holi Trips</a>
-      </li>
-    ',
-      '03' => '
-      <li class="nav-item">
-        <a class="nav-link" href="/tags/holi">Holi Trips</a>
-      </li>
-    ',
-      '04' => '',
-      '05' => '',
-      '06' => '',
-      '07' => '',
-      '08' => '',
-      '09' => '',
-      '10' => '',
-      '11' => '
-      <li class="nav-item">
-        <a class="nav-link" href="/type/xmas-new-year">Xmas & New Year</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/packages/kedarkantha">Kedarkantha</a>
-      </li>
-    ',
-      '12' => '
-      <li class="nav-item">
-        <a class="nav-link" href="/type/xmas-new-year">Xmas & New Year</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/packages/kedarkantha">Kedarkantha</a>
-      </li>
-    '
-    );
-    return $monthNavArr[$monthNumber];
-  }
-}
-?>
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" id="desktop-nav">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <img src="<?= env('app.LogoPath') ?>" alt="Bootstrap" width="50px" height="auto">
@@ -394,7 +339,6 @@ if (! function_exists('seasonNav')) {
     </div>
   </div>
 </div>
-
 <div id="honeymoon-dropdown" class="mega-panel " popover>
   <div class="menu-panel p-3">
     <div class="row g-3">
@@ -423,7 +367,6 @@ if (! function_exists('seasonNav')) {
     </div>
   </div>
 </div>
-
 <div id="more-dropdown" class="mega-panel " popover>
   <div class="menu-panel p-3">
     <div class="row g-3">
@@ -486,4 +429,3 @@ if (! function_exists('seasonNav')) {
   </div>
 </div>
 </div>
-<script src="/js/navigation-data.json"></script>

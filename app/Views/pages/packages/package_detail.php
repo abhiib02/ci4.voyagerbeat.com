@@ -268,7 +268,7 @@ $TAGS = explode(',', $package->TAGS);
                 <div class="why-voyagers">
                     <?= view('pages/packages/component/why-voyager-info') ?>
                 </div>
-                <div class="similar-packages outline-card style-border p-2">
+                <div class="similar-packages outline-card style-border p-2 hide-on-mobile">
                     <div class="d-flex justify-content-between">
                         <div>
                             <h5>More Trips Like This</h5>
