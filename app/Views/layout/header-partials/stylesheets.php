@@ -16,4 +16,3 @@
 <link rel="stylesheet" href="/css/pagination.css">
 <link rel="stylesheet" href="/css/tinymce-reset.css">
 <link rel="stylesheet" href="/css/resets.css">
-<link rel="stylesheet" href="/css/animation.css">

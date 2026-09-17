@@ -262,7 +262,7 @@
                                         </td>
                                     </tr>
                                     <tr class="border-top">
-                                        <td colspan="2" class="fw-bold text-center fs-5">{{ calc.ready ? '₹ ' + payNowAmount : '...' }}</td>
+                                        <td colspan="2" class="fw-bold  fs-2">{{ calc.ready ? '₹ ' + payNowAmount : '...' }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="small text-muted">{{ perPersonText }}</td>
@@ -326,13 +326,14 @@
             // (replace this object with data injected server-side, e.g. via
             // a JSON blob rendered into the page, an API call on mount, etc.)
             // ---------------------------------------------------------------
+            const MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const pkg = reactive({
                 PACKAGE_ID: <?= $package->PACKAGE_ID ?>,
                 PACKAGE_NAME: '<?= $package->PACKAGE_NAME ?>',
                 BOOKING_AMOUNT: <?= $package->BOOKING_AMOUNT ?>,
                 SPACIAL_OFFER: <?= $package->SPACIAL_OFFER ?>,
-                CUSTOM_TRIP: <?= $package->SPACIAL_OFFER ?>,
-                DATES: '<?= $package->SPACIAL_OFFER ?>',
+                CUSTOM_TRIP: <?= $package->CUSTOM_TRIP ?>,
+                DATES: '<?= $package->DATES ?>',
 
                 // Sharing labels — P5..P1 map to index 0..4
                 INFO_P5: '<?= $package->INFO_P5 ?>',
@@ -352,7 +353,7 @@
                 PRICE_3: <?= $package->PRICE_3 ?>,
                 PRICE_2: <?= $package->PRICE_2 ?>,
                 PRICE_1: <?= $package->PRICE_1 ?>,
-                HEAD_PRICE: '<?= $package->HEAD_PRICE ?>',
+                HEAD_PRICE: '<?= strip_tags($package->HEAD_PRICE) ?>',
 
 
                 // Without-travel pricing option 1 (travelmode = 2)
@@ -361,7 +362,7 @@
                 WT_PRICE_3: <?= $package->WT_PRICE_3 ?>,
                 WT_PRICE_2: <?= $package->WT_PRICE_2 ?>,
                 WT_PRICE_1: <?= $package->WT_PRICE_1 ?>,
-                HEAD_WTPRICE: '<?= $package->HEAD_WTPRICE ?>',
+                HEAD_WTPRICE: '<?= strip_tags($package->HEAD_WTPRICE) ?>',
 
                 // Without-travel pricing option 2 (travelmode = 1)
                 WT2_PRICE_5: <?= $package->WT2_PRICE_5 ?>,
@@ -369,7 +370,7 @@
                 WT2_PRICE_3: <?= $package->WT2_PRICE_3 ?>,
                 WT2_PRICE_2: <?= $package->WT2_PRICE_2 ?>,
                 WT2_PRICE_1: <?= $package->WT2_PRICE_1 ?>,
-                HEAD_WT2PRICE: '<?= $package->HEAD_WT2PRICE ?>',
+                HEAD_WT2PRICE: '<?= strip_tags($package->HEAD_WT2PRICE) ?>',
 
             });
 
@@ -444,14 +445,39 @@
             });
 
             const dateList = computed(() => {
-                return pkg.DATES.split(',').map(entry => {
-                    const [raw, surcharge] = entry.split('|');
-                    return {
-                        raw: entry,
-                        label: raw.trim(),
-                        surcharge: parseInt(surcharge || '0', 10)
-                    };
-                });
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // ignore time, compare by calendar day
+                function formatDDMonYYYY(dateStr) {
+                    const [day, month, year] = dateStr.trim().split('/').map(Number);
+                    return `${String(day).padStart(2, '0')}/${MONTH_ABBR[month - 1]}/${year}`;
+                }
+
+                function formatDateRangeLabel(rawLabel) {
+                    // "04/09/2026 - 09/09/2026" -> "04/Sep/2026 - 09/Sep/2026"
+                    // Also handles a single date with no range.
+                    return rawLabel
+                        .split('-')
+                        .map(part => formatDDMonYYYY(part))
+                        .join(' - ');
+                }
+                return pkg.DATES.split(',')
+                    .map(entry => {
+                        const [raw, surcharge] = entry.split('|');
+                        const rawLabel = raw.trim();
+
+                        // "04/09/2026 - 09/09/2026" -> use the first date to test "is this upcoming?"
+                        const startStr = rawLabel.split('-')[0].trim();
+                        const [day, month, year] = startStr.split('/').map(Number);
+                        const startDate = new Date(year, month - 1, day);
+
+                        return {
+                            raw: entry,
+                            label: formatDateRangeLabel(rawLabel),
+                            surcharge: parseInt(surcharge || '0', 10),
+                            startDate,
+                        };
+                    })
+                    .filter(d => d.startDate >= today);
             });
 
             // ---------------- Traveler management ----------------
