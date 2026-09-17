@@ -1,8 +1,10 @@
 <div class="fixed-top">
-    <div class="topbar text-center py-2 bgColorTheme px-2">
+    <div class="topbar text-center py-2 bgColorTheme px-2 d-flex justify-content-between">
+        <button onclick="history.back()" class="btn btn-sm btn-outline-dark"><i class='bx bx-chevron-left'></i>Back</button>
         <a href="/">
             <img src="<?= env('app.LogoPath') ?>" alt="<?= env('app.name') ?>" width="50px" height="auto">
         </a>
+        <button data-bs-toggle="modal" data-bs-target="#SearchBox" class="btn btn-sm  btn-outline-dark"><i class='bx bx-search'></i></button>
     </div>
 </div>
 <nav class="fixed-bottom" style="z-index: 1100;" id="mobile-nav">
@@ -16,8 +18,8 @@
             </a>
         </li>
         <?php $current_url = $_SERVER['REQUEST_URI']; ?>
-        <li class="nav-item text-center" role="presentation">
-            <a href="<?= 'https://wa.me/918448591315?text=Hey! Voyagers Beat,I want to hear more about voyagers beat up coming trip | https://voyagersbeat.com' . $current_url; ?>" class="nav-link rounded-3  lh-1" id="contact-tab2" aria-selected="false">
+        <li class="nav-item text-center" role="presentation" id="">
+            <a href="<?= 'https://wa.me/918448591315?text=Hey! Voyagers Beat,I want to hear more about voyagers beat up coming trip | https://voyagersbeat.com' . $current_url; ?>" class="nav-link rounded-3  lh-1" id="whatsapp-nav-mobile-btn" style="--bs-nav-pills-link-active-bg:#37c572;" aria-selected="false">
                 <i class='bx bxl-whatsapp fs-1'></i>
                 <br>
                 <sub>Whatsapp</sub>
@@ -25,7 +27,7 @@
         </li>
 
         <li class="nav-item text-center" role="presentation">
-            <a href="tel:+919667711662" class="nav-link rounded-3  lh-1" id="contact-tab2" aria-selected="false">
+            <a href="tel:+919667711662" class="nav-link rounded-3  lh-1" id="call-nav-mobile-btn" style="--bs-nav-pills-link-active-bg:#ff7722;" aria-selected="false">
                 <i class='bx bx-phone-call fs-1'></i>
                 <br>
                 <sub>Call Now</sub>
@@ -312,5 +314,9 @@
             </div>
 
         </div>
+        <div class="text-center">
+            <img src="<?= env('app.LogoPath') ?>" alt="<?= env('app.name') ?>" width="100px" height="auto">
+        </div>
     </div>
+
 </div>

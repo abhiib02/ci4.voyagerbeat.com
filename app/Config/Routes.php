@@ -54,10 +54,6 @@ $routes->get('duplicate_package_process/(:num)', 'PackageController::duplicate_p
 
 
 
-
-
-
-
 /*--------------- User Routes------------------*/
 $routes->get('account', 'DashboardController::UserDashboard', ['filter' => 'AuthGuard']);
 $routes->get('account/(:any)', 'DashboardController::UserDashboard/$1', ['filter' => 'AuthGuard']);
@@ -108,3 +104,8 @@ $routes->get('travelerFavorites', 'PackageController::GetLikedPackages');
 $routes->get('api/getFavorite/(:num)', 'PackageController::GetFavoriteCount/$1');
 $routes->get('api/IncFavorite/(:num)', 'PackageController::IncreaseFavoriteCount/$1');
 $routes->get('api/DecFavorite/(:num)', 'PackageController::DecreaseFavoriteCount/$1');
+
+
+/*------------------Booking Routes --------------------------*/
+$routes->get('book/(:num)', 'BookingController::Book/$1');
+$routes->post('booking-payment', 'RazorpayController::booking_pay');

@@ -35,7 +35,7 @@
         </section>
 
         <section class="container" id="package_name">
-            <h5><?= $package->PACKAGE_NAME; ?></h5>
+            <h5 class="mt-2"><?= $package->PACKAGE_NAME; ?></h5>
             <span class="main-color-text"><i class='bx bxs-location-plus'></i></span>&nbsp;<span><?= $package->LOCATION; ?></span>•<span><?= $package->COUNTRY; ?></span>
         </section>
 
@@ -84,20 +84,19 @@
                 </div>
             </div>
         </section>
-        <section class="container" id="costing">
-
+        <section class="container mb-3" id="costing">
             <?= view('pages/packages/component/cost-section-sidebar', ['package' => $package]) ?>
         </section>
-        <section class="container" id="dates">
+        <section class="container mb-3" id="dates">
             <h3 class="text-theme-secondary">Dates</h3>
             <?= view('pages/packages/component/dates-section', ['package' => $package]) ?>
         </section>
-        <section class="container" id="itinerary">
+        <section class="container mb-3" id="itinerary">
             <h3 class="text-theme-secondary">Day to Day Itinerary</h3>
             <?= view('pages/packages/component/itinerarySection', ['package' => $package]) ?>
         </section>
         <br>
-        <section class="container" id="Inclusion">
+        <section class="container mb-3" id="Inclusion">
             <h3 class="text-success">Inclusion</h3>
             <div class="row">
                 <div class="col-lg-6">
@@ -111,7 +110,7 @@
                 </div>
             </div>
         </section>
-        <section class="container" id="Exclusion">
+        <section class="container mb-3" id="Exclusion">
             <h3 class="text-danger">Exclusion</h3>
             <div class="row">
                 <div class="col-lg-6">
@@ -125,15 +124,23 @@
                 </div>
             </div>
         </section>
-        <section class="container" id="Highlight">
-            <h3 class="">Highlight</h3>
+        <section class="container mb-3" id="Highlight">
+            <h3 class="text-theme-secondary">Highlight</h3>
             <div class="wysiwyg">
                 <?= $package->TRIP_HIGHLIGHT ?>
             </div>
         </section>
-        <section class="container" id="thingstocarry">
+        <?php if (!empty($package->PACKAGE_MISC)): ?>
+            <section class="container mb-3" id="Miscellaneous">
+                <h3 class="text-theme-secondary">Miscellaneous</h3>
+                <div class="wysiwyg">
+                    <?= $package->PACKAGE_MISC ?>
+                </div>
+            </section>
+        <?php endif; ?>
+        <section class="container mb-3" id="thingstocarry">
 
-            <p class="mid-text main-color-text">Things To Carry</p>
+            <h3 class="text-theme-secondary">Things To Carry</h3>
 
             <div class="accordion accordion-flush" id="thingsToCarryAccordion">
 
@@ -261,1219 +268,75 @@
 
             </div>
         </section>
-    </div>
-</div>
-<div class="package_detail_content">
-
-    <div class="images">
-
-        <!-- Swiper -->
-
-        <div class="package_gallery_wrapper">
-
-
-            <?php if ($package->PACKAGE_PDF) : ?>
-
-                <button class="btn themebtn pdf-link" style="height:min-content; --btn-color:#ff7722; font-weight:bold;" onclick="downloadURI('../../pdf/<?php echo $package->PACKAGE_PDF; ?>','')" data-href="../../pdf/<?php echo $package->PACKAGE_PDF; ?>"><i class='bx bx-download' style="font-size:1rem;"></i> PDF</button>
-
-            <?php endif; ?>
-
-        </div>
-
-        <!-- Swiper -->
-
-    </div>
-
-    <div class="details">
-
-        <br>
-
-        <div class="container">
-
-            <h5><?= $package->PACKAGE_NAME; ?></h5>
-
-            <p class="second-color-text"><span class="main-color-text"><i class='bx bxs-location-plus'></i></span>&nbsp;&nbsp;<?= $package->LOCATION; ?>,<?= $package->COUNTRY; ?></p>
-
-        </div>
-
-        <br>
-
-        <!-- details section -->
-
-        <div class="container ">
-
-            <div class="flex-new" style="gap: 20px;">
-
-                <div class="detail-box">
-
-                    <div>
-
-                        <i class="bx bx-time-five main-color-text big-text"></i><br>
-
-                        Duration <br>
-
-                        <!-- format the string to N/D -->
-
-                        <b> <?= preg_replace('/\s*Nights?\s*\/\s*(\d+)\s*Days?/i', 'N/$1D', $package->PACKAGE_DAYS); ?></b>
-
-                    </div>
-
-                </div>
-
-                <div class="detail-box">
-
-                    <div>
-
-                        <i class="bx bx-car main-color-text big-text"></i><br>
-
-                        Pick and Drop <br>
-
-
-
-                        <b> <?= $package->PICKNDROP ?></b>
-
-                    </div>
-
-                </div>
-
-                <div class="detail-box">
-
-                    <div>
-
-                        <span class="" style="font-size:2em;font-weight:bolder;color:var(--maincolor) !important;">₹</span><br>
-
-                        Starting Price <br>
-
-                        <?php if ($package->REQUEST_PRICE) : ?>
-
-                            <b class="">Price on Request </b>
-
-                        <?php else: ?>
-
-                            <b class="">₹ <?= $package->PRICE_1; ?></b>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-        </div>
-
-        <br>
-
-        <!-- price section -->
-
-        <?php if (!$package->REQUEST_PRICE): ?>
-            <div class="container">
-                <p class="mid-text main-color-text">Prices</p>
-            </div>
-            <?php if ($package->HEAD_PRICE != "0"): ?>
-                <div class="container ">
-                    <p class="main-color-text"><?= $package->HEAD_PRICE; ?></p>
-                    <br>
-
-                    <div class="flex-new" style="gap: 20px;">
-
-                        <?php if (($package->INFO_P1 != null) && ($package->PRICE_1 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P1; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->PRICE_1; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P2 != null) && ($package->PRICE_2 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P2; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->PRICE_2; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                    <br>
-
-                    <div class="flex-new" style="gap: 20px;">
-
-                        <?php if (($package->INFO_P3 != null) && ($package->PRICE_3 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P3; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->PRICE_3; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P4 != null) && ($package->PRICE_4 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P4; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->PRICE_4; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P5 != null) && ($package->PRICE_5 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P5; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->PRICE_5; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                    <br>
-
-
-                </div>
-                <br>
-            <?php endif; ?>
-
-            <?php if ($package->HEAD_WTPRICE != "0" && $package->HEAD_WTPRICE != ""): ?>
-                <div class="container ">
-
-
-                    <p class="main-color-text"><?= $package->HEAD_WTPRICE; ?></p>
-                    <br>
-
-                    <div class="flex-new" style="gap: 20px;">
-
-                        <?php if (($package->INFO_P1 != null) && ($package->WT_PRICE_1 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P1; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT_PRICE_1; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P2 != null) && ($package->WT_PRICE_2 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P2; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT_PRICE_2; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                    <br>
-
-                    <div class="flex-new" style="gap: 20px;">
-
-                        <?php if (($package->INFO_P3 != null) && ($package->WT_PRICE_3 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P3; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT_PRICE_3; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P4 != null) && ($package->WT_PRICE_4 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P4; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT_PRICE_4; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P5 != null) && ($package->WT_PRICE_5 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P5; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT_PRICE_5; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                    <br>
-
-
-
-                </div>
-                <br>
-            <?php endif; ?>
-
-            <?php if ($package->HEAD_WT2PRICE != "" && $package->HEAD_WT2PRICE != "0"): ?>
-                <div class="container ">
-
-
-                    <p class="main-color-text"><?= $package->HEAD_WT2PRICE; ?></p>
-                    <br>
-
-                    <div class="flex-new" style="gap: 20px;">
-
-                        <?php if (($package->INFO_P1 != null) && ($package->WT2_PRICE_1 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P1; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT2_PRICE_1; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P2 != null) && ($package->WT2_PRICE_2 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P2; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT2_PRICE_2; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                    <br>
-
-                    <div class="flex-new" style="gap: 20px;">
-
-                        <?php if (($package->INFO_P3 != null) && ($package->WT2_PRICE_3 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P3; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT2_PRICE_3; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P4 != null) && ($package->WT2_PRICE_4 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P4; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT2_PRICE_4; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                        <?php if (($package->INFO_P5 != null) && ($package->WT2_PRICE_5 > 0)) : ?>
-
-                            <div class="detail-box">
-
-                                <p class="second-color-text">
-
-                                    <?= $package->INFO_P5; ?></p>
-
-                                <b class="main-color-text mid-text"> ₹ <?= $package->WT2_PRICE_5; ?> </b>
-
-                                <p>per person</p>
-
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                    <br>
-
-
-
-                </div>
-                <br>
-            <?php endif; ?>
-
-            <div class="container">
-                <a href="#datesandcost" class="themebtn btn">Dates & Cost</a>
-            </div>
-            <br>
-        <?php endif; ?>
-
-
-
-
-
-        <!-- itinerary  -->
-
-        <div class="container package_itinerary">
-
-            <p class="mid-text main-color-text">Day to Day Itinerary</p>
-
-            <?php if (str_contains($package->PACK_IT, '<h5>')): ?>
-
-                <div class="iti" style="display:none;">
-
-                    <?php echo strtolower($package->PACK_IT); ?>
-
-                </div>
-
-
-
-                <ul class="package-coll collapsible" style="margin:0;">
-
-
-
-                </ul>
-
-            <?php else: ?>
-
-
-
-                <?php $itiArr = json_decode($package->PACK_IT) ?>
-
-                <ul class="package-coll collapsible" style="margin:0;">
-
-                    <?php foreach ($itiArr as $day): ?>
-
-                        <li>
-
-                            <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><?= $day->dayTitle ?></span><span>▼</span></div>
-
-                            <div class="collapsible-body">
-
-                                <?= $day->dayDesc ?>
-
-                            </div>
-
-                        </li>
-
-                    <?php endforeach; ?>
-
-                </ul>
-
-            <?php endif; ?>
-
-        </div>
-
-        <br>
-
-        <!-- Inclusion  -->
-
-        <div class="container inclusion">
-
-            <p class="mid-text main-color-text">Inclusions</p>
-
-            <div id="Inclusion">
-
-                <?= $package->INCLUSION ?>
-
-            </div>
-
-        </div>
-
-        <br>
-
-        <!-- Exclusion  -->
-
-        <div class="container Exclusion">
-
-            <p class="mid-text main-color-text">Exclusions</p>
-
-            <div id="Exclusion">
-
-                <?= $package->EXCLUSION ?>
-
-            </div>
-
-        </div>
-
-        <br>
-
-        <!-- Trip Dates & cost-->
-
-        <?php if (!$package->REQUEST_PRICE): ?>
-
-            <div class="container">
-
-                <p id="datesandcost" class="mid-text main-color-text">Trip Cost</p>
-
-                <table class="">
-
-                    <thead style="background:var(--maincolor-lite);">
-
-                        <tr>
-
-                            <th class="">Sharing</th>
-
-                            <?php if ($package->HEAD_PRICE != '0'): ?>
-
-                                <th><?= $package->HEAD_PRICE; ?></th>
-
-                            <?php endif; ?>
-
-
-
-                            <?php if ($package->HEAD_WTPRICE != '0' && $package->HEAD_WTPRICE != 'N/A'): ?>
-
-                                <th><?= $package->HEAD_WTPRICE; ?></th>
-
-                            <?php endif; ?>
-
-
-
-                            <?php if ($package->HEAD_WT2PRICE != null || $package->HEAD_WT2PRICE != '0'): ?>
-
-                                <th><?= $package->HEAD_WT2PRICE; ?></th>
-
-                            <?php endif; ?>
-
-
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        <?php if (($package->INFO_P1 != null) && ($package->PRICE_1 > 0)) { ?>
-
-                            <tr>
-
-                                <td><?= $package->INFO_P1; ?></td>
-
-                                <td><?= ($package->S_PRICE_1) ? '<del>₹' . $package->S_PRICE_1 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_1; ?></b></td>
-
-                                <?php if ($package->WT_PRICE_1 != 0): ?><td><?= ($package->WT_PRICE_1 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_1 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_1; ?></b></td><?php endif; ?>
-
-                                <?php if ($package->WT2_PRICE_1 != 0): ?><td><?= ($package->WT2_PRICE_1 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_1 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_1; ?></b></td><?php endif; ?>
-
-                            </tr>
-
-                        <?php } ?>
-
-                        <?php if (($package->INFO_P2 != null) && ($package->PRICE_2 > 0)) { ?>
-
-                            <tr>
-
-                                <td><?= $package->INFO_P2; ?></td>
-
-                                <td><?= ($package->S_PRICE_2) ? '<del>₹' . $package->S_PRICE_2 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_2; ?></b></td>
-
-                                <?php if ($package->WT_PRICE_2 != 0): ?><td><?= ($package->WT_PRICE_2 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_2 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_2; ?></b></td><?php endif; ?>
-
-                                <?php if ($package->WT2_PRICE_2 != 0): ?><td><?= ($package->WT2_PRICE_2 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_2 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_2; ?></b></td><?php endif; ?>
-
-                            </tr>
-
-                        <?php } ?>
-
-                        <?php if (($package->INFO_P3 != null) && ($package->PRICE_3 > 0)) { ?>
-
-                            <tr>
-
-                                <td><?= $package->INFO_P3; ?></td>
-
-                                <td><?= ($package->S_PRICE_3) ? '<del>₹' . $package->S_PRICE_3 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_3; ?></b></td>
-
-                                <?php if ($package->WT_PRICE_3 != 0): ?><td><?= ($package->WT_PRICE_3 == 0) ? "Not Available" : '<del>' . ((int)$package->WT_PRICE_3 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_3; ?></b></td><?php endif; ?>
-
-                                <?php if ($package->WT2_PRICE_3 != 0): ?><td><?= ($package->WT2_PRICE_3 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_3 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_3; ?></b></td><?php endif; ?>
-
-                            </tr>
-
-                        <?php } ?>
-
-                        <?php if (($package->INFO_P4 != null) && ($package->PRICE_4 > 0)) { ?>
-
-                            <tr>
-
-                                <td><?= $package->INFO_P4; ?></td>
-
-                                <td><?= ($package->S_PRICE_4) ? '<del>₹' . $package->S_PRICE_4 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_4; ?></b></td>
-
-                                <?php if ($package->WT_PRICE_4 != 0): ?><td><?= ($package->WT_PRICE_4 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_4 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_4; ?></b></td><?php endif; ?>
-
-                                <?php if ($package->WT2_PRICE_4 != 0): ?><td><?= ($package->WT2_PRICE_4 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_4 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_4; ?></b></td><?php endif; ?>
-
-                            </tr>
-
-                        <?php } ?>
-
-                        <?php if (($package->INFO_P5 != null) && ($package->PRICE_5 > 0)) { ?>
-
-                            <tr>
-
-                                <td><?= $package->INFO_P5; ?></td>
-
-                                <td><?= ($package->S_PRICE_5) ? '<del>₹' . $package->S_PRICE_5 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_5; ?></b></td>
-
-                                <?php if ($package->WT_PRICE_5 != 0): ?><td><?= ($package->WT_PRICE_5 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_5 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_5; ?></b></td><?php endif; ?>
-
-                                <?php if ($package->WT2_PRICE_5 != 0): ?><td><?= ($package->WT2_PRICE_5 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_5 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_5; ?></b></td><?php endif; ?>
-
-                            </tr>
-
-                        <?php } ?>
-
-                    </tbody>
-
-                </table>
-
-                <div id="Datesncost">
-
-                    <p id="datesandcost" class="mid-text main-color-text">Dates</p>
-
-                    <div class="btn-grp">
-
-                        <div class="btndate disable" data-index=0></div>
-
-                        <div class="btndate disable" data-index=1>January</div>
-
-                        <div class="btndate disable" data-index=2>February</div>
-
-                        <div class="btndate disable" data-index=3>March</div>
-
-                        <div class="btndate disable" data-index=4>April</div>
-
-                        <div class="btndate disable" data-index=5>May</div>
-
-                        <div class="btndate disable" data-index=6>June</div>
-
-                        <div class="btndate disable" data-index=7>July</div>
-
-                        <div class="btndate disable" data-index=8>August</div>
-
-                        <div class="btndate disable" data-index=9>September</div>
-
-                        <div class="btndate disable" data-index=10>October</div>
-
-                        <div class="btndate disable" data-index=11>November</div>
-
-                        <div class="btndate disable" data-index=12>December</div>
-
-                    </div>
-
-
-
-                    <div class="date-viewer animate__animated">
-
-
-
-                    </div>
-
-
-
-
-
-                    <table class="black-text " style="display:none;">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Dates</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            <?php
-
-                            $Dates = explode(",", $package->DATES);
-
-                            for ($i = 0; $i < (count($Dates)); $i++) { ?>
-
-                                <tr>
-
-                                    <td class="date"><?php echo $Dates[$i]; ?></td>
-
-                                </tr>
-
-                            <?php } ?>
-
-
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-            <br>
-
-        <?php else: ?>
-
-            <div class="container">
-
-                <b>Price on Request</b>
-
-                <hr>
-
-                <h6>Pricing will be provided upon request, based on your selected destinations, duration, accommodations, and customization preferences.</h6>
-
-            </div>
-
-        <?php endif; ?>
-
-
-
-        <br>
-
-        <!-- About Trip  -->
-
-        <div class="container ">
-
-            <p class="mid-text main-color-text">About This Trip</p>
-
-            <p><?= $package->META_DESC ?></p>
-
-        </div>
-
-        <br>
-
-        <!-- Trip Highlights -->
-
-        <div class="container">
-
-            <p class="mid-text main-color-text">Trip Highlight</p>
-
-            <!--<div class="wysiwyg" style="padding:0px;">-->
-
-            <?php //formattedHTML($package->TRIP_HIGHLIGHT) 
-            ?>
-
-            <!--</div>-->
-
-            <ul class="collapsible" style="margin:0;">
-
-
-
-                <li>
-
-                    <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><?= $package->PACKAGE_NAME ?> Highlight's</span><span>▼</span></div>
-
-                    <div class="collapsible-body">
-
-
-
-                        <div class="flex-new" style="flex-wrap:wrap;gap:20px;">
-                            <div class="wysiwyg">
-                                <?= $package->TRIP_HIGHLIGHT ?>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </li>
-
-
-
-            </ul>
-
-        </div>
-
-
-
-
-
-
-
-
-
-        <!-- Trip Misc -->
-
-        <?php if ($package->PACKAGE_MISC != ""): ?>
-
-            <div class="container">
-
-                <p class="mid-text main-color-text">Miscellaneous</p>
-
-
-
-                <ul class="collapsible" style="margin:0;">
-
-
-
-                    <li>
-
-                        <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Miscellaneous</b></span><span>▼</span></div>
-
-                        <div class="collapsible-body">
-
-                            <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-                                <div class="" style="padding:0px;">
-                                    <div class="wysiwyg">
-                                        <?= $package->PACKAGE_MISC ?>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </li>
-
-            </div>
-
-        <?php endif; ?>
-
-        <br>
-
-        <!-- ttc -->
-
-        <div class="container">
-
-            <p class="mid-text main-color-text">Things To Carry</p>
-
-            <ul class="collapsible" style="margin:0;">
-
-
-
-                <li>
-
-                    <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Gadgets</b></span><span>▼</span></div>
-
-                    <div class="collapsible-body">
-
-                        <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-
+        <section class="container mb-3" id="advisory">
+            <h3 class="text-theme-secondary">Advisory</h3>
+            <div class="accordion accordion-flush" id="advisoryAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingAdvisory">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdvisory" aria-expanded="false" aria-controls="collapseAdvisory">
+                            Advisory
+                        </button>
+                    </h2>
+                    <div id="collapseAdvisory" class="accordion-collapse collapse" aria-labelledby="headingAdvisory" data-bs-parent="#advisoryAccordion">
+                        <div class="accordion-body">
                             <ul>
-
-                                <li>Camera</li>
-
-                                <li>Power Bank</li>
-
-                                <li>LED torch light</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </li>
-
-                <li>
-
-                    <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Gears</b></span><span>▼</span></div>
-
-                    <div class="collapsible-body">
-
-                        <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-
-                            <ul>
-
-                                <li>A rucksack bag and a day pack</li>
-
-                                <li>3-litre water bladder or water bottle</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </li>
-
-                <li>
-
-                    <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Clothes</b></span><span>▼</span></div>
-
-                    <div class="collapsible-body">
-
-                        <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-
-                            <ul>
-
-                                <li>A sun cap and a woolen cap</li>
-
-                                <li>UV protected sunglasses</li>
-
-                                <li>One cotton long sleeves and 2 short sleeve t-shirt</li>
-
-                                <li>1 fleece jacket</li>
-
-                                <li>1 heavy Thick jacket/down jacket</li>
-
-                                <li>1 pair of gloves At least 2 long pants (trek pants and cargo pants are favourable)</li>
-
-                                <li>4 sets of undergarments</li>
-
-                                <li>2 pair of socks</li>
-
-                                <li>A small towel</li>
-
-                                <li>A rain jacket or a poncho</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </li>
-
-                <li>
-
-                    <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Footwear</b></span><span>▼</span></div>
-
-                    <div class="collapsible-body">
-
-                        <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-
-                            <ul>
-
-                                <li>Above-the-ankle waterproof and breathable hiking boots with good grip</li>
-
-                                <li>Flip flops/sandals</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </li>
-
-                <li>
-
-                    <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Medication</b></span><span>▼</span></div>
-
-                    <div class="collapsible-body">
-
-                        <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-
-                            <ul>
-
-                                <li>Glucose powder</li>
-
-                                <li>Medicines for headaches</li>
-
-                                <li>Medicines for diarrhoea</li>
-
-                                <li>Medicines for muscular pain</li>
-
-                                <li>Medicines for motion and altitude sickness</li>
-
-                                <li>Dettol</li>
-
-                                <li>Bandages</li>
-
-                                <li>Cotton</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </li>
-
-                <li>
-
-                    <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Personal Accessories</b></span><span>▼</span></div>
-
-                    <div class="collapsible-body">
-
-                        <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-
-                            <ul>
-
-                                <li>Toothpaste</li>
-
-                                <li>Toothbrush</li>
-
-                                <li>Paper soap & sanitizer</li>
-
-                                <li>Sunscreen minimum of spf40</li>
-
-                                <li>Lip balm</li>
-
-                                <li>cold creams</li>
-
-                                <li>Body spray</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </li>
-
-
-
-            </ul>
-
-        </div>
-
-        <br>
-
-        <!-- Advisory -->
-
-        <div class="container">
-
-            <p class="mid-text main-color-text">Advisory</p>
-
-            <ul class="collapsible" style="margin:0;">
-
-
-
-                <li>
-
-                    <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Advisory</b></span><span>▼</span></div>
-
-                    <div class="collapsible-body">
-
-                        <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-
-                            <ul class="">
-
                                 <li>Carry minimum weight.</li>
-
                                 <li>Please take care of Precautions needed for COVID-19 Pandemic.</li>
-
                                 <li>Do not litter.</li>
-
                                 <li>Alcohol and smoking is at their own risk.</li>
-
                                 <li>The decision of the trek leader will be final and binding.</li>
-
                                 <li>Delays may occur due to weather conditions & Traffic Conditions.</li>
-
-                                <li>Any person with health conditions like Asthma etc. is advised not to go for this expedition.
-
-                                    However, if they so decide, it is at their own risk.</li>
-
+                                <li>Any person with health conditions like Asthma etc. is advised not to go for this expedition. However, if they so decide, it is at their own risk.</li>
                                 <li>Do not wander off on your own.</li>
-
                                 <li>Please take care of your baggage.</li>
-
-                                <li>Please keep yourself hydrated throughout the trek and fuel yourself with some energy bars,
-
-                                    protein bars, or any snacks to maintain the energy level.</li>
-
-                                <li>Involve yourself in some physical activities like jumping, running, stretching, as it increases
-
-                                    the stamina and strength of the body.</li>
-
+                                <li>Please keep yourself hydrated throughout the trek and fuel yourself with some energy bars, protein bars, or any snacks to maintain the energy level.</li>
+                                <li>Involve yourself in some physical activities like jumping, running, stretching, as it increases the stamina and strength of the body.</li>
                                 <li>People with any physical ailments are advised not to come on the trek.</li>
-
                             </ul>
-
                         </div>
-
                     </div>
-
-                </li>
-
-            </ul>
-
-
-
-        </div>
-
-        <br>
-
-        <!-- Tnc -->
-
-        <?php if ($package->PACKAGE_TNC != ""): ?>
-
-            <div class="container">
-
-                <p class="mid-text main-color-text">Terms & Conditions</p>
-
-                <ul class="collapsible" style="margin:0;">
-
-
-
-                    <li>
-
-                        <div class="collapsible-header" style="background:var(--bg-color-2);" tabindex="0"><span><b>Terms & Conditions</b></span><span>▼</span></div>
-
-                        <div class="collapsible-body">
-
-                            <div class="detail-box" style="place-items: flex-start;text-align: unset;padding:10px;">
-
-                                <div class="" style="padding:0px;">
-                                    <div class="wysiwyg">
-                                        <?= $package->PACKAGE_TNC ?>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </li>
-
-                </ul>
-
+                </div>
             </div>
 
+        </section>
+        <section class="container mb-3" id="tnc">
+            <h3 class="text-theme-secondary">Terms & Condition</h3>
+            <?php if (!empty($package->PACKAGE_TNC)): ?>
 
-
-        <?php endif; ?>
-
-        <br>
-
-        <!-- Book Now  -->
-
-        <div class="bg-second-2 book_section">
-
-            <div class="container">
-
-                <div class="flex-new spaced-between">
-
-                    <div>
-
-                        <?php if (!$package->REQUEST_PRICE): ?>
-
-                            <p class="second-color-text">
-
-                                Starting From</p>
-
-                            <b class="main-color-text big-text"> ₹ <?= $package->PRICE_1; ?> </b>
-
-                            <p>per person</p>
-
-                        <?php else: ?>
-
-                            <p class="main-color-text ">
-
-                                Request Price</p>
-
-                            <p>per person</p>
-
-                        <?php endif; ?>
-
-
-
+                <div class="accordion accordion-flush" id="tncAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTnc">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTnc" aria-expanded="false" aria-controls="collapseTnc">
+                                Terms & Conditions
+                            </button>
+                        </h2>
+                        <div id="collapseTnc" class="accordion-collapse collapse" aria-labelledby="headingTnc" data-bs-parent="#tncAccordion">
+                            <div class="accordion-body">
+                                <div class="wysiwyg">
+                                    <?= $package->PACKAGE_TNC ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div>
-
-                        <?php if ($package->REQUEST_PRICE): ?>
-
-                            <a class="btn themebtn-lite " style="--btn-color:var(--maincolor); width:100%; font-weight:bold;" href="https://wa.me/91<?= $defaultContact ?>?text=Hello,I want to book | https://voyagersbeat.com/package/<?php echo $package->SLUG; ?>">Book Now</a>
-
-                        <?php else: ?>
-
-                            <a class="btn themebtn-lite " style="--btn-color:var(--maincolor); width:100%; font-weight:bold;" href="/book/<?php echo $package->PACKAGE_ID; ?>">Book Now</a>
-
-                        <?php endif; ?>
-
-                    </div>
-
                 </div>
 
+            <?php endif; ?>
+        </section>
+    </div>
+</div>
+<div class="sticky-bottom" style="bottom:70px;">
+    <div class="container">
+        <div class=" d-flex justify-content-between">
+            <div></div>
+            <div>
+                <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-sm btn-theme btn-success w-100" style="width:250px;">Book Now <i class='bx bx-right-arrow-alt'></i></a>
             </div>
-
-
-
         </div>
-
     </div>
 
-
-
 </div>
+<div id="trigger-nav-menu-animation"></div>
+
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
 
@@ -1485,4 +348,30 @@
             dynamicBullets: true,
         },
     });
+</script>
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                whatsappBtn.classList.add('wobble-hor-bottom');
+                callBtn.classList.add('wobble-hor-bottom');
+                whatsappBtn.classList.add('active');
+                callBtn.classList.add('active');
+                // Add your active class or action here
+            } else {
+                whatsappBtn.classList.remove('wobble-hor-bottom');
+                callBtn.classList.remove('wobble-hor-bottom');
+                whatsappBtn.classList.remove('active');
+                callBtn.classList.remove('active');
+            }
+        });
+    }, {
+        threshold: 0.1 // Triggers when 10% of the element is visible
+    });
+
+    // Target your element
+    const whatsappBtn = document.querySelector('#whatsapp-nav-mobile-btn');
+    const callBtn = document.querySelector('#call-nav-mobile-btn');
+    const triggerDiv = document.querySelector('#trigger-nav-menu-animation');
+    observer.observe(triggerDiv);
 </script>
