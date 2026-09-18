@@ -61,17 +61,18 @@ class Booking extends Model
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
-    public function insertBooking($data)
+    public function insertBooking(array $data)
     {
-        $db = \Config\Database::connect();
-        return $db->table($this->table)->insert($data);
+        return $this->insert($data);
     }
-    public function getBookingByPaymentId($paymentId)
+    public function getBookingByPaymentId(string $paymentId)
     {
-        $db = \Config\Database::connect();
-        return $db->table($this->table)->where('RAZORPAY_PAYMENT_ID', $paymentId)->get()->getRow();
+        return $this->where('order_id', $paymentId)->first();
     }
-
+    public function isBookingExistByPaymentId(string $paymentId): bool
+    {
+        return $this->where('order_id', $paymentId)->countAllResults() > 0;
+    }
     public function getAllBookings()
     {
         return $this->table($this->table)->get()->getResult();
@@ -80,37 +81,10 @@ class Booking extends Model
     {
         return $this->select()->orderBy('ID', 'DESC')->paginate($perPage, $group);
     }
-    public function getBookedDatesCountByPackageId($PackageID)
+    public function getUserBookingsByEmail(string $email): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table($this->table);
-        $builder->select("BOOKED_DATE_OF_TRAVEL");
-        $builder->where('BOOKED_PACKAGE_ID', $PackageID);
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
-    }
-    public function getBookings($num)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table($this->table);
-        $builder->select("*");
-        $builder->limit($num);
-        $builder->orderBy('BOOKING_ID', 'DESC');
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
-    }
-
-    public function getUserBookingsByEmail($email)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table($this->table);
-        $builder->select("*");
-        $builder->where('EMAIL', $email);
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->where('email', $email)
+            ->findAll();
     }
     public function getUserBookingsCountByEmail(string $email): int
     {

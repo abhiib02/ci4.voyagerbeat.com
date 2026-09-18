@@ -51,19 +51,34 @@ abstract class BaseController extends Controller
 
         $this->session = service('session');
 
+        // Define a unique cache key
+
+
         // Preload any models, libraries, etc, here.
         $this->PackageModel = new Package();
         $this->OptionModel = new Option();
-        $this->data['AllPackagesNameAndID'] = $this->PackageModel->getAllPackagesNameAndID();
-        $this->data['defaultContact'] = $this->OptionModel->getOptionValue('contact');
-        $this->data['navDataLadakh'] = $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'leh');
-        $this->data['navDataSpiti'] = $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'spiti');
-        $this->data['navDataInternational'] = $this->PackageModel->getAllDistinctCountry();
-        $this->data['navDataPackageType'] = $this->PackageModel->getAllDistinctType();
-        $this->data['navDataHoneymoon'] = $this->PackageModel->getPackagesByTagForNav('honeymoon');
 
 
+        //Caching Nav Data As it will be used on every page ⬇
+        $cacheKeys = [
+            'navDataLadakh' => fn() => $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'leh'),
+            'navDataSpiti' => fn() => $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'spiti'),
+            'navDataInternational' => fn() => $this->PackageModel->getAllDistinctCountry(),
+            'navDataPackageType' => fn() => $this->PackageModel->getAllDistinctType(),
+            'navDataHoneymoon' => fn() => $this->PackageModel->getPackagesByTagForNav('honeymoon'),
+            'AllPackagesNameAndID' => fn() => $this->PackageModel->getAllPackagesNameAndID(),
+            'defaultContact' => fn() => $this->OptionModel->getOptionValue('contact'),
+            'defaultmails' => fn() => $this->OptionModel->getOptionValue('mails'),
 
+        ];
+
+        foreach ($cacheKeys as $cacheKey => $callback) {
+            if (! $this->data[$cacheKey] = cache($cacheKey)) {
+                $this->data[$cacheKey] = $callback();
+                cache()->save($cacheKey, $this->data[$cacheKey], 300);
+            }
+        }
+        //Caching Nav Data As it will be used on every page ⬆
 
         \Config\Services::renderer()->setData([
             'isAdmin' => $this->AuthCheckAdmin(),

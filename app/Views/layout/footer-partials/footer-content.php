@@ -1,4 +1,4 @@
-<footer class="bg-light py-3">
+<footer class="bg-light py-3 no-print">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">

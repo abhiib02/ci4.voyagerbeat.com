@@ -1,18 +1,18 @@
-<div style="background: #19C26F;" class="grid-center  vh100">
+<div style="background: #19C26F;" class="grid-center  full-vh">
     <div class="grid-center container ">
         <br>
         <div class="card w-100 p-3 mt-5">
             <div class="d-flex justify-content-between align-content-center">
                 <div>
-                    <img src="<?=env('appLogoPath')?>" width="80px" alt="">
+                    <img src="<?= env('appLogoPath') ?>" width="80px" alt="">
                 </div>
                 <div class="d-flex gap-2">
-                <div class="text-end">
-                    <h6 class="fw-bold">Booking Confirmation Receipt</h6>
-                    <hr>
-                    <h6><?=env('appName')?></h6>
-                </div>
-                <div id="qrcode"></div>
+                    <div class="text-end">
+                        <h6 class="fw-bold">Booking Confirmation Receipt</h6>
+                        <hr>
+                        <h6><?= env('appName') ?></h6>
+                    </div>
+                    <div id="qrcode"></div>
                 </div>
             </div>
             <hr>
@@ -22,15 +22,15 @@
                     <table class="table table-bordered">
                         <tr>
                             <td>Name</td>
-                            <td><b><?=$bookingData->NAME?></b></td>
+                            <td><b><?= $bookingData->name ?></b></td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td><b><?=$bookingData->EMAIL?></b></td>
+                            <td><b><?= $bookingData->email ?></b></td>
                         </tr>
                         <tr>
                             <td>Contact</td>
-                            <td><b><?=$bookingData->CONTACT?></b></td>
+                            <td><b><?= $bookingData->contact ?></b></td>
                         </tr>
                     </table>
                 </div>
@@ -39,15 +39,15 @@
                     <table class="table table-bordered">
                         <tr>
                             <td>Booking ID</td>
-                            <td><b><?=$bookingData->BOOKING_ID?></b></td>
+                            <td><b><?= $bookingData->ID ?></b></td>
                         </tr>
                         <tr>
                             <td>Payment ID</td>
-                            <td><b><?=$bookingData->RAZORPAY_PAYMENT_ID?></b></td>
+                            <td><b><?= $bookingData->order_id ?></b></td>
                         </tr>
                         <tr>
                             <td>Booking Date</td>
-                            <td><b><?=$bookingData->CREATED_AT?></b></td>
+                            <td><b><?= $bookingData->booking_date_utc ?></b></td>
                         </tr>
                     </table>
 
@@ -57,88 +57,73 @@
                     <table class="table table-bordered">
                         <tr>
                             <td>Package ID</td>
-                            <td><b><?=$bookingData->BOOKED_PACKAGE_ID?></b></td>
+                            <td><b><?= $bookingData->package_id ?></b></td>
                         </tr>
-                        <tr>
-                            <td>Package Name</td>
-                            <td><b><?=$bookingData->BOOKED_PACKAGE_NAME?></b></td>
-                        </tr>
+
                         <tr>
                             <td>Package Date of Travel</td>
-                            <td><b><?=$bookingData->BOOKED_DATE_OF_TRAVEL?></b></td>
+                            <td><b><?= $bookingData->date ?></b></td>
                         </tr>
                         <tr>
                             <td>Adults</td>
-                            <td><b><?=$bookingData->ADULTS?></b></td>
+                            <td><b><?= $bookingData->adults ?></b></td>
                         </tr>
                         <tr>
                             <td>Sharing Basis</td>
-                            <td><b><?=$bookingData->SHARING?></b></td>
+                            <td><b><?= $bookingData->sharing ?></b></td>
                         </tr>
                     </table>
                 </div>
 
-                <div class="col-lg-6">                    
+                <div class="col-lg-6">
                     <h6 class="fw-bold">Payment Details</h6>
                     <table class="table table-bordered">
-                        <tr>
-                            <td>Booking Amount</td>
-                            <td><b>₹ <?=number_format($bookingData->BOOKING_AMOUNT,2)?></b></td>
-                        </tr>
+
                         <tr>
                             <td>Total Amount</td>
-                            <td><b>₹ <?=number_format($bookingData->TOTAL_AMOUNT,2)?></b></td>
+                            <td><b>₹ <?= number_format($bookingData->total_package_cost, 2) ?></b></td>
                         </tr>
                         <tr>
                             <td>Amount Paid</td>
-                            <td><b>₹ <?=number_format($bookingData->AMOUNT_PAID,2)?></b></td>
+                            <td><b>₹ <?= number_format($bookingData->amount, 2) ?></b></td>
                         </tr>
                         <tr>
                             <td>Remaining Payable</td>
-                            <td><b><?=(($bookingData->TOTAL_AMOUNT - $bookingData->AMOUNT_PAID)==0) ? 'Full Payment Done' : '₹ '.number_format($bookingData->TOTAL_AMOUNT - $bookingData->AMOUNT_PAID,2)?></b></td>
+                            <td><b><?= (($bookingData->total_package_cost - $bookingData->amount) == 0) ? 'Full Payment Done' : '₹ ' . number_format($bookingData->total_package_cost - $bookingData->amount, 2) ?></b></td>
                         </tr>
-                        <?php if(!empty($bookingData->COUPON_USED)):?>
-                        <tr>
-                            <td>Coupon Used</td>
-                            <td><b><?=$bookingData->COUPON_USED?></b></td>
-                        </tr>
-                        <?php endif;?>
+                        <?php if (!empty($bookingData->coupon_used)): ?>
+                            <tr>
+                                <td>Coupon Used</td>
+                                <td><b><?= $bookingData->coupon_used ?></b></td>
+                            </tr>
+                        <?php endif; ?>
                     </table>
 
-                    <?php if(($bookingData->ADDITIONAL_MESSAGE != 0) && ($bookingData->ADDITIONAL_MESSAGE != null)):?>
-                    <hr>
-                    <h6 class="fw-bold">Customer Message</h6>
-                    <table class="table table-bordered">
-                        <tr>
-                            <td>
-                                <?=$bookingData->ADDITIONAL_MESSAGE?>
-                            </td>
-                        </tr>
-                    </table>
-                    <?php endif;?>
                 </div>
 
             </div>
             <small>
                 * This is a system generated Booking Confirmation Receipt.
             </small>
-            <hr>
-            <p class="text-center">
-                For any queries, please contact us at <a href="tel:<?=$Contact?>"><?=$Contact?></a> or Mail us on <a
-                    href="mailto:<?=$mails?>"><?=$mails?></a>.
-            </p>
+            <div class="no-print">
+                <hr>
+                <p class="text-center">
+                    For any queries, please contact us at <a href="tel:<?= $defaultContact ?>"><?= $defaultContact ?></a> or Mail us on <a href="mailto:<?= $defaultmails ?>"><?= $defaultmails ?></a>
+                </p>
 
-            <div class="noPrint">
-                <hr>
-                <small>
-                    * Please check your email this receipt has been sent to your email address as well.
-                </small>
-                <hr>
+                <div class="noPrint">
+                    <hr>
+                    <small>
+                        * Please check your email this receipt has been sent to your email address as well.
+                    </small>
+                    <hr>
+                </div>
+                <div>
+                    <button class="noPrint btn btn-primary" onclick="window.print();">Print Receipt</button>
+                    <a href="/" class="noPrint btn btn-secondary">Back to Home</a>
+                </div>
             </div>
-            <div>
-                <button class="noPrint btn btn-primary" onclick="window.print();">Print Receipt</button>
-                <a href="/" class="noPrint btn btn-secondary">Back to Home</a>
-            </div>
+
         </div>
     </div>
 
@@ -147,16 +132,16 @@
 <script src="/js/qrcode.min.js"></script>
 <script>
     var qrcode = new QRCode("qrcode", {
-    text: "<?=env('app.baseURL');?>thanks?payment_id=<?=$bookingData->RAZORPAY_PAYMENT_ID?>",
-    width: 80,
-    height: 80,
-    colorDark : "#000000",
-    colorLight : "#ffffff",
-    correctLevel : QRCode.CorrectLevel.H
-});
+        text: "<?= env('app.baseURL'); ?>thanks?payment_id=<?= $bookingData->order_id ?>",
+        width: 80,
+        height: 80,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
 </script>
 <?php if (isset($_SESSION['FlashMessage'])) : ?>
-<script>
-    runToast('<?= $_SESSION['FlashMessage']['message'] ?>', '<?= $_SESSION['FlashMessage']['status'] ?>');
-</script>
+    <script>
+        runToast('<?= $_SESSION['FlashMessage']['message'] ?>', '<?= $_SESSION['FlashMessage']['status'] ?>');
+    </script>
 <?php endif; ?>

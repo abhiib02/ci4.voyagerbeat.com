@@ -6,100 +6,74 @@ use CodeIgniter\Model;
 
 class Coupon extends Model
 {
+    protected $table            = 'coupons_table';
+    protected $primaryKey       = 'Coupon_ID';
+    protected $useAutoIncrement = true;
+    protected $returnType       = 'object';
+    protected $useSoftDeletes   = false;
+    protected $protectFields    = true;
 
-    protected $tableName = 'coupons_table';
+    protected $allowedFields    = [
+        'Coupon_Code',
+        'Coupon_Type',
+        'Coupon_Worth',
+        'Coupon_Count'
+    ];
 
-    public function addCoupon($data)
+    public function addCoupon(array $data)
     {
-        $db = \Config\Database::connect();
-        return $db->table($this->tableName)->insert($data);
+        return $this->insert($data);
     }
-    public function deleteCoupon($Codeid)
+
+    public function deleteCoupon(int $codeId)
     {
-        if (!$this->isCodeExistById($Codeid)) {
+        if (! $this->isCodeExistById($codeId)) {
             return 0;
         }
-        $db = \Config\Database::connect();
-        $builder = $db->table($this->tableName);
-        $builder->where('Coupon_ID', $Codeid);
-        $builder->delete();
+
+        $this->delete($codeId);
         return 1;
     }
 
-    public function updateCoupon($id, array $data): bool
+    public function updateCoupon(int $id, array $data): bool
     {
-        return $this->db->table($this->tableName)
-            ->where('Coupon_ID', $id)
-            ->update([
-                'Coupon_Code'  => $data['Coupon_Code'],
-                'Coupon_Type'  => $data['Coupon_Type'],
-                'Coupon_Worth' => $data['Coupon_Worth'],
-                'Coupon_Count' => $data['Coupon_Count'],
-            ]);
+        return $this->update($id, $data);
     }
-    public function isCodeExist($code)
+
+    public function isCodeExist(string $code): int
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table($this->tableName);
-        $builder->select("*");
-        $builder->where('Coupon_Code', $code);
-        $query = $builder->get();
-        if ($query->getNumRows() > 0) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return $this->where('Coupon_Code', $code)->countAllResults() > 0 ? 1 : 0;
     }
-    public function isCodeExistById($id)
+
+    public function isCodeExistById(int $id): int
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table($this->tableName);
-        $builder->select("*");
-        $builder->where('Coupon_ID', $id);
-        $query = $builder->get();
-        if ($query->getNumRows() > 0) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return $this->find($id) !== null ? 1 : 0;
     }
 
     public function getCoupon(string $code)
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table($this->tableName);
-        $builder->select("*");
-        $builder->where('Coupon_Code', $code);
-        $query = $builder->get();
-        return $query;
+        return $this->where('Coupon_Code', $code)->first();
     }
-    public function DecreamentCodeCount(string $code): bool
+
+    public function decrementCodeCount(string $code): bool
     {
-        $builder = $this->db->table($this->tableName);
-
-        // Set raw SQL expression for decrementing count safely
-        $builder->set('Coupon_Count', 'Coupon_Count - 1', false);
-
-        // Adjust 'Coupon_Code' to match your actual table column name for coupon codes
-        $builder->where('Coupon_Code', $code);
-        $builder->where('Coupon_Count >', 0);
-        $builder->update();
+        $this->set('Coupon_Count', 'Coupon_Count - 1', false)
+            ->where('Coupon_Code', $code)
+            ->where('Coupon_Count >', 0)
+            ->update();
 
         return $this->db->affectedRows() > 0;
     }
 
     public function getCouponJson(string $code): array
     {
-        return $this->db->table($this->tableName)
-            ->select(['Coupon_ID', 'Coupon_Code', 'Coupon_Worth', 'Coupon_Type', 'Coupon_Count'])
+        return $this->select(['Coupon_ID', 'Coupon_Code', 'Coupon_Worth', 'Coupon_Type', 'Coupon_Count'])
             ->where('Coupon_Code', $code)
-            ->get()
-            ->getResult(); // Returns an array of objects
+            ->findAll();
     }
+
     public function getAllCoupons(): array
     {
-        return $this->db->table('Coupons_Table')
-            ->get()
-            ->getResult(); // Returns an array of objects
+        return $this->findAll();
     }
 }

@@ -8,70 +8,191 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/vendor/autoload.php";
 use App\Controllers\BaseController;
 use App\Controllers\EmailController;
 use Config\Services;
+use App\Models\Package;
+use App\Models\Coupon;
 use Razorpay\Api\Api;
 use Razorpay\Api\Errors\SignatureVerificationError;
 
 class RazorpayController extends BaseController
 {
+    protected Package $PackageModel;
+    protected Coupon $CouponModel;
+    protected array $BookingData;
+    public function __construct()
+    {
+        $this->PackageModel =  new Package();
+        $this->CouponModel =  new Coupon();
+    }
 
-    public function __construct() {}
+    protected function CouponCost(string $code, string $amount)
+    {
+        if (!$this->CouponModel->isCodeExist($code)) {
+            return 0;
+        }
+
+        $couponData = $this->CouponModel->getCoupon($code);
+
+        switch ($couponData->Coupon_Type) {
+            case 0:
+                return $couponData->Coupon_Worth;
+            case 1:
+                $percentile = ($couponData->Coupon_Worth) / 100;
+                return $amount - ($amount * $percentile);
+            default:
+                return 0;
+        }
+    }
+
 
     public function booking_pay()
     {
         $session = Services::session();
         $api = new Api(env('razorKey'), env('razorSecret'));
+        $PackagePriceDetails = $this->PackageModel->getPackageByID($this->request->getPost('id'));
 
+        $GST = 0.05;
 
-        $sharing_amount = explode('|', $this->request->getPost('sharing'))[0];
-        $sharing = explode('|', $this->request->getPost('sharing'))[1];
-        $total_amount = $_SESSION['payable_amount'] = $this->request->getPost('adults') * $sharing_amount;
-        $booking_amount = $this->request->getPost('booking_amount');
-        $total_booking_amount = $this->request->getPost('adults') * $booking_amount;
+        $priceArr = [
+            $PackagePriceDetails->PRICE_5,
+            $PackagePriceDetails->PRICE_4,
+            $PackagePriceDetails->PRICE_3,
+            $PackagePriceDetails->PRICE_2,
+            $PackagePriceDetails->PRICE_1
+        ];
+        $WTpriceArr = [
+            $PackagePriceDetails->WT_PRICE_5,
+            $PackagePriceDetails->WT_PRICE_4,
+            $PackagePriceDetails->WT_PRICE_3,
+            $PackagePriceDetails->WT_PRICE_2,
+            $PackagePriceDetails->WT_PRICE_1
+        ];
+        $WT2priceArr = [
+            $PackagePriceDetails->WT2_PRICE_5,
+            $PackagePriceDetails->WT2_PRICE_4,
+            $PackagePriceDetails->WT2_PRICE_3,
+            $PackagePriceDetails->WT2_PRICE_2,
+            $PackagePriceDetails->WT2_PRICE_1
+        ];
 
+        /////////////////////////////////////////////////////////////
+        //                                                         //
+        // You can calculate payment amount as per your logic      //
+        // Always set the amount from backend for security reasons //
+        // data used for backend price verification                //
+        //                                                         //
+        /////////////////////////////////////////////////////////////
 
-        $booking_amount_status = $this->request->getPost('booking_amount_status');
+        // Get All the Data from the post request
 
-        $data['name'] = $this->request->getPost('name');
-        $data['email'] = $this->request->getPost('email');
-        $data['contact'] = $this->request->getPost('contact');
-        $data['package_id'] = $this->request->getPost('package_id');
-        $data['package_name'] = $this->request->getPost('package_name');
-        $data['adults'] = $this->request->getPost('adults');
-        $data['dateoftravel'] = $this->request->getPost('dateoftravel');
-        $data['sharing'] = $sharing;
-        $data['sharing_amount'] = $sharing_amount;
-        $data['total_booking_amount'] = $total_booking_amount;
-        $data['booking_amount_status'] = $booking_amount_status;
-        $data['total_amount'] = $total_amount;
-        $data['msg'] = $this->request->getPost('msg');
-        $data['ORDER_ID'] = $data['contact'];
+        //Customer Details
+        $BookingData['name'] = $this->request->getPost('name');
+        $BookingData['gender'] = $this->request->getPost('gender');
+        $BookingData['mobile'] = $this->request->getPost('mobile');
+        $BookingData['email'] = $this->request->getPost('email');
+        $BookingData['sharingArr'] = $this->request->getPost('sharing');
 
-        $rules = $this->validate([
-            'name' => 'required',
-            'email' => 'required|valid_email',
-            'contact' => 'required|min_length[10]|max_length[13]',
-            'dateoftravel' => 'required',
-            'adults' => 'required',
-            'sharing' => 'required',
-        ]);
+        //TravelBuddies Details
+        $BookingData['pax_details'] = $this->request->getPost('pax_details');
+        $BookingData['adults'] = $this->request->getPost('adults');
+        //Package Related Details
 
-        if ($total_amount > 500000) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Maximum Amount Exceeds', 'status' => 'warning']);
-            return redirect()->to("/max-amount");
+        $BookingData['package_id'] = $this->request->getPost('id');
+        $BookingData['package_name'] = $this->request->getPost('package_name');
+        $BookingData['booking_amount'] = $this->request->getPost('bookingamount');
+        $BookingData['total_amount'] = $this->request->getPost('amounttopay');
+        $BookingData['date'] = explode('|', $this->request->getPost('date'))[0] ?? $this->request->getPost('date');
+        $BookingData['dateSurcharge'] = explode('|', $this->request->getPost('date'))[1] ?? 0;
+        $BookingData['travelmode'] = substr($this->request->getPost('travelmode'), 0, 1);
+        $BookingData['paymode'] = $this->request->getPost('paymode');
+        $BookingData['coupon_code'] = $this->request->getPost('coupon_code');
+
+        // Will Calculate again With Given Data by Customer
+        $BookingData['AmountPayable'] = 0;
+        $BookingData['GrandTotal'] = 0;
+        // Calculating Amount Using Sharing for Each Person
+        $BookingData['each_person_sharing'] = [];
+        $BookingData['personCostSum'] = 0;
+        foreach ($BookingData['sharingArr'] as $customerSharing) {
+            array_push($BookingData['each_person_sharing'], substr($customerSharing, 0, 1));
         }
-        if (!$rules) {
-            echo '<script>alert("Some Input is Invalid");window.location.href="/";</script>';
-            die();
+
+
+
+        // Price Calculation According to Travel Mode
+        // Calculated Amount Using Each Adult with its sharing ex: trav1 - quad,trav2 = double => 1* quad(price) + 1 * double(price)
+
+        switch ($BookingData['travelmode']) {
+            case 1:
+                foreach ($BookingData['each_person_sharing'] as $eachSharing) {
+                    if ($WT2priceArr[$eachSharing] > 0) {
+                        $BookingData['personCostSum'] += $WT2priceArr[$eachSharing];
+                    } else {
+                        return redirect()->to("packageid/" . $BookingData['package_id'] . '?paymentError=tm1');
+                    }
+                }
+                break;
+            case 2:
+                foreach ($BookingData['each_person_sharing'] as $eachSharing) {
+                    if ($WTpriceArr[$eachSharing] > 0) {
+                        $BookingData['personCostSum'] += $WTpriceArr[$eachSharing];
+                    } else {
+                        return redirect()->to("packageid/" . $BookingData['package_id'] . '?paymentError=tm2');
+                    }
+                }
+                break;
+            case 3:
+                foreach ($BookingData['each_person_sharing'] as $eachSharing) {
+                    if ($priceArr[$eachSharing] > 0) {
+                        $BookingData['personCostSum'] += $priceArr[$eachSharing];
+                    } else {
+                        return redirect()->to("packageid/" . $BookingData['package_id'] . '?paymentError=tm2');
+                    }
+                }
+                break;
+            default:
+                return redirect()->to("packageid/" . $BookingData['package_id'] . '?paymentError=tminvalid');
         }
-        if ($booking_amount_status == 1) {
-            $session->set(['payable_amount' => $total_booking_amount]);
-        } else {
-            $session->set(['payable_amount' => $total_amount]);
+
+        // add all cost each ( sharing (ACCORDING TO PICKUP) + surcharge + gst )
+        $TOTAL_SURCHARGE = ($BookingData['dateSurcharge'] * $BookingData['adults']);
+
+        $TOTAL_COST = round(($BookingData['personCostSum'] + $TOTAL_SURCHARGE) + ($GST * ($BookingData['personCostSum'] + $TOTAL_SURCHARGE)));
+
+        $TOTAL_COST_BOOKING = $BookingData['adults'] * $BookingData['booking_amount'];
+
+        // Subtract all offers from total cost ( spacial offer + coupon + loyalty points)
+
+        $TOTAL_COST = $TOTAL_COST - $this->CouponCost($BookingData['coupon_code'], $TOTAL_COST); // Append Loyalty Point Subtraction Here
+
+
+
+
+        switch ($BookingData['paymode']) {
+            case 'full':
+                $BookingData['AmountPayable'] = $TOTAL_COST;
+                $BookingData['GrandTotal'] = $TOTAL_COST;
+                break;
+            case 'booking':
+                $BookingData['AmountPayable'] = $TOTAL_COST_BOOKING;
+                $BookingData['GrandTotal'] = $TOTAL_COST;
+                break;
+            default:
+                return redirect()->to("packageid/" . $BookingData['package_id'] . '?paymentError=Paymode_is_invalid');
         }
+
+        //Checks For Exceptions
+
+        if ($BookingData['AmountPayable'] >= 500000) {
+            return redirect()->to("book/" . $BookingData['package_id'] . "?paymentError=1");
+        }
+
+        // Generating Order ID
+
+        $BookingData['BookingID'] = $BookingData['package_id'] . '-' . $BookingData['mobile'] . '-' . $BookingData['GrandTotal'];
 
         $razorpayOrder = $api->order->create(array(
-            'receipt'         => $data['ORDER_ID'],
-            'amount'          => $_SESSION['payable_amount'] * 100, // 2000 rupees in paise
+            'receipt'         => $BookingData['BookingID'],
+            'amount'          => $BookingData['AmountPayable'] * 100, // 2000 rupees in paise
             'currency'        => 'INR',
             'payment_capture' => 1 // auto capture
         ));
@@ -80,33 +201,37 @@ class RazorpayController extends BaseController
         $razorpayOrderId = $razorpayOrder['id'];
 
         $session->set(['razorpay_order_id' => $razorpayOrderId]);
+        $session->set(['payable_amount' => $BookingData['AmountPayable']]);
 
-        $data = $this->prepareData($amount, $razorpayOrderId, $data);
+
+        $data = $this->prepareData($amount, $razorpayOrderId, $BookingData);
 
         return view('razorpay', ['data' => $data]);
     }
-    public function prepareData($amount, $razorpayOrderId, $data)
+
+
+    public function prepareData(int $amount, string $razorpayOrderId, array $data)
     {
         $data = array(
             "key" => env('razorKey'),
             "amount" => $amount,
             "name" => env('appName'),
             "description" => env('appName'),
-            "image" => env('appLogoPath'),
+            "image" => env('applogoPath'),
             "prefill" => array(
                 "name"  => $data['name'],
                 "email"  => $data['email'],
-                "contact" => $data['contact'],
+                "gender" => $data['gender'],
+                "contact" => $data['mobile'],
                 "package_id" => $data['package_id'],
-                "package_name" => $data['package_name'],
-                "dateoftravel" => $data['dateoftravel'],
+                "travelmode" => $data['travelmode'],
+                "sharing" => $data['sharingArr'][0],
+                "coupon_used" => $data['coupon_code'],
                 "adults" => $data['adults'],
-                "sharing" => $data['sharing'],
-                "sharing_amount" => $data['sharing_amount'],
-                "total_booking_amount" => $data['total_booking_amount'],
-                "booking_amount_status" => $data['booking_amount_status'],
-                "total_amount" => $data['total_amount'],
-                "msg" => $data['msg'],
+                "pax_details" => $data['pax_details'],
+                "date" => $data['date'],
+                "paymode" => $data['paymode'],
+                "total_amount" => $data['GrandTotal'],
             ),
             "notes"  => array(
                 "address"  => "",
@@ -156,17 +281,19 @@ class RazorpayController extends BaseController
             //////////////////////////////////////////////////
             //                                              //
             // Call this function from where ever you want  //
-            // to save save data before of after the payment//
+            // to save data before or after the payment//
             //                                              //
             //////////////////////////////////////////////////
 
+            //Saving Data to DataBase
             $BookingData = $this->saveBookingData();
 
+
             $this->session->setFlashdata('FlashMessage', ['message' => 'Booking Confirmed', 'status' => 'Success']);
-            return redirect()->to("/thanks?payment_id=" . $BookingData['payment_id']);
+            return $this->RedirectWithtoast('Booking Confirmed', 'Success', "/thanks?payment_id=" . $BookingData['order_id']);
         } else {
 
-            return redirect()->to("/paymentfailed");
+            return redirect()->to("/payment-failed");
         }
     }
     public function saveBookingData()
@@ -174,52 +301,30 @@ class RazorpayController extends BaseController
         $bookingController = new BookingController();
         $session = Services::session();
 
-        $data['payment_id'] = $this->request->getPost('razorpay_payment_id');
+        $data['order_id'] = $this->request->getPost('razorpay_payment_id');
         $data['name'] = $this->request->getPost('name');
         $data['email'] = $this->request->getPost('email');
+        $data['gender'] = $this->request->getPost('gender');
         $data['contact'] = $this->request->getPost('contact');
         $data['package_id'] = $this->request->getPost('package_id');
-        $data['package_name'] = $this->request->getPost('package_name');
-        $data['dateoftravel'] = $this->request->getPost('dateoftravel');
-        $data['adults'] = $this->request->getPost('adults');
+        $data['travelmode'] = $this->request->getPost('travelmode');
         $data['sharing'] = $this->request->getPost('sharing');
-        $data['sharing_amount'] = $this->request->getPost('sharing_amount');
-        $data['booking_amount'] = $this->request->getPost('total_booking_amount');
-        $data['total_amount'] = $this->request->getPost('total_amount');
-        $data['msg'] = $this->request->getPost('msg');
+        $data['coupon_used'] = $this->request->getPost('coupon_used');
+        $data['adults'] = $this->request->getPost('adults');
+        $data['pax_details'] = $this->request->getPost('pax_details');
+        $data['date'] = $this->request->getPost('date');
+        $data['paymode'] = $this->request->getPost('paymode');
+        $data['total_package_cost'] = $this->request->getPost('total_amount');
         $data['amount'] = $session->get('payable_amount');
 
-
-
         $bookingController->SaveBooking($data);
-        $this->sendEmail($data['payment_id']);
-
+        //$this->sendEmail($data['payment_id']);
         return $data;
     }
 
-    public function sendEmail($payment_id)
+    public function sendEmail(string $payment_id)
     {
         $EmailController = new EmailController();
         $EmailController->sendBookingDetails($payment_id);
-    }
-    public function paymentFailed()
-    {
-        $this->data['title'] = "Payment Failed";
-        $this->data['description'] = "Your payment has failed. Please try again.";
-        $this->data['canonical'] = base_url('payment-failed');
-        $this->data['noindex'] = true;
-
-        return view('layout/header-2', $this->data) .
-            view('pages/static/payment-failed', $this->data);
-    }
-    public function MaximumAmount()
-    {
-        $this->data['title'] = "Maximum Amount Exceeds";
-        $this->data['description'] = "Your payment has failed. Please try again.";
-        $this->data['canonical'] = base_url('max-amount');
-        $this->data['noindex'] = true;
-
-        return view('layout/header-2', $this->data) .
-            view('pages/static/max-amount', $this->data);
     }
 }

@@ -3,6 +3,11 @@
   margin: 0;
   padding: 0;
 }
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
 @view-transition {
   /* navigation: auto; */
 }

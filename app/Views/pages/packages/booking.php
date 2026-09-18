@@ -80,7 +80,7 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label class="form-label">Sharing</label>
-                                            <select name="sharing" class="form-select" :class="{'is-invalid': errors.sharing}" v-model="lead.sharing" required>
+                                            <select name="sharing[]" class="form-select" :class="{'is-invalid': errors.sharing}" v-model="lead.sharing" required>
                                                 <option value="" disabled selected>Choose your option</option>
                                                 <option v-for="opt in sharingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
                                             </select>
@@ -116,7 +116,7 @@
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <label class="form-label">Sharing</label>
-                                                <select class="form-select" v-model="t.sharing" required>
+                                                <select class="form-select" name="sharing[]" v-model="t.sharing" required>
                                                     <option value="" disabled selected>Choose Sharing</option>
                                                     <option v-for="opt in sharingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
                                                 </select>
@@ -183,10 +183,10 @@
                             </h2>
                             <div class="accordion-collapse collapse" :class="{show: openIndex === 2}" ref="section2">
                                 <div class="accordion-body">
-                                    <label class="form-label">Travel Mode</label>
+                                    <label class="form-label">Travel Mode / Pickup Point</label>
                                     <select name="travelmode" class="form-select" v-model="travelMode" required>
                                         <option value="" disabled selected>Choose your option</option>
-                                        <option v-for="opt in travelModeOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
+                                        <option v-for="opt in travelModeOptions" :key="opt.value" :value="opt.value">{{opt.value}}.{{ opt.label }}</option>
                                     </select>
 
                                     <div class="d-flex justify-content-between mt-4">
@@ -275,9 +275,9 @@
                                         <td colspan="2">
                                             <label class="form-label">How much you want to pay?</label>
                                             <select name="paymode" v-model="paymode" class="form-select">
-                                                <option value="" disabled selected>Choose your option</option>
-                                                <option value="1">1. Full Payment</option>
-                                                <option value="2">2. Booking Amount</option>
+                                                <option value="" disabled>Choose your option</option>
+                                                <option value="full">1. Full Payment</option>
+                                                <option value="booking">2. Booking Amount</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -398,7 +398,7 @@
 
             const selectedDate = ref('');
             const travelMode = ref('');
-            const paymode = ref('1');
+            const paymode = ref('full');
             const couponCode = ref('');
             const couponApplied = ref(false);
             const couponDiscount = ref(0);
@@ -541,7 +541,7 @@
                 });
 
                 const dateSurcharge = (parseInt(String(selectedDate.value).split('|')[1] || '0', 10) || 0) * adults.value;
-                const gst = Math.round(amount * GST * 100) / 100;
+                const gst = Math.round((amount + dateSurcharge) * GST * 100) / 100;
                 const offerAppliedOn = Math.round((amount + gst + dateSurcharge) * 100) / 100;
 
                 let running = offerAppliedOn;
@@ -568,13 +568,13 @@
 
             const finalPayable = computed(() => {
                 if (!calc.value.ready) return 0;
-                const base = paymode.value === '2' ? pkg.BOOKING_AMOUNT * adults.value : calc.value.amountToPay;
+                const base = paymode.value === 'booking' ? pkg.BOOKING_AMOUNT * adults.value : calc.value.amountToPay;
                 return couponApplied.value ? base - couponDiscount.value : base;
             });
 
             const payNowAmount = computed(() => {
                 if (!calc.value.ready) return 0;
-                return paymode.value === '2' ? pkg.BOOKING_AMOUNT * adults.value : calc.value.amountToPay;
+                return paymode.value === 'booking' ? pkg.BOOKING_AMOUNT * adults.value : calc.value.amountToPay;
             });
 
             const perPersonText = computed(() => {
