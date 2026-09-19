@@ -9,7 +9,7 @@
 </style>
 
 
-<div id="app">
+<div id="app" class="scroll-margin">
 
     <!-- Header -->
     <div class="bgSecondaryTheme text-white py-4 mb-4">
@@ -260,6 +260,7 @@
                                             </div>
                                         </td>
                                     </tr>
+
                                     <tr v-if="couponApplied">
                                         <td>Coupon Applied</td>
                                         <td class="text-end"><b>{{ couponCode }}</b></td>
@@ -271,6 +272,22 @@
                                             <span class="text-success"><b>₹ {{ finalPayable }}</b></span>
                                         </td>
                                     </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <div v-if="!couponApplied" class="coupon-container invisible-scrollbar">
+                                <span
+                                    v-for="c in availableCoupons"
+                                    :key="c.code"
+                                    class="coupon shadow"
+                                    role="button"
+                                    @click="selectCoupon(c.code)">
+                                    {{ c.code }} - ₹{{ c.off }} Off
+                                </span>
+                            </div>
+                            <br>
+                            <table class="table table-borderless mb-0 align-middle">
+                                <tbody>
                                     <tr class="border-top">
                                         <td colspan="2" class="fw-bold fs-2">{{ calc.ready ? '₹ ' + payNowAmount : '...' }}</td>
                                     </tr>
@@ -301,6 +318,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
@@ -334,7 +352,7 @@
             const pkg = reactive({
                 PACKAGE_ID: <?= $package->PACKAGE_ID ?>,
                 PACKAGE_NAME: '<?= $package->PACKAGE_NAME ?>',
-                BOOKING_AMOUNT: <?= $package->BOOKING_AMOUNT ?>,
+                BOOKING_AMOUNT: <?= $package->BOOKING_AMOUNT ?: 3000 ?>,
                 SPACIAL_OFFER: <?= $package->SPACIAL_OFFER ?>,
                 CUSTOM_TRIP: <?= $package->CUSTOM_TRIP ?>,
                 DATES: '<?= $package->DATES ?>',
@@ -386,6 +404,33 @@
 
             const GST = 0.05;
             const MAX_ONLINE_AMOUNT = 500000;
+            const availableCoupons = [{
+                    code: 'VOYAGER100',
+                    off: 100
+                },
+                {
+                    code: 'VK2k',
+                    off: 2000
+                },
+                {
+                    code: 'vb500',
+                    off: 500
+                },
+                {
+                    code: 'vbs2kn',
+                    off: 1000
+                },
+                {
+                    code: 'bdwer1k',
+                    off: 1000
+                },
+                {
+                    code: 'abhi5000',
+                    off: 5000
+                },
+            ];
+
+
 
             // ---------------- Form state ----------------
             const lead = reactive({
@@ -502,6 +547,7 @@
                 travelers.splice(index, 1);
             }
 
+
             // ---------------- Pricing helpers ----------------
             function sharingPrice(sharingIndex, tmode) {
                 if (tmode === 1) return wt2PriceArr[sharingIndex] || 0;
@@ -571,6 +617,14 @@
                 };
             });
 
+            function selectCoupon(code) {
+                if (couponApplied.value) {
+                    runToast('Only One Coupon Can Be Applied', 'danger');
+                    return;
+                }
+                couponCode.value = code;
+                applyCode();
+            }
             const finalPayable = computed(() => {
                 if (!calc.value.ready) return 0;
                 return couponApplied.value ? calc.value.amountToPay - couponDiscount.value : calc.value.amountToPay;
@@ -800,6 +854,8 @@
                 section0,
                 section1,
                 section2,
+                availableCoupons,
+                selectCoupon,
             };
         }
     }).mount('#app');

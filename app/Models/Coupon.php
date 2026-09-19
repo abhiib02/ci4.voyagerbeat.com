@@ -63,6 +63,7 @@ class Coupon extends Model
 
     public function decrementCodeCount(string $code): bool
     {
+
         $this->set('Coupon_Count', 'Coupon_Count - 1', false)
             ->where('Coupon_Code', $code)
             ->where('Coupon_Count >', 0)
@@ -70,7 +71,6 @@ class Coupon extends Model
 
         return $this->db->affectedRows() > 0;
     }
-
     public function getCouponJson(string $code): array
     {
         return $this->select(['Coupon_ID', 'Coupon_Code', 'Coupon_Worth', 'Coupon_Type'])
@@ -81,5 +81,9 @@ class Coupon extends Model
     public function getAllCoupons(): array
     {
         return $this->findAll();
+    }
+    public function getAllValidCoupons(): array
+    {
+        return $this->where('Coupon_Count >', 0)->findAll();
     }
 }
