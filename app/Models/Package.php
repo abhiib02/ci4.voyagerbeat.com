@@ -140,7 +140,7 @@ class Package extends Model
 
     public function getAllPackagesForAdminDashboard(int $perPage = 15, string $group = 'default'): array
     {
-        return $this->select('PACKAGE_ID, SLUG, PACKAGE_NAME, LOCATION, updated_at')->orderBy('updated_at', 'DESC')->paginate($perPage, $group);
+        return $this->select('PACKAGE_ID, SLUG, PACKAGE_NAME, LOCATION, DATES, updated_at')->orderBy('updated_at', 'DESC')->find(); //->paginate($perPage, $group);
     }
 
     public function getAllPackagesNameAndID(): array
