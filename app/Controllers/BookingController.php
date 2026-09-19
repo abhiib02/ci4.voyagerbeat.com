@@ -23,31 +23,6 @@ class BookingController extends BaseController
         $this->data['package'] = $this->PackageModel->getPackageByID($packageID);
         return $this->Render_Page('packages/booking', $this->data);
     }
-    public function SaveBooking(array $data)
-    {
-
-        $DataArr = [
-            'order_id' => $data['order_id'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'gender' => $data['gender'],
-            'contact' => $data['contact'],
-            'package_id' => $data['package_id'],
-            'travelmode' => $data['travelmode'],
-            'sharing' => $data['sharing'],
-            'coupon_used' => $data['coupon_used'],
-            'adults' => $data['adults'],
-            'pax_details' => $data['pax_details'],
-            'date' => $data['date'],
-            'total_package_cost' => $data['total_package_cost'],
-            'paymode' => $data['paymode'],
-            'amount' => $data['amount'],
-        ];
-
-        $this->BookingModel->insertBooking($DataArr);
-
-        return true;
-    }
     public function PaymentSuccess()
     {
         $payment_ID = $this->request->getGet('payment_id');
