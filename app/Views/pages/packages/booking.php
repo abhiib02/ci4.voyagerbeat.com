@@ -272,7 +272,7 @@
                                         </td>
                                     </tr>
                                     <tr class="border-top">
-                                        <td colspan="2" class="fw-bold  fs-2">{{ calc.ready ? '₹ ' + payNowAmount : '...' }}</td>
+                                        <td colspan="2" class="fw-bold fs-2">{{ calc.ready ? '₹ ' + payNowAmount : '...' }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="small text-muted">{{ perPersonText }}</td>
@@ -309,14 +309,7 @@
         </div>
     </form>
 
-    <!-- Bootstrap toast for validation feedback -->
-    <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
-        <div class="toast align-items-center text-bg-danger border-0" :class="{show: !!toastMsg}" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">{{ toastMsg }}</div>
-            </div>
-        </div>
-    </div>
+
 
 </div>
 
@@ -580,13 +573,15 @@
 
             const finalPayable = computed(() => {
                 if (!calc.value.ready) return 0;
-                const base = paymode.value === 'booking' ? pkg.BOOKING_AMOUNT * adults.value : calc.value.amountToPay;
-                return couponApplied.value ? base - couponDiscount.value : base;
+                return couponApplied.value ? calc.value.amountToPay - couponDiscount.value : calc.value.amountToPay;
             });
 
             const payNowAmount = computed(() => {
                 if (!calc.value.ready) return 0;
-                return paymode.value === 'booking' ? pkg.BOOKING_AMOUNT * adults.value : calc.value.amountToPay;
+                return paymode.value === 'booking' ?
+                    pkg.BOOKING_AMOUNT * adults.value // booking mode: fixed amount per adult, coupon doesn't apply
+                    :
+                    finalPayable.value; // full mode: full price minus coupon discount (if any)
             });
 
             const perPersonText = computed(() => {
@@ -687,29 +682,31 @@
             // ---------------- Coupon ----------------
             async function applyCode() {
                 if (!calc.value.ready) {
-                    showToast('Fill in traveler, date and travel details first');
+                    runToast('Fill in traveler, date and travel details first', 'danger');
                     return;
                 }
                 if (!couponCode.value) {
-                    showToast('Enter a coupon code');
+                    runToast('Enter a coupon code', 'danger');
                     return;
                 }
                 try {
-                    const res = await fetch(`https://voyagersbeat.com/couponCode/${encodeURIComponent(couponCode.value)}`);
+                    const res = await fetch(`<?= env('app.baseURL') ?>couponCode/${encodeURIComponent(couponCode.value)}`);
                     const data = await res.json();
+
                     const codeData = data && data[0];
+                    console.log(codeData);
                     if (!codeData || codeData.Coupon_Count == 0) {
-                        showToast('Coupon expired or invalid');
+                        runToast('Coupon expired or invalid', 'danger');
                         return;
                     }
                     const worth = parseFloat(codeData.Coupon_Worth);
                     const type = parseInt(codeData.Coupon_Type, 10); // 0 = flat, 1 = percent
-                    const base = payNowAmount.value;
+                    const base = calc.value.amountToPay; // always the full amount, not payNowAmount
                     couponDiscount.value = type === 1 ? Math.round(base * (worth / 100)) : worth;
                     couponApplied.value = true;
-                    showToast('Coupon applied!');
+                    runToast('Coupon applied!', 'success');
                 } catch (e) {
-                    showToast('Invalid coupon code');
+                    runToast('Invalid coupon code', 'danger');
                 }
             }
 
@@ -729,14 +726,8 @@
                 });
             }
 
-            // ---------------- Validation / toast ----------------
-            function showToast(msg) {
-                toastMsg.value = msg;
-                clearTimeout(toastTimer);
-                toastTimer = setTimeout(() => {
-                    toastMsg.value = '';
-                }, 3000);
-            }
+            // ---------------- Validation 
+
 
             function validate() {
                 errors.name = !lead.name;
@@ -748,19 +739,19 @@
 
                 const firstError = Object.entries(errors).find(([, v]) => v);
                 if (firstError) {
-                    showToast(`Please fill "${firstError[0]}"`);
+                    runToast(`Please fill "${firstError[0]}"`, 'danger');
                     return false;
                 }
                 if (!selectedDate.value) {
-                    showToast('Please choose a date');
+                    runToast('Please choose a date', 'danger');
                     return false;
                 }
                 if (!travelMode.value) {
-                    showToast('Please choose a travel mode');
+                    runToast('Please choose a travel mode', 'danger');
                     return false;
                 }
                 if (travelers.some(t => !t.name || !t.gender || !t.contact || !t.email || !t.sharing)) {
-                    showToast('Please complete all traveler details');
+                    runToast('Please complete all traveler details', 'danger');
                     return false;
                 }
                 return true;

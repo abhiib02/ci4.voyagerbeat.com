@@ -44,6 +44,12 @@ class Coupon extends Model
     {
         return $this->where('Coupon_Code', $code)->countAllResults() > 0 ? 1 : 0;
     }
+    public function isCodeCount(string $code): int
+    {
+        return $this->where('Coupon_Code', $code)
+            ->where('Coupon_Count >', 0)
+            ->find() ? 1 : 0;
+    }
 
     public function isCodeExistById(int $id): int
     {
@@ -67,7 +73,7 @@ class Coupon extends Model
 
     public function getCouponJson(string $code): array
     {
-        return $this->select(['Coupon_ID', 'Coupon_Code', 'Coupon_Worth', 'Coupon_Type', 'Coupon_Count'])
+        return $this->select(['Coupon_ID', 'Coupon_Code', 'Coupon_Worth', 'Coupon_Type'])
             ->where('Coupon_Code', $code)
             ->findAll();
     }
