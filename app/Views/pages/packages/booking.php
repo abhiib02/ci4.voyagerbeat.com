@@ -143,7 +143,17 @@
                             <div class="accordion-collapse collapse" :class="{show: openIndex === 1}" ref="section1">
                                 <div class="accordion-body">
 
-                                    <template v-if="dateList.length > 1">
+                                    <template v-if="dateList.length === 0">
+                                        <p class="text-danger mb-0">
+                                            No upcoming batch dates are available for this package right now.
+                                            Please contact us to check for new dates.
+                                        </p>
+                                        <br>
+                                        <label class="form-label">Select Date</label>
+                                        <input type="date" name="date" class="form-control" :class="{'is-invalid': errors.date}" v-model="selectedDate" required>
+                                    </template>
+
+                                    <template v-else-if="dateList.length > 0">
                                         <label class="form-label">Batch Dates</label>
                                         <select name="date" class="form-select" v-model="selectedDate" required>
                                             <option value="" disabled selected>Choose your option</option>
@@ -316,7 +326,8 @@
         reactive,
         ref,
         computed,
-        watch
+        watch,
+        onMounted
     } = Vue;
 
     createApp({
@@ -409,7 +420,8 @@
                 gender: false,
                 mobile: false,
                 email: false,
-                sharing: false
+                sharing: false,
+                date: false,
             });
             const errorMessage = ref('');
             const toastMsg = ref('');
@@ -600,12 +612,78 @@
                 return JSON.stringify(paxDetails);
             });
 
+            const storageKey = `voyager_booking_${pkg.PACKAGE_ID}`;
+
+            function saveFormState() {
+                const state = {
+                    lead: {
+                        ...lead
+                    },
+                    travelers: travelers.map(t => ({
+                        ...t
+                    })),
+                    travelerSeq,
+                    selectedDate: selectedDate.value,
+                    travelMode: travelMode.value,
+                    paymode: paymode.value,
+                    couponCode: couponCode.value,
+                    couponApplied: couponApplied.value,
+                    couponDiscount: couponDiscount.value,
+                    openIndex: openIndex.value,
+                };
+                try {
+                    sessionStorage.setItem(storageKey, JSON.stringify(state));
+                } catch (e) {
+                    /* storage full or blocked — fail silently */
+                }
+            }
+
+            function restoreFormState() {
+                try {
+                    const raw = sessionStorage.getItem(storageKey);
+                    if (!raw) return;
+                    const state = JSON.parse(raw);
+
+                    Object.assign(lead, state.lead || {});
+                    travelers.splice(0, travelers.length, ...(state.travelers || []));
+                    travelerSeq = state.travelerSeq || (1 + travelers.length);
+
+                    selectedDate.value = state.selectedDate || '';
+                    travelMode.value = state.travelMode || '';
+                    paymode.value = state.paymode || 'full';
+                    couponCode.value = state.couponCode || '';
+                    couponApplied.value = state.couponApplied || false;
+                    couponDiscount.value = state.couponDiscount || 0;
+                    openIndex.value = state.openIndex ?? 0;
+                } catch (e) {
+                    /* corrupt/old data — ignore */
+                }
+            }
+
+            restoreFormState();
+
+            // Save on every change to any of these — deep watch covers nested
+            // traveler objects and lead fields.
+
+            if (dateList.value.length > 0) {
+                const stillValid = dateList.value.some(d => d.raw === selectedDate.value);
+                if (!stillValid) selectedDate.value = '';
+            }
+            watch(
+                [lead, travelers, selectedDate, travelMode, paymode, couponCode, couponApplied, couponDiscount, openIndex],
+                saveFormState, {
+                    deep: true
+                }
+            );
+
             watch(overLimit, (val) => {
                 errorMessage.value = val ?
-                    `Maximum Amount is ${MAX_ONLINE_AMOUNT / 100000} Lac for Online Payment. Contact Us @ +91-9667711662 for Offline Payment.` :
+                    `Maximum Amount is ${MAX_ONLINE_AMOUNT / 100000} Lac for Online Payment. Contact Us @ +91-<?= $defaultContact ?> for Offline Payment.` :
                     '';
             });
-
+            watch(selectedDate, (val) => {
+                if (val) errors.date = false;
+            });
             // ---------------- Coupon ----------------
             async function applyCode() {
                 if (!calc.value.ready) {
@@ -666,6 +744,8 @@
                 errors.mobile = !lead.mobile;
                 errors.email = !lead.email;
                 errors.sharing = !lead.sharing;
+                errors.date = !selectedDate.value;
+
                 const firstError = Object.entries(errors).find(([, v]) => v);
                 if (firstError) {
                     showToast(`Please fill "${firstError[0]}"`);
@@ -685,6 +765,7 @@
                 }
                 return true;
             }
+
 
             function onSubmit(e) {
                 // Only block the browser's normal POST when something is invalid.

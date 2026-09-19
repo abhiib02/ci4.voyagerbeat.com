@@ -48,6 +48,102 @@ class RazorpayController extends BaseController
     {
         $session = Services::session();
         $api = new Api(env('razorKey'), env('razorSecret'));
+
+        /// Validation Defination
+        $validationRules = [
+            'name' => [
+                'rules'  => 'required|min_length[2]|max_length[100]|string',
+                'errors' => [
+                    'required'   => 'Name is required.',
+                    'min_length' => 'Name must be at least 2 characters.',
+                ],
+            ],
+            'gender' => [
+                'rules'  => 'required|in_list[Male,Female,Other,M,F,O]',
+                'errors' => [
+                    'in_list' => 'Please select a valid gender option.',
+                ],
+            ],
+            'mobile' => [
+                'rules'  => 'required|numeric|exact_length[10]',
+                'errors' => [
+                    'required'     => 'Mobile number is required.',
+                    'exact_length' => 'Mobile number must be exactly 10 digits.',
+                ],
+            ],
+            'email' => [
+                'rules'  => 'required|valid_email',
+                'errors' => [
+                    'required'    => 'Email address is required.',
+                    'valid_email' => 'Please provide a valid email address.',
+                ],
+            ],
+            'sharing' => [
+                'rules'  => 'permit_empty',
+                'required'    => 'Sharing is required.',
+            ],
+            'sharing.*' => [
+                'rules'  => 'permit_empty|string',
+                'required'    => 'Sharing is required.',
+            ],
+
+            'pax_details' => [
+                'rules'  => 'permit_empty',
+            ],
+            'adults' => [
+                'rules'  => 'required|integer|greater_than_equal_to[1]',
+                'errors' => [
+                    'required'              => 'Number of adults is required.',
+                    'greater_than_equal_to' => 'At least 1 adult is required.',
+                ],
+            ],
+            'id' => [
+                'rules'  => 'required|is_natural_no_zero',
+                'errors' => [
+                    'required' => 'Package ID is missing.',
+                ],
+            ],
+            'package_name' => [
+                'rules'  => 'required|string',
+            ],
+            'bookingamount' => [
+                'rules'  => 'required|numeric|greater_than_equal_to[0]',
+            ],
+            'amounttopay' => [
+                'rules'  => 'required|numeric|greater_than_equal_to[0]',
+            ],
+            'date' => [
+                'rules'  => 'required|string',
+                'errors' => [
+                    'required' => 'Please select a travel date.',
+                ],
+            ],
+            'travelmode' => [
+                'rules'  => 'required|string',
+            ],
+            'paymode' => [
+                'rules'  => 'required|string|in_list[full,booking]',
+            ],
+            'coupon_code' => [
+                'rules'  => 'permit_empty|alpha_numeric|max_length[50]',
+            ],
+        ];
+
+        if (! $this->validate($validationRules)) {
+
+            // Get all errors as an array [field => message]
+            $errors = $this->validator->getErrors();
+
+            // Extract the very first error message as a string
+            $firstError = !empty($errors) ? array_values($errors)[0] : '';
+
+            // print_r($errors);
+
+            return $this->RedirectWithtoast("errors : $firstError", 'Danger', '/book/' . $this->request->getPost('id'));
+            //return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+
         $PackagePriceDetails = $this->PackageModel->getPackageByID($this->request->getPost('id'));
 
         $GST = 0.05;
@@ -81,6 +177,8 @@ class RazorpayController extends BaseController
         // data used for backend price verification                //
         //                                                         //
         /////////////////////////////////////////////////////////////
+
+
 
         // Get All the Data from the post request
 
@@ -177,7 +275,7 @@ class RazorpayController extends BaseController
                 $BookingData['GrandTotal'] = $TOTAL_COST;
                 break;
             default:
-                return redirect()->to("packageid/" . $BookingData['package_id'] . '?paymentError=Paymode_is_invalid');
+                return $this->RedirectWithtoast('PaymentError : Paymode_is_invalid', 'Danger', "packageid/" . $BookingData['package_id'] . '?paymentError=Paymode_is_invalid');
         }
 
         //Checks For Exceptions
