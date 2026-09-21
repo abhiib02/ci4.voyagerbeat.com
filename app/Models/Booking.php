@@ -79,7 +79,7 @@ class Booking extends Model
     }
     public function getAllBookingsForAdminDashboard(int $perPage = 10, string $group = 'default'): array
     {
-        return $this->select()->orderBy('ID', 'DESC')->paginate($perPage, $group);
+        return $this->select()->orderBy('ID', 'DESC')->findAll();
     }
     public function getUserBookingsByEmail(string $email): array
     {

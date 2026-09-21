@@ -7,7 +7,7 @@
 
     </div>
     <div class="card-body">
-        <table class="sortable table" id="">
+        <table class="sortable table" id="datatable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -79,10 +79,7 @@
                 <?php } ?>
             </tbody>
         </table>
-        <!-- Pagination Links -->
-        <div class="pagination">
-            <?= $pager->links() ?>
-        </div>
+
     </div>
 </div>
 
