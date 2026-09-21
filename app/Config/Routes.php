@@ -5,9 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /** @var RouteCollection $routes */
 
 $routes->set404Override(function () {
-    return
-        view('layout/header') .
-        view('errors/error404');
+
+    return view('errors/error404');
 });
 
 $routes->get('/', 'MainController::index');

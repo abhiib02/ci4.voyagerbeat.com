@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
     <main>
 
         <?php if (isMobileDevice()): ?>

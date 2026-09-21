@@ -413,15 +413,49 @@
                             <label for="">Disabled</label>
                             <input class="form-control" type="text" disabled>
 
-                            <input class="form-control" type="text" placeholder="INFO_P1 *" name="INFO_P1" value="<?= $package->INFO_P1 ?>" required>
+                            <select name="INFO_P1" class="form-select" required>
+                                <option value="<?= $package->INFO_P1 ?>" selected><?= $package->INFO_P1 ?></option>
+                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing">Group Sharing</option>
+                            </select>
 
-                            <input class="form-control" type="text" placeholder="INFO_P2" name="INFO_P2" value="<?= $package->INFO_P2 ?>">
+                            <select name="INFO_P2" class="form-select">
+                                <option value="<?= $package->INFO_P2 ?>" selected><?= $package->INFO_P2 ?></option>
+                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing">Group Sharing</option>
+                            </select>
+                            <select name="INFO_P3" class="form-select">
+                                <option value="<?= $package->INFO_P3 ?>" selected><?= $package->INFO_P3 ?></option>
+                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing">Group Sharing</option>
+                            </select>
+                            <select name="INFO_P4" class="form-select">
+                                <option value="<?= $package->INFO_P4 ?>" selected><?= $package->INFO_P4 ?></option>
+                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing">Group Sharing</option>
+                            </select>
+                            <select name="INFO_P5" class="form-select">
+                                <option value="<?= $package->INFO_P5 ?>" selected><?= $package->INFO_P5 ?></option>
+                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing">Group Sharing</option>
+                            </select>
 
-                            <input class="form-control" type="text" placeholder="INFO_P3" name="INFO_P3" value="<?= $package->INFO_P3 ?>">
 
-                            <input class="form-control" type="text" placeholder="INFO_P4" name="INFO_P4" value="<?= $package->INFO_P4 ?>">
-
-                            <input class="form-control" type="text" placeholder="INFO_P5" name="INFO_P5" value="<?= $package->INFO_P5 ?>">
                         </div>
                         <div class="col-lg-2">
                             <label for="">Selling Price</label>

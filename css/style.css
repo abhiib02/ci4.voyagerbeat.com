@@ -399,6 +399,52 @@ body {
   -ms-overflow-style: none;
   /* Safari and Chrome */
 }
+.top-layer {
+  position: relative;
+  z-index: 2;
+}
+
+.layers-container {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.layers {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-bg {
+  background: var(--url);
+  background-size: 110%;
+  background-repeat: no-repeat;
+  background-position: calc((var(--x) * var(--mul, 1) * 1px) + 50%)
+    calc((var(--y) * var(--mul, 1) * 1px) + 20%);
+  pointer-events: none;
+}
+
+@keyframes x-val {
+  0% {
+    background-position: calc(var(--x, 0) * var(--mul, 1) * 1px);
+  }
+
+  100% {
+    background-position: calc(var(--x, -1920000) * var(--mul, 1) * 1px);
+  }
+}
 /*----------- Social Colors ------------------*/
 .fb-bg {
   background: #1877f2;
