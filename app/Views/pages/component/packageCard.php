@@ -52,7 +52,7 @@
                     <?php if ($package->REQUEST_PRICE) : ?>
                         Price on Request
                     <?php else: ?>
-                        Starts @ <b>₹<?= $package->PRICE_1; ?></b>
+                        <del class="text-secondary">₹<?= $package->S_PRICE_1; ?></del> <b>₹<?= $package->PRICE_1; ?> / Adult</b>
                     <?php endif; ?>
 
                 </a>
