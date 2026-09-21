@@ -275,15 +275,19 @@
                                 </tbody>
                             </table>
                             <br>
-                            <div v-if="!couponApplied" class="coupon-container invisible-scrollbar">
-                                <span
-                                    v-for="c in availableCoupons"
-                                    :key="c.code"
-                                    class="coupon shadow"
-                                    role="button"
-                                    @click="selectCoupon(c.code)">
-                                    {{ c.code }} - ₹{{ c.off }} Off
-                                </span>
+                            <div class="coupon-marquee">
+                                <div class="coupon-track">
+                                    <div v-if="!couponApplied" class="coupon-container invisible-scrollbar">
+                                        <span
+                                            v-for="c in availableCoupons"
+                                            :key="c.code"
+                                            class="coupon shadow"
+                                            role="button"
+                                            @click="selectCoupon(c.Coupon_Code)">
+                                            {{ c.Coupon_Code }} - <span v-if="c.Coupon_Type == 0">₹{{ c.Coupon_Worth }} Off</span> <span v-else>{{ c.Coupon_Worth }}% Off</span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <br>
                             <table class="table table-borderless mb-0 align-middle">
@@ -404,31 +408,7 @@
 
             const GST = 0.05;
             const MAX_ONLINE_AMOUNT = 500000;
-            const availableCoupons = [{
-                    code: 'VOYAGER100',
-                    off: 100
-                },
-                {
-                    code: 'VK2k',
-                    off: 2000
-                },
-                {
-                    code: 'vb500',
-                    off: 500
-                },
-                {
-                    code: 'vbs2kn',
-                    off: 1000
-                },
-                {
-                    code: 'bdwer1k',
-                    off: 1000
-                },
-                {
-                    code: 'abhi5000',
-                    off: 5000
-                },
-            ];
+            const availableCoupons = <?= json_encode($ValidCoupons) ?>
 
 
 

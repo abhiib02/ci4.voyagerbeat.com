@@ -8,11 +8,6 @@
             <input name="code" class="form-control" type="text" value="<?= $coupon->Coupon_Code; ?>" required />
         </div>
         <div class="">
-            <label>Coupon Worth (if type is 1 then mention percentage )</label>
-            <input name="worth" class="form-control" id="worth" type="number" oninput='checkType()'
-                value="<?= $coupon->Coupon_Worth; ?>" required />
-        </div>
-        <div class="">
             <label>Coupon Type (0 for Amount /1 for Percentage)</label>
 
             <select name="type" class="form-select" id="type" onchange="checkType()" required>
@@ -22,6 +17,12 @@
                 <option value="1">Percentage</option>
             </select>
         </div>
+        <div class="">
+            <label>Coupon Worth (if type is 1 then mention percentage )</label>
+            <input name="worth" class="form-control" id="worth" type="number" oninput='checkType()'
+                value="<?= $coupon->Coupon_Worth; ?>" required />
+        </div>
+
         <div class="">
             <label>Coupon Count (code usage limit)</label>
             <input name="count" class="form-control" type="number" value="<?= $coupon->Coupon_Count; ?>" required />
