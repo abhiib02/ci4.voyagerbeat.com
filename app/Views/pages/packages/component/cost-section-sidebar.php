@@ -125,7 +125,7 @@
         <i class='bx bx-transfer-alt fs-3 text-theme-secondary'></i>
                         <br>
           <input type="radio" name="pricing" data-key="${key}" value="${obj[key]}" ${i === 0 ? 'checked' : ''}>
-          ${key.split('<br>')[1]}
+          ${key.split('<br>')?.[1] ?? key}
         </label>
       `).join('');
 
@@ -134,14 +134,22 @@
 
         // Function to update the final output text
         
+        // quad sharing (4 persons in 1 room)
+        // ----         ---------------------
+        //  [1]                    [2]
+        // item.label.match(/^([^\s]+).*\(([^)]+)\)/)[1]
+        // item.label.match(/^([^\s]+).*\(([^)]+)\)/)[2]
 
         // Render Layer 1 (Sharing options)
         sharingDiv.innerHTML = CostingObject.map((item, i) => `
       <label class="btn btn-outline-voyagers cost-sidebar-radio flex-fill">
+        <span>${item.label.match(/^([^\s]+).*\(([^)]+)\)/)?.[1] ?? item.label}</span>
+        <br>
         ${Array.from({ length: getSharingTermNumber(item.label.split(' ')[0].toLowerCase()) }, (_, i) => `<span class="bed-dot"></span>`).join('')}
         <br>
+        
         <input type="radio" name="sharing" value="${i}" ${i === 0 ? 'checked' : ''} class="">
-        ${item.label}
+        <span class="tiny-text">${item.label.match(/^([^\s]+).*\(([^)]+)\)/)?.[2] ?? item.label}</span>
       </label>
     `).join('');
 

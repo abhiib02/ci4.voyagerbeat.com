@@ -150,6 +150,9 @@ body {
 .small-text {
   font-size: 1rem;
 }
+.tiny-text {
+  font-size: 0.8rem;
+}
 /* text-styling*/
 .text-shadow {
   text-shadow: 0px 0px 5px #00000088;
@@ -281,10 +284,10 @@ body {
 }
 .coupon-container {
   width: 100%;
-  overflow-x: scroll;
-  display: flex;
-  scrollbar-width: thin;
-  gap: 0.5rem;
+  @media (width > 992px) {
+    display: flex;
+    gap: 10px;
+  }
 }
 
 .coupon {
@@ -292,8 +295,7 @@ body {
   position: relative;
   padding: 1rem;
   cursor: pointer;
-  width: fit-content;
-  min-width: 180px;
+  width: 100%;
   border: 1px solid color-mix(in srgb, var(--couponColor) 80%, black);
   border-left: 5px solid color-mix(in srgb, var(--couponColor) 80%, black);
   color: color-mix(in srgb, var(--couponColor) 30%, black);

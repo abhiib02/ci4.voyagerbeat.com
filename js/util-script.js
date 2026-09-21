@@ -36,9 +36,11 @@ function getMonthNumber(n) {
 
 function getSharingTermNumber(Term) {
   const SharingTerm = {
+    group: 5,
     quad: 4,
     triple: 3,
     double: 2,
+    solo: 5,
   };
 
   return SharingTerm[Term] || 1;

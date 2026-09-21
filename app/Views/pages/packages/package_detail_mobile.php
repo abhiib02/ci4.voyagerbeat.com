@@ -1,5 +1,24 @@
 <?php helper('packageImage'); ?>
+<?php
+// Data Formatting
+$TAGS = explode(',', $package->TAGS);
+?>
 <link rel="stylesheet" href="/css/package-detail-mobile.css">
+<div>
+
+    <div itemscope itemtype="<?= base_url(); ?>">
+
+        <meta itemprop="name" content="<?= $package->PACKAGE_NAME; ?>" />
+
+        <meta itemprop="url" content="<?= '/package/' . $package->SLUG; ?>" />
+
+        <meta itemprop="description" content="<?= $package->META_DESC; ?>" />
+
+        <meta itemprop="datePublished" content="<?= $package->updated_at; ?>" />
+
+    </div>
+
+</div>
 <div class="scroll-margin">
     <div class="package_detail_content_mobile">
 
@@ -37,42 +56,42 @@
 
         <section class="container" id="package_name">
             <h5 class="mt-2"><?= $package->PACKAGE_NAME; ?></h5>
-            <span class="main-color-text"><i class='bx bxs-location-plus'></i></span>&nbsp;<span><?= $package->LOCATION; ?></span>•<span><?= $package->COUNTRY; ?></span>
+            <p><?= $package->META_DESC ?></p>
+            <div class="my-2">
+                <a href="/type/<?= urlencode($package->PACKAGE_TYPE) ?>"><span class=" badge rounded-pill text-bg-dark"><?= $package->PACKAGE_TYPE ?></span></a>
+                <a href="/badge/<?= urlencode($package->BADGE) ?>" class="text-decoration-none"><span class="badge rounded-pill text-bg-warning"><?= $package->BADGE ?></span></a>
+                <?php foreach ($TAGS as $tag): ?>
+                    <a href="/tag/<?= $tag ?>" class="text-decoration-none text-theme-secondary"><span class="badge rounded-pill text-theme-secondary">#<?= $tag ?></span></a>
+                <?php endforeach; ?>
+            </div>
+            <span class="text-theme-secondary"><i class='bx bxs-location-plus'></i></span>&nbsp;<span><?= $package->LOCATION; ?></span>•<span><?= $package->COUNTRY; ?></span>
         </section>
 
         <section class="container" id="quick-info">
-            <div class="d-flex justify-content-between flex-wrap">
-                <div class="border rounded-3 my-2 flex-fill">
-                    <div class="card-body p-3 d-flex align-items-center">
-                        <div class="rounded-3 bg-warning bg-opacity-10 text-warning p-3 me-3">
+            <div class="d-flex justify-content-between flex-wrap gap-1">
+                <div class="border rounded-3 my-2 flex-fill card">
+                    <div class="card-body p-2 grid-center">
+                        <div class="text-center">
+                            <p class="text-muted small fw-semibold text-uppercase m-0">Duration</p>
                             <i class="bx bx-time-five fs-3"></i>
-                        </div>
-                        <div class="text-start">
-                            <span class="text-muted small fw-semibold text-uppercase">Duration</span>
                             <h6 class="mb-0 fw-bold text-dark">5 Days</h6>
                         </div>
                     </div>
                 </div>
-                <div class="border rounded-3 my-2 flex-fill">
-                    <div class="card-body p-3 d-flex align-items-center">
-                        <div class="rounded-3 bg-warning bg-opacity-10 text-warning p-3 me-3">
+                <div class="border rounded-3 my-2 flex-fill card">
+                    <div class="card-body p-2 grid-center">
+                        <div class="text-center">
+                            <p class="text-muted small fw-semibold text-uppercase m-0">Pick n Drop</p>
                             <i class='bx bx-map-pin fs-3'></i>
-                        </div>
-                        <div class="text-start">
-                            <span class="text-muted small fw-semibold text-uppercase">Pick n Drop</span>
-                            <h6 class="mb-0 fw-bold text-dark">
-                                <?= ($package->PICKNDROP) ?? 'Delhi to Delhi' ?>
-                            </h6>
+                            <h6 class="mb-0 fw-bold text-dark"><?= ($package->PICKNDROP) ?? 'Delhi to Delhi' ?></h6>
                         </div>
                     </div>
                 </div>
-                <div class="border rounded-3 my-2 flex-fill">
-                    <div class="card-body p-3 d-flex align-items-center">
-                        <div class="rounded-3 bg-warning bg-opacity-10 text-warning p-3 me-3">
+                <div class="border rounded-3 my-2 flex-fill card">
+                    <div class="card-body p-2 grid-center">
+                        <div class="text-center">
+                            <p class="text-muted small fw-semibold text-uppercase m-0">Starting Price</p>
                             <i class='bx bx-rupee fs-3'></i>
-                        </div>
-                        <div class="text-start">
-                            <span class="text-muted small fw-semibold text-uppercase">Starting Price</span>
                             <h6 class="mb-0 fw-bold text-dark">
                                 <?php if ($package->REQUEST_PRICE) : ?>
                                     Price on Request
@@ -82,6 +101,7 @@
                             </h6>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>

@@ -275,20 +275,32 @@
                                 </tbody>
                             </table>
                             <br>
-                            <div class="coupon-marquee">
-                                <div class="coupon-track">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#couponsDrawer">View Available Coupons</button>
+                            </div>
+                            <br>
+                            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="couponsDrawer" aria-labelledby="offcanvasBottomLabel" style="--bs-offcanvas-height:60vh;">
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Available Coupons</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body small">
                                     <div v-if="!couponApplied" class="coupon-container invisible-scrollbar">
-                                        <span
+                                        <div
                                             v-for="c in availableCoupons"
                                             :key="c.code"
                                             class="coupon shadow"
                                             role="button"
                                             @click="selectCoupon(c.Coupon_Code)">
                                             {{ c.Coupon_Code }} - <span v-if="c.Coupon_Type == 0">₹{{ c.Coupon_Worth }} Off</span> <span v-else>{{ c.Coupon_Worth }}% Off</span>
-                                        </span>
+                                        </div>
+                                    </div>
+                                    <div v-if="couponApplied">
+                                        <p class="text-success text-center fs-2">{{couponCode}} Applied of <b class="text-success">₹{{ couponDiscount }}</b></p>
                                     </div>
                                 </div>
                             </div>
+
                             <br>
                             <table class="table table-borderless mb-0 align-middle">
                                 <tbody>
@@ -604,6 +616,10 @@
                 }
                 couponCode.value = code;
                 applyCode();
+
+                const el = document.getElementById('couponsDrawer');
+                const instance = bootstrap.Offcanvas.getOrCreateInstance(el);
+                instance.hide();
             }
             const finalPayable = computed(() => {
                 if (!calc.value.ready) return 0;
@@ -724,7 +740,7 @@
                     return;
                 }
                 try {
-                    const res = await fetch(`https://${window.location.hostname}/couponCode/${encodeURIComponent(couponCode.value)}`);
+                    const res = await fetch(`${window.location.protocol}//${window.location.hostname}/couponCode/${encodeURIComponent(couponCode.value)}`);
                     const data = await res.json();
 
                     const codeData = data && data[0];
