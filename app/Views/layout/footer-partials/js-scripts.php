@@ -5,3 +5,18 @@
 <script src="/js/ImgPlaceholder.js"></script>
 <script src="/js/add_to_favorite.js"></script>
 <script src="/js/downloadPDF.js"></script>
+<script src="https://unpkg.com/lenis@1.1.2/dist/lenis.min.js"></script>
+<script>
+    const lenis = new Lenis()
+
+    lenis.on('scroll', (e) => {
+        console.log(e)
+    })
+
+    function raf(time) {
+        lenis.raf(time)
+        requestAnimationFrame(raf)
+    }
+
+    requestAnimationFrame(raf)
+</script>

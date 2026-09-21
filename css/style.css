@@ -393,6 +393,10 @@ body {
 
 .invisible-scrollbar::-webkit-scrollbar {
   display: none;
+  scrollbar-width: none;
+
+  /* Hide scrollbar for IE and legacy Edge */
+  -ms-overflow-style: none;
   /* Safari and Chrome */
 }
 /*----------- Social Colors ------------------*/
