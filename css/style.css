@@ -131,6 +131,9 @@ body {
 .scroll-margin {
   margin-top: 20px;
   margin-bottom: 20px;
+  @media (width < 992px) {
+    margin-top: 0px;
+  }
 }
 /* Utility classes end*/
 

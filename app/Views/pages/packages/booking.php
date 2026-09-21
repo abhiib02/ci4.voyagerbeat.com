@@ -724,7 +724,7 @@
                     return;
                 }
                 try {
-                    const res = await fetch(`<?= env('app.baseURL') ?>couponCode/${encodeURIComponent(couponCode.value)}`);
+                    const res = await fetch(`https://${window.location.hostname}/couponCode/${encodeURIComponent(couponCode.value)}`);
                     const data = await res.json();
 
                     const codeData = data && data[0];

@@ -4,6 +4,7 @@
     <div class="package_detail_content_mobile">
 
         <section class="pdf-download" id="pdf">
+            <button class="btn btn-sm btn-theme btn-warning share-button"><i class='bx bxs-share-alt'></i></button>
             <?php if (!empty($package->PACKAGE_PDF)): ?>
                 <button data-href="/upload/package_pdf/<?= $package->PACKAGE_PDF; ?>" onclick="downloadURI('/upload/package_pdf/<?= $package->PACKAGE_PDF; ?>','')" type="button" class="btn btn-sm btn-theme btn-warning "> Download PDF <i class='bx bxs-download'></i></button>
             <?php endif; ?>
@@ -374,4 +375,39 @@
     const callBtn = document.querySelector('#call-nav-mobile-btn');
     const triggerDiv = document.querySelector('#trigger-nav-menu-animation');
     observer.observe(triggerDiv);
+</script>
+<script>
+    const shareButton = document.querySelector('.share-button');
+    const shareDialog = document.querySelector('.share-dialog');
+    const closeButton = document.querySelector('.close-button');
+    shareButton.addEventListener('click', event => {
+        if (navigator.share) {
+            const shareMessage = `✨ <?= addslashes($package->PACKAGE_NAME) ?> ✨\n\n` +
+                `📍 <?= addslashes($package->LOCATION) ?>\n` +
+                `⏱️ <?= $package->DURATION ?> Days\n` +
+                `🏷️ <?= $package->PACKAGE_TYPE ?>\n\n` +
+                `💰 Pricing (per person):\n` +
+                `  <?= $package->INFO_P1 ?? '' ?>: ₹<?= number_format($package->PRICE_1) ?? '' ?>\n` +
+                `  <?= $package->INFO_P2 ?? '' ?>: ₹<?= number_format($package->PRICE_2) ?? '' ?>\n` +
+                `  <?= $package->INFO_P3 ?? '' ?>: ₹<?= number_format($package->PRICE_3) ?? '' ?>\n\n` +
+                `✅ Inclusions:\n` +
+                `<?= addslashes(strip_tags($package->INCLUSION) ?? '') ?>` +
+                `<?= addslashes($package->DESCRIPTION ?? '') ?>\n\n` +
+                `🚀 Book now on Voyagers Beat app!\n` +
+                `🔗 https://voyagersbeat.com/package/<?= $package->SLUG ?>\n` +
+                `📲 Open in app: voyagersbeat://package/<?= $package->SLUG ?>\n\n` +
+                `📞 Contact: +91 9667711662`;
+
+            navigator.share({
+                    title: '✨ <?= addslashes($package->PACKAGE_NAME) ?> ✨',
+                    text: shareMessage
+                })
+                .then(() => {
+                    console.log('Thanks for sharing!');
+                })
+                .catch(console.error);
+        } else {
+            shareDialog.classList.add('is-open');
+        }
+    });
 </script>
