@@ -55,20 +55,35 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body pb-5 mb-3">
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <a href="/upcoming" class="accordion-button collapsed text-decoration-none" type="button">
-                        Upcoming <i class='bx bx-link'></i>
-                    </a>
-                </h2>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#weekend-getaway-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                        Weekend Getaway
-                    </button>
-                </h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <a class="nav-link icon-link" href="#"><i class='bx bxs-backpack fs-3'></i> Backpacking Trips</a>
+            </li>
+            <li class="list-group-item">
+                <a class="nav-link icon-link" href="#"><i class='bx bxs-directions fs-3'></i> Trekking Trips</a>
+            </li>
+            <li class="list-group-item">
+                <a class="nav-link icon-link" href="#"><i class='bx bxs-car fs-3'></i> Road Trips</a>
+            </li>
+            <li class="list-group-item">
+                <a class="nav-link icon-link" href="#"><i class='bx bxs-tree-alt fs-3'></i> Leh Trips</a>
+            </li>
+            <li class="list-group-item">
+                <a class="nav-link icon-link" href="#"><i class='bx bx-send fs-3'></i> Spiti Trips</a>
+            </li>
+            <li class="list-group-item">
+                <a class="nav-link icon-link" href="#"><i class='bx bxs-leaf fs-3'></i> Spiritual Trips</a>
+            </li>
+            <li class="list-group-item">
+                <a class="nav-link icon-link" href="#"><i class='bx bxs-heart fs-3'></i> Second Innings</a>
+            </li>
+            <li class="list-group-item">
+                <a class="nav-link icon-link" href="#"><i class='bx bxs-compass fs-3'></i>All Packages</a>
+            </li>
+            <li class="list-group-item">
+                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#weekend-getaway-mobile" aria-expanded="false" aria-controls="weekend-getaway">
+                    <i class='bx bxs-calendar fs-3'></i> Weekend Getaway
+                </button>
                 <div id="weekend-getaway-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -203,37 +218,31 @@
                     </div>
 
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#season-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                        Season Trips
-                    </button>
-                </h2>
+            </li>
+            <li class="list-group-item">
+                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#season-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
+                    <i class='bx bxl-google-cloud fs-3'></i> Season Trips
+                </button>
                 <div id="season-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
                     <ul class="list-group">
                         <?= seasonNavMobile() ?>
                     </ul>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trip-types-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                        Trip Types
-                    </button>
-                </h2>
+            </li>
+            <li class="list-group-item">
+                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trip-types-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
+                    <i class='bx bx-list-ul fs-3'></i> Trip Types
+                </button>
                 <div id="trip-types-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
                     <?php foreach ($navDataPackageType as $item): ?>
                         <a href="/type/<?= urlencode($item) ?>" class="badge rounded-pill text-bg-dark text-decoration-none p-2 my-1"><?= $item ?></a>
                     <?php endforeach; ?>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#International-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                        International
-                    </button>
-                </h2>
+            </li>
+            <li class="list-group-item">
+                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#International-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
+                    <i class='bx bxs-plane-alt fs-3'></i> International Trips
+                </button>
                 <div id="International-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
                     <?php foreach ($navDataInternational as $item): ?>
                         <?php if ($item != 'India'): ?>
@@ -248,13 +257,11 @@
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#more-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                        More
-                    </button>
-                </h2>
+            </li>
+            <li class="list-group-item">
+                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#more-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
+                    <i class='bx bx-list-ol fs-3'></i> More
+                </button>
                 <div id="more-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
                     <ul class="list-group">
                         <a class="list-group-item list-group-item-action" href="/blogs">
@@ -294,13 +301,11 @@
                         <?php endif; ?>
                     </ul>
                 </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Socials-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                        Socials
-                    </button>
-                </h2>
+            </li>
+            <li class="list-group-item">
+                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Socials-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
+                    <i class='bx bxl-instagram-alt fs-3'></i> Social
+                </button>
                 <div id="Socials-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
                     <div class="d-flex justify-content-between">
                         <a href="https://www.facebook.com/voyagersBeat/" class="btn fb-bg text-white fs-2"><i class="bx bxl-facebook-circle"></i></a>
@@ -311,9 +316,10 @@
                         <a href="https://in.linkedin.com/company/voyagers" class="btn linkedin-bg text-white fs-2"><i class="bx bxl-linkedin"></i></a>
                     </div>
                 </div>
-            </div>
+            </li>
 
-        </div>
+        </ul>
+
         <div class="text-center">
             <img src="<?= env('app.LogoPath') ?>" alt="<?= env('app.name') ?>" width="100px" height="auto">
         </div>

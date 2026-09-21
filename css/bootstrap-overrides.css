@@ -1,3 +1,7 @@
+:root {
+  --bs-link-color: var(--text-color);
+}
+
 .form-select:focus,
 .form-control:focus {
   color: var(--bs-body-color);
