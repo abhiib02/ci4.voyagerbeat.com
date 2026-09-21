@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" id="desktop-nav">
+<?= view('pages/component/AnnouncementBar') ?>
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top" id="desktop-nav">
+
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <img src="<?= env('app.LogoPath') ?>" alt="Bootstrap" width="50px" height="auto">

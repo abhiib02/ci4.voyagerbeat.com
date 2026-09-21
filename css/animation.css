@@ -54,3 +54,75 @@
       drop-shadow(-15px 15px 0px #f4433600) drop-shadow(25px 25px 0px #f4433600);
   }
 }
+
+.animated-promo-btn {
+  animation: promoGlowPulse 2.8s ease-in-out infinite;
+}
+/* Dynamic Glowing & Pulsing Promo Badges */
+@keyframes promoGlowPulse {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 2px 10px rgba(255, 107, 0, 0.4),
+      0 0 0 0 rgba(255, 107, 0, 0.4);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      0 5px 20px rgba(255, 107, 0, 0.7),
+      0 0 14px rgba(255, 215, 0, 0.65);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 2px 10px rgba(255, 107, 0, 0.4),
+      0 0 0 0 rgba(255, 107, 0, 0.4);
+  }
+}
+
+@keyframes promoFestiveGlowPulse {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 2px 10px rgba(230, 57, 70, 0.4),
+      0 0 0 0 rgba(230, 57, 70, 0.4);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      0 5px 20px rgba(230, 57, 70, 0.75),
+      0 0 14px rgba(255, 75, 140, 0.65);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 2px 10px rgba(230, 57, 70, 0.4),
+      0 0 0 0 rgba(230, 57, 70, 0.4);
+  }
+}
+
+@keyframes starSpin {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(20deg) scale(1.3);
+  }
+}
+
+@keyframes festiveIconPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.28);
+  }
+}

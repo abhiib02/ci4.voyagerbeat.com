@@ -69,6 +69,8 @@ abstract class BaseController extends Controller
             'AllPackagesNameAndID' => fn() => $this->PackageModel->getAllPackagesNameAndID(),
             'defaultContact' => fn() => $this->OptionModel->getOptionValue('contact'),
             'defaultmails' => fn() => $this->OptionModel->getOptionValue('mails'),
+            'AnnouncementText' => fn() => $this->OptionModel->getOptionValue('AnnouncementText'),
+            'AnnouncementLink' => fn() => $this->OptionModel->getOptionValue('AnnouncementLink'),
 
         ];
 

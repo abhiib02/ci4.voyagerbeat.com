@@ -9,6 +9,7 @@
         <a href="/tag/hot-selling" class="btn btn-theme flex-fill fw-bold text-white" style="--btn-bg-color:#FF5A00;">Hot Trips</a>
         <a href="/upcoming" class="btn btn-theme flex-fill fw-bold text-white" style="--btn-bg-color:#4cc3a8;">Upcoming Trips</a>
     </div>
+    <?= view('pages/component/AnnouncementBar-mobile') ?>
     <h5 class="my-2">Trips</h5>
     <div class="categories-wrapper invisible-scrollbar">
         <div class="categories">

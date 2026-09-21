@@ -10,6 +10,7 @@
 
 <body>
     <main>
+
         <?php if (isMobileDevice()): ?>
             <?= view('layout/header-partials/nav-mobile') ?>
         <?php else: ?>

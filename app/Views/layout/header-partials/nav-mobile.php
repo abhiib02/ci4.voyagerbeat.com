@@ -1,4 +1,4 @@
-<div class="fixed-top">
+<div class="sticky-top">
     <div class="topbar text-center py-2 bgColorTheme px-2 d-flex justify-content-between">
         <button onclick="history.back()" class="btn btn-sm btn-outline-dark"><i class='bx bx-chevron-left'></i>Back</button>
         <a href="/">
