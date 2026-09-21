@@ -1,6 +1,6 @@
 <!-- Vue 3 -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-
+<link rel="stylesheet" href="/css/coupon.css">
 <style>
     #details-right {
         position: sticky;
@@ -44,7 +44,7 @@
                                     Details Section
                                 </button>
                             </h2>
-                            <div class="accordion-collapse collapse" :class="{show: openIndex === 0}" ref="section0">
+                            <div class="accordion-collapse collapse scroll-margin" :class="{show: openIndex === 0}" ref="section0">
                                 <div class="accordion-body">
 
                                     <div class="row mb-3">
@@ -140,7 +140,7 @@
                                     Dates Section
                                 </button>
                             </h2>
-                            <div class="accordion-collapse collapse" :class="{show: openIndex === 1}" ref="section1">
+                            <div class="accordion-collapse collapse scroll-margin" :class="{show: openIndex === 1}" ref="section1">
                                 <div class="accordion-body">
 
                                     <template v-if="dateList.length === 0">
@@ -191,7 +191,7 @@
                                     Travel Section
                                 </button>
                             </h2>
-                            <div class="accordion-collapse collapse" :class="{show: openIndex === 2}" ref="section2">
+                            <div class="accordion-collapse collapse scroll-margin" :class="{show: openIndex === 2}" ref="section2">
                                 <div class="accordion-body">
                                     <label class="form-label">Travel Mode / Pickup Point</label>
                                     <select name="travelmode" class="form-select" v-model="travelMode" required>
@@ -212,7 +212,7 @@
 
                 <!-- RIGHT COLUMN: SUMMARY -->
                 <div class="col-12 col-lg-4">
-                    <div id="details-right" class="card shadow-sm">
+                    <div id="details-right" class="card shadow-sm scroll-margin">
                         <div class="card-body">
                             <table class="table table-borderless mb-0 align-middle">
                                 <tbody>
@@ -286,14 +286,29 @@
                                 </div>
                                 <div class="offcanvas-body small">
                                     <div v-if="!couponApplied" class="coupon-container invisible-scrollbar">
-                                        <div
-                                            v-for="c in availableCoupons"
-                                            :key="c.code"
-                                            class="coupon shadow"
-                                            role="button"
-                                            @click="selectCoupon(c.Coupon_Code)">
-                                            {{ c.Coupon_Code }} - <span v-if="c.Coupon_Type == 0">₹{{ c.Coupon_Worth }} Off</span> <span v-else>{{ c.Coupon_Worth }}% Off</span>
+                                        <div class="coupon" v-for="c in availableCoupons" :key="c.code" role="button" @click="selectCoupon(c.Coupon_Code)">
+                                            <article>
+                                                <aside>
+                                                    <svg viewBox="0 0 172 64" preserveAspectRatio="none" aria-hidden="true">
+                                                        <path d="M -6 60 Q 70 -4 180 34" fill="none" stroke="rgba(255,255,255,.3)"
+                                                            stroke-width="1.6" stroke-dasharray="3 6" stroke-linecap="round" />
+                                                        <circle cx="14" cy="47" r="3" fill="rgba(255,255,255,.55)" />
+                                                    </svg>
+                                                    <strong>₹{{ c.Coupon_Worth }}</strong>
+                                                    <span>off</span>
+                                                </aside>
+                                                <section>
+                                                    <h2>Flat ₹{{ c.Coupon_Worth }} off your booking</h2>
+                                                    <p>Applies to bookings of ₹{{ Number(c.Coupon_Worth) + 2500 }} or more.</p>
+                                                    <div>
+                                                        <code>{{ c.Coupon_Code }}</code>
+                                                        <button type="button" @click="selectCoupon(c.Coupon_Code)" data-code="{{ c.Coupon_Code }}">Apply</button>
+                                                    </div>
+
+                                                </section>
+                                            </article>
                                         </div>
+
                                     </div>
                                     <div v-if="couponApplied">
                                         <p class="text-success text-center fs-2">{{couponCode}} Applied of <b class="text-success">₹{{ couponDiscount }}</b></p>

@@ -129,7 +129,7 @@ body {
   display: none;
 }
 .scroll-margin {
-  margin-top: 20px;
+  scroll-margin-top: 50px;
   margin-bottom: 20px;
   @media (width < 992px) {
     margin-top: 0px;
@@ -289,17 +289,18 @@ body {
     gap: 10px;
   }
 }
-
+/* 
 .coupon {
   --couponColor: #2ebd85;
   position: relative;
   padding: 1rem;
   cursor: pointer;
   width: 100%;
+
   border: 1px solid color-mix(in srgb, var(--couponColor) 80%, black);
   border-left: 5px solid color-mix(in srgb, var(--couponColor) 80%, black);
   color: color-mix(in srgb, var(--couponColor) 30%, black);
-  /* background-color: color-mix(in srgb, var(--couponColor) 30%, transparent); */
+  background-color: color-mix(in srgb, var(--couponColor) 30%, transparent);
   background: color-mix(in srgb, var(--couponColor) 2%, white);
   border-radius: var(--theme-border-radius);
   margin: 20px 0px;
@@ -316,7 +317,11 @@ body {
     width: 2px;
     border: 1px dashed color-mix(in srgb, var(--couponColor) 30%, black);
   }
-}
+  @media (width > 992px) {
+    height: 200px;
+    font-size: 2rem;
+  }
+} */
 /*----------- Custom Styling ------------------*/
 .style-border {
   box-shadow:
