@@ -1,3 +1,11 @@
+.coupon-container {
+  width: 100%;
+  @media (width > 992px) {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
 .coupon {
   --card: #ffffff;
   --ink: #12281f;

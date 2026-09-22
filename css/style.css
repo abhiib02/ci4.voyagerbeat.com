@@ -282,13 +282,7 @@ body {
 .text-red {
   color: #f44336;
 }
-.coupon-container {
-  width: 100%;
-  @media (width > 992px) {
-    display: flex;
-    gap: 10px;
-  }
-}
+
 /* 
 .coupon {
   --couponColor: #2ebd85;
