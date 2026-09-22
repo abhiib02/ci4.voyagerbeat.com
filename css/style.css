@@ -76,31 +76,6 @@ input[type="radio"] {
   --themebtncolor: #000;
 } */
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --font-family: "Roboto Condensed", sans-serif;
-    --font-size: 14px;
-    --maincolor: #ffd600;
-    --maincoloroutline: #e0bf12;
-    --maincolor-lite2: #ffd60044;
-    --maincolor-lite: #ffd60088;
-    --invertcolor: #fff;
-    --inverttextcolor: #000;
-    --darkcolor: #000e;
-    --secondcolor: #333;
-    --secondcolor-lite: #3338;
-    --swiper-theme-color: var(--maincolor);
-    --bg-color: #0b0e1a;
-    --bg-color-2: #1c1f2a;
-    --text-color: #ffffff;
-    --primary-color: #ffd600;
-
-    --themebtncolor: #000;
-    --theme-border-radius: 10px;
-    color-scheme: dark;
-  }
-}
-
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;

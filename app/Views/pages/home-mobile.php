@@ -1,4 +1,4 @@
-<section class="container scroll-margin">
+<section class="container scroll-margin pt-2">
     <div class="">
         <div class="input-group mb-3 bg-white rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#SearchBox">
             <input type="text" class="form-control rounded-pill border-0" placeholder="Where do you want to go?" aria-label="Where do you want to go?" aria-describedby="button-addon2" readonly>

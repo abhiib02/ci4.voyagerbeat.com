@@ -36,6 +36,7 @@
         <?php endif; ?>
     </div>
     <br>
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center fw-bold">
@@ -47,3 +48,17 @@
         </div>
     </div>
 </footer>
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="installOffcanvas" aria-labelledby="installOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="installOffcanvasLabel">Install Voyagers Beat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body text-center">
+        <p>Install our app for faster booking and easy access to your trips!</p>
+        <button class="btn btn-theme btn-voyager w-100 mt-2" id="installAppBtn">Install App</button>
+        <br>
+        <br>
+    </div>
+</div>
+<script src="/js/appInstallPopup.js"></script>

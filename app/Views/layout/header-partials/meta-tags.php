@@ -22,6 +22,11 @@
 <meta property="og:url" content="http://voyagersbeat.com">
 <meta name="twitter:card" content="http://voyagersbeat.com">
 <meta property="og:type" content="Travel and Tourism" />
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192x192.png">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <!-------Meta Tags----------->
 

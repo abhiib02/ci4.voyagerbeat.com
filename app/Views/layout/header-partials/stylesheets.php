@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.css" />
 <link rel="stylesheet" href="/css/bootstrap-overrides.css">
 <link rel="stylesheet" href="/css/megamenu.css">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/style.css?v=100">
 <link rel="stylesheet" href="/css/packageCard.css">
 <link rel="stylesheet" href="/css/packageCardSimple.css">
 <link rel="stylesheet" href="/css/pagination.css">

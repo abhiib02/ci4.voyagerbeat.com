@@ -197,7 +197,7 @@ class EmailController extends BaseController
 
         $url = base_url() . 'resetform?token=' . $token;
 
-        $message = $this->reset_mail_email_template($url, env('app.name'), env('app.baseURL') . env('appLogoPath'));
+        $message = $this->reset_mail_email_template($url, env('app.name'), env('app.logoPath'));
 
         $email = Services::email();
         $email->setTo($to);
