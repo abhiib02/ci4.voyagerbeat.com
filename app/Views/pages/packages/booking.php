@@ -196,7 +196,7 @@
                                     <label class="form-label">Travel Mode / Pickup Point</label>
                                     <select name="travelmode" class="form-select" v-model="travelMode" required>
                                         <option value="" disabled selected>Choose your option</option>
-                                        <option v-for="opt in travelModeOptions" :key="opt.value" :value="opt.value">{{opt.value}}.{{ opt.label }}</option>
+                                        <option v-for="opt in travelModeOptions" :key="opt.value" :value="opt.value + '|' + opt.label">{{opt.value}}.{{ opt.label }}</option>
                                     </select>
 
                                     <div class="d-flex justify-content-between mt-4">

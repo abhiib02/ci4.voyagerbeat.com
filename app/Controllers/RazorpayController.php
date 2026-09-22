@@ -189,7 +189,7 @@ class RazorpayController extends BaseController
         //Customer Details
         $BookingData['name'] = $this->request->getPost('name');
         $BookingData['gender'] = $this->request->getPost('gender');
-        $BookingData['mobile'] = $this->request->getPost('mobile');
+        $BookingData['contact'] = $this->request->getPost('mobile');
         $BookingData['email'] = $this->request->getPost('email');
         $BookingData['sharingArr'] = $this->request->getPost('sharing');
 
@@ -207,7 +207,8 @@ class RazorpayController extends BaseController
 
         $BookingData['date'] = explode('#', $this->request->getPost('date'))[0] ?? $this->request->getPost('date');
         $BookingData['dateSurcharge'] = explode('#', $this->request->getPost('date'))[1] ?? 0;
-        $BookingData['travelmode'] = substr($this->request->getPost('travelmode'), 0, 1);
+        $BookingData['travelmode'] = $this->request->getPost('travelmode');
+        $travelmodeInt = substr($this->request->getPost('travelmode'), 0, 1);
 
 
 
@@ -226,7 +227,7 @@ class RazorpayController extends BaseController
         // Price Calculation According to Travel Mode
         // Calculated Amount Using Each Adult with its sharing ex: trav1 - quad,trav2 = double => 1* quad(price) + 1 * double(price)
 
-        switch ($BookingData['travelmode']) {
+        switch ($travelmodeInt) {
             case 1:
                 foreach ($BookingData['each_person_sharing'] as $eachSharing) {
                     if ($WT2priceArr[$eachSharing] > 0) {
@@ -293,7 +294,7 @@ class RazorpayController extends BaseController
 
         // Generating Order ID
 
-        $BookingData['BookingID'] = $BookingData['package_id'] . '-' . $BookingData['mobile'] . '-' . $BookingData['GrandTotal'];
+        $BookingData['BookingID'] = $BookingData['package_id'] . '-' . $BookingData['contact'] . '-' . $BookingData['GrandTotal'];
 
         $razorpayOrder = $api->order->create(array(
             'receipt'         => $BookingData['BookingID'],
@@ -309,6 +310,7 @@ class RazorpayController extends BaseController
         $this->session->set(['payable_amount' => $BookingData['AmountPayable']]);
 
         $data = $this->prepareData($amount, $razorpayOrderId, $BookingData);
+        $BookingData = $this->saveBookingData($razorpayOrderId, $BookingData);
 
         return view('razorpay', ['data' => $data]);
     }
@@ -326,16 +328,7 @@ class RazorpayController extends BaseController
                 "name"  => $data['name'],
                 "email"  => $data['email'],
                 "gender" => $data['gender'],
-                "contact" => $data['mobile'],
-                "package_id" => $data['package_id'],
-                "travelmode" => $data['travelmode'],
-                "sharing" => $data['sharingArr'][0],
-                "coupon_used" => $data['coupon_code'],
-                "adults" => $data['adults'],
-                "pax_details" => $data['pax_details'],
-                "date" => $data['date'],
-                "paymode" => $data['paymode'],
-                "total_amount" => $data['GrandTotal'],
+                "contact" => $data['contact']
             ),
             "notes"  => array(
                 "address"  => "",
@@ -368,46 +361,49 @@ class RazorpayController extends BaseController
             } catch (SignatureVerificationError $e) {
                 $success = false;
                 $error = 'Razorpay_Error : ' . $e->getMessage();
-                print_r($error);
+                //print_r($error);
             }
         }
-
+        $razorpayOrderId = $this->session->get('razorpay_order_id');
         if ($success === false) {
+            
+            $this->BookingModel->updateStatus($razorpayOrderId,'Failed');
             return redirect()->to("/payment-failed");
         }
 
-        $BookingData = $this->saveBookingData(); //Saving Data to Database
-
+        //Saving Status to Complete
+        $this->BookingModel->updateStatus($razorpayOrderId, 'Complete');
         //$this->sendEmail($BookingData['order_id']); //Sending Email to Customer
 
-        return $this->RedirectWithtoast('Booking Confirmed', 'Success', "/thanks?payment_id=" . $BookingData['order_id']);
+        return $this->RedirectWithtoast('Booking Confirmed', 'Success', "/thanks?order_id=" . $razorpayOrderId);
     }
-    public function saveBookingData()
+    public function saveBookingData(string $order_id,array $BookingData)
     {
-        $Bookingdata['order_id'] = (string)$this->request->getPost('razorpay_payment_id');
-        $Bookingdata['name'] = (string)$this->request->getPost('name');
-        $Bookingdata['email'] = (string)$this->request->getPost('email');
-        $Bookingdata['gender'] = (string)$this->request->getPost('gender');
-        $Bookingdata['contact'] = (string)$this->request->getPost('contact');
-        $Bookingdata['package_id'] = (int)$this->request->getPost('package_id');
-        $Bookingdata['travelmode'] = (int)$this->request->getPost('travelmode');
-        $Bookingdata['sharing'] = (string)$this->request->getPost('sharing');
-        $Bookingdata['coupon_used'] = (string)$this->request->getPost('coupon_used');
-        $Bookingdata['adults'] = (int)$this->request->getPost('adults');
-        $Bookingdata['pax_details'] = (string)$this->request->getPost('pax_details');
-        $Bookingdata['date'] = (string)$this->request->getPost('date');
-        $Bookingdata['paymode'] = (string)$this->request->getPost('paymode');
-        $Bookingdata['total_package_cost'] = (int)$this->request->getPost('total_amount');
-        $Bookingdata['amount'] = (int) $this->session->get('payable_amount');
+        $data['order_id'] = $order_id;
+        $data['name'] = (string)$BookingData['name'];
+        $data['email'] = (string)$BookingData['email'];
+        $data['gender'] = (string)$BookingData['gender'];
+        $data['contact'] = (string)$BookingData['contact'];
+        $data['package_id'] = (int)$BookingData['package_id'];
+        $data['travelmode'] = (int)$BookingData['travelmode'];
+        $data['sharing'] = $BookingData['sharingArr'][0];
+        $data['coupon_used'] = (string)$BookingData['coupon_code'];
+        $data['adults'] = (int)$BookingData['adults'];
+        $data['pax_details'] = (string)$BookingData['pax_details'];
+        $data['date'] = (string)$BookingData['date'];
+        $data['paymode'] = (string)$BookingData['paymode'];
+        $data['total_package_cost'] = (int)$BookingData['GrandTotal'];
+        $data['amount'] = (int)$BookingData['AmountPayable'];
+        $data['status'] = 'Pending';
 
-        $insertResult = $this->BookingModel->insertBooking($Bookingdata); // Calling Modal Function for Insertion
+        $insertResult = $this->BookingModel->insertBooking($data); // Calling Modal Function for Insertion
 
         if ($insertResult === false) {
             log_message('error', 'Booking insert failed: ' . json_encode($this->BookingModel->errors()));
             return $this->BookingModel->errors();
         }
 
-        return $Bookingdata;
+        return $this->BookingModel->errors();
     }
 
     public function sendEmail(string $payment_id)

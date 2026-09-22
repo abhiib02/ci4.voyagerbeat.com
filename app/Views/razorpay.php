@@ -33,15 +33,6 @@
     <input type="hidden" name="email" value="<?php echo $details['prefill']['email'] ?>">
     <input type="hidden" name="gender" value="<?php echo $details['prefill']['gender'] ?>">
     <input type="hidden" name="contact" value="<?php echo $details['prefill']['contact'] ?>">
-    <input type="hidden" name="package_id" value="<?php echo $details['prefill']['package_id'] ?>">
-    <input type="hidden" name="travelmode" value="<?php echo $details['prefill']['travelmode'] ?>">
-    <input type="hidden" name="sharing" value="<?php echo $details['prefill']['sharing'] ?>">
-    <input type="hidden" name="coupon_used" value="<?php echo $details['prefill']['coupon_used'] ?>">
-    <input type="hidden" name="adults" value="<?php echo $details['prefill']['adults'] ?>">
-    <textarea type="hidden" name="pax_details"><?php echo $details['prefill']['pax_details'] ?></textarea>
-    <input type="hidden" name="date" value="<?php echo $details['prefill']['date'] ?>">
-    <input type="hidden" name="paymode" value="<?php echo $details['prefill']['paymode'] ?>">
-    <input type="hidden" name="total_amount" value="<?php echo $details['prefill']['total_amount'] ?>">
 
 </form>
 <script>

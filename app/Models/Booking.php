@@ -29,6 +29,7 @@ class Booking extends Model
         'paymode',
         'contact',
         'amount',
+        'status',
         'total_package_cost',
         'booking_date_utc',
     ];
@@ -55,6 +56,7 @@ class Booking extends Model
         'paymode'            => 'required',
         'contact'            => 'required',
         'amount'             => 'required|integer',
+        'status'             => 'required',
         'total_package_cost' => 'required|integer',
     ];
     protected $validationMessages   = [];
@@ -65,13 +67,16 @@ class Booking extends Model
     {
         return $this->insert($data);
     }
-    public function getBookingByPaymentId(string $paymentId)
+    public function getBookingByOrderId(string $orderId)
     {
-        return $this->where('order_id', $paymentId)->first();
+        return $this->where('order_id', $orderId)->first();
     }
-    public function isBookingExistByPaymentId(string $paymentId): bool
+    public function isBookingExistByOrderId(string $orderId): bool
     {
-        return $this->where('order_id', $paymentId)->countAllResults() > 0;
+        return $this->where('order_id', $orderId)->countAllResults() > 0;
+    }
+    public function updateStatus(string $orderId,string $status): bool {
+        return $this->set('status', $status)->where('order_id', $orderId)->update();
     }
     public function getAllBookings()
     {

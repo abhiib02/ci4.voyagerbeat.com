@@ -30,14 +30,14 @@ class BookingController extends BaseController
     }
     public function PaymentSuccess()
     {
-        $payment_ID = $this->request->getGet('payment_id');
-        if (empty($payment_ID)) {
+        $order_ID = $this->request->getGet('order_id');
+        if (empty($order_ID)) {
             return $this->Render_Page('static/booking-thanks-unpaid', $this->data);
         }
-        if (!$this->BookingModel->isBookingExistByPaymentId($payment_ID)) {
+        if (!$this->BookingModel->isBookingExistByOrderId($order_ID)) {
             return $this->Render_Page('static/booking-thanks-unpaid', $this->data);
         }
-        $this->data['bookingData'] = $this->BookingModel->getBookingByPaymentId($payment_ID);
+        $this->data['bookingData'] = $this->BookingModel->getBookingByOrderId($order_ID);
         return $this->Render_Page('static/booking-thanks', $this->data);
     }
 

@@ -26,7 +26,7 @@
                     <th>Pay Mode</th>
                     <th>Amount Paid</th>
                     <th>Total Package Cost</th>
-
+                    <th>Payment Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -74,6 +74,20 @@
                         <td><?= $booking->paymode; ?></td>
                         <td><?= $booking->amount; ?></td>
                         <td><?= $booking->total_package_cost; ?></td>
+                        <td>
+                            <?php switch ($booking->status) {
+                                case 'Complete': ?>
+                                    <span class="badge text-bg-success"><?= $booking->status; ?></span>
+                                <?php break;
+                                case 'Pending': ?>
+                                    <span class="badge text-bg-warning"><?= $booking->status; ?></span>
+                                <?php break;
+                                default: ?>
+                                    <span class="badge text-bg-danger">Failed</span>
+                            <?php break;
+                            } ?>
+
+                        </td>
 
                     </tr>
                 <?php } ?>
