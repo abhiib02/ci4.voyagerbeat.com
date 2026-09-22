@@ -7,7 +7,7 @@ if (! function_exists('isCurrentDateNearRange')) {
 
         if (preg_match($pattern, trim($dateRangeStr))) {
             // Strip any suffix like '|0' before splitting
-            $cleanRange = explode('|', $dateRangeStr)[0];
+            $cleanRange = explode('#', $dateRangeStr)[0];
             $startDateStr = explode(' - ', $cleanRange)[0];
 
             // Normalize both dates to midnight (00:00:00) for clean day calculations

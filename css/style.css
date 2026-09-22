@@ -506,3 +506,19 @@ body {
     display: none !important;
   }
 }
+/*------------------- Mobile Nav*/
+#mobile-nav > ul > li.nav-item:hover {
+  animation: bg-tap 0.3s ease forwards;
+}
+
+@keyframes bg-tap {
+  0% {
+    background: color-mix(in srgb, var(--maincolor) 0%, transparent);
+  }
+  50% {
+    background: color-mix(in srgb, var(--maincolor) 30%, transparent);
+  }
+  100% {
+    background: color-mix(in srgb, var(--maincolor) 0%, transparent);
+  }
+}

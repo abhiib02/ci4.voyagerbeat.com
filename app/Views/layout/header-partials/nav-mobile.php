@@ -25,7 +25,15 @@
                 <sub>Whatsapp</sub>
             </a>
         </li>
-
+        <?php if (str_contains($current_url, '/package/') || str_contains($current_url, '/packageid/')): ?>
+            <li class="nav-item text-center" role="presentation" id="">
+                <a href="/book/<?= $package->PACKAGE_ID ?>" class="nav-link btn btn-theme btn-success text-white active lh-1 " id="Book-now-btn" aria-selected="false">
+                    <i class='bx bx-calendar-check fs-1'></i>
+                    <br>
+                    <sub>Book Now</sub>
+                </a>
+            </li>
+        <?php endif; ?>
         <li class="nav-item text-center" role="presentation">
             <a href="tel:+919667711662" class="nav-link rounded-3  lh-1" id="call-nav-mobile-btn" style="--bs-nav-pills-link-active-bg:#ff7722;" aria-selected="false">
                 <i class='bx bx-phone-call fs-1'></i>
@@ -275,7 +283,9 @@
                 </button>
                 <div id="trip-types-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
                     <?php foreach ($navDataPackageType as $item): ?>
-                        <a href="/type/<?= urlencode($item) ?>" class="badge rounded-pill text-bg-dark text-decoration-none p-2 my-1"><?= $item ?></a>
+                        <a class="list-group-item list-group-item-action" href="/type/<?= urlencode($item) ?>">
+                            <?= $item ?>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             </li>

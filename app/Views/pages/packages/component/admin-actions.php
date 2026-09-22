@@ -1,6 +1,6 @@
     <?php if ($isAdmin): ?>
         <div class="btn-group w-100 mb-1" role="group" aria-label="Basic example">
-            <a href="/package-edit/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-sm btn-primary d-flex justify-content-center" title="Edit"><i class='bx bxs-edit fs-4'></i></a>
+            <a href="/package-edit/<?= $package->PACKAGE_ID ?>?Adminlist=0" type="button" class="btn btn-sm btn-primary d-flex justify-content-center" title="Edit"><i class='bx bxs-edit fs-4'></i></a>
             &nbsp;
             <form action="/delete_package_process" method="post" id="package_delete_form">
                 <input type="hidden" name="id" value="<?= $package->PACKAGE_ID ?>">

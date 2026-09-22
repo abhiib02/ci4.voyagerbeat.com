@@ -38,7 +38,7 @@
     <input type="hidden" name="sharing" value="<?php echo $details['prefill']['sharing'] ?>">
     <input type="hidden" name="coupon_used" value="<?php echo $details['prefill']['coupon_used'] ?>">
     <input type="hidden" name="adults" value="<?php echo $details['prefill']['adults'] ?>">
-    <input type="hidden" name="pax_details" value="<?php echo $details['prefill']['pax_details'] ?>">
+    <textarea type="hidden" name="pax_details"><?php echo $details['prefill']['pax_details'] ?></textarea>
     <input type="hidden" name="date" value="<?php echo $details['prefill']['date'] ?>">
     <input type="hidden" name="paymode" value="<?php echo $details['prefill']['paymode'] ?>">
     <input type="hidden" name="total_amount" value="<?php echo $details['prefill']['total_amount'] ?>">

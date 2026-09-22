@@ -205,8 +205,8 @@ class RazorpayController extends BaseController
         $BookingData['coupon_code'] = $this->request->getPost('coupon_code');
         $BookingData['paymode'] = $this->request->getPost('paymode');
 
-        $BookingData['date'] = explode('|', $this->request->getPost('date'))[0] ?? $this->request->getPost('date');
-        $BookingData['dateSurcharge'] = explode('|', $this->request->getPost('date'))[1] ?? 0;
+        $BookingData['date'] = explode('#', $this->request->getPost('date'))[0] ?? $this->request->getPost('date');
+        $BookingData['dateSurcharge'] = explode('#', $this->request->getPost('date'))[1] ?? 0;
         $BookingData['travelmode'] = substr($this->request->getPost('travelmode'), 0, 1);
 
 
@@ -368,6 +368,7 @@ class RazorpayController extends BaseController
             } catch (SignatureVerificationError $e) {
                 $success = false;
                 $error = 'Razorpay_Error : ' . $e->getMessage();
+                print_r($error);
             }
         }
 
@@ -376,36 +377,37 @@ class RazorpayController extends BaseController
         }
 
         $BookingData = $this->saveBookingData(); //Saving Data to Database
+
         //$this->sendEmail($BookingData['order_id']); //Sending Email to Customer
 
         return $this->RedirectWithtoast('Booking Confirmed', 'Success', "/thanks?payment_id=" . $BookingData['order_id']);
     }
     public function saveBookingData()
     {
-        $data['order_id'] = (string)$this->request->getPost('razorpay_payment_id');
-        $data['name'] = (string)$this->request->getPost('name');
-        $data['email'] = (string)$this->request->getPost('email');
-        $data['gender'] = (string)$this->request->getPost('gender');
-        $data['contact'] = (int)$this->request->getPost('contact');
-        $data['package_id'] = (int)$this->request->getPost('package_id');
-        $data['travelmode'] = (int)$this->request->getPost('travelmode');
-        $data['sharing'] = (string)$this->request->getPost('sharing');
-        $data['coupon_used'] = (string)$this->request->getPost('coupon_used');
-        $data['adults'] = (int)$this->request->getPost('adults');
-        $data['pax_details'] = (string)$this->request->getPost('pax_details');
-        $data['date'] = (string)$this->request->getPost('date');
-        $data['paymode'] = (string)$this->request->getPost('paymode');
-        $data['total_package_cost'] = (int)$this->request->getPost('total_amount');
-        $data['amount'] = (int) $this->session->get('payable_amount');
+        $Bookingdata['order_id'] = (string)$this->request->getPost('razorpay_payment_id');
+        $Bookingdata['name'] = (string)$this->request->getPost('name');
+        $Bookingdata['email'] = (string)$this->request->getPost('email');
+        $Bookingdata['gender'] = (string)$this->request->getPost('gender');
+        $Bookingdata['contact'] = (string)$this->request->getPost('contact');
+        $Bookingdata['package_id'] = (int)$this->request->getPost('package_id');
+        $Bookingdata['travelmode'] = (int)$this->request->getPost('travelmode');
+        $Bookingdata['sharing'] = (string)$this->request->getPost('sharing');
+        $Bookingdata['coupon_used'] = (string)$this->request->getPost('coupon_used');
+        $Bookingdata['adults'] = (int)$this->request->getPost('adults');
+        $Bookingdata['pax_details'] = (string)$this->request->getPost('pax_details');
+        $Bookingdata['date'] = (string)$this->request->getPost('date');
+        $Bookingdata['paymode'] = (string)$this->request->getPost('paymode');
+        $Bookingdata['total_package_cost'] = (int)$this->request->getPost('total_amount');
+        $Bookingdata['amount'] = (int) $this->session->get('payable_amount');
 
-        $insertResult = $this->BookingModel->insertBooking($data); // Calling Modal Function for Insertion
+        $insertResult = $this->BookingModel->insertBooking($Bookingdata); // Calling Modal Function for Insertion
 
         if ($insertResult === false) {
-            $errors = $this->BookingModel->errors();
-            return $this->RedirectWithtoast('Some Error Occured While Saving You Booking Please Contact', 'Danger', "/payment-failed");
+            log_message('error', 'Booking insert failed: ' . json_encode($this->BookingModel->errors()));
+            return $this->BookingModel->errors();
         }
 
-        return $data;
+        return $Bookingdata;
     }
 
     public function sendEmail(string $payment_id)

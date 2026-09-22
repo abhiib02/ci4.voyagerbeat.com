@@ -519,7 +519,7 @@
                 }
                 return pkg.DATES.split(',')
                     .map(entry => {
-                        const [raw, surcharge] = entry.split('|');
+                        const [raw, surcharge] = entry.split('#');
                         const rawLabel = raw.trim();
 
                         // "04/09/2026 - 09/09/2026" -> use the first date to test "is this upcoming?"
@@ -598,7 +598,7 @@
                     amountStruck += sharingSellPrice(i, tmode);
                 });
 
-                const dateSurcharge = (parseInt(String(selectedDate.value).split('|')[1] || '0', 10) || 0) * adults.value;
+                const dateSurcharge = (parseInt(String(selectedDate.value).split('#')[1] || '0', 10) || 0) * adults.value;
                 const gst = Math.round((amount + dateSurcharge) * GST * 100) / 100;
                 const offerAppliedOn = Math.round((amount + gst + dateSurcharge) * 100) / 100;
 

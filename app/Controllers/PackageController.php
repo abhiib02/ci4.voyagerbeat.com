@@ -61,7 +61,7 @@ class PackageController extends BaseController
         else {
             $packages = $this->PackageModel->getAllPackages();
             $this->data['pager'] = $this->PackageModel->pager;
-            $name = "All Packages";
+            $name = "All";
             $title = "All Packages | Voyagers Beat | Live to Travel";
             $metaDesc = "Explore all available travel packages with Voyagers Beat.";
             $canonical = "packages";
@@ -621,7 +621,11 @@ class PackageController extends BaseController
 
         $this->PackageModel->UpdatePackage($ID, $DataArr);
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package ID:' . $ID . ' Update', 'status' => 'info']);
-        return redirect()->to('/dashboard/packages-list');
+        if ($this->request->getGet('Adminlist') == '1') {
+            return redirect()->to('/dashboard/packages-list');
+        } else {
+            return redirect()->to('/packageid/' . $ID);
+        }
     }
     public function duplicate_package_process(int $PACKAGE_ID)
     {

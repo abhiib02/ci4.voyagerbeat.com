@@ -23,9 +23,9 @@ $TAGS = explode(',', $package->TAGS);
     <div class="package_detail_content_mobile">
 
         <section class="pdf-download" id="pdf">
-            <button class="btn btn-sm btn-theme btn-warning share-button"><i class='bx bxs-share-alt'></i></button>
+            <button class="btn btn-theme btn-warning share-button"><i class='bx bxs-share-alt'></i></button>
             <?php if (!empty($package->PACKAGE_PDF)): ?>
-                <button data-href="/upload/package_pdf/<?= $package->PACKAGE_PDF; ?>" onclick="downloadURI('/upload/package_pdf/<?= $package->PACKAGE_PDF; ?>','')" type="button" class="btn btn-sm btn-theme btn-warning "> Download PDF <i class='bx bxs-download'></i></button>
+                <button data-href="/upload/package_pdf/<?= $package->PACKAGE_PDF; ?>" onclick="downloadURI('/upload/package_pdf/<?= $package->PACKAGE_PDF; ?>','')" type="button" class="btn btn-theme btn-warning "> PDF <i class='bx bxs-download'></i></button>
             <?php endif; ?>
         </section>
 
@@ -74,7 +74,7 @@ $TAGS = explode(',', $package->TAGS);
                         <div class="text-center">
                             <p class="text-muted small fw-semibold text-uppercase m-0">Duration</p>
                             <i class="bx bx-time-five fs-3"></i>
-                            <h6 class="mb-0 fw-bold text-dark">5 Days</h6>
+                            <h6 class="mb-0 fw-bold text-dark"><?= ($package->STAY) ?? '' ?></h6>
                         </div>
                     </div>
                 </div>
@@ -345,17 +345,7 @@ $TAGS = explode(',', $package->TAGS);
         </section>
     </div>
 </div>
-<div class="sticky-bottom" style="bottom:70px;">
-    <div class="container">
-        <div class=" d-flex justify-content-between">
-            <div></div>
-            <div>
-                <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-sm btn-theme btn-success w-100" style="width:250px;">Book Now <i class='bx bx-right-arrow-alt'></i></a>
-            </div>
-        </div>
-    </div>
 
-</div>
 <div id="trigger-nav-menu-animation"></div>
 
 <!-- Swiper JS -->
@@ -370,32 +360,7 @@ $TAGS = explode(',', $package->TAGS);
         },
     });
 </script>
-<script>
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                whatsappBtn.classList.add('wobble-hor-bottom');
-                callBtn.classList.add('wobble-hor-bottom');
-                whatsappBtn.classList.add('active');
-                callBtn.classList.add('active');
-                // Add your active class or action here
-            } else {
-                whatsappBtn.classList.remove('wobble-hor-bottom');
-                callBtn.classList.remove('wobble-hor-bottom');
-                whatsappBtn.classList.remove('active');
-                callBtn.classList.remove('active');
-            }
-        });
-    }, {
-        threshold: 0.1 // Triggers when 10% of the element is visible
-    });
-
-    // Target your element
-    const whatsappBtn = document.querySelector('#whatsapp-nav-mobile-btn');
-    const callBtn = document.querySelector('#call-nav-mobile-btn');
-    const triggerDiv = document.querySelector('#trigger-nav-menu-animation');
-    observer.observe(triggerDiv);
-</script>
+<script src="/js/button_trigger_package.js"></script>
 <script>
     const shareButton = document.querySelector('.share-button');
     const shareDialog = document.querySelector('.share-dialog');
@@ -431,3 +396,7 @@ $TAGS = explode(',', $package->TAGS);
         }
     });
 </script>
+<script>
+    const PackageDates = '<?= $package->DATES ?>';
+</script>
+<script src="/js/package-dates.js"></script>
