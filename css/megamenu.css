@@ -103,6 +103,7 @@
   transition-delay: calc(sibling-index() * 10ms);
   translate: 0 0;
   opacity: 1;
+  background: var(--bg-color);
 }
 @starting-style {
   .icon-menu {

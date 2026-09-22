@@ -31,3 +31,7 @@
 .nav-pills .nav-link {
   color: var(--text-color);
 }
+.list-group-item:has(> button:not(.collapsed)) {
+  background-color: var(--maincolor);
+  border-radius: var(--theme-border-radius);
+}

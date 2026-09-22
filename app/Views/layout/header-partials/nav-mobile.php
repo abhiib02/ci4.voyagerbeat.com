@@ -55,46 +55,23 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body pb-5 mb-3">
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush" id="listgroupaccordion">
             <li class="list-group-item">
-                <a class="nav-link icon-link" href="#"><i class='bx bxs-backpack fs-3'></i> Backpacking Trips</a>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link icon-link" href="#"><i class='bx bxs-directions fs-3'></i> Trekking Trips</a>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link icon-link" href="#"><i class='bx bxs-car fs-3'></i> Road Trips</a>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link icon-link" href="#"><i class='bx bxs-tree-alt fs-3'></i> Leh Trips</a>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link icon-link" href="#"><i class='bx bx-send fs-3'></i> Spiti Trips</a>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link icon-link" href="#"><i class='bx bxs-leaf fs-3'></i> Spiritual Trips</a>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link icon-link" href="#"><i class='bx bxs-heart fs-3'></i> Second Innings</a>
-            </li>
-            <li class="list-group-item">
-                <a class="nav-link icon-link" href="#"><i class='bx bxs-compass fs-3'></i>All Packages</a>
-            </li>
-            <li class="list-group-item">
-                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#weekend-getaway-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                    <i class='bx bxs-calendar fs-3'></i> Weekend Getaway
+                <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#weekend-getaway-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                    <span><span class="fs-3">📅</span> Weekend Getaway</span>
+                    <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
-                <div id="weekend-getaway-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
+                <div id="weekend-getaway-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active text-theme-secondary" id="night-tab" data-bs-toggle="tab" data-bs-target="#night-1" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">1 Night</button>
+                            <button class="nav-link active text-dark" id="night-tab" data-bs-toggle="tab" data-bs-target="#night-1" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">1 Night</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-theme-secondary" id="night-2-tab" data-bs-toggle="tab" data-bs-target="#night-2" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">2 Nights</button>
+                            <button class="nav-link text-dark" id="night-2-tab" data-bs-toggle="tab" data-bs-target="#night-2" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">2 Nights</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-theme-secondary" id="night-3-tab" data-bs-toggle="tab" data-bs-target="#night-3" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">3 Nights</button>
+                            <button class="nav-link text-dark" id="night-3-tab" data-bs-toggle="tab" data-bs-target="#night-3" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">3 Nights</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -220,30 +197,94 @@
                 </div>
             </li>
             <li class="list-group-item">
-                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#season-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                    <i class='bx bxl-google-cloud fs-3'></i> Season Trips
+                <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#family-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                    <span><span class="fs-3">👨‍👩‍👧‍👧</span>Family Trips</span>
+                    <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
-                <div id="season-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
+                <div id="family-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
                     <ul class="list-group">
-                        <?= seasonNavMobile() ?>
+                        <a class="list-group-item list-group-item-action" href="/state/kerala">
+                            Kerala
+                        </a>
+                        <a class="list-group-item list-group-item-action" href="/state/Andaman+and+Nicobar+Islands">
+                            Andaman
+                        </a>
+                        <a class="list-group-item list-group-item-action" href="/tag/dham-yatra">
+                            Char Dham Yatra
+                        </a>
+                        <a class="list-group-item list-group-item-action" href="/packages/ooty">
+                            Ooty
+                        </a>
+                        <a class="list-group-item list-group-item-action" href="/packages/coorg">
+                            Coorg
+                        </a>
+                        <a class="list-group-item list-group-item-action" href="/tag/Second+Innings">
+                            Second Innings
+                        </a>
+
                     </ul>
                 </div>
             </li>
             <li class="list-group-item">
-                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trip-types-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                    <i class='bx bx-list-ul fs-3'></i> Trip Types
+                <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#leh-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                    <span><span class="fs-3">🏕</span>Leh Trips</span>
+                    <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
-                <div id="trip-types-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
+                <div id="leh-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
+                    <ul class="list-group">
+                        <?php foreach ($navDataLadakh as $item): ?>
+                            <a class="list-group-item list-group-item-action" href="/package/<?= urlencode($item->SLUG) ?>">
+                                <?= $item->PACKAGE_NAME ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#Spiti-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                    <span><span class="fs-3">🏔</span> Spiti Trips</span>
+                    <span><i class='bx bxs-chevron-down'></i></span>
+                </button>
+                <div id="Spiti-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
+                    <ul class="list-group">
+                        <?php foreach ($navDataSpiti as $item): ?>
+                            <a class="list-group-item list-group-item-action" href="/package/<?= urlencode($item->SLUG) ?>">
+                                <?= $item->PACKAGE_NAME ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </li>
+            <?php if (!empty(seasonNavMobile())): ?>
+                <li class="list-group-item">
+                    <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#season-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                        <span><span class="fs-3">🌦</span>Season Trips</span>
+                        <span><i class='bx bxs-chevron-down'></i></span>
+                    </button>
+                    <div id="season-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
+                        <ul class="list-group">
+                            <?= seasonNavMobile() ?>
+                        </ul>
+                    </div>
+                </li>
+            <?php endif; ?>
+            <li class="list-group-item">
+                <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#trip-types-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                    <span><span class="fs-3">📃</span> Trip Types</span>
+                    <span><i class='bx bxs-chevron-down'></i></span>
+                </button>
+                <div id="trip-types-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
                     <?php foreach ($navDataPackageType as $item): ?>
                         <a href="/type/<?= urlencode($item) ?>" class="badge rounded-pill text-bg-dark text-decoration-none p-2 my-1"><?= $item ?></a>
                     <?php endforeach; ?>
                 </div>
             </li>
             <li class="list-group-item">
-                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#International-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                    <i class='bx bxs-plane-alt fs-3'></i> International Trips
+                <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#International-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                    <span><span class="fs-3">✈</span> International Trips</span>
+                    <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
-                <div id="International-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
+                <div id="International-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
                     <?php foreach ($navDataInternational as $item): ?>
                         <?php if ($item != 'India'): ?>
                             <a href="/country/<?= urlencode($item) ?>" class="icon-menu">
@@ -258,11 +299,13 @@
                     <?php endforeach; ?>
                 </div>
             </li>
+
             <li class="list-group-item">
-                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#more-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                    <i class='bx bx-list-ol fs-3'></i> More
+                <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#more-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                    <span><span class="fs-3">📱</span> More</span>
+                    <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
-                <div id="more-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
+                <div id="more-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
                     <ul class="list-group">
                         <a class="list-group-item list-group-item-action" href="/blogs">
                             Blogs
@@ -303,10 +346,11 @@
                 </div>
             </li>
             <li class="list-group-item">
-                <button class="nav-link icon-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Socials-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway">
-                    <i class='bx bxl-instagram-alt fs-3'></i> Social
+                <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#Socials-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
+                    <span><span class="fs-3">🔔</span> Social</span>
+                    <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
-                <div id="Socials-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#accordionFlushExample">
+                <div id="Socials-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
                     <div class="d-flex justify-content-between">
                         <a href="https://www.facebook.com/voyagersBeat/" class="btn fb-bg text-white fs-2"><i class="bx bxl-facebook-circle"></i></a>
                         <a href="https://wa.me/918448591315?text=Hey!%20Voyagers%20Beat%20I%20am%20interested%20in%20your%20trip" class="btn whatsapp-bg fs-2"><i class="bx bxl-whatsapp"></i></a>
@@ -317,12 +361,17 @@
                     </div>
                 </div>
             </li>
+            <li class="list-group-item">
+                <a class="nav-link icon-link d-flex justify-content-between w-100" href="/packages">
+                    <span><span class="fs-3">🧭</span>All Packages</span>
+                    <span><i class='bx bx-link-alt'></i></span>
+                </a>
+            </li>
+
+
+
 
         </ul>
-
-        <div class="text-center">
-            <img src="<?= env('app.LogoPath') ?>" alt="<?= env('app.name') ?>" width="100px" height="auto">
-        </div>
     </div>
 
 </div>

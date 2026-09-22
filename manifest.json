@@ -1,0 +1,29 @@
+{
+    "name":"Voyagers Beat",
+    "short_name":"Voyagers Beat",
+    "start_url":"/",
+     "description": "Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol & kheerganga, Shimla, Manali, and another tour ",
+    "icons": [
+                {
+              "src": "logo512.png",
+              "type": "image/png",
+              "sizes": "512x512",
+              "purpose": "maskable any"
+            }, {
+              "src": "logo192.png",
+              "type": "image/png",
+              "sizes": "192x192",
+              "purpose": "maskable any"
+            },
+            {
+              "src": "logo144.png",
+              "type": "image/png",
+              "sizes": "144x144",
+              "purpose": "maskable any"
+            }
+        ],
+    "theme_color":"#e69d00",
+    "background_color":"#fff",
+    "display": "standalone",
+    "orientation":"portrait"
+}
