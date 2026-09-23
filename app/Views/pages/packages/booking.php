@@ -20,17 +20,16 @@
     </div>
 
     <form id="bookingForm" action="/booking-payment" method="POST" @submit="onSubmit" novalidate>
-        <!-- CSRF token if your backend needs one, e.g. Laravel's csrf_field():
-    <input type="hidden" name="_token" :value="csrfToken"> -->
 
-        <!-- Hidden fields carrying computed / non-input values to the backend -->
+        <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+
         <input type="hidden" name="id" :value="pkg.PACKAGE_ID">
         <input type="hidden" name="package_name" :value="pkg.PACKAGE_NAME">
         <input type="hidden" name="bookingamount" :value="pkg.BOOKING_AMOUNT">
         <input type="hidden" name="amounttopay" :value="payNowAmount">
         <input type="hidden" name="pax_details" :value="paxDetailsJson">
         <div class="container mb-5">
-            <div class="row g-4">
+            <div class="row g-2">
 
                 <!-- LEFT COLUMN -->
                 <div class="col-12 col-lg-8">
@@ -212,7 +211,55 @@
 
                 <!-- RIGHT COLUMN: SUMMARY -->
                 <div class="col-12 col-lg-4">
-                    <div id="details-right" class="card shadow-sm scroll-margin">
+                    <div id="confirm-details" class="card mb-2">
+                        <div class="card-header">
+                            Booking Details
+                        </div>
+                        <div class="card-body" v-if="lead.name">
+                            <table class="table">
+                                <tr>
+                                    <th colspan="2">Traveler Detail</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">{{lead.name}} • {{lead.gender}} • {{lead.mobile}} • {{lead.email}}</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">Sharing</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">{{lead.sharing.split('|')[1]}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Departure Date</th>
+                                    <th>Boarding</th>
+                                </tr>
+                                <tr>
+                                    <td><em>{{ selectedDate.split('|')[0] }}</em></td>
+                                    <td><em>{{ travelMode.split('|')[1] }}</em></td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">Pax Detail</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <ol>
+                                            <li v-for="t in parsedTravelers" :key="t.traveler">
+                                                <b>{{ t.name }}</b> | {{ t.sharing.split('|')[1] || t.sharing }}
+                                            </li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </div>
+                    </div>
+                    <div id="details-right" class="card scroll-margin">
+                        <div class="card-header">
+                            Costing Structure
+                        </div>
                         <div class="card-body">
                             <table class="table table-borderless mb-0 align-middle">
                                 <tbody>
@@ -361,7 +408,27 @@
 
 
 </div>
+<script>
+    function parsePaxDetails(json) {
+        const raw = typeof json === 'string' ? JSON.parse(json) : json;
+        const travelersMap = {};
 
+        Object.entries(raw).forEach(([key, value]) => {
+            // "traveler_2_name" -> num=2, field="name"
+            const match = key.match(/^traveler_(\d+)_(.+)$/);
+            if (!match) return;
+            const [, num, field] = match;
+            if (!travelersMap[num]) travelersMap[num] = {
+                traveler: num
+            };
+            travelersMap[num][field] = value;
+        });
+
+        return Object.values(travelersMap)
+            .filter(t => t.name) // drop empty placeholder travelers (e.g. traveler_3 with all blanks)
+            .sort((a, b) => a.traveler - b.traveler);
+    }
+</script>
 <script>
     const {
         createApp,
@@ -472,6 +539,8 @@
             const toastMsg = ref('');
             let toastTimer = null;
 
+            // ---------------- Derived Pax Details lists ----------------
+            const parsedTravelers = computed(() => parsePaxDetails(paxDetailsJson.value));
             // ---------------- Derived option lists ----------------
             const sharingOptions = computed(() => {
                 const opts = [];
@@ -519,7 +588,7 @@
                 }
                 return pkg.DATES.split(',')
                     .map(entry => {
-                        const [raw, surcharge] = entry.split('#');
+                        const [raw, surcharge] = entry.split('|');
                         const rawLabel = raw.trim();
 
                         // "04/09/2026 - 09/09/2026" -> use the first date to test "is this upcoming?"
@@ -553,6 +622,7 @@
             function removeTraveler(index) {
                 travelers.splice(index, 1);
             }
+
 
 
             // ---------------- Pricing helpers ----------------
@@ -598,7 +668,7 @@
                     amountStruck += sharingSellPrice(i, tmode);
                 });
 
-                const dateSurcharge = (parseInt(String(selectedDate.value).split('#')[1] || '0', 10) || 0) * adults.value;
+                const dateSurcharge = (parseInt(String(selectedDate.value).split('|')[1] || '0', 10) || 0) * adults.value;
                 const gst = Math.round((amount + dateSurcharge) * GST * 100) / 100;
                 const offerAppliedOn = Math.round((amount + gst + dateSurcharge) * 100) / 100;
 
@@ -867,6 +937,7 @@
                 section2,
                 availableCoupons,
                 selectCoupon,
+                parsedTravelers
             };
         }
     }).mount('#app');

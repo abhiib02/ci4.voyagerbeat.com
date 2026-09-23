@@ -40,6 +40,7 @@ function getSharingTermNumber(Term) {
     quad: 4,
     triple: 3,
     double: 2,
+    couple: 2,
     solo: 5,
   };
 

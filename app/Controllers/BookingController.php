@@ -43,6 +43,12 @@ class BookingController extends BaseController
 
     public function Paymentfailed()
     {
+        $this->BookingModel->updateStatus(session()->get('razorpay_order_id'), 'Failed');
+        return $this->Render_Page('static/payment-failed', $this->data);
+    }
+    public function PaymentCancel()
+    {
+        $this->BookingModel->updateStatus(session()->get('razorpay_order_id'), 'Cancel');
         return $this->Render_Page('static/payment-failed', $this->data);
     }
     public function MaximumAmount()

@@ -87,6 +87,7 @@
     background-position: center;
     background-color: var(--secondaryColor);
     border-radius: var(--theme-border-radius);
+    border: 1px solid var(--secondaryColor);
     color: white;
     display: grid;
     place-items: center;
@@ -103,7 +104,7 @@
   transition-delay: calc(sibling-index() * 10ms);
   translate: 0 0;
   opacity: 1;
-  background: var(--bg-color);
+  background: var(--bg-color-2);
 }
 @starting-style {
   .icon-menu {

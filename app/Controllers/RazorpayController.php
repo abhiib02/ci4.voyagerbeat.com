@@ -48,6 +48,7 @@ class RazorpayController extends BaseController
     }
 
 
+
     public function booking_pay()
     {
 
@@ -342,7 +343,6 @@ class RazorpayController extends BaseController
         return $data;
     }
 
-
     public function verify() //This function verifies the payment,after successful payment
     {
 
@@ -353,7 +353,7 @@ class RazorpayController extends BaseController
             $api = new Api(env('razorKey'), env('razorSecret'));
             try {
                 $attributes = array(
-                    'razorpay_order_id' => $this->session->get('razorpay_order_id'),
+                    'razorpay_order_id' => session()->get('razorpay_order_id'),
                     'razorpay_payment_id' => $this->request->getPost('razorpay_payment_id'),
                     'razorpay_signature' => $this->request->getPost('razorpay_signature')
                 );
@@ -364,20 +364,19 @@ class RazorpayController extends BaseController
                 //print_r($error);
             }
         }
-        $razorpayOrderId = $this->session->get('razorpay_order_id');
+        $razorpayOrderId = session()->get('razorpay_order_id');
         if ($success === false) {
-            
-            $this->BookingModel->updateStatus($razorpayOrderId,'Failed');
             return redirect()->to("/payment-failed");
         }
 
-        //Saving Status to Complete
         $this->BookingModel->updateStatus($razorpayOrderId, 'Complete');
+
         //$this->sendEmail($BookingData['order_id']); //Sending Email to Customer
 
         return $this->RedirectWithtoast('Booking Confirmed', 'Success', "/thanks?order_id=" . $razorpayOrderId);
     }
-    public function saveBookingData(string $order_id,array $BookingData)
+
+    public function saveBookingData(string $order_id, array $BookingData)
     {
         $data['order_id'] = $order_id;
         $data['name'] = (string)$BookingData['name'];

@@ -75,7 +75,8 @@ class Booking extends Model
     {
         return $this->where('order_id', $orderId)->countAllResults() > 0;
     }
-    public function updateStatus(string $orderId,string $status): bool {
+    public function updateStatus(string $orderId, string $status): bool
+    {
         return $this->set('status', $status)->where('order_id', $orderId)->update();
     }
     public function getAllBookings()

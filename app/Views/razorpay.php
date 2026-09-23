@@ -31,7 +31,6 @@
 
     <input type="hidden" name="name" value="<?php echo $details['prefill']['name'] ?>">
     <input type="hidden" name="email" value="<?php echo $details['prefill']['email'] ?>">
-    <input type="hidden" name="gender" value="<?php echo $details['prefill']['gender'] ?>">
     <input type="hidden" name="contact" value="<?php echo $details['prefill']['contact'] ?>">
 
 </form>
@@ -53,7 +52,7 @@
         ondismiss: function() {
             //console.log("Dismissed Payment");
             alert("Payment Process Closed");
-            window.location.replace("/payment-failed");
+            window.location.replace("/payment-cancel");
         },
         // Boolean indicating whether pressing escape key 
         // should close the checkout form. (default: true)

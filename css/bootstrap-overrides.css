@@ -32,6 +32,6 @@
   color: var(--text-color);
 }
 .list-group-item:has(> button:not(.collapsed)) {
-  background-color: var(--maincolor);
+  background-color: color-mix(in srgb, var(--maincolor) 20%, transparent);
   border-radius: var(--theme-border-radius);
 }

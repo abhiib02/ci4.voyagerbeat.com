@@ -31,8 +31,8 @@ function generateInputsFromString(STRVIEWER, parent_element) {
   let string = STRVIEWER.textContent;
   let dates_arr = string.split(",");
   dates_arr.forEach((one_date) => {
-    const onlyDate = one_date.split("#")[0];
-    const surchargeValue = one_date.split("#")[1];
+    const onlyDate = one_date.split("|")[0];
+    const surchargeValue = one_date.split("|")[1];
     const node = document.createElement("input");
     const surchargeInput = document.createElement("input");
     node.setAttribute("class", "date_input form-control");
@@ -67,7 +67,7 @@ function commaSeperatedStringGen(arr, surchargeArr) {
 
     let surchargeValue = surchargeArr[index].value || 0;
 
-    let CombinedString = cleanDate + "#" + surchargeValue;
+    let CombinedString = cleanDate + "|" + surchargeValue;
 
     COMMA_SEPERATED_DATES += CombinedString;
 

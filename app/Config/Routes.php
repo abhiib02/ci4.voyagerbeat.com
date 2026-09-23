@@ -110,6 +110,8 @@ $routes->get('api/DecFavorite/(:num)', 'PackageController::DecreaseFavoriteCount
 $routes->get('book/(:num)', 'BookingController::Book/$1');
 $routes->get('thanks', 'BookingController::PaymentSuccess');
 $routes->get('payment-failed', 'BookingController::Paymentfailed');
+$routes->get('payment-cancel', 'BookingController::PaymentCancel');
+
 $routes->get('max-amount', 'BookingController::MaximumAmount');
 
 /*-----------------Coupon Code Routes--------------------*/

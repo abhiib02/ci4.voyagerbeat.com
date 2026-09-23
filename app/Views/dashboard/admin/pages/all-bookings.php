@@ -82,8 +82,11 @@
                                 case 'Pending': ?>
                                     <span class="badge text-bg-warning"><?= $booking->status; ?></span>
                                 <?php break;
+                                case 'Cancel': ?>
+                                    <span class="badge text-bg-secondary"><?= $booking->status; ?></span>
+                                <?php break;
                                 default: ?>
-                                    <span class="badge text-bg-danger">Failed</span>
+                                    <span class="badge text-bg-danger">Failed / Unknown</span>
                             <?php break;
                             } ?>
 
