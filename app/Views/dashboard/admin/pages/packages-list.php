@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($Packages as $package) { ?>
+                <?php foreach (($Packages ?? []) as $package) { ?>
                     <tr>
                         <td><a class="btn btn-sm btn-outline-dark" target="__blank" href="/packageid/<?= esc($package->PACKAGE_ID); ?>"><?= esc($package->PACKAGE_ID); ?></a></td>
                         <td><?= esc($package->SLUG); ?></td>

@@ -9,7 +9,7 @@
                 <th>Option Name</th>
                 <th>Option Value</th>
             </thead>
-            <?php foreach ($Options as $index => $option) : ?>
+            <?php foreach (($Options ?? []) as $index => $option) : ?>
                 <tr>
                     <td><?= $option->name ?></td>
                     <td>

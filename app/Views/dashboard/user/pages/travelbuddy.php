@@ -19,7 +19,7 @@
                  </tr>
              </thead>
              <tbody>
-                 <?php foreach ($CustomerAsTravelBuddy as $tbbooking) { ?>
+                 <?php foreach (($CustomerAsTravelBuddy ?? []) as $tbbooking) { ?>
                      <tr>
                          <td><?php echo $tbbooking->name; ?></td>
 

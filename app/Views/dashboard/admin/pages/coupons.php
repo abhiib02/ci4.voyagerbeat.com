@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($Coupons as $coupon) { ?>
+                <?php foreach (($Coupons ?? []) as $coupon) { ?>
                     <tr>
                         <td><?php echo $coupon->Coupon_ID; ?></td>
                         <td><?php echo $coupon->Coupon_Code; ?></td>

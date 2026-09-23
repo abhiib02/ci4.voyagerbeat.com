@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($CustomerBookings as $cbooking) { ?>
+                <?php foreach (($CustomerBookings ?? []) as $cbooking) { ?>
                     <tr>
                         <td><?php echo $cbooking->ID; ?></td>
                         <td><?php echo $cbooking->order_id; ?></td>

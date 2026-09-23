@@ -33,7 +33,7 @@
                 <?php
 
 
-                foreach ($Bookings as $booking) { ?>
+                foreach (($Bookings ?? []) as $booking) { ?>
                     <tr>
                         <td><?= $booking->ID; ?></td>
                         <td><?= $booking->order_id; ?></td>

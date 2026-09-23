@@ -1,3 +1,13 @@
+<?php
+$coupon = $coupon ?? (object) [
+    'Coupon_ID' => '',
+    'Coupon_Code' => '',
+    'Coupon_Type' => 0,
+    'Coupon_Worth' => '',
+    'Coupon_Count' => '',
+];
+?>
+
 <form action="/UpdateCoupon" method="post"
     style="height:100%;display:flex;flex-direction:column;justify-content:space-between;">
     <div>

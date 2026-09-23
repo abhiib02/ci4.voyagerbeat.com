@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($Users as $user) { ?>
+                <?php foreach (($Users ?? []) as $user) { ?>
                     <tr>
 
                         <td><?= $user->USER_ID ?></td>
