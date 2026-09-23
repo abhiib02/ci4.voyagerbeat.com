@@ -131,6 +131,12 @@ body {
     margin-top: 0px;
   }
 }
+.dw-50-mw-100 {
+  width: 50%;
+  @media (width < 992px) {
+    width: 100%;
+  }
+}
 /* Utility classes end*/
 
 /* Typography */
@@ -250,6 +256,7 @@ body {
   background-blend-mode: overlay;
   background-size: cover;
   background-position: center;
+  background-attachment: var(--bg-attachment);
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition:

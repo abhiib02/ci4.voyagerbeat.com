@@ -1,7 +1,7 @@
 <div class="container-fluid">
-    <div class="row full-vh custom-background" style="--bgUrl:url(/assets/backgrounds/1.jpg);">
+    <div class="row full-vh custom-background" style="--bgUrl:url(/assets/backgrounds/1.jpg);--bg-attachment:fixed;">
         <div class="col-lg-12 grid-center ">
-            <div class="card theme-card p-4 w-25 mx-auto">
+            <div class="card dw-50-mw-100 p-4">
                 <div class="text-center">
                     <img src="<?= env('app.LogoPath') ?>" width="100px" alt="voyagersbeat.logo">
                     <hr>
@@ -35,12 +35,13 @@
                     </div>
                     <div id="match" class="hide mb-3">
                     </div>
-                    <button type="submit" id="submit" class="btn btn-sm btn-success">Sign up</button>
-                    <a href="/login" class="btn btn-sm btn-outline-dark">Login</a>
+                    <button type="submit" id="submit" class="btn btn-success">Sign up</button>
+                    <a href="/login" class="btn btn-outline-dark">Login</a>
                 </form>
             </div>
         </div>
     </div>
+
 </div>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
