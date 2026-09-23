@@ -28,6 +28,9 @@
         <?php if (IS_ADMIN): ?>
             <a href="/dashboard">Dashboard</a> |
             <a href="/logout">Logout</a>
+        <?php elseif (IS_EMPLOYEE): ?>
+            <a href="/employee-dashboard">Employee Dashboard</a> |
+            <a href="/logout">Logout</a>
         <?php elseif (IS_USER): ?>
             <a href="/account">Account</a> |
             <a href="/logout">Logout</a>

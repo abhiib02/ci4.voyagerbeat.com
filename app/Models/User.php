@@ -75,6 +75,36 @@ class User extends Model
         $result = $query->getNumRows();
         return $result;
     }
+    public function getAllAdmins()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $builder->select('*');
+        $builder->where('ROLE', 1);
+        $query = $builder->get();
+        $result = $query->getResult();
+        return $result;
+    }
+    public function getAllEmployee()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $builder->select('*');
+        $builder->where('ROLE', 2);
+        $query = $builder->get();
+        $result = $query->getResult();
+        return $result;
+    }
+    public function getAllCustomers()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('users');
+        $builder->select('*');
+        $builder->where('ROLE', 0);
+        $query = $builder->get();
+        $result = $query->getResult();
+        return $result;
+    }
     public function getCustomerCount()
     {
         $db = \Config\Database::connect();

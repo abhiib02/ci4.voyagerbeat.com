@@ -68,23 +68,34 @@ class LoginController extends BaseController
             $this->session->setFlashdata('FlashMessage', ['message' => 'Incorrect Email or Password', 'status' => 'danger']);
             return redirect()->to('/login');
         }
-        $isAdmin = $UserModel->isAdmin($email);
+
         $userRole = $UserModel->getUserRole($email);
         $LoggedInData = [
             'id' => $UserModel->getUserID($email),
             'name' => $UserModel->getUserName($queryData['EMAIL']),
             'email' => $queryData['EMAIL'],
             'logged_in' => true,
-            'isadmin' => $isAdmin,
             'role' => $userRole,
         ];
 
         $this->session->set($LoggedInData);
-
-        if ($isAdmin) {
-            return redirect()->route('dashboard');
-        } else {
-            return redirect()->route('account');
+        switch ($LoggedInData['role']) {
+            case 0:
+                //Customer Role
+                return redirect()->route('Customer.Dashboard');
+                break;
+            case 1:
+                //Admin Role
+                return redirect()->route('Admin.Dashboard');
+                break;
+            case 2:
+                //Employee Role
+                return redirect()->route('Employee.Dashboard');
+                break;
+            default:
+                //Default Role / Customer
+                return redirect()->route('Customer.Dashboard');
+                break;
         }
     }
 

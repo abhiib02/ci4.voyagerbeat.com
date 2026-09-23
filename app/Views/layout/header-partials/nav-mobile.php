@@ -240,7 +240,7 @@
                 </button>
                 <div id="leh-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
                     <ul class="list-group">
-                        <?php foreach ($navDataLadakh as $item): ?>
+                        <?php foreach (($navDataLadakh ?? []) as $item): ?>
                             <a class="list-group-item list-group-item-action" href="/package/<?= urlencode($item->SLUG) ?>">
                                 <?= $item->PACKAGE_NAME ?>
                             </a>
@@ -255,7 +255,7 @@
                 </button>
                 <div id="Spiti-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
                     <ul class="list-group">
-                        <?php foreach ($navDataSpiti as $item): ?>
+                        <?php foreach (($navDataSpiti ?? []) as $item): ?>
                             <a class="list-group-item list-group-item-action" href="/package/<?= urlencode($item->SLUG) ?>">
                                 <?= $item->PACKAGE_NAME ?>
                             </a>
@@ -282,7 +282,7 @@
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="trip-types-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
-                    <?php foreach ($navDataPackageType as $item): ?>
+                    <?php foreach (($navDataPackageType ?? []) as $item): ?>
                         <a class="list-group-item list-group-item-action" href="/type/<?= urlencode($item) ?>">
                             <?= $item ?>
                         </a>
@@ -295,7 +295,7 @@
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="International-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
-                    <?php foreach ($navDataInternational as $item): ?>
+                    <?php foreach (($navDataInternational ?? []) as $item): ?>
                         <?php if ($item != 'India'): ?>
                             <a href="/country/<?= urlencode($item) ?>" class="icon-menu">
                                 <div class="icon" style="--iconbg:url('/assets/flags/<?= getCountryCode($item) ?>.svg')">
@@ -330,9 +330,17 @@
                         <a class="list-group-item list-group-item-action" href="/career">
                             Join Our Team
                         </a>
+
                         <?php if (IS_ADMIN): ?>
                             <a class="list-group-item list-group-item-action" href="/dashboard">
                                 Admin Dashboard
+                            </a>
+                            <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
+                                Logout
+                            </a>
+                        <?php elseif (IS_EMPLOYEE): ?>
+                            <a class="list-group-item list-group-item-action" href="/employee-dashboard">
+                                Employee Dashboard
                             </a>
                             <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
                                 Logout

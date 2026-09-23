@@ -27,11 +27,12 @@ class AdminAuthGuard implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        //role = 2 (Employee)
         //role = 1 (Admin)
-        //role = 0 (Employee)
+        //role = 0 (Customer)
         //
         $session = Services::session();
-        if(!($session->has('logged_in') && $session->get('role') == 1)) {
+        if (!($session->has('logged_in') && $session->get('role') == 1)) {
             return redirect()->to('/logout');
         }
     }

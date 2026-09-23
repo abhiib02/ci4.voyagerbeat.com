@@ -392,6 +392,13 @@
             <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
               Logout
             </a>
+          <?php elseif (IS_EMPLOYEE): ?>
+            <a class="list-group-item list-group-item-action" href="/employee-dashboard">
+              Employee Dashboard
+            </a>
+            <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
+              Logout
+            </a>
           <?php elseif (IS_USER): ?>
             <a class="list-group-item list-group-item-action" href="/account">
               Your Profile

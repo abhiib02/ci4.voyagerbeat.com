@@ -8,7 +8,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 use Config\Services;
 
-class AuthGuard implements FilterInterface {
+class AuthGuard implements FilterInterface
+{
     /**
      * Do whatever processing this filter needs to do.
      * By default it should not return anything during
@@ -24,10 +25,12 @@ class AuthGuard implements FilterInterface {
      *
      * @return mixed
      */
-    public function before(RequestInterface $request, $arguments = null) {
+    public function before(RequestInterface $request, $arguments = null)
+    {
 
+        //role = 2 (Employee)
         //role = 1 (Admin)
-        //role = 0 (Employee)
+        //role = 0 (Customer)
         //
         $session = Services::session();
         if (!($session->has('logged_in') && $session->get('role') == 0)) {
@@ -47,7 +50,8 @@ class AuthGuard implements FilterInterface {
      *
      * @return mixed
      */
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null) {
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    {
         //
     }
 }

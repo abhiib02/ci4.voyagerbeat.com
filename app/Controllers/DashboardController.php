@@ -71,8 +71,14 @@ class DashboardController extends BaseController
                 $this->data['UsedBadges'] = $this->PackageModel->getAllDistinctBadges();
                 $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
                 break;
-            case 'users-list':
-                $this->data['Users'] = $this->UserModel->getAllUsers();
+            case 'admins-list':
+                $this->data['Admins'] = $this->UserModel->getAllAdmins();
+                break;
+            case 'employee-list':
+                $this->data['Employees'] = $this->UserModel->getAllEmployee();
+                break;
+            case 'customers-list':
+                $this->data['Customers'] = $this->UserModel->getAllCustomers();
                 break;
             case 'all-bookings':
                 $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard();
@@ -84,6 +90,19 @@ class DashboardController extends BaseController
         }
 
         return $this->Render_Page_Admin_dashboard('/admin-dashboard', $this->data);
+    }
+    public function EmployeeDashboard($pageName = null)
+    {
+
+        $this->data['User'] = $this->UserModel->getUserByID((int) $this->data['id']);
+        $this->data['pagenames'] = $this->PagesScan('Views/dashboard/employee/pages/');
+        $this->data['pagename'] = $pageName;
+        switch ($pageName) {
+            case 'nothing':
+                $this->data['EmployeeData'] = 'Employeeeee Dataaa';
+                break;
+        }
+        return $this->Render_Page_Employee_dashboard('employee-dashboard', $this->data);
     }
     public function UserDashboard($pageName = null)
     {
@@ -103,6 +122,7 @@ class DashboardController extends BaseController
         }
         return $this->Render_Page_dashboard('user-dashboard', $this->data);
     }
+
 
 
 

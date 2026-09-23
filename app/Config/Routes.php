@@ -5,14 +5,16 @@ use CodeIgniter\Router\RouteCollection;
 /** @var RouteCollection $routes */
 
 $routes->set404Override(function () {
-
     return view('errors/error404');
 });
 
 $routes->get('/', 'MainController::index');
 
-/*----------------login and register routes-----------------------*/
-
+/*
+|--------------------------------------------------------------------------
+| Auth Routes (Login / Register / Password)
+|--------------------------------------------------------------------------
+*/
 $routes->get('login', 'LoginController::index');
 $routes->get('logout', 'LoginController::logout');
 $routes->post('login', 'LoginController::googleloginValidation');
@@ -28,62 +30,87 @@ $routes->post('forgotpassword', 'UserController::forgotpassword');
 $routes->get('resetform', 'UserController::resetform');
 $routes->post('reset', 'UserController::reset');
 
-/*----------------admin routes-----------------------*/
-$routes->get('dashboard', 'DashboardController::AdminDashboard', ['filter' => 'AdminAuthGuard']);
-$routes->get('dashboard/(:any)', 'DashboardController::AdminDashboard/$1', ['filter' => 'AdminAuthGuard']);
+/*
+|--------------------------------------------------------------------------
+| Dashboard Routes
+|--------------------------------------------------------------------------
+| Grouped by role, each protected by its own auth filter.
+*/
 
-/*-------------user management ROUTES-------------*/
-$routes->post('change-password', 'UserController::changePassword', ['filter' => 'AdminAuthGuard']);
-$routes->post('delete-user', 'UserController::deleteUser', ['filter' => 'AdminAuthGuard']);
-$routes->post('makeAdmin', 'UserController::makeAdmin', ['filter' => 'AdminAuthGuard']);
-$routes->post('removeAdmin', 'UserController::removeAdmin', ['filter' => 'AdminAuthGuard']);
+// Admin
+$routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
+    $routes->get('dashboard', 'DashboardController::AdminDashboard', ['as' => 'Admin.Dashboard']);
+    $routes->get('dashboard/(:any)', 'DashboardController::AdminDashboard/$1');
+});
 
-/*-------------Coupon management ROUTES-------------*/
-$routes->post('createCoupon', 'CouponController::createCoupon', ['filter' => 'AdminAuthGuard']);
-$routes->post('UpdateCoupon', 'CouponController::updateCoupon', ['filter' => 'AdminAuthGuard']);
-$routes->post('deleteCoupon', 'CouponController::removeCoupon', ['filter' => 'AdminAuthGuard']);
+// Employee
+$routes->group('', ['filter' => 'EmployeeAuthGuard'], static function ($routes) {
+    $routes->get('employee-dashboard', 'DashboardController::EmployeeDashboard', ['as' => 'Employee.Dashboard']);
+    $routes->get('employee-dashboard/(:any)', 'DashboardController::EmployeeDashboard/$1');
+});
 
+// Customer
+$routes->group('', ['filter' => 'AuthGuard'], static function ($routes) {
+    $routes->get('account', 'DashboardController::UserDashboard', ['as' => 'Customer.Dashboard']);
+    $routes->get('account/(:any)', 'DashboardController::UserDashboard/$1');
+});
 
-/*-------------------- packages management ROUTES-----------------*/
-$routes->post('createPackageProcess', 'PackageController::add_package_process', ['filter' => 'AdminAuthGuard']);
-$routes->get('package-edit/(:num)', 'PackageController::update_package_form/$1', ['filter' => 'AdminAuthGuard']);
-$routes->post('update_package_process', 'PackageController::update_package_process', ['filter' => 'AdminAuthGuard']);
-$routes->post('delete_package_process', 'PackageController::delete_package_process', ['filter' => 'AdminAuthGuard']);
+/*
+|--------------------------------------------------------------------------
+| Admin-Only Management Routes
+|--------------------------------------------------------------------------
+| Everything here requires AdminAuthGuard, so it's wrapped in a single
+| group instead of repeating the filter on every line.
+*/
+$routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
 
-$routes->get('duplicate_package_process/(:num)', 'PackageController::duplicate_package_process/$1', ['filter' => 'AdminAuthGuard']);
+    // User management
+    $routes->post('change-password', 'UserController::changePassword');
+    $routes->post('delete-user', 'UserController::deleteUser');
+    $routes->post('makeAdmin', 'UserController::makeAdmin');
+    $routes->post('removeAdmin', 'UserController::removeAdmin');
 
+    // Coupon management
+    $routes->post('createCoupon', 'CouponController::createCoupon');
+    $routes->post('UpdateCoupon', 'CouponController::updateCoupon');
+    $routes->post('deleteCoupon', 'CouponController::removeCoupon');
 
+    // Package management
+    $routes->post('createPackageProcess', 'PackageController::add_package_process');
+    $routes->get('package-edit/(:num)', 'PackageController::update_package_form/$1');
+    $routes->post('update_package_process', 'PackageController::update_package_process');
+    $routes->post('delete_package_process', 'PackageController::delete_package_process');
+    $routes->get('duplicate_package_process/(:num)', 'PackageController::duplicate_package_process/$1');
 
-/*--------------- User Routes------------------*/
-$routes->get('account', 'DashboardController::UserDashboard', ['filter' => 'AuthGuard']);
-$routes->get('account/(:any)', 'DashboardController::UserDashboard/$1', ['filter' => 'AuthGuard']);
+    // Admin listing / lookup pages
+    $routes->get('users', 'DashboardController::users');
+    $routes->get('packages-list', 'DashboardController::packagesList');
+    $routes->get('destination-list', 'DashboardController::destinationsList');
+    $routes->get('category-list', 'DashboardController::categoriesList');
+    $routes->get('options-list', 'DashboardController::optionsList');
+    $routes->get('all-bookings', 'DashboardController::BookingsList');
+    $routes->get('import', 'DashboardController::import_package_form');
+    $routes->post('/option/(:alpha)', 'OptionsController::save/$1');
+});
 
-
-$routes->get('users', 'DashboardController::users', ['filter' => 'AdminAuthGuard']);
-$routes->get('packages-list', 'DashboardController::packagesList', ['filter' => 'AdminAuthGuard']);
-$routes->get('destination-list', 'DashboardController::destinationsList', ['filter' => 'AdminAuthGuard']);
-$routes->get('category-list', 'DashboardController::categoriesList', ['filter' => 'AdminAuthGuard']);
-$routes->get('options-list', 'DashboardController::optionsList', ['filter' => 'AdminAuthGuard']);
-$routes->get('all-bookings', 'DashboardController::BookingsList', ['filter' => 'AdminAuthGuard']);
-$routes->get('import', 'DashboardController::import_package_form', ['filter' => 'AdminAuthGuard']);
-$routes->post('/option/(:alpha)', 'OptionsController::save/$1');
-
-
-/*-------------------- packages_routes-----------------*/
-
+/*
+|--------------------------------------------------------------------------
+| Public Package Routes
+|--------------------------------------------------------------------------
+*/
 $routes->get('packages', 'PackageController::index');
 $routes->get('packages/(:any)', 'PackageController::index/$1');
 $routes->get('package/(:any)', 'PackageController::packageBySlug/$1');
 $routes->get('packageid/(:num)', 'PackageController::packageByID/$1');
 
-
+// Filter "index" pages (render the same base view with different filters applied client-side)
 $routes->get('category', 'PackageController::index');
 $routes->get('type', 'PackageController::index');
 $routes->get('tag', 'PackageController::index');
 $routes->get('nights', 'PackageController::index');
 $routes->get('badge', 'PackageController::index');
 
-
+// Filtered package listings
 $routes->get('category/(:any)', 'PackageController::packagesByCategory/$1');
 $routes->get('type/(:any)', 'PackageController::packagesByType/$1');
 $routes->get('tag/(:any)', 'PackageController::packagesByTag/$1');
@@ -100,24 +127,39 @@ $routes->get('hidden', 'PackageController::hiddenPackages');
 $routes->get('search', 'PackageController::index');
 $routes->get('travelerFavorites', 'PackageController::GetLikedPackages');
 
-/*-------------------- packages_Like_routes-----------------*/
-$routes->get('api/getFavorite/(:num)', 'PackageController::GetFavoriteCount/$1');
-$routes->get('api/IncFavorite/(:num)', 'PackageController::IncreaseFavoriteCount/$1');
-$routes->get('api/DecFavorite/(:num)', 'PackageController::DecreaseFavoriteCount/$1');
+/*
+|--------------------------------------------------------------------------
+| Package "Like" / Favorite API Routes
+|--------------------------------------------------------------------------
+*/
+$routes->group('api', static function ($routes) {
+    $routes->get('getFavorite/(:num)', 'PackageController::GetFavoriteCount/$1');
+    $routes->get('IncFavorite/(:num)', 'PackageController::IncreaseFavoriteCount/$1');
+    $routes->get('DecFavorite/(:num)', 'PackageController::DecreaseFavoriteCount/$1');
+});
 
-
-/*------------------Booking Routes --------------------------*/
+/*
+|--------------------------------------------------------------------------
+| Booking Routes
+|--------------------------------------------------------------------------
+*/
 $routes->get('book/(:num)', 'BookingController::Book/$1');
 $routes->get('thanks', 'BookingController::PaymentSuccess');
 $routes->get('payment-failed', 'BookingController::Paymentfailed');
 $routes->get('payment-cancel', 'BookingController::PaymentCancel');
-
 $routes->get('max-amount', 'BookingController::MaximumAmount');
 
-/*-----------------Coupon Code Routes--------------------*/
+/*
+|--------------------------------------------------------------------------
+| Coupon Code Routes
+|--------------------------------------------------------------------------
+*/
 $routes->get('couponCode/(:any)', 'CouponController::applyCouponAjax/$1');
 
-
-/*------------------Razorpay Routes --------------------------*/
+/*
+|--------------------------------------------------------------------------
+| Razorpay Payment Routes
+|--------------------------------------------------------------------------
+*/
 $routes->post('booking-payment', 'RazorpayController::booking_pay');
 $routes->post('verify-payment', 'RazorpayController::verify');
