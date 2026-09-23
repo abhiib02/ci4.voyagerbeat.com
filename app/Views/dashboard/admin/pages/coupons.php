@@ -17,7 +17,7 @@
 
         </dialog>
 
-        <table class="sortable table" id="datatable">
+        <table class="sortable table" id="datatable" data-order='[[ 4, "desc" ]]'>
             <thead>
                 <tr>
                     <th>Coupon ID</th>

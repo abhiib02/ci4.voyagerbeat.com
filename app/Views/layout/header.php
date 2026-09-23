@@ -11,9 +11,10 @@
 <body>
 
     <main>
-
-        <?php if (isMobileDevice()): ?>
-            <?= view('layout/header-partials/nav-mobile') ?>
-        <?php else: ?>
-            <?= view('layout/header-partials/navbar') ?>
-        <?php endif; ?>
+        <header class="no-print">
+            <?php if (isMobileDevice()): ?>
+                <?= view('layout/header-partials/nav-mobile') ?>
+            <?php else: ?>
+                <?= view('layout/header-partials/navbar') ?>
+            <?php endif; ?>
+        </header>

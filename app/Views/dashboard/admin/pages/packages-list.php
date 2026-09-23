@@ -13,7 +13,7 @@
             <a class="btn btn-sm btn-secondary" href="/hidden">Hidden packages</a>
         </div>
         <br>
-        <table id="datatable" class="sortable table">
+        <table id="datatable" class="sortable table" data-order='[[ 5, "desc" ]]'>
             <thead>
                 <tr>
                     <th>ID</th>

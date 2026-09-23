@@ -7,7 +7,7 @@
 
     </div>
     <div class="card-body">
-        <table class="sortable table" id="datatable">
+        <table class="sortable table" id="datatable" data-order='[[ 2, "desc" ]]'>
             <thead>
                 <tr>
                     <th>ID</th>
