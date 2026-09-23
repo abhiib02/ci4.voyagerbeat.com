@@ -25,7 +25,7 @@
                 <sub>Whatsapp</sub>
             </a>
         </li>
-        <?php if (str_contains($current_url, '/package/') || str_contains($current_url, '/packageid/')): ?>
+        <?php if ((str_contains($current_url, '/package/') || str_contains($current_url, '/packageid/')) && isset($package) && isset($package->PACKAGE_ID)): ?>
             <li class="nav-item text-center" role="presentation" id="">
                 <a href="/book/<?= $package->PACKAGE_ID ?>" class="nav-link btn btn-theme btn-success text-white active lh-1 " id="Book-now-btn" aria-selected="false">
                     <i class='bx bx-calendar-check fs-1'></i>
@@ -330,14 +330,14 @@
                         <a class="list-group-item list-group-item-action" href="/career">
                             Join Our Team
                         </a>
-                        <?php if ($isAdmin): ?>
+                        <?php if (IS_ADMIN): ?>
                             <a class="list-group-item list-group-item-action" href="/dashboard">
                                 Admin Dashboard
                             </a>
                             <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
                                 Logout
                             </a>
-                        <?php elseif ($isUser): ?>
+                        <?php elseif (IS_USER): ?>
                             <a class="list-group-item list-group-item-action" href="/account">
                                 Your Profile
                             </a>

@@ -25,10 +25,10 @@
         <a href="/">Home</a> |
         <a href="/about">About Us</a> |
         <a href="/destinations">Destinations</a> |
-        <?php if ($isAdmin): ?>
+        <?php if (IS_ADMIN): ?>
             <a href="/dashboard">Dashboard</a> |
             <a href="/logout">Logout</a>
-        <?php elseif ($isUser): ?>
+        <?php elseif (IS_USER): ?>
             <a href="/account">Account</a> |
             <a href="/logout">Logout</a>
         <?php else: ?>

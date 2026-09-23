@@ -215,7 +215,7 @@ class EmailController extends BaseController
             return redirect()->to('/login');
         }
     }
-    public function reset_mail_email_template($url, $name, $logo)
+    public function reset_mail_email_template(string $url, string $name, string $logo)
     {
         $message = '<!DOCTYPE html>
                     <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
@@ -400,7 +400,7 @@ class EmailController extends BaseController
                         </table>';
         return $message;
     }
-    public function booking_mail_template($dataArr)
+    public function booking_mail_template(array $dataArr)
     {
 
         $message = '
@@ -477,7 +477,7 @@ class EmailController extends BaseController
         ';
         return $message;
     }
-    public function sendBookingDetails($payment_id)
+    public function sendBookingDetails(string $payment_id)
     {
         $BookingModel = new Booking();
         $Bookingdata = $BookingModel->getBookingByPaymentId($payment_id);
@@ -506,7 +506,7 @@ class EmailController extends BaseController
             return redirect()->to('/package' . '/' . $dataArr['slug']);
         }
     }
-    public function bookingDetailTemplate($data)
+    public function bookingDetailTemplate(object $data)
     {
         $remainingAmount = (($data->TOTAL_AMOUNT - $data->AMOUNT_PAID) == 0) ? 'Full Payment Done' : number_format($data->TOTAL_AMOUNT - $data->AMOUNT_PAID, 2);
         $template = '

@@ -66,7 +66,7 @@ class UserController extends BaseController
     {
         return $this->Render_page('forgot-password', $this->data);
     }
-    public function generateMD5Token($email)
+    public function generateMD5Token(string $email)
     {
         $md5Token = md5($email . date('his'));
         return $md5Token;

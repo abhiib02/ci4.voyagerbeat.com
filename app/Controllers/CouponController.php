@@ -29,7 +29,7 @@ class CouponController extends BaseController
     }
 
 
-    public function iscodeexist($code)
+    public function iscodeexist(string $code)
     {
         return $this->CouponModel->isCodeExist($code);
     }

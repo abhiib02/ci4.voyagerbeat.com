@@ -1,4 +1,5 @@
 <?= view('pages/component/AnnouncementBar') ?>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top" id="desktop-nav">
 
   <div class="container-fluid">
@@ -112,7 +113,7 @@
   <div class="menu-panel p-3">
     <div class="row g-3">
       <div class="col-6">
-        <?php foreach ($navDataLadakh as $item): ?>
+        <?php foreach (($navDataLadakh ?? []) as $item): ?>
           <a href="/package/<?= urlencode($item->SLUG) ?>" class="icon-menu">
             <div class="icon">
               <i class='bx bx-map-pin'></i>
@@ -140,7 +141,7 @@
   <div class="menu-panel p-3">
     <div class="row g-3">
       <div class="col-6">
-        <?php foreach ($navDataSpiti as $item): ?>
+        <?php foreach (($navDataSpiti ?? []) as $item): ?>
           <a href="/package/<?= urlencode($item->SLUG) ?>" class="icon-menu">
             <div class="icon">
               <i class='bx bx-map-pin'></i>
@@ -295,7 +296,7 @@
   <div class="menu-panel p-3">
     <div class="row g-3">
       <div class="col-6">
-        <?php foreach ($navDataInternational as $item): ?>
+        <?php foreach (($navDataInternational ?? []) as $item): ?>
           <?php if ($item != 'India'): ?>
             <a href="/country/<?= urlencode($item) ?>" class="icon-menu">
               <div class="icon" style="--iconbg:url('/assets/flags/<?= getCountryCode($item) ?>.svg')">
@@ -324,7 +325,7 @@
   <div class="menu-panel p-3">
     <div class="row g-3">
       <div class="col-12 d-flex flex-wrap gap-2">
-        <?php foreach ($navDataPackageType as $item): ?>
+        <?php foreach (($navDataPackageType ?? []) as $item): ?>
           <a href="/type/<?= urlencode($item) ?>" class="icon-menu" style="width: max-content;">
             <div class="icon">
               <i class='bx bx-map-pin'></i>
@@ -346,7 +347,7 @@
     <div class="row g-3">
       <div class="col-6">
 
-        <?php foreach ($navDataHoneymoon as $item): ?>
+        <?php foreach (($navDataHoneymoon ?? []) as $item): ?>
           <a href="/package/<?= urlencode($item->SLUG) ?>" class="icon-menu">
             <div class="icon">
               <i class='bx bx-map-pin'></i>
@@ -384,14 +385,14 @@
           <a class="list-group-item list-group-item-action" href="/travelerFavorites">
             Traveler Favorites
           </a>
-          <?php if ($isAdmin): ?>
+          <?php if (IS_ADMIN): ?>
             <a class="list-group-item list-group-item-action" href="/dashboard">
               Admin Dashboard
             </a>
             <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
               Logout
             </a>
-          <?php elseif ($isUser): ?>
+          <?php elseif (IS_USER): ?>
             <a class="list-group-item list-group-item-action" href="/account">
               Your Profile
             </a>

@@ -82,10 +82,18 @@ abstract class BaseController extends Controller
         }
         //Caching Nav Data As it will be used on every page ⬆
 
-        \Config\Services::renderer()->setData([
-            'isAdmin' => $this->AuthCheckAdmin(),
-            'isUser'  => $this->AuthCheck(),
-        ]);
+        // \Config\Services::renderer()->setData([
+        //     'isAdmin' => $this->AuthCheckAdmin(),
+        //     'isUser'  => $this->AuthCheck(),
+        // ]);
+        // Define global runtime constants
+        if (!defined('IS_ADMIN')) {
+            define('IS_ADMIN', $this->AuthCheckAdmin());
+        }
+
+        if (!defined('IS_USER')) {
+            define('IS_USER', $this->AuthCheck());
+        }
     }
     protected function AuthCheckAdmin()
     {
@@ -97,14 +105,14 @@ abstract class BaseController extends Controller
         $condition = ($this->session->has('logged_in') && $this->session->get('role') == 0);
         return ($condition) ? 1 : 0;
     }
-    protected function Render_Page($view, $data)
+    protected function Render_Page(string $view, array $data)
     {
         return
             view('layout/header', $data) .
             view('pages/' . $view, $data) .
             view('layout/footer', $data);
     }
-    protected function Render_Page_Admin_dashboard($view, $data)
+    protected function Render_Page_Admin_dashboard(string $view, array $data)
     {
         $mergedData = array_merge($this->data, $data);
         return
@@ -112,7 +120,7 @@ abstract class BaseController extends Controller
             view('dashboard/admin/' . $view, $mergedData) .
             view('dashboard/admin/layout/dashboard-footer', $mergedData);
     }
-    protected function Render_Page_dashboard($view, $data)
+    protected function Render_Page_dashboard(string $view, array $data)
     {
         $mergedData = array_merge($this->data, $data);
         return
@@ -120,7 +128,7 @@ abstract class BaseController extends Controller
             view('dashboard/user/' . $view, $mergedData) .
             view('dashboard/user/layout/dashboard-footer', $mergedData);
     }
-    protected function RedirectWithtoast($message, $status, $redirect)
+    protected function RedirectWithtoast(string $message, string $status, string $redirect)
     {
         // $redirect contains . then it is a named route
         $this->session->setFlashdata('FlashMessage', ['message' => $message, 'status' => $status]);
