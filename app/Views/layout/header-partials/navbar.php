@@ -385,35 +385,7 @@
           <a class="list-group-item list-group-item-action" href="/travelerFavorites">
             Traveler Favorites
           </a>
-          <?php if (IS_ADMIN): ?>
-            <a class="list-group-item list-group-item-action" href="/dashboard">
-              Admin Dashboard
-            </a>
-            <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
-              Logout
-            </a>
-          <?php elseif (IS_EMPLOYEE): ?>
-            <a class="list-group-item list-group-item-action" href="/employee-dashboard">
-              Employee Dashboard
-            </a>
-            <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
-              Logout
-            </a>
-          <?php elseif (IS_USER): ?>
-            <a class="list-group-item list-group-item-action" href="/account">
-              Your Profile
-            </a>
-            <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
-              Logout
-            </a>
-          <?php else: ?>
-            <a class="list-group-item list-group-item-action" href="/login">
-              Login
-            </a>
-            <a class="list-group-item list-group-item-action" href="/Signup">
-              Signup
-            </a>
-          <?php endif; ?>
+          <?= view('layout/header-partials/role-based-navigation') ?>
         </ul>
       </div>
       <div class="col-6">

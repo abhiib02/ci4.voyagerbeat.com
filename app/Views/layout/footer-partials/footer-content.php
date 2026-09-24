@@ -25,18 +25,10 @@
         <a href="/">Home</a> |
         <a href="/about">About Us</a> |
         <a href="/destinations">Destinations</a> |
-        <?php if (IS_ADMIN): ?>
-            <a href="/dashboard">Dashboard</a> |
-            <a href="/logout">Logout</a>
-        <?php elseif (IS_EMPLOYEE): ?>
-            <a href="/employee-dashboard">Employee Dashboard</a> |
-            <a href="/logout">Logout</a>
-        <?php elseif (IS_USER): ?>
-            <a href="/account">Account</a> |
-            <a href="/logout">Logout</a>
-        <?php else: ?>
-            <a href="/login">Login</a>
-        <?php endif; ?>
+
+
+        <?= view('layout/footer-partials/role-based-navigation') ?>
+
     </div>
     <br>
 

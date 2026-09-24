@@ -82,20 +82,12 @@ abstract class BaseController extends Controller
         }
         //Caching Nav Data As it will be used on every page ⬆
 
-        // \Config\Services::renderer()->setData([
-        //     'isAdmin' => $this->AuthCheckAdmin(),
-        //     'isUser'  => $this->AuthCheck(),
-        // ]);
-        // Define global runtime constants
-        if (!defined('IS_ADMIN')) {
-            define('IS_ADMIN', $this->AuthCheckAdmin());
-        }
-        if (!defined('IS_EMPLOYEE')) {
-            define('IS_EMPLOYEE', $this->AuthCheckEmployee());
-        }
-        if (!defined('IS_USER')) {
-            define('IS_USER', $this->AuthCheck());
-        }
+        \Config\Services::renderer()->setData([
+            'isAdmin' => $this->AuthCheckAdmin(),
+            'isEmployee'  => $this->AuthCheckEmployee(),
+            'isUser'  => $this->AuthCheck(),
+
+        ]);
     }
     protected function AuthCheck()
     {

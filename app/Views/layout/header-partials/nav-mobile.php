@@ -331,21 +331,21 @@
                             Join Our Team
                         </a>
 
-                        <?php if (IS_ADMIN): ?>
+                        <?php if ($isAdmin): ?>
                             <a class="list-group-item list-group-item-action" href="/dashboard">
                                 Admin Dashboard
                             </a>
                             <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
                                 Logout
                             </a>
-                        <?php elseif (IS_EMPLOYEE): ?>
+                        <?php elseif ($isEmployee): ?>
                             <a class="list-group-item list-group-item-action" href="/employee-dashboard">
                                 Employee Dashboard
                             </a>
                             <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
                                 Logout
                             </a>
-                        <?php elseif (IS_USER): ?>
+                        <?php elseif ($isUser): ?>
                             <a class="list-group-item list-group-item-action" href="/account">
                                 Your Profile
                             </a>

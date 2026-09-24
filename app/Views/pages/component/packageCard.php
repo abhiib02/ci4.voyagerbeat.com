@@ -65,7 +65,7 @@
         <?php // if($package->PACKAGE_PDF){ echo '<div class="btn pdf_btn"><a class="" aria-label="Download pdf of '.$package->PACKAGE_NAME.'" rel=”nofollow” href="../../pdf/'.$package->PACKAGE_PDF.'" download><i class="icon-file-pdf"></i></a></div>';}
         ?>
 
-        <?php if (IS_ADMIN): ?>
+        <?php if ($isAdmin): ?>
             <a href="/voyagersbeat/download_json_package/<?= $package->PACKAGE_ID ?>" class="btn export_btn"><i class='bx bx-export'></i></a>
         <?php endif; ?>
 
