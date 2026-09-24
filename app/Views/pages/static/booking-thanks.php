@@ -100,6 +100,14 @@
                     </table>
 
                 </div>
+                <div class="col-lg-12 no-print">
+                    <h6 class="fw-bold m-0">Pax Details</h6>
+                    <small>This section is not printable.</small>
+                    <br>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <?= renderTravelers($bookingData->pax_details) ?>
+                    </div>
+                </div>
 
             </div>
             <small>
@@ -132,7 +140,7 @@
 <script src="/js/qrcode.min.js"></script>
 <script>
     var qrcode = new QRCode("qrcode", {
-        text: "<?= env('app.baseURL'); ?>thanks?payment_id=<?= $bookingData->order_id ?>",
+        text: "<?= env('app.baseURL'); ?>thanks?order_id=<?= $bookingData->order_id ?>",
         width: 80,
         height: 80,
         colorDark: "#000000",

@@ -385,7 +385,9 @@ class RazorpayController extends BaseController
         $this->BookingModel->updateStatus($orderId, 'Complete');
 
         // 5. Send email after saving data to database
-        $this->sendEmail($orderId);
+        if (!$this->sendEmail($orderId, $paymentId)) {
+            return $this->RedirectWithtoast('Booking Confirmed but Some Error Occured ', 'Success', '/thanks?order_id=' . $orderId);
+        };
 
         return $this->RedirectWithtoast('Booking Confirmed', 'Success', '/thanks?order_id=' . $orderId);
     }
@@ -423,9 +425,10 @@ class RazorpayController extends BaseController
         return $this->Render_Page('static/payment-failed', $this->data);
     }
 
-    public function sendEmail(string $order_id)
+    public function sendEmail(string $order_id, string $paymentId)
     {
         $EmailController = new EmailController();
-        $EmailController->sendBookingDetails($order_id);
+        $mailStatus = $EmailController->sendBookingDetails($order_id, $paymentId);
+        return $mailStatus;
     }
 }

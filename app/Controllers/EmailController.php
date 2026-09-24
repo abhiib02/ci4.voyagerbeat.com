@@ -13,6 +13,7 @@ class EmailController extends BaseController
     protected Session $session;
     public array $data;
     public Option $optionModel;
+    public Booking $BookingModel;
 
     /* =================================== */
     //
@@ -23,6 +24,7 @@ class EmailController extends BaseController
     {
         $this->session = \Config\Services::session();
         $this->optionModel = new Option();
+        $this->BookingModel = new Booking();
         $this->data['Contact'] = $this->optionModel->getOptionValue('contact');
         $this->data['mails'] = $this->optionModel->getOptionValue('mails');
     }
@@ -477,18 +479,28 @@ class EmailController extends BaseController
         ';
         return $message;
     }
-    public function sendBookingDetails(string $payment_id)
+    public function sendBookingDetails(string $order_id, string $payment_id)
     {
-        $BookingModel = new Booking();
-        $Bookingdata = $BookingModel->getBookingByPaymentId($payment_id);
+
+        $Bookingdata = $this->BookingModel->getBookingByOrderId($order_id);
+
+        //Adding Additional Data & Computed Data 
+        $Bookingdata->RAZORPAY_PAYMENT_ID  = $payment_id;
+        $Bookingdata->bookingConfirmationURL = env('app.baseURL') . 'thanks?order_id=' . $order_id;
+        $Bookingdata->remainingAmount  = ($Bookingdata->total_package_cost - $Bookingdata->amount) ? $Bookingdata->total_package_cost - $Bookingdata->amount : 'Full Payment Done';
+
+        //Manupulating Data 
+        $Bookingdata->date = explode('|', $Bookingdata->date)[0];
+        $Bookingdata->sharing = explode('|', $Bookingdata->sharing)[1];
+
         $message = $this->bookingDetailTemplate($Bookingdata);
 
         $email = \Config\Services::email();
 
         $from = env('contact_form_sender_email');
-        $subject = 'Booking Confirmation of ' . $Bookingdata->BOOKED_PACKAGE_NAME . ' for ' . $Bookingdata->NAME;
+        $subject = 'Booking Confirmation of Package ID ' . $Bookingdata->package_id . ' for ' . $Bookingdata->name;
         $emailList = [
-            $Bookingdata->EMAIL,
+            $Bookingdata->email,
             env('contact_form_receiver_email')
         ];
         $email->setTo($emailList);
@@ -498,118 +510,116 @@ class EmailController extends BaseController
         $email->setMessage($message);
         if ($email->send()) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'Booking Confirmed Please Check Mail', 'status' => 'Success']);
-            return redirect()->to("/thanks");
+            return 1;
         } else {
             $data = $email->printDebugger(['headers']);
             // print_r($data);
             $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'danger']);
-            return redirect()->to('/package' . '/' . $dataArr['slug']);
+            return 0;
         }
     }
     public function bookingDetailTemplate(object $data)
     {
-        $remainingAmount = (($data->TOTAL_AMOUNT - $data->AMOUNT_PAID) == 0) ? 'Full Payment Done' : number_format($data->TOTAL_AMOUNT - $data->AMOUNT_PAID, 2);
         $template = '
             <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Booking Confirmation</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      border: 1px solid #ccc;
-      padding: 30px;
-      background-color: #f9f9f9;
-    }
-    h2 {
-      color: #222;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 10px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-    td {
-      padding: 8px 6px;
-      vertical-align: top;
-    }
-    th {
-      text-align: left;
-      background-color: #f0f0f0;
-      padding: 8px 6px;
-    }
-    .logo {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .footer {
-      font-size: 12px;
-      color: #555;
-      text-align: center;
-      margin-top: 30px;
-    }
-    .highlight {
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="logo">
-      <img src="' . env('appLogoPath') . '" alt="' . env('appName') . '" width="100">
-      <h2>Booking Confirmation Receipt</h2>
-      <p><strong>' . env('appName') . '</strong></p>
-    </div>
+            <html lang="en">
+            <head>
+            <meta charset="UTF-8">
+            <title>Booking Confirmation</title>
+            <style>
+                body {
+                font-family: Arial, sans-serif;
+                background-color: #ffffff;
+                margin: 0;
+                padding: 20px;
+                }
+                .container {
+                max-width: 700px;
+                margin: 0 auto;
+                border: 1px solid #ccc;
+                padding: 30px;
+                background-color: #f9f9f9;
+                }
+                h2 {
+                color: #222;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 10px;
+                }
+                table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+                }
+                td {
+                padding: 8px 6px;
+                vertical-align: top;
+                }
+                th {
+                text-align: left;
+                background-color: #f0f0f0;
+                padding: 8px 6px;
+                }
+                .logo {
+                text-align: center;
+                margin-bottom: 20px;
+                }
+                .footer {
+                font-size: 12px;
+                color: #555;
+                text-align: center;
+                margin-top: 30px;
+                }
+                .highlight {
+                font-weight: bold;
+                }
+            </style>
+            </head>
+            <body>
+            <div class="container">
+                <div class="logo">
+                <img src="' . env('app.LogoPath') . '" alt="' . env('app.Name') . '" width="100">
+                <h2>Booking Confirmation Receipt</h2>
+                <p><strong>' . env('app.Name') . '</strong></p>
+                </div>
 
-    <h3>Customer Details</h3>
-    <table>
-      <tr><td><strong>Name</strong></td><td>' . $data->NAME . '</td></tr>
-      <tr><td><strong>Email</strong></td><td>' . $data->EMAIL . '</td></tr>
-      <tr><td><strong>Contact</strong></td><td>' . $data->CONTACT . '</td></tr>
-    </table>
+                <h3>Customer Details</h3>
+                <table>
+                <tr><td><strong>Name</strong></td><td>' . $data->name . '</td></tr>
+                <tr><td><strong>Email</strong></td><td>' . $data->email . '</td></tr>
+                <tr><td><strong>Contact</strong></td><td>' . $data->contact . '</td></tr>
+                </table>
 
-    <h3>Booking Details</h3>
-    <table>
-      <tr><td><strong>Booking ID</strong></td><td>' . $data->BOOKING_ID . '</td></tr>
-      <tr><td><strong>Payment ID</strong></td><td>' . $data->RAZORPAY_PAYMENT_ID . '</td></tr>
-      <tr><td><strong>Booking Date</strong></td><td>' . $data->CREATED_AT . '</td></tr>
-    </table>
+                <h3>Booking Details</h3>
+                <table>
+                <tr><td><strong>Booking ID</strong></td><td>' . $data->ID . '</td></tr>
+                <tr><td><strong>Order ID</strong></td><td>' . $data->order_id . '</td></tr>
+                <tr><td><strong>Payment ID</strong></td><td>' . $data->RAZORPAY_PAYMENT_ID . '</td></tr>
+                <tr><td><strong>Booking Date</strong></td><td>' . $data->booking_date_utc . '</td></tr>
+                </table>
 
-    <h3>Package Details</h3>
-    <table>
-      <tr><td><strong>Package ID</strong></td><td>' . $data->BOOKED_PACKAGE_ID . '</td></tr>
-      <tr><td><strong>Package Name</strong></td><td>' . $data->BOOKED_PACKAGE_NAME . '</td></tr>
-      <tr><td><strong>Package Date of Travel</strong></td><td>' . $data->BOOKED_DATE_OF_TRAVEL . '</td></tr>
-      <tr><td><strong>Adults</strong></td><td>' . $data->ADULTS . '</td></tr>
-      <tr><td><strong>Sharing Basis</strong></td><td>' . $data->SHARING . '</td></tr>
-    </table>
+                <h3>Package Details</h3>
+                <table>
+                <tr><td><strong>Package ID</strong></td><td>' . $data->package_id . '</td></tr>
+                <tr><td><strong>Package Date of Travel</strong></td><td>' . $data->date . '</td></tr>
+                <tr><td><strong>Adults</strong></td><td>' . $data->adults . '</td></tr>
+                <tr><td><strong>Sharing Basis</strong></td><td>' . $data->sharing . '</td></tr>
+                </table>
 
-    <h3>Payment Details</h3>
-    <table>
-        <tr><td><strong>Booking Amount</strong></td><td>₹ ' . number_format($data->BOOKING_AMOUNT, 2) . '</td></tr>
-      <tr><td><strong>Total Amount</strong></td><td>₹ ' . number_format($data->TOTAL_AMOUNT, 2) . '</td></tr>
-      <tr><td><strong>Amount Paid</strong></td><td>₹ ' . number_format($data->AMOUNT_PAID, 2) . '</td></tr>
-      <tr><td><strong>Remaining Payable</strong></td><td>' . $remainingAmount . '</td></tr>
-    </table>
+                <h3>Payment Details</h3>
+                <table>
+                <tr><td><strong>Total Amount</strong></td><td>₹ ' . number_format($data->total_package_cost, 2) . '</td></tr>
+                <tr><td><strong>Amount Paid</strong></td><td>₹ ' . number_format($data->amount, 2) . '</td></tr>
+                <tr><td><strong>Remaining Payable</strong></td><td>' . $data->remainingAmount . '</td></tr>
+                </table>
+                <a style="font-size: 12px;" href="' . $data->bookingConfirmationURL . '">Click here For Pax Details</a>
+                <p style="font-size: 12px; color: #666;">* This is a system generated Booking Confirmation Receipt.</p>
 
-    <p style="font-size: 12px; color: #666;">* This is a system generated Booking Confirmation Receipt.</p>
-
-    <div class="footer">
-      <p>For any queries, please contact us at <a href="tel:' . $this->data['Contact'] . '">' . $this->data['Contact'] . '</a> or mail us at <a href="mailto:' . $this->data['mails'] . '">' . $this->data['mails'] . '</a></p>
-    </div>
-  </div>
-</body>
-</html>
+                <div class="footer">
+                <p>For any queries, please contact us at <a href="tel:' . env('app.defaultContact') . '">' . env('app.defaultContact') . '</a> or mail us at <a href="mailto:' . env('app.defaultMail') . '">' . env('app.defaultMail') . '</a></p>
+                </div>
+            </div>
+            </body>
+            </html>
 
         ';
         return $template;

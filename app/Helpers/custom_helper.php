@@ -50,6 +50,53 @@ if (! function_exists('extract_both_months')) {
     }
 }
 
+if (! function_exists('renderTravelers')) {
+    function renderTravelers(string $data): string
+    {
+        // Accept a JSON string or an already-decoded array
+        if (is_string($data)) {
+            $data = json_decode($data, true) ?? [];
+        }
 
+        // Group: traveler_2_name => $travelers[2]['name']
+        $travelers = [];
+        foreach ($data as $key => $value) {
+            if (preg_match('/^traveler_(\d+)_(.+)$/', $key, $m)) {
+                $travelers[(int) $m[1]][$m[2]] = trim((string) $value);
+            }
+        }
+        ksort($travelers);
 
+        if (empty($travelers)) {
+            return '<p class="text-muted">No traveler details found.</p>';
+        }
+
+        $html = '<div class="row">';
+
+        foreach ($travelers as $number => $fields) {
+            $html .= '<div class="col-md-12 mb-3">';
+            $html .= '<div class="card">';
+            $html .= '<div class="card-header fw-bold">Traveler ' . $number . '</div>';
+            $html .= '<ul class="list-group list-group-flush">';
+
+            foreach ($fields as $field => $value) {
+                // "2|double sharing (...)" -> "double sharing (...)"
+                if ($field === 'sharing' && str_contains($value, '|')) {
+                    $value = explode('|', $value, 2)[1];
+                }
+
+                $label = ucfirst(str_replace('_', ' ', $field));
+
+                $html .= '<li class="list-group-item d-flex justify-content-between">'
+                    . '<span class="text-muted">' . esc($label) . '</span>'
+                    . '<span>' . esc(ucfirst($value)) . '</span>'
+                    . '</li>';
+            }
+
+            $html .= '</ul></div></div>';
+        }
+
+        return $html . '</div>';
+    }
+}
 ?>
