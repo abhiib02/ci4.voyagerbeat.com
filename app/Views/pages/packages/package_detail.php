@@ -25,7 +25,10 @@ $TAGS = explode(',', $package->TAGS);
             <div class="row vh-80">
                 <div class="col-lg-12 align-content-end">
                     <div class=" pb-5">
-                        <h1><?= $package->PACKAGE_NAME ?></h1>
+                        <div class="d-flex justify-content-between">
+                            <h1><?= $package->PACKAGE_NAME ?></h1>
+                            <h1>PACKAGE ID : <?= $package->PACKAGE_ID ?></h1>
+                        </div>
                         <hr>
                         <p><?= $package->META_DESC ?></p>
                         <div class="my-2">

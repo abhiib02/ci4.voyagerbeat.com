@@ -56,6 +56,7 @@ $TAGS = explode(',', $package->TAGS);
 
         <section class="container" id="package_name">
             <h5 class="mt-2"><?= $package->PACKAGE_NAME; ?></h5>
+
             <p><?= $package->META_DESC ?></p>
             <div class="my-2">
                 <a href="/type/<?= urlencode($package->PACKAGE_TYPE) ?>"><span class=" badge rounded-pill text-bg-dark"><?= $package->PACKAGE_TYPE ?></span></a>
@@ -64,7 +65,7 @@ $TAGS = explode(',', $package->TAGS);
                     <a href="/tag/<?= $tag ?>" class="text-decoration-none text-theme-secondary"><span class="badge rounded-pill text-theme-secondary">#<?= $tag ?></span></a>
                 <?php endforeach; ?>
             </div>
-            <span class="text-theme-secondary"><i class='bx bxs-location-plus'></i></span>&nbsp;<span><?= $package->LOCATION; ?></span>•<span><?= $package->COUNTRY; ?></span>
+            <span class="text-theme-secondary mx-2"><i class='bx bxs-location-plus'></i></span><span class="mx-1"><?= $package->LOCATION; ?></span>•<span class="mx-1"><?= $package->COUNTRY; ?></span>•<span class="mx-1 fw-bold">Package ID : <?= $package->PACKAGE_ID ?> </span>
         </section>
 
         <section class="container" id="quick-info">
