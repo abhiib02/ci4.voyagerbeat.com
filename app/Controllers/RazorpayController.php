@@ -328,7 +328,6 @@ class RazorpayController extends BaseController
             "prefill" => array(
                 "name"  => $data['name'],
                 "email"  => $data['email'],
-                "gender" => $data['gender'],
                 "contact" => $data['contact']
             ),
             "notes"  => array(
@@ -400,7 +399,7 @@ class RazorpayController extends BaseController
         $data['gender'] = (string)$BookingData['gender'];
         $data['contact'] = (string)$BookingData['contact'];
         $data['package_id'] = (int)$BookingData['package_id'];
-        $data['travelmode'] = (int)$BookingData['travelmode'];
+        $data['travelmode'] = (string)$BookingData['travelmode'];
         $data['sharing'] = $BookingData['sharingArr'][0];
         $data['coupon_used'] = (string)$BookingData['coupon_code'];
         $data['adults'] = (int)$BookingData['adults'];

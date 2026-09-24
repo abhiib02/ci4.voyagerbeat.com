@@ -44,7 +44,7 @@
                         <td><?= $booking->name; ?></td>
                         <td><?= $booking->email; ?></td>
                         <td><?= $booking->contact; ?></td>
-                        <td><a href="/package/<?= $booking->package_id; ?>"></a></td>
+                        <td><a href="/packageid/<?= $booking->package_id; ?>"><?= $booking->package_id; ?></a></td>
                         <td><?= $booking->adults; ?></td>
                         <td>
                             <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
@@ -67,13 +67,17 @@
                             <?php endif; ?>
 
                         </td>
-                        <td><?= $booking->sharing; ?></td>
+                        <td><?= substr($booking->sharing, 2); ?></td>
                         <td><?= $booking->coupon_used; ?></td>
                         <td><?= $booking->date; ?></td>
                         <td><?= $booking->travelmode; ?></td>
                         <td><?= $booking->paymode; ?></td>
                         <td><?= $booking->amount; ?></td>
-                        <td><?= $booking->total_package_cost; ?></td>
+                        <td>
+                            <span><?= $booking->total_package_cost; ?>
+                                <button class="btn btn-sm"><i class='bx bxs-edit-alt'></i></button>
+                            </span>
+                        </td>
                         <td>
                             <?php switch ($booking->status) {
                                 case 'Complete': ?>

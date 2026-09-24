@@ -210,7 +210,7 @@
                 </div>
 
                 <!-- RIGHT COLUMN: SUMMARY -->
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-4 hide-on-mobile">
                     <div id="confirm-details" class="card mb-2">
                         <div class="card-header">
                             Booking Details

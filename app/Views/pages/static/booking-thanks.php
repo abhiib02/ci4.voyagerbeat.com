@@ -100,14 +100,16 @@
                     </table>
 
                 </div>
-                <div class="col-lg-12 no-print">
-                    <h6 class="fw-bold m-0">Pax Details</h6>
-                    <small>This section is not printable.</small>
-                    <br>
-                    <div class="d-flex gap-2 flex-wrap">
-                        <?= renderTravelers($bookingData->pax_details) ?>
+                <?php if (!empty($bookingData->pax_details)): ?>
+                    <div class="col-lg-12 no-print">
+                        <h6 class="fw-bold m-0">Pax Details</h6>
+                        <small>This section is not printable.</small>
+                        <br>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <?= renderTravelers($bookingData->pax_details) ?>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
 
             </div>
             <small>
