@@ -14,89 +14,86 @@ class LoginController extends BaseController
     public array $data = [];
     public Package $PackageModel;
     public Option $OptionModel;
-    // public Destination $DestinationModel;
+    public User $UserModel;
     public function __construct()
     {
-        // $this->PackageModel = new Package();
-        // $this->DestinationModel = new Destination();
-        // $this->data['Destinations'] = $this->DestinationModel->getAllDestinations();
-        // $this->OptionModel = new Option();
-        // $this->data['Contact'] = $this->OptionModel->getOptionValue('contact');
-        // $this->data['States'] = $this->PackageModel->getAllDistinctStates();
-        // $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
+        $this->UserModel = new User();
     }
     public function index()
     {
         $this->data['noindex'] = 1;
 
         if ($this->AuthCheckAdmin()) {
-            return redirect()->route('dashboard');
-        } elseif ($this->AuthCheck()) {
-            return redirect()->route('account');
-        } else {
-            return $this->Render_Page('login', $this->data);
+            return redirect()->route('Admin.Dashboard');
         }
+        if ($this->AuthCheckEmployee()) {
+            return redirect()->route('Employee.Dashboard');
+        }
+        if ($this->AuthCheck()) {
+            return redirect()->route('Customer.Dashboard');
+        }
+        return $this->Render_Page('login', $this->data);
     }
+
+    public function RedirectToDashboard(array $session)
+    {
+        $routeName = match ($session['role']) {
+            1 => 'Admin.Dashboard',
+            2 => 'Employee.Dashboard',
+            default => 'Customer.Dashboard',
+        };
+        return redirect()->route($routeName);
+    }
+
 
     public function loginValidation()
     {
-
-
-        $UserModel = new User();
-        $queryData = [
-            "EMAIL" => $this->request->getPost('email'),
-            "PASSWORD" => $this->request->getPost('password'),
-        ];
-        $email = $queryData['EMAIL'];
-        $password = $queryData['PASSWORD'];
-        $userExist = $UserModel->isUserExist($queryData['EMAIL']);
-        $rules = $this->validate([
-            'email' => 'required|valid_email',
+        // 1. Validate input FIRST
+        $rules = [
+            'email'    => 'required|valid_email',
             'password' => 'required',
-        ]);
+        ];
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid email or password format.',
+                'status'  => 'warning'
+            ]);
+            return redirect()->to('/login')->withInput();
+        }
+
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+
+        $user = $this->UserModel->getUser($email);
+
+
         if (!$rules) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'Some Input is Invalid', 'status' => 'warning']);
             return redirect()->to('/login');
         }
         // check user exist
-        if (!$userExist) {
+        if (!$user) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'User Does not Exist', 'status' => 'danger']);
             return redirect()->to('/login');
         }
-        $LoginStatus = $UserModel->can_login($email, $password);
-        if (!($LoginStatus)) {
+        $LoginStatus = $this->UserModel->can_login($email, $password);
+        if (!$LoginStatus) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'Incorrect Email or Password', 'status' => 'danger']);
             return redirect()->to('/login');
         }
 
-        $userRole = $UserModel->getUserRole($email);
+
         $LoggedInData = [
-            'id' => $UserModel->getUserID($email),
-            'name' => $UserModel->getUserName($queryData['EMAIL']),
-            'email' => $queryData['EMAIL'],
+            'id' => $user->USER_ID,
+            'name' => $user->USER_NAME,
+            'email' => $user->USER_EMAIL,
             'logged_in' => true,
-            'role' => $userRole,
+            'role' => (int)$user->ROLE,
         ];
 
         $this->session->set($LoggedInData);
-        switch ($LoggedInData['role']) {
-            case 0:
-                //Customer Role
-                return redirect()->route('Customer.Dashboard');
-                break;
-            case 1:
-                //Admin Role
-                return redirect()->route('Admin.Dashboard');
-                break;
-            case 2:
-                //Employee Role
-                return redirect()->route('Employee.Dashboard');
-                break;
-            default:
-                //Default Role / Customer
-                return redirect()->route('Customer.Dashboard');
-                break;
-        }
+
+        return $this->RedirectToDashboard($LoggedInData);
     }
 
     public function googleloginValidation()
@@ -124,36 +121,32 @@ class LoginController extends BaseController
             return redirect()->to('/login');
         }
         $email = $data->email;
-        $userExist = $UserModel->isUserExist($email);
+        $user = $this->UserModel->getUser($email);
         // check user exist
-        if (!$userExist) {
+        if (!$user) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'User Does not Exist', 'status' => 'danger']);
             return redirect()->to('/login');
         }
-        $isAdmin = $UserModel->isAdmin($email);
+
         $LoggedInData = [
-            'id' => $UserModel->getUserID($email),
-            'name' => $UserModel->getUserName($email),
-            'email' => $email,
+            'id' => $user->USER_ID,
+            'name' => $user->USER_NAME,
+            'email' => $user->USER_EMAIL,
             'logged_in' => true,
-            'isadmin' => $isAdmin,
+            'role' => (int)$user->ROLE,
         ];
+
         $this->session->set($LoggedInData);
-        if (!$isAdmin) {
-            return redirect()->route('account');
-        }
-        return redirect()->route('dashboard');
+
+        return $this->RedirectToDashboard($LoggedInData);
     }
 
     public function logout()
     {
-        $this->session = Services::session();
-        if ($this->AuthCheck() || $this->AuthCheckAdmin()) {
-            $LoggedInData = ['id', 'name', 'email', 'logged_in', 'isadmin', 'role'];
-            $this->session->remove($LoggedInData);
-            return redirect()->route('login');
-        } else {
-            return redirect()->route('login');
-        }
+        $this->session->destroy();
+        return redirect()
+            ->route('login')
+            ->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            ->setHeader('Pragma', 'no-cache');
     }
 }
