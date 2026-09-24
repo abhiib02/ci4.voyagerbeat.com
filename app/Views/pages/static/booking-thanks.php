@@ -62,7 +62,7 @@
 
                         <tr>
                             <td>Package Date of Travel</td>
-                            <td><b><?= $bookingData->date ?></b></td>
+                            <td><b><?= explode('|', $bookingData->date)[0] ?></b></td>
                         </tr>
                         <tr>
                             <td>Adults</td>
@@ -70,7 +70,7 @@
                         </tr>
                         <tr>
                             <td>Sharing Basis</td>
-                            <td><b><?= $bookingData->sharing ?></b></td>
+                            <td><b><?= substr($bookingData->sharing, 2) ?></b></td>
                         </tr>
                     </table>
                 </div>

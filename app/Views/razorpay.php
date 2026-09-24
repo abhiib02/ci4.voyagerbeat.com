@@ -24,6 +24,7 @@
 <form name='razorpayform' action="<?= env('app.baseURL') ?>verify-payment" method="POST">
     <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
     <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+    <input type="hidden" name="payment_status" id="payment_status" value="">
 
     <?php $details = json_encode($data);
     $details = json_decode($details, true);
@@ -52,7 +53,8 @@
         ondismiss: function() {
             //console.log("Dismissed Payment");
             alert("Payment Process Closed");
-            window.location.replace("/payment-cancel");
+            document.getElementById('payment_status').value = 'cancelled';
+            document.razorpayform.submit(); // goes to verify-payment
         },
         // Boolean indicating whether pressing escape key 
         // should close the checkout form. (default: true)
@@ -66,6 +68,5 @@
         $("#rzp-button1").click();
         rzp.open();
         e.preventDefault();
-        $("#loader").removeClass("hide");
     });
 </script>

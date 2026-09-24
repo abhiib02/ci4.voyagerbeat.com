@@ -343,37 +343,51 @@ class RazorpayController extends BaseController
         return $data;
     }
 
-    public function verify() //This function verifies the payment,after successful payment
+    public function verify()
     {
+        $orderId = session()->get('razorpay_order_id');
 
-        $success = true;
-        $error = "payment_failed";
+        if (empty($orderId)) {
+            return redirect()->to('/')->with('error', 'Session expired. Please try again.');
+        }
 
-        if (empty($_POST['razorpay_payment_id']) === false) {
+        $paymentId = $this->request->getPost('razorpay_payment_id');
+        $signature = $this->request->getPost('razorpay_signature');
+        $status    = $this->request->getPost('payment_status'); // 'cancelled' when modal dismissed
+
+        // 1. User closed the Razorpay modal
+        if ($status === 'cancelled') {
+            $this->BookingModel->updateStatus($orderId, 'Cancelled');
+            return redirect()->to('/payment-failed')->with('error', 'Payment was cancelled. You can try again.');
+        }
+
+        // 2. No payment data = failure (never assume success)
+        if (empty($paymentId) || empty($signature)) {
+            $this->BookingModel->updateStatus($orderId, 'Failed');
+            return redirect()->to('/payment-failed');
+        }
+
+        // 3. Verify the signature
+        try {
             $api = new Api(env('razorKey'), env('razorSecret'));
-            try {
-                $attributes = array(
-                    'razorpay_order_id' => session()->get('razorpay_order_id'),
-                    'razorpay_payment_id' => $this->request->getPost('razorpay_payment_id'),
-                    'razorpay_signature' => $this->request->getPost('razorpay_signature')
-                );
-                $api->utility->verifyPaymentSignature($attributes);
-            } catch (SignatureVerificationError $e) {
-                $success = false;
-                $error = 'Razorpay_Error : ' . $e->getMessage();
-                //print_r($error);
-            }
-        }
-        $razorpayOrderId = session()->get('razorpay_order_id');
-        if ($success === false) {
-            return redirect()->to("/payment-failed");
+            $api->utility->verifyPaymentSignature([
+                'razorpay_order_id'   => $orderId,
+                'razorpay_payment_id' => $paymentId,
+                'razorpay_signature'  => $signature,
+            ]);
+        } catch (SignatureVerificationError $e) {
+            log_message('error', 'Razorpay signature failed: ' . $e->getMessage());
+            $this->BookingModel->updateStatus($orderId, 'Failed');
+            return redirect()->to('/payment-failed');
         }
 
-        $this->BookingModel->updateStatus($razorpayOrderId, 'Complete');
+        // 4. Only reached when the signature is valid
+        $this->BookingModel->updateStatus($orderId, 'Complete');
 
-        //$this->sendEmail($BookingData['order_id']); //Sending Email to Customer
+        // 5. Send email after saving data to database
+        $this->sendEmail($orderId);
 
-        return $this->RedirectWithtoast('Booking Confirmed', 'Success', "/thanks?order_id=" . $razorpayOrderId);
+        return $this->RedirectWithtoast('Booking Confirmed', 'Success', '/thanks?order_id=' . $orderId);
     }
 
     public function saveBookingData(string $order_id, array $BookingData)
@@ -404,10 +418,14 @@ class RazorpayController extends BaseController
 
         return $this->BookingModel->errors();
     }
+    public function Paymentfailed()
+    {
+        return $this->Render_Page('static/payment-failed', $this->data);
+    }
 
-    public function sendEmail(string $payment_id)
+    public function sendEmail(string $order_id)
     {
         $EmailController = new EmailController();
-        $EmailController->sendBookingDetails($payment_id);
+        $EmailController->sendBookingDetails($order_id);
     }
 }

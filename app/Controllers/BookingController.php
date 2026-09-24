@@ -2,11 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Models;
 use App\Models\Booking;
 use App\Models\Package;
 use App\Models\Coupon;
-use Config\Services;
+
 
 class BookingController extends BaseController
 {
@@ -19,7 +18,7 @@ class BookingController extends BaseController
 
         $this->BookingModel = new Booking();
         $this->CouponModel = new Coupon();
-        $this->session = Services::session();
+        $this->PackageModel = new Package();
     }
 
     public function Book(int $packageID)
@@ -41,16 +40,6 @@ class BookingController extends BaseController
         return $this->Render_Page('static/booking-thanks', $this->data);
     }
 
-    public function Paymentfailed()
-    {
-        $this->BookingModel->updateStatus(session()->get('razorpay_order_id'), 'Failed');
-        return $this->Render_Page('static/payment-failed', $this->data);
-    }
-    public function PaymentCancel()
-    {
-        $this->BookingModel->updateStatus(session()->get('razorpay_order_id'), 'Cancel');
-        return $this->Render_Page('static/payment-failed', $this->data);
-    }
     public function MaximumAmount()
     {
         return $this->Render_Page('static/max-amount', $this->data);

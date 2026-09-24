@@ -829,7 +829,7 @@
                     const data = await res.json();
 
                     const codeData = data && data[0];
-                    console.log(codeData);
+
                     if (!codeData || codeData.Coupon_Count == 0) {
                         runToast('Coupon expired or invalid', 'danger');
                         return;

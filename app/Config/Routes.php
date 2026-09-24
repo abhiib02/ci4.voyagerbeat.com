@@ -145,8 +145,8 @@ $routes->group('api', static function ($routes) {
 */
 $routes->get('book/(:num)', 'BookingController::Book/$1');
 $routes->get('thanks', 'BookingController::PaymentSuccess');
-$routes->get('payment-failed', 'BookingController::Paymentfailed');
-$routes->get('payment-cancel', 'BookingController::PaymentCancel');
+$routes->post('payment-failed', 'RazorpayController::Paymentfailed');
+$routes->get('payment-failed', 'RazorpayController::Paymentfailed');
 $routes->get('max-amount', 'BookingController::MaximumAmount');
 
 /*

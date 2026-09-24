@@ -85,10 +85,14 @@
                                 case 'Cancel': ?>
                                     <span class="badge text-bg-secondary"><?= $booking->status; ?></span>
                                 <?php break;
+                                case 'Cancelled': ?>
+                                    <span class="badge text-bg-secondary"><?= $booking->status; ?></span>
+                                <?php break;
                                 default: ?>
                                     <span class="badge text-bg-danger">Failed / Unknown</span>
                             <?php break;
                             } ?>
+
 
                         </td>
 
