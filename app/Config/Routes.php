@@ -78,9 +78,9 @@ $routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
     // Package management
     $routes->post('createPackageProcess', 'PackageController::add_package_process');
     $routes->get('package-edit/(:num)', 'PackageController::update_package_form/$1');
-    $routes->post('update_package_process', 'PackageController::update_package_process');
-    $routes->post('delete_package_process', 'PackageController::delete_package_process');
-    $routes->get('duplicate_package_process/(:num)', 'PackageController::duplicate_package_process/$1');
+    $routes->post('updatePackageProcess', 'PackageController::update_package_process');
+    $routes->post('deletePackageProcess', 'PackageController::delete_package_process');
+    $routes->get('duplicatePackageProcess/(:num)', 'PackageController::duplicate_package_process/$1');
 
     // Admin listing / lookup pages
     $routes->get('users', 'DashboardController::users');
