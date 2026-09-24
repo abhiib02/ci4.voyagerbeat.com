@@ -44,291 +44,172 @@ class User extends Model
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
-    public function __construct()
+    public function __construct() {}
+
+    public function insertUser(array $data)
     {
-        $db = \Config\Database::connect();
+        return $this->insert($data);
     }
 
-    public function insertUser($data)
+    public function getAllUsers(): array
     {
-        $db = \Config\Database::connect();
-        return $db->table('users')->insert($data);
+        return $this->findAll();
     }
 
+    public function getAdminCount(): int
+    {
+        return $this->where('ROLE', 1)->countAllResults();
+    }
 
-    public function getAllUsers()
+    public function getAllAdmins(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select('*');
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->where('ROLE', 1)->findAll();
     }
-    public function getAdminCount()
+
+    public function getAllEmployee(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select('*');
-        $builder->where('ROLE', 1);
-        $query = $builder->get();
-        $result = $query->getNumRows();
-        return $result;
+        return $this->where('ROLE', 2)->findAll();
     }
-    public function getAllAdmins()
+    public function getAllCustomers(): array
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select('*');
-        $builder->where('ROLE', 1);
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->where('ROLE', 0)->findAll();
     }
-    public function getAllEmployee()
+    public function getCustomerCount(): int
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select('*');
-        $builder->where('ROLE', 2);
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        return $this->where('ROLE', 0)->countAllResults();
     }
-    public function getAllCustomers()
+    public function getUserID(string $email)
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select('*');
-        $builder->where('ROLE', 0);
-        $query = $builder->get();
-        $result = $query->getResult();
-        return $result;
+        $user = $this->select('USER_ID')->where('USER_EMAIL', $email)->first();
+
+        return $user->USER_ID ?? null;
     }
-    public function getCustomerCount()
+    public function getUser(string $email)
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select('*');
-        $builder->where('ROLE', 0);
-        $query = $builder->get();
-        $result = $query->getNumRows();
-        return $result;
-    }
-    public function getUserID($email)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("USER_ID");
-        $builder->where('USER_EMAIL', $email);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result->USER_ID;
-    }
-    public function getUser($email)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("*");
-        $builder->where('EMAIL', $email);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result;
+        return $this->select('USER_ID, USER_NAME, USER_EMAIL, ROLE')
+            ->where('USER_EMAIL', $email)
+            ->first();
     }
     public function getUserByID($id)
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("*");
-        $builder->where('USER_ID', $id);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result;
+        return $this->find($id);
     }
-    public function getUserName($email)
+    public function getUserName(string $email): ?string
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("USER_NAME");
-        $builder->where('USER_EMAIL', $email);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result->USER_NAME;
+        $user = $this->select('USER_NAME')->where('USER_EMAIL', $email)->first();
+
+        return $user->USER_NAME ?? null;
     }
-    public function getUserRole($email)
+    public function getUserRole(string $email)
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("ROLE");
-        $builder->where('USER_EMAIL', $email);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result->ROLE;
+        $row = $this->select('ROLE')->where('USER_EMAIL', $email)->get()->getRow();
+
+        return (int)$row->ROLE ?: null;
     }
-    public function isUserExist($email)
+    public function isUserExist(string $email): bool
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("*");
-        $builder->where('USER_EMAIL', $email);
-        $query = $builder->get();
-        if ($query->getNumRows() > 0) {
-            return 1;
-        } else {
-            return 0;
+        return $this->where('USER_EMAIL', $email)->countAllResults() > 0;
+    }
+    public function isUserExistByID($id): bool
+    {
+        return $this->where('USER_ID', $id)->countAllResults() > 0;
+    }
+
+    public function delUser(int $ID): bool
+    {
+        if ($this->find($ID) !== null) {
+            return (bool) $this->delete($ID);
         }
+        return false;
     }
-    public function isUserExistByID($id)
+    public function isHashExist(string $hash): bool
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("*");
-        $builder->where('USER_ID', $id);
-        $query = $builder->get();
-        if ($query->getNumRows() > 0) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return $this->where('PASSWORD', $hash)->countAllResults() > 0;
     }
-
-    public function delUser($id)
+    public function insertPasswordResetTokenToEmail(string $email, string $token): bool
     {
-        if ($this->isUserExistByID($id)) {
-
-            $db = \Config\Database::connect();
-            $builder = $db->table('users');
-            $builder->where('USER_ID', $id);
-            $builder->delete();
-            return 1;
-        } else {
-            return 0;
-        }
+        return $this->where('USER_EMAIL', $email)
+            ->set(['PASSWORD_RESET_TOKEN' => $token])
+            ->update();
     }
-    public function isHashExist($hash)
+    public function isTokenExist(string $token): bool
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("*");
-        $builder->where('PASSWORD', $hash);
-        $query = $builder->get();
-        if ($query->getNumRows() > 0) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return $this->where('PASSWORD_RESET_TOKEN', $token)->countAllResults() > 0;
     }
-    public function insertPasswordResetTokenToEmail($email, $token)
+    public function isAdmin(string $email): bool
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->set("PASSWORD_RESET_TOKEN", $token);
-        $builder->where('USER_EMAIL', $email);
-        $builder->update();
-    }
-    public function isTokenExist($token)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("*");
-        $builder->where('PASSWORD_RESET_TOKEN', $token);
-        $query = $builder->get();
-        if ($query->getNumRows() > 0) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-    public function isAdmin($email)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("ROLE");
-        $builder->where('USER_EMAIL', $email);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result->ROLE;
-    }
-
-    public function MakeAdmin($id)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->set("ROLE", 1);
-        $builder->where('USER_ID', $id);
-        $builder->update();
-    }
-
-    public function RemoveAdmin($id)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->set("ROLE", 0);
-        $builder->where('USER_ID', $id);
-        $builder->update();
-        return 'Admin Privileges Revoked';
-    }
-    public function getUserPassHash($email)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("PASSWORD");
-        $builder->where('USER_EMAIL', $email);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result->PASSWORD;
-    }
-    public function getUserPassResetToken($email)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->select("PASSWORD_RESET_TOKEN");
-        $builder->where('EMAIL', $email);
-        $query = $builder->get();
-        $result = $query->getRow();
-        return $result->PASSWORD_RESET_TOKEN;
-    }
-    public function removePassResetToken($token)
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->set("PASSWORD_RESET_TOKEN", null);
-        $builder->where("PASSWORD_RESET_TOKEN", $token);
-        $builder->update();
-    }
-    function can_login($username, $password)
-    {
-
-        $passHash = $this->getUserPassHash($username);
-
-        if (password_verify($password, $passHash)) {
-
-            return true;
-        } else {
+        $user = $this->select('ROLE')->where('USER_EMAIL', $email)->first();
+        if (!$user) {
             return false;
         }
+        return ((int)$user->ROLE === 1) ? true : false;
     }
 
-    public function changePasswordByAdmin($id, $password)
+    public function MakeAdmin($id): bool
     {
-        $db = \Config\Database::connect();
-        $hashedpass = password_hash((string) $password, PASSWORD_DEFAULT);
-        $builder = $db->table('users');
-        $builder->set("PASSWORD", $hashedpass);
-        $builder->where("USER_ID", $id);
-        $builder->update();
-        return true;
+        return $this->update($id, ['ROLE' => 1]);
+    }
+
+    public function RemoveAdmin($id): bool
+    {
+        return $this->update($id, ['ROLE' => 0]);
+    }
+    public function getUserPassHash(string $email): ?string
+    {
+        $user = $this->select('PASSWORD')->where('USER_EMAIL', $email)->first();
+        if (!$user) {
+            return null;
+        }
+        return $user->PASSWORD;
+    }
+    public function getUserPassResetToken(string $email): ?string
+    {
+        $user = $this->select('PASSWORD_RESET_TOKEN')->where('USER_EMAIL', $email)->first();
+
+        if (! $user) {
+            return null;
+        }
+
+        return $user->PASSWORD_RESET_TOKEN;
+    }
+    public function removePassResetToken(string $token): bool
+    {
+        return $this->where('PASSWORD_RESET_TOKEN', $token)
+            ->set(['PASSWORD_RESET_TOKEN' => null])
+            ->update();
+    }
+    public function can_login(string $username, string $password): bool
+    {
+        $passHash = $this->getUserPassHash($username);
+
+        if (! $passHash) {
+            return false;
+        }
+
+        return password_verify($password, $passHash);
+    }
+
+    public function changePasswordByAdmin($id, string $password): bool
+    {
+        $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+
+        return $this->update($id, ['PASSWORD' => $hashedPass]);
     }
 
 
-    public function resetpassword($token, $newhash)
+    public function resetPassword(string $token, string $newHash): bool
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('users');
-        $builder->set("PASSWORD", $newhash);
-        $builder->where("PASSWORD_RESET_TOKEN", $token);
-        $builder->update();
-        $this->removePassResetToken($token);
-        return true;
+        if (! $this->isTokenExist($token)) {
+            return false;
+        }
+        $updated = $this->where('PASSWORD_RESET_TOKEN', $token)
+            ->set(['PASSWORD' => $newHash])
+            ->update();
+
+        if ($updated) {
+            $this->removePassResetToken($token);
+            return true;
+        }
+        return false;
     }
 }
