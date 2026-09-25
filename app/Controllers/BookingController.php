@@ -25,7 +25,7 @@ class BookingController extends BaseController
     {
         $this->data['ValidCoupons'] = $this->CouponModel->getAllValidCoupons();
         $this->data['package'] = $this->PackageModel->getPackageByID($packageID);
-        return $this->Render_Page('packages/booking-form', $this->data);
+        return $this->Render_Page('booking/booking-form', $this->data);
     }
 
 
@@ -90,6 +90,61 @@ class BookingController extends BaseController
                 return $value;
         }
     }
+
+    public function createBookingProcess()
+    {
+        // 1. Validate input FIRST
+        $rules = [
+            'package_id'    => 'required|integer',
+            'amount' => 'required|integer',
+            'adults' => 'required|integer',
+            'contact' => 'required|numeric|min_length[10]|max_length[10]',
+            'agent' => 'required|integer',
+        ];
+
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Data Inserted',
+                'status'  => 'Danger'
+            ]);
+            return redirect()->back()->withInput();
+        }
+        // Skipping All Fields Validation 
+        $this->BookingModel->skipValidation(true);
+
+        $generated_order_id = md5(base64_encode($this->request->getPost('contact') . date('Y-m-d H:i:s')));
+        $packageData = $this->PackageModel->getPackageByID($this->request->getPost('package_id'));
+
+        $AgentFilledData = [
+            'package_id' => $this->request->getPost('package_id'),
+            'package_name' => $packageData->PACKAGE_NAME,
+            'amount' => $this->request->getPost('amount'),
+            'adults' => $this->request->getPost('adults'),
+            'contact' => $this->request->getPost('contact'),
+            'agent' => $this->request->getPost('agent'),
+            'order_id' => $generated_order_id,
+        ];
+
+        $this->BookingModel->insertBooking($AgentFilledData);
+        $this->session->setFlashdata('FlashMessage', [
+            'message' => 'Booking Created ',
+            'status'  => 'Success'
+        ]);
+        return redirect()->to('/employee-dashboard/booking-list')->withInput();
+    }
+
+    public function BookingConfirmationForm(string $order_id)
+    {
+        $this->data['order_id'] = $order_id;
+        return $this->Render_Page('booking/booking-confirmation-form', $this->data);
+        // Make This Form 
+    }
+    public function BookingConfirmationProcess()
+    {
+        // This Function Handle BookingConfirmationForm Submission
+    }
+
+
 
 
     public function MaximumAmount()

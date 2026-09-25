@@ -51,6 +51,7 @@ $routes->group('', ['filter' => 'EmployeeAuthGuard'], static function ($routes) 
 //Admin and Employee Both
 $routes->group('', ['filter' => ['AdminOrEmployeeAuthGuard']], function ($routes) {
     $routes->patch('bookings-patch/(:num)', 'BookingController::updateField/$1');
+    $routes->post('create-booking', 'BookingController::createBookingProcess');
 });
 
 
@@ -133,6 +134,8 @@ $routes->get('hidden', 'PackageController::hiddenPackages');
 $routes->get('search', 'PackageController::index');
 $routes->get('travelerFavorites', 'PackageController::GetLikedPackages');
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Package "Like" / Favorite API Routes
@@ -156,6 +159,9 @@ $routes->get('payment-failed', 'RazorpayController::Paymentfailed');
 $routes->get('max-amount', 'RazorpayController::MaximumAmount');
 
 $routes->get('book/(:num)', 'BookingController::Book/$1');
+$routes->get('booking-confirmation-form/(:any)', 'BookingController::BookingConfirmationForm/$1');
+
+
 
 /*
 |--------------------------------------------------------------------------

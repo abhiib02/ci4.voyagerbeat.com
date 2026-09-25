@@ -2,7 +2,8 @@
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <div class="fw-bold">Bookings</div>
-            <a class="fw-bold btn btn-success" target="_blank" href="https://docs.google.com/spreadsheets/d/16alRGAwiWdj3F5B0852nTssBJwTOoeEJSM_SaE2l28E/edit?usp=sharing">&#9871; Open Google Sheet</a>
+            <button class="fw-bold btn btn-success" onclick="openModel('create-booking')">Create Booking</button>
+            <?= view('dashboard/shared-components/create-booking-form') ?>
         </div>
 
     </div>
@@ -14,7 +15,6 @@
                     <th>Order ID</th>
                     <th>Booking Date</th>
                     <th>Name</th>
-                    <th>Email</th>
                     <th>Contact</th>
                     <th>Pax Details</th>
                     <th>Pay Mode</th>
@@ -33,10 +33,9 @@
 
                     <tr>
                         <td><?= $booking->ID ?></td>
-                        <td><?= $booking->order_id ?></td>
+                        <td><?= substr($booking->order_id, 0, 20) ?></td>
                         <td><?= $booking->booking_date_utc ?></td>
                         <td><?= $booking->name ?></td>
-                        <td><?= $booking->email ?></td>
                         <td><?= $booking->contact ?></td>
                         <td>
                             <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
@@ -88,8 +87,12 @@
                             <textarea name="note" data-field="note" class="form-control form-control-sm" data-booking-id="<?= $booking->ID; ?>"><?= esc($booking->note) ?></textarea>
                         </td>
                         <td>
-                            <button type="button" class="waves-effect  btn btn-sm btn-primary white-text" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
-
+                            <div class="d-flex gap-1">
+                                <button type="button" class="waves-effect  btn btn-sm btn-outline-dark" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
+                                <?php if (!str_contains($booking->order_id, 'order_')): ?>
+                                    <button type="button" class="waves-effect  btn btn-sm btn-outline-dark">Copy Link</button> <!-- Add Copy Link login here | Example Link : https://ramrod-domestic-unmixed.ngrok-free.dev/booking-confirmation-form/14832bb30745a08469bd-->
+                                <?php endif; ?>
+                            </div>
                             <dialog id="BookingTableDetail<?= $booking->ID ?>">
                                 <div class="card">
                                     <div class="card-header">
@@ -172,6 +175,9 @@
 
     </div>
 </div>
+
+
+
 
 <script>
     document.querySelectorAll('[data-booking-id][data-field]').forEach(function(el) {

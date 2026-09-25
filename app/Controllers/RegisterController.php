@@ -24,13 +24,17 @@ class RegisterController extends BaseController
     public function index()
     {
         $this->data['noindex'] = 1;
+
         if ($this->AuthCheckAdmin()) {
-            return redirect()->route('dashboard');
-        } elseif ($this->AuthCheck()) {
-            return redirect()->route('account');
-        } else {
-            return $this->Render_Page('signup', $this->data);
+            return redirect()->route('Admin.Dashboard');
         }
+        if ($this->AuthCheckEmployee()) {
+            return redirect()->route('Employee.Dashboard');
+        }
+        if ($this->AuthCheck()) {
+            return redirect()->route('Customer.Dashboard');
+        }
+        return $this->Render_Page('signup', $this->data);
     }
     public function SignupValidation()
     {
