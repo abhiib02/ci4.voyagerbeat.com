@@ -91,6 +91,8 @@ $routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
     $routes->get('all-bookings', 'DashboardController::BookingsList');
     $routes->get('import', 'DashboardController::import_package_form');
     $routes->post('/option/(:alpha)', 'OptionsController::save/$1');
+
+    $routes->patch('bookings-patch/(:num)', 'BookingController::updateField/$1');
 });
 
 /*
@@ -143,11 +145,13 @@ $routes->group('api', static function ($routes) {
 | Booking Routes
 |--------------------------------------------------------------------------
 */
-$routes->get('book/(:num)', 'BookingController::Book/$1');
-$routes->get('thanks', 'BookingController::PaymentSuccess');
+
+$routes->get('thanks', 'RazorpayController::PaymentSuccess');
 $routes->post('payment-failed', 'RazorpayController::Paymentfailed');
 $routes->get('payment-failed', 'RazorpayController::Paymentfailed');
-$routes->get('max-amount', 'BookingController::MaximumAmount');
+$routes->get('max-amount', 'RazorpayController::MaximumAmount');
+
+$routes->get('book/(:num)', 'BookingController::Book/$1');
 
 /*
 |--------------------------------------------------------------------------

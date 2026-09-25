@@ -27,18 +27,70 @@ class BookingController extends BaseController
         $this->data['package'] = $this->PackageModel->getPackageByID($packageID);
         return $this->Render_Page('packages/booking', $this->data);
     }
-    public function PaymentSuccess()
+
+
+    public function updateField($bookingId = null)
     {
-        $order_ID = $this->request->getGet('order_id');
-        if (empty($order_ID)) {
-            return $this->Render_Page('static/booking-thanks-unpaid', $this->data);
+        if (! $this->request->is('patch')) {
+            return $this->response->setStatusCode(405)->setJSON(['error' => 'Method not allowed']);
         }
-        if (!$this->BookingModel->isBookingExistByOrderId($order_ID)) {
-            return $this->Render_Page('static/booking-thanks-unpaid', $this->data);
+
+        $bookingId = (int) $bookingId;
+
+        $booking = $this->BookingModel->find($bookingId);
+        if ($booking === null) {
+            return $this->response->setStatusCode(404)->setJSON(['error' => 'Booking not found']);
         }
-        $this->data['bookingData'] = $this->BookingModel->getBookingByOrderId($order_ID);
-        return $this->Render_Page('static/booking-thanks', $this->data);
+
+        // Authorization — confirm the logged-in user can edit this booking
+        // if ($booking->user_id !== session('id')) {
+        //     return $this->response->setStatusCode(403)->setJSON(['error' => 'Forbidden']);
+        // }
+
+        $input = $this->request->getJSON(true);
+        $field = $input['field'] ?? null;
+        $value = $input['value'] ?? null;
+
+        if ($field === null || $value === null) {
+            return $this->response->setStatusCode(400)->setJSON(['error' => 'field and value are required']);
+        }
+
+        // Whitelist — only fields explicitly listed here can be patched via this endpoint
+        $allowedFields = ['note', 'status', 'total_package_cost']; // extend as needed
+
+        if (! in_array($field, $allowedFields, true)) {
+            return $this->response->setStatusCode(422)->setJSON(['error' => 'Field not editable']);
+        }
+
+        $value = $this->sanitizeFieldValue($field, $value);
+
+        $updated = $this->BookingModel->update($bookingId, [$field => $value]);
+
+        if (! $updated) {
+            return $this->response->setStatusCode(500)->setJSON(['error' => 'Failed to update field']);
+        }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'field'   => $field,
+            'value'   => $value,
+        ]);
     }
+
+    protected function sanitizeFieldValue(string $field, $value)
+    {
+        switch ($field) {
+            case 'note':
+                return trim(strip_tags($value));
+            case 'status':
+                // e.g. validate against an enum of allowed statuses
+                $validStatuses = ['Pending', 'Complete', 'Cancel', 'Failed / Unknown'];
+                return in_array($value, $validStatuses, true) ? $value : null;
+            default:
+                return $value;
+        }
+    }
+
 
     public function MaximumAmount()
     {

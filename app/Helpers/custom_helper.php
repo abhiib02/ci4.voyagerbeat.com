@@ -99,4 +99,17 @@ if (! function_exists('renderTravelers')) {
         return $html . '</div>';
     }
 }
+if (! function_exists('statusToClass')) {
+    function statusToClass(string $status): string
+    {
+        $map = [
+            'Pending'          => 'status-pending',
+            'Complete'         => 'status-complete',
+            'Cancel'           => 'status-cancel',
+            'Failed / Unknown' => 'status-failed-unknown',
+        ];
+
+        return $map[$status] ?? 'status-unknown';
+    }
+}
 ?>

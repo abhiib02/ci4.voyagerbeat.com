@@ -419,11 +419,27 @@ class RazorpayController extends BaseController
 
         return $this->BookingModel->errors();
     }
+    public function PaymentSuccess()
+    {
+        $order_ID = $this->request->getGet('order_id');
+        if (empty($order_ID)) {
+            return $this->Render_Page('static/booking-thanks-unpaid', $this->data);
+        }
+        if (!$this->BookingModel->isBookingExistByOrderId($order_ID)) {
+            return $this->Render_Page('static/booking-thanks-unpaid', $this->data);
+        }
+        $this->data['bookingData'] = $this->BookingModel->getBookingByOrderId($order_ID);
+        return $this->Render_Page('static/booking-thanks', $this->data);
+    }
+
     public function Paymentfailed()
     {
         return $this->Render_Page('static/payment-failed', $this->data);
     }
-
+    public function MaximumAmount()
+    {
+        return $this->Render_Page('static/max-amount', $this->data);
+    }
     public function sendEmail(string $order_id, string $paymentId)
     {
         $EmailController = new EmailController();

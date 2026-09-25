@@ -29,7 +29,7 @@
             link.removeAttribute('aria-current');
 
             const linkPath = link.getAttribute('href');
-            console.log(linkPath);
+
             if (linkPath === currentPath) {
                 link.classList.add('active');
                 link.setAttribute('aria-current', 'true');

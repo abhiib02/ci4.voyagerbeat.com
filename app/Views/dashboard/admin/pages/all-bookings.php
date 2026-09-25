@@ -7,10 +7,11 @@
 
     </div>
     <div class="card-body">
-        <table class="sortable table" id="datatable" data-order='[[ 2, "desc" ]]'>
+        <table class="sortable table hover" id="datatable" data-order='[[ 3, "desc" ]]'>
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Booking Origin</th>
                     <th>Order ID</th>
                     <th>Booking Date</th>
                     <th>Name</th>
@@ -21,8 +22,8 @@
                     <th>Amount Paid</th>
                     <th>Total Package Cost</th>
                     <th>Payment Status</th>
+                    <th>Note</th>
                     <th>Actions</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -30,8 +31,10 @@
 
 
                 foreach (($Bookings ?? []) as $booking) { ?>
+
                     <tr>
                         <td><?= $booking->ID ?></td>
+                        <td><?= $booking->origin ?></td>
                         <td><?= $booking->order_id ?></td>
                         <td><?= $booking->booking_date_utc ?></td>
                         <td><?= $booking->name ?></td>
@@ -61,35 +64,30 @@
                         <td class="text-capitalize"><?= $booking->paymode ?></td>
                         <td><?= $booking->amount ?></td>
                         <td>
-                            <span><?= $booking->total_package_cost ?>
-                                <button class="btn btn-sm"><i class='bx bxs-edit-alt'></i></button>
-                            </span>
+                            <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>">
                         </td>
                         <td>
-                            <?php switch ($booking->status) {
-                                case 'Complete': ?>
-                                    <span class="badge text-bg-success"><?= $booking->status ?></span>
-                                    <?php
-                                    $remainingAmount = $booking->total_package_cost - $booking->amount;
-                                    if ($remainingAmount): ?>
-                                        <span class="btn btn-sm fw-bold" disabled>Remaining : ₹<?= $remainingAmount ?></span>
-                                    <?php endif; ?>
-                                <?php break;
-                                case 'Pending': ?>
-                                    <span class="badge text-bg-warning"><?= $booking->status ?></span>
-                                <?php break;
-                                case 'Cancel': ?>
-                                    <span class="badge text-bg-secondary"><?= $booking->status ?></span>
-                                <?php break;
-                                case 'Cancelled': ?>
-                                    <span class="badge text-bg-secondary"><?= $booking->status ?></span>
-                                <?php break;
-                                default: ?>
-                                    <span class="badge text-bg-danger">Failed / Unknown</span>
-                            <?php break;
-                            } ?>
 
 
+                            <select data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>">
+                                <?php
+                                $statuses = ['Pending', 'Complete', 'Cancel', 'Failed / Unknown'];
+                                foreach ($statuses as $status):
+                                ?>
+                                    <option class="<?= statusToClass($status) ?>" value="<?= esc($status) ?>" <?= $booking->status === $status ? 'selected' : '' ?>>
+                                        <?= esc($status) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <?php
+                            $remainingAmount = $booking->total_package_cost - $booking->amount;
+                            if ($remainingAmount >= 0): ?>
+                                <span class="btn btn-sm fw-bold" disabled>Remaining : ₹<?= $remainingAmount ?></span>
+                            <?php endif; ?>
+                        </td>
+
+                        <td>
+                            <textarea name="note" data-field="note" class="form-control form-control-sm" data-booking-id="<?= $booking->ID; ?>"><?= esc($booking->note) ?></textarea>
                         </td>
                         <td>
                             <button type="button" class="waves-effect  btn btn-sm btn-primary white-text" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
@@ -147,7 +145,13 @@
                                             </tr>
                                             <tr>
                                                 <th>Remaining Amount</th>
-                                                <td>₹<?= $booking->total_package_cost - $booking->amount ?></td>
+
+                                                <td><?php
+                                                    $remainingAmount = $booking->total_package_cost - $booking->amount;
+                                                    if ($remainingAmount >= 0): ?>
+
+                                                    <?php endif; ?>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Booked on</th>
@@ -155,6 +159,9 @@
                                             </tr>
 
                                         </table>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#BookingTableDetail<?= $booking->ID; ?>').close();">Close</button>
                                     </div>
                                 </div>
                             </dialog>
@@ -167,6 +174,40 @@
 
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('[data-booking-id][data-field]').forEach(function(el) {
+        el.addEventListener('change', function() {
+            const bookingId = this.dataset.bookingId;
+            const field = this.dataset.field;
+            const value = this.value;
+
+            fetch(`/bookings-patch/${bookingId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        '<?= csrf_header() ?>': '<?= csrf_hash() ?>'
+                    },
+                    body: JSON.stringify({
+                        field: field,
+                        value: value
+                    })
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Request failed: ' + res.status);
+                    return res.json();
+                })
+                .then(data => {
+                    console.log('Field saved', data);
+                    runToast(`Field saved : ${data.field}`, 'Success');
+                })
+                .catch(err => {
+                    console.error('Failed to save field', err);
+                    runToast(`Failed to save field ${err}`, 'danger');
+                });
+        });
+    });
+</script>
 
 <script>
     function showTravelers(data, id) {

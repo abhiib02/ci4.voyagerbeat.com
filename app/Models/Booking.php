@@ -32,6 +32,7 @@ class Booking extends Model
         'status',
         'total_package_cost',
         'booking_date_utc',
+        'note'
     ];
 
     // Dates

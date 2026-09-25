@@ -51,11 +51,45 @@ class DashboardController extends BaseController
 
     }
 
+    // ------------------- Pages -----------------------//
+    protected function AdminPages(): array
+    {
+        return [
+            'option-list'    => ['title' => 'Options',   'permission' => 'options.view'],
+            'packages-list'  => ['title' => 'Packages',  'permission' => 'packages.view'],
+            'package-create' => ['title' => 'New Package', 'permission' => 'packages.create'],
+            'admins-list'    => ['title' => 'Admins',    'permission' => 'admins.view'],
+            'employee-list'  => ['title' => 'Employees', 'permission' => 'employees.view'],
+            'customers-list' => ['title' => 'Customers', 'permission' => 'customers.view'],
+            'all-bookings'   => ['title' => 'Bookings',  'permission' => 'bookings.view'],
+            'coupons'        => ['title' => 'Coupons',   'permission' => 'coupons.view'],
+        ];
+    }
 
-
+    protected function EmployeePages(): array
+    {
+        return [
+            'nothing' => ['title' => 'Placeholder'], // replace with real pages
+        ];
+    }
+    protected function UserPages(): array
+    {
+        return [
+            'bookings'    => ['title' => 'My Bookings'],
+            'travelbuddy' => ['title' => 'Travel Buddy Bookings'],
+        ];
+    }
+    // ------------------- Pages -----------------------//
     public function AdminDashboard($pageName = null)
     {
-        $this->data['pagenames'] = $this->PagesScan('Views/dashboard/admin/pages/');
+
+        $pages = $this->AdminPages();
+        $this->data['pagenames'] = array_keys($pages);
+
+        if ($pageName !== null && ! in_array($pageName, $this->data['pagenames'], true)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
         $this->data['pagename'] = $pageName;
 
         switch ($pageName) {
@@ -91,11 +125,17 @@ class DashboardController extends BaseController
 
         return $this->Render_Page_Admin_dashboard('/admin-dashboard', $this->data);
     }
+
     public function EmployeeDashboard($pageName = null)
     {
 
         $this->data['User'] = $this->UserModel->getUserByID((int) $this->data['id']);
-        $this->data['pagenames'] = $this->PagesScan('Views/dashboard/employee/pages/');
+        $pages = $this->EmployeePages();
+        $this->data['pagenames'] = array_keys($pages);
+
+        if ($pageName !== null && ! isset($pages[$pageName])) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
             case 'nothing':
@@ -108,7 +148,12 @@ class DashboardController extends BaseController
     {
 
         $this->data['User'] = $this->UserModel->getUserByID((int) $this->data['id']);
-        $this->data['pagenames'] = $this->PagesScan('Views/dashboard/user/pages/');
+        $pages = $this->UserPages();
+        $this->data['pagenames'] = array_keys($pages);
+
+        if ($pageName !== null && ! isset($pages[$pageName])) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
         $this->data['pagename'] = $pageName;
         $this->data['CustomerBookingsCount'] = $this->BookingModel->getUserBookingsCountByEmail($this->data['email']);
         $this->data['CustomerAsTravelBuddyCount'] = $this->BookingModel->getBookingCountWherePaxEmailExist($this->data['email']);
@@ -125,29 +170,6 @@ class DashboardController extends BaseController
 
 
 
-
-    protected function PagesScan(string $directoryPath): array
-    {
-        helper('filesystem');
-
-        $basePath = APPPATH . trim($directoryPath, '/') . '/';
-        $map      = directory_map($basePath, 1);
-
-        if (! is_array($map)) {
-            return [];
-        }
-
-        $pageNames = [];
-
-        foreach ($map as $file) {
-            // Skip subdirectories (directory_map returns subfolders as arrays or non-file paths)
-            if (is_string($file) && is_file($basePath . $file)) {
-                $pageNames[] = pathinfo($file, PATHINFO_FILENAME);
-            }
-        }
-
-        return $pageNames;
-    }
 
 
 

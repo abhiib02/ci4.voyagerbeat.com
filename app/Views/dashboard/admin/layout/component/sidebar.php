@@ -40,7 +40,7 @@
                     <?php foreach ($pagenames as $page): ?>
                         <a href="/dashboard/<?= esc($page) ?>" class="nav-link d-flex align-items-center px-3 py-2 rounded-2 text-dark ">
                             <i class="bx bx-chevron-right me-2 fs-5"></i>
-                            <span class="fw-medium text-capitalize"><?= esc(str_replace(['-', '_'], ' ', $page)) ?></span>
+                            <span class="fw-medium text-capitalize"><?= esc($page) ?></span>
                         </a>
                     <?php endforeach; ?>
                 <?php endif; ?>
