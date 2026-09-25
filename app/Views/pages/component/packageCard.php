@@ -34,9 +34,11 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         </ul>
-        <ul class="months" style="justify-content:flex-end;">
-            <li class="mon-pill text-bg-dark fw-bold"><?= $package->PACKAGE_ID ?></li>
-        </ul>
+        <?php if ($isAdmin || $isEmployee): ?>
+            <ul class="months" style="justify-content:flex-end;">
+                <li class="mon-pill text-bg-dark fw-bold"><?= $package->PACKAGE_ID ?></li>
+            </ul>
+        <?php endif; ?>
     </section>
     <section class="detail">
         <div>
