@@ -48,6 +48,11 @@ $routes->group('', ['filter' => 'EmployeeAuthGuard'], static function ($routes) 
     $routes->get('employee-dashboard', 'DashboardController::EmployeeDashboard', ['as' => 'Employee.Dashboard']);
     $routes->get('employee-dashboard/(:any)', 'DashboardController::EmployeeDashboard/$1');
 });
+//Admin and Employee Both
+$routes->group('', ['filter' => ['AdminOrEmployeeAuthGuard']], function ($routes) {
+    $routes->patch('bookings-patch/(:num)', 'BookingController::updateField/$1');
+});
+
 
 // Customer
 $routes->group('', ['filter' => 'AuthGuard'], static function ($routes) {
@@ -91,9 +96,8 @@ $routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
     $routes->get('all-bookings', 'DashboardController::BookingsList');
     $routes->get('import', 'DashboardController::import_package_form');
     $routes->post('/option/(:alpha)', 'OptionsController::save/$1');
-
-    $routes->patch('bookings-patch/(:num)', 'BookingController::updateField/$1');
 });
+
 
 /*
 |--------------------------------------------------------------------------

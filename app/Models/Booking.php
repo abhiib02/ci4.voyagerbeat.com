@@ -33,7 +33,8 @@ class Booking extends Model
         'status',
         'total_package_cost',
         'booking_date_utc',
-        'note'
+        'note',
+        'agent'
     ];
 
     // Dates
@@ -86,10 +87,15 @@ class Booking extends Model
     {
         return $this->table($this->table)->get()->getResult();
     }
-    public function getAllBookingsForAdminDashboard(int $perPage = 10, string $group = 'default'): array
+    public function getAllBookingsForAdminDashboard(): array
     {
         return $this->select()->orderBy('ID', 'DESC')->findAll();
     }
+    public function getAllBookingsofAgentForDashboard(int $userID): array
+    {
+        return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
+    }
+
     public function getUserBookingsByEmail(string $email): array
     {
         return $this->where('email', $email)

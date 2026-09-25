@@ -9,7 +9,7 @@
                 </div>
                 <div class="lh-sm overflow-hidden">
                     <h6 class="mb-0 fw-bold text-truncate" title="<?= esc($name ?? '') ?>">
-                        <?= esc($name ?? 'User') ?>
+                        <?= esc($id ?? 'id') ?> | <?= esc($name ?? 'User') ?>
                     </h6>
                     <small class="text-muted text-truncate d-block" title="<?= esc($email ?? '') ?>">
                         <?= esc($email ?? '') ?>

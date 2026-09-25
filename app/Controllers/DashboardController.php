@@ -69,7 +69,7 @@ class DashboardController extends BaseController
     protected function EmployeePages(): array
     {
         return [
-            'nothing' => ['title' => 'Placeholder'], // replace with real pages
+            'booking-list' => ['title' => 'Booking List'], // replace with real pages
         ];
     }
     protected function UserPages(): array
@@ -128,8 +128,8 @@ class DashboardController extends BaseController
 
     public function EmployeeDashboard($pageName = null)
     {
-
-        $this->data['User'] = $this->UserModel->getUserByID((int) $this->data['id']);
+        $userID = (int) $this->data['id'];
+        $this->data['User'] = $this->UserModel->getUserByID($userID);
         $pages = $this->EmployeePages();
         $this->data['pagenames'] = array_keys($pages);
 
@@ -138,8 +138,9 @@ class DashboardController extends BaseController
         }
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
-            case 'nothing':
-                $this->data['EmployeeData'] = 'Employeeeee Dataaa';
+            case 'booking-list':
+                $this->data['AgentBookings'] = $this->BookingModel->getAllBookingsofAgentForDashboard($userID);
+                $this->data['pager'] = $this->BookingModel->pager;
                 break;
         }
         return $this->Render_Page_Employee_dashboard('employee-dashboard', $this->data);
