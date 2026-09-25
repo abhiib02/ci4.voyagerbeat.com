@@ -25,7 +25,7 @@ class BookingController extends BaseController
     {
         $this->data['ValidCoupons'] = $this->CouponModel->getAllValidCoupons();
         $this->data['package'] = $this->PackageModel->getPackageByID($packageID);
-        return $this->Render_Page('packages/booking', $this->data);
+        return $this->Render_Page('packages/booking-form', $this->data);
     }
 
 

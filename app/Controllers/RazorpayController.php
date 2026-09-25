@@ -399,6 +399,7 @@ class RazorpayController extends BaseController
         $data['gender'] = (string)$BookingData['gender'];
         $data['contact'] = (string)$BookingData['contact'];
         $data['package_id'] = (int)$BookingData['package_id'];
+        $data['package_name'] = (string)$BookingData['package_name'];
         $data['travelmode'] = (string)$BookingData['travelmode'];
         $data['sharing'] = $BookingData['sharingArr'][0];
         $data['coupon_used'] = (string)$BookingData['coupon_code'];

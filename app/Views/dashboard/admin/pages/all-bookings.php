@@ -11,7 +11,6 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Booking Origin</th>
                     <th>Order ID</th>
                     <th>Booking Date</th>
                     <th>Name</th>
@@ -34,7 +33,6 @@
 
                     <tr>
                         <td><?= $booking->ID ?></td>
-                        <td><?= $booking->origin ?></td>
                         <td><?= $booking->order_id ?></td>
                         <td><?= $booking->booking_date_utc ?></td>
                         <td><?= $booking->name ?></td>
@@ -117,7 +115,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Booked Package</th>
-                                                <td><a href="/packageid/<?= $booking->package_id; ?>"><?= $booking->package_id ?></a></td>
+                                                <td><a href="/packageid/<?= $booking->package_id; ?>"><?= $booking->package_id ?> | <?= $booking->package_name ?></a></td>
                                             </tr>
                                             <tr>
                                                 <th>Adults</th>
