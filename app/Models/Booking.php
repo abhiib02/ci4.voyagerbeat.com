@@ -26,22 +26,31 @@ class Booking extends Model
         'sharing',
         'coupon_used',
         'date',
+        'trip_type',
+        'boarding_city',
+        'address',
         'travelmode',
         'paymode',
         'contact',
+        'contact_trip',
+        'contact_alt',
+        'heard',
         'amount',
         'status',
+        'pay_screenshot',
+        'adhaar_number',
         'total_package_cost',
-        'booking_date_utc',
         'note',
-        'agent'
+        'agent',
+        'created_at',
+        'updated_at',
     ];
 
     // Dates
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'booking_date_utc';
-    protected $updatedField  = '';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 
     // Validation
     protected $validationRules      = [
@@ -56,11 +65,19 @@ class Booking extends Model
         'sharing'            => 'required',
         'coupon_used'        => 'permit_empty',
         'date'               => 'required',
+        'trip_type'          => 'required',
+        'boarding_city'      => 'required',
+        'address'            => 'required',
         'travelmode'         => 'required',
         'paymode'            => 'required',
-        'contact'            => 'required',
+        'contact'            => 'required|integer',
+        'contact_trip'       => 'required|integer',
+        'contact_alt'        => 'required|integer',
+        'heard'              => 'required',
         'amount'             => 'required|integer',
         'status'             => 'required',
+        'pay_screenshot'     => 'required',
+        'adhaar_number'      => 'required|integer',
         'total_package_cost' => 'required|integer',
     ];
     protected $validationMessages   = [];
@@ -95,7 +112,6 @@ class Booking extends Model
     {
         return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
     }
-
     public function getUserBookingsByEmail(string $email): array
     {
         return $this->where('email', $email)

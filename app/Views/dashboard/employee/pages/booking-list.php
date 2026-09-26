@@ -34,7 +34,7 @@
                     <tr>
                         <td><?= $booking->ID ?></td>
                         <td><?= substr($booking->order_id, 0, 20) ?></td>
-                        <td><?= $booking->booking_date_utc ?></td>
+                        <td><?= $booking->created_at ?></td>
                         <td><?= $booking->name ?></td>
                         <td><?= $booking->contact ?></td>
                         <td>
@@ -90,7 +90,7 @@
                             <div class="d-flex gap-1">
                                 <button type="button" class="waves-effect  btn btn-sm btn-outline-dark" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
                                 <?php if (!str_contains($booking->order_id, 'order_')): ?>
-                                    <button type="button" class="waves-effect  btn btn-sm btn-outline-dark">Copy Link</button> <!-- Add Copy Link login here | Example Link : https://ramrod-domestic-unmixed.ngrok-free.dev/booking-confirmation-form/14832bb30745a08469bd-->
+                                    <button type="button" id="copyLinkBtn" class="waves-effect  btn btn-sm btn-outline-dark" data-link="<?= base_url() ?>booking-confirmation-form/<?= $booking->order_id; ?>" onclick="copyLink()">Copy Link</button>
                                 <?php endif; ?>
                             </div>
                             <dialog id="BookingTableDetail<?= $booking->ID ?>">
@@ -155,8 +155,12 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>Booked on</th>
-                                                <td><?= $booking->booking_date_utc ?></td>
+                                                <th>Booking Link Generated</th>
+                                                <th>Booking Last Updated</th>
+                                            </tr>
+                                            <tr>
+                                                <td><?= $booking->created_at ?></td>
+                                                <td><?= $booking->updated_at ?></td>
                                             </tr>
 
                                         </table>
@@ -177,7 +181,27 @@
 </div>
 
 
+<script>
+    async function copyLink() {
+        const button = document.getElementById('copyLinkBtn');
+        // Get the current page URL (or replace with any link string)
+        const link = button.dataset.link;
 
+        try {
+            // Copy the text to the clipboard
+            await navigator.clipboard.writeText(link);
+
+            // Provide temporary visual feedback
+            button.innerText = "Copied!";
+            runToast('Link Copied', 'success');
+            setTimeout(() => {
+                button.innerText = "Copy Link";
+            }, 3500);
+        } catch (err) {
+            runToast('Failed To Copy Link', 'danger');
+        }
+    }
+</script>
 
 <script>
     document.querySelectorAll('[data-booking-id][data-field]').forEach(function(el) {

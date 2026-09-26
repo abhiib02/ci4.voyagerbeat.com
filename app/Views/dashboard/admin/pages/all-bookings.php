@@ -34,7 +34,7 @@
                     <tr>
                         <td><?= $booking->ID ?></td>
                         <td><?= $booking->order_id ?></td>
-                        <td><?= $booking->booking_date_utc ?></td>
+                        <td><?= $booking->created_at ?></td>
                         <td><?= $booking->name ?></td>
                         <td><?= $booking->email ?></td>
                         <td><?= $booking->contact ?></td>
@@ -152,8 +152,12 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>Booked on</th>
-                                                <td><?= $booking->booking_date_utc ?></td>
+                                                <th>Booking Link Generated</th>
+                                                <th>Booking Last Updated</th>
+                                            </tr>
+                                            <tr>
+                                                <td><?= $booking->created_at ?></td>
+                                                <td><?= $booking->updated_at ?></td>
                                             </tr>
 
                                         </table>

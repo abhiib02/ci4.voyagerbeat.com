@@ -130,12 +130,27 @@ class BookingController extends BaseController
             'message' => 'Booking Created ',
             'status'  => 'Success'
         ]);
-        return redirect()->to('/employee-dashboard/booking-list')->withInput();
+        return redirect()->to('/employee-dashboard/booking-list');
     }
 
     public function BookingConfirmationForm(string $order_id)
     {
+        if (str_contains($order_id, 'order_')) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Action',
+                'status'  => 'Danger'
+            ]);
+            if ($this->session->get('role') == 2) {
+                return redirect()->to('/employee-dashboard/booking-list');
+            } elseif ($this->session->get('role') == 1) {
+                return redirect()->to('/dashboard/all-booking');
+            } else {
+                return redirect()->to('/logout');
+            }
+        }
         $this->data['order_id'] = $order_id;
+        $this->data['BookingData'] = $this->BookingModel->getBookingByOrderId($order_id);
+        $this->data['PackageData'] = $this->PackageModel->getPackageByID($this->data['BookingData']->package_id);
         return $this->Render_Page('booking/booking-confirmation-form', $this->data);
         // Make This Form 
     }
