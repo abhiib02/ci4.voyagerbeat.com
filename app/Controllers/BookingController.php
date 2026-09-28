@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Booking;
 use App\Models\Package;
 use App\Models\Coupon;
+use App\Controllers\EmailController;
 
 
 class BookingController extends BaseController
@@ -13,12 +14,14 @@ class BookingController extends BaseController
     public Booking $BookingModel;
     public Package $PackageModel;
     public Coupon $CouponModel;
+    private EmailController $EmailController;
     public function __construct()
     {
 
         $this->BookingModel = new Booking();
         $this->CouponModel = new Coupon();
         $this->PackageModel = new Package();
+        $this->EmailController = new EmailController();
     }
 
     public function Book(int $packageID)
@@ -119,6 +122,7 @@ class BookingController extends BaseController
             'package_id' => $this->request->getPost('package_id'),
             'package_name' => $packageData->PACKAGE_NAME,
             'amount' => $this->request->getPost('amount'),
+            'total_package_cost' => $this->request->getPost('total_package_cost'),
             'adults' => $this->request->getPost('adults'),
             'contact' => $this->request->getPost('contact'),
             'agent' => $this->request->getPost('agent'),
@@ -130,7 +134,18 @@ class BookingController extends BaseController
             'message' => 'Booking Created ',
             'status'  => 'Success'
         ]);
-        return redirect()->to('/employee-dashboard/booking-list');
+
+        switch (session()->get('role')) {
+            case 1:
+                return redirect()->to('/dashboard/all-bookings');
+                break;
+            case 2:
+                return redirect()->to('/employee-dashboard/booking-list');
+                break;
+            default:
+                return redirect()->to('/employee-dashboard/booking-list');
+                break;
+        }
     }
 
     public function BookingConfirmationForm(string $order_id)
@@ -150,20 +165,91 @@ class BookingController extends BaseController
         }
         $this->data['order_id'] = $order_id;
         $this->data['BookingData'] = $this->BookingModel->getBookingByOrderId($order_id);
+        if (!$this->data['BookingData']->customer_access) {
+            return $this->RedirectWithtoast('Link Expired', 'Danger', '/');
+        }
+
         $this->data['PackageData'] = $this->PackageModel->getPackageByID($this->data['BookingData']->package_id);
         return $this->Render_Page('booking/booking-confirmation-form', $this->data);
-        // Make This Form 
     }
     public function BookingConfirmationProcess()
     {
-        // This Function Handle BookingConfirmationForm Submission
+        $rules = [
+            'name' => 'required',
+            'contact_trip' => 'required|numeric|min_length[10]|max_length[10]',
+            'contact_alt' => 'required|numeric|min_length[10]|max_length[10]|differs[contact_trip]',
+            'gender' => 'required|in_list[Male,Female,Other]',
+            'trip_type' => 'required|in_list[community,personlised]',
+            'date' => 'required',
+            'travelmode' => 'required',
+            'boarding_city' => 'required',
+            'sharing' => 'required',
+            'adhaar_number' => 'required',
+            'heard' => 'required',
+            'payment_screenshot_file' => 'uploaded[payment_screenshot_file]|is_image[payment_screenshot_file]'
+
+        ];
+        if (! $this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Data Inserted',
+                'status'  => 'Danger'
+            ]);
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $paymentScreenShot = $this->request->getFile('payment_screenshot_file');
+        if ($paymentScreenShot->getSize() > 0) {
+
+            $paymentScreenShotFileName = $this->request->getPost('order_id') . '-' . $this->request->getPost('name') . '.' . $paymentScreenShot->getExtension();
+            $paymentScreenShot->move('upload/bookings/payment_screenshot', $paymentScreenShotFileName);
+        } else {
+            return redirect()->back()->withInput()->with('errors', 'Payment Screenshot is Invalid');
+        }
+        $this->BookingModel->skipValidation(true);
+
+
+        $orderId = $this->request->getPost('order_id');
+
+
+        $customerFilledData = [
+            'name' => $this->request->getPost('name'),
+            'email' => $this->request->getPost('email'),
+            'contact_trip' => $this->request->getPost('contact_trip'),
+            'contact_alt' => $this->request->getPost('contact_alt'),
+            'gender' => $this->request->getPost('gender'),
+            'trip_type' => $this->request->getPost('trip_type'),
+            'date' => $this->request->getPost('date'),
+            'travelmode' => $this->request->getPost('travelmode'),
+            'pax_details' => $this->request->getPost('pax_details'),
+            'boarding_city' => $this->request->getPost('boarding_city'),
+            'sharing' => $this->request->getPost('sharing'),
+            'adhaar_number' => $this->request->getPost('adhaar_number'),
+            'heard' => $this->request->getPost('heard'),
+            'paymode' => 'UPI Advance Payment',
+            'customer_access' => 0
+        ];
+
+        $customerFilledData['pay_screenshot'] = $paymentScreenShotFileName;
+
+        $this->BookingModel->updateConfirmedBooking($orderId, $customerFilledData);
+
+        if (! $this->sendEmail($orderId, 'Direct Upi')) {
+            return $this->RedirectWithtoast('Booking Confirmed but Some Error Occured During Sending Mail', 'Success', '/thanks?order_id=' . $orderId);
+        };
+
+        return $this->RedirectWithtoast('Booking Confirmed', 'Success', '/thanks?order_id=' . $orderId);
     }
-
-
 
 
     public function MaximumAmount()
     {
         return $this->Render_Page('static/max-amount', $this->data);
+    }
+
+
+    public function sendEmail(string $order_id, string $paymentId)
+    {
+        $mailStatus = $this->EmailController->sendBookingDetails($order_id, $paymentId);
+        return $mailStatus;
     }
 }

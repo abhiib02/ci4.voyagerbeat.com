@@ -32,9 +32,11 @@ class AuthGuard implements FilterInterface
         //role = 1 (Admin)
         //role = 0 (Customer)
         //
-        $session = Services::session();
-        if (!($session->has('logged_in') && $session->get('role') == 0)) {
-            return redirect()->to('/logout');
+        $role = (int) session()->get('role');
+        $allowedRoles = [0]; // 1 = Admin, 2 = Employee
+
+        if (! in_array($role, $allowedRoles, true)) {
+            return redirect()->to('/login')->with('error', 'Please log in.');
         }
     }
 

@@ -63,6 +63,8 @@ Vagrantfile
 /writable/debugbar/*
 !/writable/debugbar/index.html
 
+
+
 php_errors.log
 
 #-------------------------
@@ -124,5 +126,4 @@ _modules/*
 
 /results/
 /phpunit.xml
-
-/upload/package_pdf
+/upload

@@ -42,12 +42,12 @@
                             <td><b><?= $bookingData->ID ?></b></td>
                         </tr>
                         <tr>
-                            <td>Payment ID</td>
+                            <td>Order ID</td>
                             <td><b><?= $bookingData->order_id ?></b></td>
                         </tr>
                         <tr>
                             <td>Booking Date</td>
-                            <td><b><?= $bookingData->booking_date_utc ?></b></td>
+                            <td><b><?= $bookingData->created_at ?></b></td>
                         </tr>
                     </table>
 
@@ -59,7 +59,10 @@
                             <td>Package ID</td>
                             <td><b><?= $bookingData->package_id ?></b></td>
                         </tr>
-
+                        <tr>
+                            <td>Package Name</td>
+                            <td><b><?= $bookingData->package_name ?></b></td>
+                        </tr>
                         <tr>
                             <td>Package Date of Travel</td>
                             <td><b><?= explode('|', $bookingData->date)[0] ?></b></td>
@@ -70,7 +73,7 @@
                         </tr>
                         <tr>
                             <td>Sharing Basis</td>
-                            <td><b><?= substr($bookingData->sharing, 2) ?></b></td>
+                            <td><b><?= $bookingData->sharing ?></b></td>
                         </tr>
                     </table>
                 </div>
@@ -81,7 +84,7 @@
 
                         <tr>
                             <td>Total Amount</td>
-                            <td><b>₹ <?= number_format($bookingData->total_package_cost, 2) ?></b></td>
+                            <td><b>₹ <?= number_format($bookingData->total_package_cost, 2) ?? 'Will Be Informed While Boarding' ?></b></td>
                         </tr>
                         <tr>
                             <td>Amount Paid</td>
@@ -89,7 +92,17 @@
                         </tr>
                         <tr>
                             <td>Remaining Payable</td>
-                            <td><b><?= (($bookingData->total_package_cost - $bookingData->amount) == 0) ? 'Full Payment Done' : '₹ ' . number_format($bookingData->total_package_cost - $bookingData->amount, 2) ?></b></td>
+                            <td>
+                                <b>
+                                    <?php if (($bookingData->total_package_cost - $bookingData->amount) == 0): ?>
+                                        Full Payment Done
+                                    <?php elseif (($bookingData->total_package_cost - $bookingData->amount) < 0): ?>
+                                        Total Amount will be provided While Boarding
+                                    <?php else: ?>
+                                        ₹ <?= number_format($bookingData->total_package_cost - $bookingData->amount, 2) ?>
+                                    <?php endif; ?>
+                                </b>
+                            </td>
                         </tr>
                         <?php if (!empty($bookingData->coupon_used)): ?>
                             <tr>

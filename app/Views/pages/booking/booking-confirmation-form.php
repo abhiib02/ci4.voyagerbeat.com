@@ -27,8 +27,17 @@
         }
     </style>
     <div class="container">
+        <?php if (session('errors')): ?>
+            <ul class="alert alert-danger">
+                <?php foreach (session('errors') as $error): ?>
+                    <li><?= esc($error) ?></li>
+                <?php endforeach ?>
+            </ul>
+        <?php endif ?>
+
         <progress value="0" max="100" id="progress" style="width:100%;"></progress>
-        <form id="multiStep-booking-confirmation-form" method="post" action="/asd" enctype="multipart/form-data">
+        <form id="multiStep-booking-confirmation-form" method="post" action="/booking-confirmation-process" enctype="multipart/form-data">
+            <input type="hidden" name="order_id" value="<?= esc($BookingData->order_id) ?>">
             <!-- Step 1: Basic Information -->
             <div class="step active">
                 <h2>Basic Information</h2>
@@ -41,24 +50,21 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="contact">Contact</label>
+                            <label for="contact">Email</label>
                             <input
-                                type="text"
+                                type="email"
                                 class="form-control"
-                                id="contact"
-                                name="contact"
-                                inputmode="numeric"
-                                pattern="\d{1,10}"
-                                maxlength="10" required>
+                                id="email"
+                                name="email" required>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="contact">Contact (* For During Trip)</label>
+                            <label for="contact">Contact (For During Trip)</label>
                             <input
                                 type="text"
                                 class="form-control"
-                                id="contact"
+                                id="contact_trip"
                                 name="contact_trip"
                                 inputmode="numeric"
                                 pattern="\d{1,10}"
@@ -67,11 +73,11 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="contact">Alternative Contact (* For Emergency)</label>
+                            <label for="contact">Alternative Contact (For Emergency Purpose)</label>
                             <input
                                 type="text"
                                 class="form-control"
-                                id="contact"
+                                id="contact_alt"
                                 name="contact_alt"
                                 inputmode="numeric"
                                 pattern="\d{1,10}"
@@ -90,7 +96,7 @@
                         </div>
                     </div>
                 </div>
-
+                <br>
                 <button type="button" class="btn btn-success next">Next</button>
             </div>
 
@@ -207,7 +213,7 @@
                     <h2>Pax Details</h2>
 
                     <div id="pax-details-inputs">
-                        <?php for ($i = 0; $i < $BookingData->adults; $i++): ?>
+                        <?php for ($i = 0; $i < ($BookingData->adults - 1); $i++): ?>
                             <div class="traveler">
                                 <h5>Traveler <?= $i + 2 ?></h5>
                                 <div class="row g-3">
@@ -271,7 +277,7 @@
 
                 <div class="form-group">
                     <label for="height">Adhaar Number</label>
-                    <input type="number" class="form-control" name="adhaar" id="adhaar" required>
+                    <input type="number" class="form-control" name="adhaar_number" id="adhaar_number" required>
                 </div>
 
                 <div class="form-group">
@@ -305,7 +311,7 @@
 
 
                     <button type="button" class="btn btn-secondary prev">Previous</button>
-                    <button class="btn btn-success">Submit</button>
+                    <button type="submit" id="submit" class="btn btn-success">Submit</button>
             </div>
 
 
@@ -355,6 +361,7 @@
     // Auto update on typing
     document.addEventListener("input", updateAll);
 </script>
+
 <script>
     const steps = document.querySelectorAll('.step');
     const progress = document.querySelector('#progress');

@@ -487,11 +487,20 @@ class EmailController extends BaseController
         //Adding Additional Data & Computed Data 
         $Bookingdata->RAZORPAY_PAYMENT_ID  = $payment_id;
         $Bookingdata->bookingConfirmationURL = env('app.baseURL') . 'thanks?order_id=' . $order_id;
-        $Bookingdata->remainingAmount  = ($Bookingdata->total_package_cost - $Bookingdata->amount) ? $Bookingdata->total_package_cost - $Bookingdata->amount : 'Full Payment Done';
+        $Bookingdata->remainingAmount  = $Bookingdata->total_package_cost - $Bookingdata->amount;
 
         //Manupulating Data 
-        $Bookingdata->date = explode('|', $Bookingdata->date)[0];
-        $Bookingdata->sharing = explode('|', $Bookingdata->sharing)[1];
+        $Bookingdata->date = explode('|', $Bookingdata->date)[0] ?? $Bookingdata->date;
+        $Bookingdata->sharing = explode('|', $Bookingdata->sharing)[1] ?? $Bookingdata->sharing;
+
+
+        if ($Bookingdata->remainingAmount < 0) {
+            $Bookingdata->remainingAmount = 'Total Amount will be provided While Boarding';
+        } elseif ($Bookingdata->remainingAmount == 0) {
+            $Bookingdata->remainingAmount = 'Full Payment Done';
+        } else {
+            $Bookingdata->remainingAmount = $Bookingdata->remainingAmount;
+        }
 
         $message = $this->bookingDetailTemplate($Bookingdata);
 
@@ -501,11 +510,10 @@ class EmailController extends BaseController
         $subject = 'Booking Confirmation of Package ID ' . $Bookingdata->package_id . ' for ' . $Bookingdata->name;
         $emailList = [
             $Bookingdata->email,
-            env('contact_form_receiver_email')
         ];
         $email->setTo($emailList);
         $email->setFrom($from, env('app.name'));
-
+        $email->setCC(env('contact_form_receiver_email'));
         $email->setSubject($subject);
         $email->setMessage($message);
         if ($email->send()) {
@@ -594,12 +602,13 @@ class EmailController extends BaseController
                 <tr><td><strong>Booking ID</strong></td><td>' . $data->ID . '</td></tr>
                 <tr><td><strong>Order ID</strong></td><td>' . $data->order_id . '</td></tr>
                 <tr><td><strong>Payment ID</strong></td><td>' . $data->RAZORPAY_PAYMENT_ID . '</td></tr>
-                <tr><td><strong>Booking Date</strong></td><td>' . $data->booking_date_utc . '</td></tr>
+                <tr><td><strong>Booking Date</strong></td><td>' . $data->created_at . '</td></tr>
                 </table>
 
                 <h3>Package Details</h3>
                 <table>
                 <tr><td><strong>Package ID</strong></td><td>' . $data->package_id . '</td></tr>
+                <tr><td><strong>Package Name</strong></td><td>' . $data->package_name . '</td></tr>
                 <tr><td><strong>Package Date of Travel</strong></td><td>' . $data->date . '</td></tr>
                 <tr><td><strong>Adults</strong></td><td>' . $data->adults . '</td></tr>
                 <tr><td><strong>Sharing Basis</strong></td><td>' . $data->sharing . '</td></tr>
@@ -609,7 +618,7 @@ class EmailController extends BaseController
                 <table>
                 <tr><td><strong>Total Amount</strong></td><td>₹ ' . number_format($data->total_package_cost, 2) . '</td></tr>
                 <tr><td><strong>Amount Paid</strong></td><td>₹ ' . number_format($data->amount, 2) . '</td></tr>
-                <tr><td><strong>Remaining Payable</strong></td><td>' . $data->remainingAmount . '</td></tr>
+                <tr><td><strong>Remaining Payable</strong></td><td>₹ ' . number_format($data->remainingAmount, 2) . '</td></tr>
                 </table>
                 <a style="font-size: 12px;" href="' . $data->bookingConfirmationURL . '">Click here For Pax Details</a>
                 <p style="font-size: 12px; color: #666;">* This is a system generated Booking Confirmation Receipt.</p>

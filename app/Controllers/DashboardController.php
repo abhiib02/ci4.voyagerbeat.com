@@ -139,7 +139,7 @@ class DashboardController extends BaseController
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
             case 'booking-list':
-                $this->data['AgentBookings'] = $this->BookingModel->getAllBookingsofAgentForDashboard($userID);
+                $this->data['Bookings'] = $this->BookingModel->getAllBookingsofAgentForDashboard($userID);
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
         }

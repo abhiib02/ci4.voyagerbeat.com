@@ -5,10 +5,10 @@
         </div>
         <div class="card-body">
             <form action="/create-booking" method="post" id="create-booking-form">
-                <div class="row">
-                    <div class="col-lg-6">
+                <div class="row ">
+                    <div class="col-6">
                         <div class="mb-3">
-                            <label for="package_id" class="form-label">Package ID</label>
+                            <label for="package_id" class="form-label fw-bold">Package ID</label>
                             <input
                                 type="number"
                                 class="form-control"
@@ -19,22 +19,9 @@
                                 required>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-6">
                         <div class="mb-3">
-                            <label for="amount" class="form-label">Amount Paid</label>
-                            <input
-                                type="number"
-                                class="form-control"
-                                id="amount"
-                                name="amount"
-                                min="0"
-                                step="0.01"
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                            <label for="adults" class="form-label">Adults</label>
+                            <label for="adults" class="form-label fw-bold">Adults</label>
                             <input
                                 type="number"
                                 class="form-control"
@@ -45,9 +32,11 @@
                                 required>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                </div>
+                <div class="row ">
+                    <div class="col-12">
                         <div class="mb-3">
-                            <label for="contact" class="form-label">Contact No</label>
+                            <label for="contact" class="form-label fw-bold">Contact No</label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -60,6 +49,37 @@
                             <div class="form-text">Up to 10 digits, numbers only.</div>
                         </div>
                     </div>
+                </div>
+                <div class="row ">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label fw-bold">Amount Paid</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="amount"
+                                name="amount"
+                                min="0"
+                                step="0.01"
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label fw-bold">Total Amount</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="total_package_cost"
+                                name="total_package_cost"
+                                min="0"
+                                step="0.01"
+                                required>
+                        </div>
+                    </div>
+
+
+
                 </div>
 
 
@@ -74,7 +94,7 @@
             </form>
         </div>
         <div class="card-footer">
-            <button class="btn btn-sm btn-success" form="create-booking-form">Submit</button>
+            <button class="btn btn-sm btn-success" form="create-booking-form">Create Link</button>
             <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#create-booking').close();">Close</button>
         </div>
     </div>

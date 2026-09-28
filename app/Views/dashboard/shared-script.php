@@ -40,6 +40,7 @@
 <script>
     function showTravelers(data, id) {
         document.getElementById(`travelers-dialog-${id}`).showModal();
+
         let travelers = {};
 
         // Group data
@@ -69,7 +70,7 @@
                      <div class="ms-2 me-auto">
                         <div class="fw-bold fs-6">${t.name || ''}</div>
                         ${(t.gender || '').toLowerCase()} • <a href="tel:${t.contact || ''}">${t.contact || ''}</a> • <a href="mail:${t.email || ''}">${t.email || ''}</a>
-                        <p>Sharing Basis : ${t.sharing.split('|')[1] || ''}</p>
+                        <p>Sharing Basis : ${t.sharing.split('|')[1] || t.sharing}</p>
                      </div>
                   </li>
          `;

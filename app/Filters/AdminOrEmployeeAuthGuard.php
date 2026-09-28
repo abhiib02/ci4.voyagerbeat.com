@@ -31,10 +31,10 @@ class AdminOrEmployeeAuthGuard implements FilterInterface
         //role = 1 (Admin)
         //role = 0 (Customer)
         //
-        $isAdmin    = session()->get('role') === 1; // adjust to your actual session keys
-        $isEmployee = session()->get('role') === 2;
+        $role = (int) session()->get('role');
+        $allowedRoles = [1, 2]; // 1 = Admin, 2 = Employee
 
-        if (! $isAdmin && ! $isEmployee) {
+        if (! in_array($role, $allowedRoles, true)) {
             return redirect()->to('/login')->with('error', 'Please log in.');
         }
     }

@@ -42,6 +42,7 @@ class Booking extends Model
         'total_package_cost',
         'note',
         'agent',
+        'customer_access',
         'created_at',
         'updated_at',
     ];
@@ -79,6 +80,7 @@ class Booking extends Model
         'pay_screenshot'     => 'required',
         'adhaar_number'      => 'required|integer',
         'total_package_cost' => 'required|integer',
+
     ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
@@ -87,6 +89,10 @@ class Booking extends Model
     public function insertBooking(array $data)
     {
         return $this->insert($data);
+    }
+    public function updateConfirmedBooking(string $orderId, array $data): bool
+    {
+        return $this->where('order_id', $orderId)->update(null, $data);
     }
     public function getBookingByOrderId(string $orderId)
     {
@@ -106,11 +112,20 @@ class Booking extends Model
     }
     public function getAllBookingsForAdminDashboard(): array
     {
+        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->orderBy('ID', 'DESC')
+            ->find();
         return $this->select()->orderBy('ID', 'DESC')->findAll();
     }
     public function getAllBookingsofAgentForDashboard(int $userID): array
     {
-        return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
+        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->where('payments_table.agent', $userID)
+            ->orderBy('ID', 'DESC')
+            ->find();
+        //return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
     }
     public function getUserBookingsByEmail(string $email): array
     {

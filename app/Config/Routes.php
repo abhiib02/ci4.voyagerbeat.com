@@ -161,6 +161,7 @@ $routes->get('max-amount', 'RazorpayController::MaximumAmount');
 $routes->get('book/(:num)', 'BookingController::Book/$1');
 $routes->get('booking-confirmation-form/(:any)', 'BookingController::BookingConfirmationForm/$1');
 
+$routes->post('booking-confirmation-process', 'BookingController::BookingConfirmationProcess');
 
 
 /*
@@ -177,3 +178,6 @@ $routes->get('couponCode/(:any)', 'CouponController::applyCouponAjax/$1');
 */
 $routes->post('booking-payment', 'RazorpayController::booking_pay');
 $routes->post('verify-payment', 'RazorpayController::verify');
+
+
+/*-------------test-----------------------*/

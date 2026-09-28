@@ -74,7 +74,7 @@ if (! function_exists('renderTravelers')) {
         $html = '<div class="row">';
 
         foreach ($travelers as $number => $fields) {
-            $html .= '<div class="col-md-12 mb-3">';
+            $html .= '<div class="col-md-4 mb-3">';
             $html .= '<div class="card">';
             $html .= '<div class="card-header fw-bold">Traveler ' . $number . '</div>';
             $html .= '<ul class="list-group list-group-flush">';
