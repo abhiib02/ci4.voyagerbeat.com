@@ -134,34 +134,27 @@ class BookingController extends BaseController
             'message' => 'Booking Created ',
             'status'  => 'Success'
         ]);
-
-        switch (session()->get('role')) {
-            case 1:
-                return redirect()->to('/dashboard/all-bookings');
-                break;
-            case 2:
-                return redirect()->to('/employee-dashboard/booking-list');
-                break;
-            default:
-                return redirect()->to('/employee-dashboard/booking-list');
-                break;
-        }
+        $redirectTo = match (session()->get('role')) {
+            1 => '/dashboard/all-bookings',
+            2      => '/employee-dashboard/booking-list',
+            default  => '/employee-dashboard/booking-list',
+        };
+        return redirect()->to($redirectTo);
     }
 
     public function BookingConfirmationForm(string $order_id)
     {
-        if (str_contains($order_id, 'order_')) {
+        if (str_contains($order_id, 'order_') || strlen($order_id) != 32) {
             $this->session->setFlashdata('FlashMessage', [
                 'message' => 'Invalid Action',
                 'status'  => 'Danger'
             ]);
-            if ($this->session->get('role') == 2) {
-                return redirect()->to('/employee-dashboard/booking-list');
-            } elseif ($this->session->get('role') == 1) {
-                return redirect()->to('/dashboard/all-booking');
-            } else {
-                return redirect()->to('/logout');
-            }
+            $redirectTo = match (session()->get('role')) {
+                1 => '/dashboard/all-bookings',
+                2      => '/employee-dashboard/booking-list',
+                default  => '/logout',
+            };
+            return redirect()->to($redirectTo);
         }
         $this->data['order_id'] = $order_id;
         $this->data['BookingData'] = $this->BookingModel->getBookingByOrderId($order_id);

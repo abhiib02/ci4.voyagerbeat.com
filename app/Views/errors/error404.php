@@ -82,15 +82,15 @@
     </div>
     <div class="layers-container">
         <div class="layers">
-            <div class="layer custom-bg" style="--url:url('assets/not-found/lbottom.png'); --mul:0;"></div>
-            <div class="layer custom-bg" style="--url:url('assets/not-found/l7.png'); --mul:0;"></div>
-            <div class="layer custom-bg" style="--url:url('assets/not-found/l6.png');--mul:0.001;"></div>
-            <div class="layer custom-bg" style="--url:url('assets/not-found/l5.png');--mul:0.001;"></div>
-            <div class="layer custom-bg" style="--url:url('assets/not-found/l4.png');--mul:0.0015;"></div>
-            <div class="layer custom-bg" style="--url:url('assets/not-found/l3.png');--mul:0.02;"></div>
-            <div class="layer custom-bg" style="--url:url('assets/not-found/l2.png');--mul:0.025;"></div>
-            <div class="layer custom-bg" style="--url:url('assets/not-found/l1.png');--mul:0.035;"></div>
-            <div class="layer custom-bg" style="--url:url('assets/not-found/l0.png');--mul:0.045;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/lbottom.png'); --mul:0;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/l7.png'); --mul:0;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/l6.png');--mul:0.001;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/l5.png');--mul:0.001;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/l4.png');--mul:0.0015;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/l3.png');--mul:0.02;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/l2.png');--mul:0.025;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/l1.png');--mul:0.035;"></div>
+            <div class="layer custom-bg" style="--url:url('/assets/not-found/l0.png');--mul:0.045;"></div>
         </div>
     </div>
 
