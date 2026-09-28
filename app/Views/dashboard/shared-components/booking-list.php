@@ -59,7 +59,7 @@
                 <td>
 
 
-                    <select data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>">
+                    <select data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
                         <?php
                         $statuses = ['Pending', 'Complete', 'Cancel', 'Failed / Unknown'];
                         foreach ($statuses as $status):
@@ -239,13 +239,36 @@
                                         return res.json();
                                     })
                                     .then(data => {
-                                        console.log('Field saved', data);
+
                                         runToast(`Field saved : ${data.field}`, 'Success');
                                     })
                                     .catch(err => {
-                                        console.error('Failed to save field', err);
+
                                         runToast(`Failed to save field ${err}`, 'danger');
                                     });
                             });
                         });
+                    </script>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', (event) => {
+                            setInitPaymentStatusClass();
+                        })
+
+                        function setInitPaymentStatusClass() {
+                            let selects = document.querySelectorAll('[data-field="status"]');
+                            selects.forEach((select) => {
+                                select.classList.add('status-' + select.value.toLowerCase());
+                            })
+                        }
+
+                        function setPaymentStatusClass() {
+                            [...this.event.target.classList].forEach(className => {
+                                if (className.includes('status-')) {
+                                    this.event.target.classList.remove(className);
+                                }
+                            });
+
+                            this.event.target.classList.add('status-' + this.event.target.value.toLowerCase());
+                        }
                     </script>
