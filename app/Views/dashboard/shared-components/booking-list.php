@@ -69,10 +69,12 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <?php
-                    $remainingAmount = $booking->total_package_cost - $booking->amount;
-                    if ($remainingAmount >= 0): ?>
-                        <span class="btn btn-sm fw-bold" disabled>Remaining : ₹<?= $remainingAmount ?></span>
+                    <?php if ($booking->status == 'Pending'): ?>
+                        <?php
+                        $remainingAmount = $booking->total_package_cost - $booking->amount;
+                        if ($remainingAmount >= 0): ?>
+                            <span class="btn btn-sm fw-bold" disabled>Remaining : ₹<?= $remainingAmount ?></span>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </td>
 
