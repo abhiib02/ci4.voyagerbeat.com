@@ -6,7 +6,6 @@ namespace App\Controllers;
 require_once $_SERVER["DOCUMENT_ROOT"] . "/vendor/autoload.php";
 
 use App\Controllers\BaseController;
-use App\Controllers\EmailController;
 use Config\Services;
 use App\Models\Package;
 use App\Models\Booking;
@@ -186,6 +185,17 @@ class RazorpayController extends BaseController
 
 
         // Get All the Data from the post request
+
+        //required Data After Confirmed Payment
+        $BookingData['trip_type'] = 'N/A';
+        $BookingData['boarding_city'] = 'N/A';
+        $BookingData['address'] = 'N/A';
+        $BookingData['contact_trip'] = '0';
+        $BookingData['contact_alt'] = '0';
+        $BookingData['heard'] = 'N/A';
+        $BookingData['pay_screenshot'] = 'N/A';
+        $BookingData['adhaar_number'] = '0';
+
 
         //Customer Details
         $BookingData['name'] = $this->request->getPost('name');
@@ -383,12 +393,7 @@ class RazorpayController extends BaseController
         // 4. Only reached when the signature is valid
         $this->BookingModel->updateStatus($orderId, 'Complete');
 
-        // 5. Send email after saving data to database
-        if (!$this->sendEmail($orderId, $paymentId)) {
-            return $this->RedirectWithtoast('Booking Confirmed but Some Error Occured ', 'Success', '/thanks?order_id=' . $orderId);
-        };
-
-        return $this->RedirectWithtoast('Booking Confirmed', 'Success', '/thanks?order_id=' . $orderId);
+        return $this->sendBookingConfirmationForm($orderId, true);
     }
 
     public function saveBookingData(string $order_id, array $BookingData)
@@ -409,6 +414,18 @@ class RazorpayController extends BaseController
         $data['paymode'] = (string)$BookingData['paymode'];
         $data['total_package_cost'] = (int)$BookingData['GrandTotal'];
         $data['amount'] = (int)$BookingData['AmountPayable'];
+
+        $data['trip_type'] = (string)$BookingData['trip_type'];
+        $data['boarding_city'] = (string)$BookingData['boarding_city'];
+        $data['address'] = (string)$BookingData['address'];
+        $data['contact_trip'] = (int)$BookingData['contact_trip'];
+        $data['contact_alt'] = (int)$BookingData['contact_alt'];
+        $data['heard'] = (string)$BookingData['heard'];
+        $data['pay_screenshot'] = (string)$BookingData['pay_screenshot'];
+        $data['adhaar_number'] = (int)$BookingData['adhaar_number'];
+
+
+
         $data['status'] = 'Pending';
 
         $insertResult = $this->BookingModel->insertBooking($data); // Calling Modal Function for Insertion
@@ -441,10 +458,9 @@ class RazorpayController extends BaseController
     {
         return $this->Render_Page('static/max-amount', $this->data);
     }
-    public function sendEmail(string $order_id, string $paymentId)
+
+    public function sendBookingConfirmationForm(string $order_id, bool $prefill = true)
     {
-        $EmailController = new EmailController();
-        $mailStatus = $EmailController->sendBookingDetails($order_id, $paymentId);
-        return $mailStatus;
+        return redirect()->to('/booking-confirmation-form/' . $order_id . '?prefill=' . $prefill);
     }
 }

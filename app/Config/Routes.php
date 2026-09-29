@@ -162,6 +162,7 @@ $routes->get('book/(:num)', 'BookingController::Book/$1');
 $routes->get('booking-confirmation-form/(:any)', 'BookingController::BookingConfirmationForm/$1');
 
 $routes->post('booking-confirmation-process', 'BookingController::BookingConfirmationProcess');
+$routes->get('booking-mail-process/(:any)', 'EmailController::sendBookingDetails/$1');
 
 
 /*

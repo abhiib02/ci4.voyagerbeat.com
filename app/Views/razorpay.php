@@ -11,7 +11,7 @@
 </style>
 <div class="fullvh grid-center" id="loader">
     <div class="text-center">
-        <img width="200px" src="/assets/images/payment_process.gif" alt=""><br>
+        <img width="200px" src="/assets/anim/payment-process.gif" alt=""><br>
         <h4>Please Wait...</h4>
         <h4>Payment is in process</h4>
         <h4>Do Not Close This Page</h2>

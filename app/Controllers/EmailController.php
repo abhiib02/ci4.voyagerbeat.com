@@ -479,13 +479,14 @@ class EmailController extends BaseController
         ';
         return $message;
     }
-    public function sendBookingDetails(string $order_id, string $payment_id)
+    public function sendBookingDetails(string $order_id)
     {
 
         $Bookingdata = $this->BookingModel->getBookingByOrderId($order_id);
 
         //Adding Additional Data & Computed Data 
-        $Bookingdata->RAZORPAY_PAYMENT_ID  = $payment_id;
+
+
         $Bookingdata->bookingConfirmationURL = env('app.baseURL') . 'thanks?order_id=' . $order_id;
         $Bookingdata->remainingAmount  = $Bookingdata->total_package_cost - $Bookingdata->amount;
 
@@ -601,7 +602,6 @@ class EmailController extends BaseController
                 <table>
                 <tr><td><strong>Booking ID</strong></td><td>' . $data->ID . '</td></tr>
                 <tr><td><strong>Order ID</strong></td><td>' . $data->order_id . '</td></tr>
-                <tr><td><strong>Payment ID</strong></td><td>' . $data->RAZORPAY_PAYMENT_ID . '</td></tr>
                 <tr><td><strong>Booking Date</strong></td><td>' . $data->created_at . '</td></tr>
                 </table>
 
@@ -618,9 +618,9 @@ class EmailController extends BaseController
                 <table>
                 <tr><td><strong>Total Amount</strong></td><td>₹ ' . number_format($data->total_package_cost, 2) . '</td></tr>
                 <tr><td><strong>Amount Paid</strong></td><td>₹ ' . number_format($data->amount, 2) . '</td></tr>
-                <tr><td><strong>Remaining Payable</strong></td><td>₹ ' . number_format($data->remainingAmount, 2) . '</td></tr>
+                <tr><td><strong>Remaining Payable</strong></td><td>' . $data->remainingAmount . '</td></tr>
                 </table>
-                <a style="font-size: 12px;" href="' . $data->bookingConfirmationURL . '">Click here For Pax Details</a>
+                <a style="font-size: 12px;" href="' . $data->bookingConfirmationURL . '">Click here For All Details</a>
                 <p style="font-size: 12px; color: #666;">* This is a system generated Booking Confirmation Receipt.</p>
 
                 <div class="footer">

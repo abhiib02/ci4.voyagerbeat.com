@@ -75,10 +75,14 @@ abstract class BaseController extends Controller
         ];
 
         foreach ($cacheKeys as $cacheKey => $callback) {
-            if (! $this->data[$cacheKey] = cache($cacheKey)) {
-                $this->data[$cacheKey] = $callback();
-                cache()->save($cacheKey, $this->data[$cacheKey], 300);
+            $cachedData = cache($cacheKey);
+
+            if ($cachedData === null) {
+                $cachedData = $callback();
+                cache()->save($cacheKey, $cachedData, 300);
             }
+
+            $this->data[$cacheKey] = $cachedData;
         }
         //Caching Nav Data As it will be used on every page ⬆
 

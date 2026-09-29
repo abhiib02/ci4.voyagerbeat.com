@@ -80,7 +80,7 @@ class BookingController extends BaseController
         ]);
     }
 
-    protected function sanitizeFieldValue(string $field, $value)
+    protected function sanitizeFieldValue(string $field, string $value)
     {
         switch ($field) {
             case 'note':
@@ -144,7 +144,9 @@ class BookingController extends BaseController
 
     public function BookingConfirmationForm(string $order_id)
     {
-        if (str_contains($order_id, 'order_') || strlen($order_id) != 32) {
+        $this->data['order_id'] = $order_id;
+        $this->data['BookingData'] = $this->BookingModel->getBookingByOrderId($order_id);
+        if (!$this->data['BookingData']) {
             $this->session->setFlashdata('FlashMessage', [
                 'message' => 'Invalid Action',
                 'status'  => 'Danger'
@@ -156,13 +158,16 @@ class BookingController extends BaseController
             };
             return redirect()->to($redirectTo);
         }
-        $this->data['order_id'] = $order_id;
-        $this->data['BookingData'] = $this->BookingModel->getBookingByOrderId($order_id);
+
         if (!$this->data['BookingData']->customer_access) {
             return $this->RedirectWithtoast('Link Expired', 'Danger', '/');
         }
-
+        $this->data['prefill'] = (int)esc(strip_tags($this->request->getGet('prefill') ?? 0));
         $this->data['PackageData'] = $this->PackageModel->getPackageByID($this->data['BookingData']->package_id);
+
+        if ($this->data['prefill'] == 1) {
+            return $this->Render_Page('booking/booking-prefilled-confirm-form', $this->data);
+        }
         return $this->Render_Page('booking/booking-confirmation-form', $this->data);
     }
     public function BookingConfirmationProcess()
@@ -175,6 +180,8 @@ class BookingController extends BaseController
             'trip_type' => 'required|in_list[community,personlised]',
             'date' => 'required',
             'travelmode' => 'required',
+            'address' => 'required',
+            'pax_details' => 'required',
             'boarding_city' => 'required',
             'sharing' => 'required',
             'adhaar_number' => 'required',
@@ -193,7 +200,7 @@ class BookingController extends BaseController
         $paymentScreenShot = $this->request->getFile('payment_screenshot_file');
         if ($paymentScreenShot->getSize() > 0) {
 
-            $paymentScreenShotFileName = $this->request->getPost('order_id') . '-' . $this->request->getPost('name') . '.' . $paymentScreenShot->getExtension();
+            $paymentScreenShotFileName = $this->request->getPost('order_id') . '-' . str_replace(' ', '-', $this->request->getPost('name')) . '.' . $paymentScreenShot->getExtension();
             $paymentScreenShot->move('upload/bookings/payment_screenshot', $paymentScreenShotFileName);
         } else {
             return redirect()->back()->withInput()->with('errors', 'Payment Screenshot is Invalid');
@@ -214,19 +221,23 @@ class BookingController extends BaseController
             'date' => $this->request->getPost('date'),
             'travelmode' => $this->request->getPost('travelmode'),
             'pax_details' => $this->request->getPost('pax_details'),
+            'address' => $this->request->getPost('boarding_city'),
             'boarding_city' => $this->request->getPost('boarding_city'),
             'sharing' => $this->request->getPost('sharing'),
             'adhaar_number' => $this->request->getPost('adhaar_number'),
             'heard' => $this->request->getPost('heard'),
-            'paymode' => 'UPI Advance Payment',
             'customer_access' => 0
         ];
 
         $customerFilledData['pay_screenshot'] = $paymentScreenShotFileName;
 
+        if (!((int)$this->request->getPost('prefill') == 1)) {
+            $customerFilledData['paymode'] = 'UPI Advance Payment';
+        }
+
         $this->BookingModel->updateConfirmedBooking($orderId, $customerFilledData);
 
-        if (! $this->sendEmail($orderId, 'Direct Upi')) {
+        if (!$this->sendEmail($orderId)) {
             return $this->RedirectWithtoast('Booking Confirmed but Some Error Occured During Sending Mail', 'Success', '/thanks?order_id=' . $orderId);
         };
 
@@ -240,9 +251,15 @@ class BookingController extends BaseController
     }
 
 
-    public function sendEmail(string $order_id, string $paymentId)
+    public function sendEmail(string $order_id)
     {
-        $mailStatus = $this->EmailController->sendBookingDetails($order_id, $paymentId);
-        return $mailStatus;
+        $client = service('curlrequest');
+
+        $response = $client->get(base_url('booking-mail-process/' . $order_id), [
+            'http_errors' => false,   // don't throw on 4xx/5xx
+            'timeout'     => 30,
+        ]);
+
+        return $response->getBody();
     }
 }
