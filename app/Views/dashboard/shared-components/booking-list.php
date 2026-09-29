@@ -54,7 +54,7 @@
                 <td class="text-capitalize"><?= $booking->paymode ?></td>
                 <td><?= $booking->amount ?></td>
                 <td>
-                    <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>">
+                    <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>" <?= ($booking->status != 'Pending') ? 'readonly' : ''; ?>>
                 </td>
                 <td>
 
