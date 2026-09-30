@@ -55,12 +55,12 @@
                         ${(traveler.gender || '').toLowerCase()} • <a href="tel:${traveler.contact || ''}">${traveler.contact || ''}</a>
                         <p class="m-0">Sharing Basis : ${traveler.sharing.split('|')[1] || traveler.sharing}</p>
                         <p class="m-0">Adhaar Number : ${traveler.adhaar}</p>
-                        <button class="btn btn-sm btn-outline-dark" onclick="openModel('${traveler.name}_${traveler.adhaar}')">Open Adhaar Card </button>
-                        <dialog class="border-1 rounded" id="${traveler.name}_${traveler.adhaar}">
+                        <button class="btn btn-sm btn-outline-dark" onclick="openModel('Trav-${traveler.contact}_${traveler.adhaar}')">Open Adhaar Card </button>
+                        <dialog class="border-1 rounded" id="Trav-${traveler.contact}_${traveler.adhaar}">
                         <div class="card">
                         <img width="auto" height="500px" src="/upload/adhaar/${traveler.adhaarCard_file}">
                         <div class="card-footer">
-                                    <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#${traveler.name}_${traveler.adhaar}').close();">Close</button>
+                                    <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#Trav-${traveler.contact}_${traveler.adhaar}').close();">Close</button>
                                 </div>
                                 </div>
                         </dialog>
