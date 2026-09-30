@@ -8,6 +8,8 @@
 
     </div>
     <div class="card-body">
+
         <?= view('dashboard/shared-components/booking-list') ?>
     </div>
+
 </div>
