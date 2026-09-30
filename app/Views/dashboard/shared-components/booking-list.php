@@ -62,9 +62,19 @@
 
                 </td>
                 <td class="text-capitalize"><?= $booking->paymode ?></td>
-                <td><?= $booking->amount ?></td>
                 <td>
-                    <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>" <?= ($booking->status != 'Pending') ? 'readonly' : ''; ?>>
+                    <?php if ($isAdmin): ?>
+                        <input type="number" class="form-control form-control-sm" data-field="amount" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->amount ?>">
+                    <?php else: ?>
+                        <?= $booking->amount ?>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php if ($isAdmin): ?>
+                        <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>" <?= ($booking->status != 'Pending') ? 'readonly' : ''; ?>>
+                    <?php else: ?>
+                        <?= $booking->total_package_cost ?>
+                    <?php endif; ?>
                 </td>
                 <td>
                     <?php if ($booking->status == 'Pending'): ?>

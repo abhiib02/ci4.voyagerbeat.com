@@ -71,7 +71,9 @@
                                         </div>
                                         <div class="col-6 col-md-3">
                                             <label class="form-label">Contact No</label>
-                                            <input type="number" name="mobile" inputmode="numeric" class="form-control" :class="{'is-invalid': errors.mobile}" v-model="lead.mobile" required>
+                                            <input type="number" name="mobile" inputmode="numeric"
+                                                pattern="\d{1,10}"
+                                                maxlength="10" class="form-control" :class="{'is-invalid': errors.mobile}" v-model="lead.mobile" required>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <label class="form-label">Email</label>
