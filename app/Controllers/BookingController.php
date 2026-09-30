@@ -226,6 +226,7 @@ class BookingController extends BaseController
             'pax_details' => $this->request->getPost('pax_details'),
             'address' => $this->request->getPost('address'),
             'heard' => $this->request->getPost('heard'),
+            'status' => 'Pending',
             'customer_access' => 0
         ];
 
