@@ -1,4 +1,4 @@
-<div style="background: #19C26F;" class="grid-center  full-vh scroll-margin print-container" id="print-content-wrapper">
+<div style="background: #19C26F;" class="grid-center  full-vh scroll-margin print-container " id="print-content-wrapper">
     <div class="grid-center container ">
         <br>
         <div class="card w-100 p-3 mt-5">
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <hr>
-            <div class="row">
+            <div class="row page-1">
                 <div class="col-md-6">
                     <h6 class="fw-bold">Customer Details</h6>
                     <table class="table table-bordered">
@@ -56,13 +56,10 @@
                     <h6 class="fw-bold">Package Details</h6>
                     <table class="table table-bordered">
                         <tr>
-                            <td>Package ID</td>
-                            <td><b><?= $bookingData->package_id ?></b></td>
+                            <td>Package ID / Name</td>
+                            <td><a href="/packageid/<?= $bookingData->package_id ?>"><b><?= $bookingData->package_id ?></b> / <b><?= $bookingData->package_name ?></b></a></td>
                         </tr>
-                        <tr>
-                            <td>Package Name</td>
-                            <td><b><?= $bookingData->package_name ?></b></td>
-                        </tr>
+
                         <tr>
                             <td>Package Date of Travel</td>
                             <td><b><?= explode('|', $bookingData->date)[0] ?></b></td>
@@ -70,10 +67,6 @@
                         <tr>
                             <td>Adults</td>
                             <td><b><?= $bookingData->adults ?></b></td>
-                        </tr>
-                        <tr>
-                            <td>Sharing Basis</td>
-                            <td><b><?= $bookingData->sharing ?></b></td>
                         </tr>
                     </table>
                 </div>
@@ -113,13 +106,46 @@
                     </table>
 
                 </div>
+
+            </div>
+            <div class="row page-2">
                 <?php if (!empty($bookingData->pax_details)): ?>
-                    <div class="col-lg-12 no-print">
-                        <h6 class="fw-bold m-0">Pax Details</h6>
-                        <small>This section is not printable.</small>
+                    <div class="col-lg-12 page-2">
                         <br>
-                        <div class="d-flex gap-2 flex-wrap">
-                            <?= renderTravelers($bookingData->pax_details) ?>
+                        <h6 class="fw-bold m-0">Pax Details</h6>
+                        <br>
+
+                        <?php $Paxs  = json_decode($bookingData->pax_details); ?>
+                        <div class="row ">
+                            <?php foreach ($Paxs as $index => $pax): ?>
+                                <div class="col-md-6 col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-header fw-bold">Traveler <?= $index + 1 ?></div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span class="text-muted">Name</span>
+                                                <span><?= $pax->name ?></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span class="text-muted">Contact</span>
+                                                <span><?= $pax->contact  ?></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span class="text-muted">Gender</span>
+                                                <span><?= $pax->gender ?></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span class="text-muted">Sharing</span>
+                                                <span><?= $pax->sharing ?></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span class="text-muted">Adhaar Number</span>
+                                                <span><?= $pax->adhaar ?></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 <?php endif; ?>

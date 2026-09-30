@@ -18,3 +18,4 @@
 <link rel="stylesheet" href="/css/tinymce-reset.css">
 <link rel="stylesheet" href="/css/resets.css">
 <link rel="stylesheet" href="/css/animation.css">
+<link rel="stylesheet" href="/css/print.css">
