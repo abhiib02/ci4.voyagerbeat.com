@@ -14,14 +14,13 @@ class BookingController extends BaseController
     public Booking $BookingModel;
     public Package $PackageModel;
     public Coupon $CouponModel;
-    private EmailController $EmailController;
+
     public function __construct()
     {
 
         $this->BookingModel = new Booking();
         $this->CouponModel = new Coupon();
         $this->PackageModel = new Package();
-        $this->EmailController = new EmailController();
     }
 
     public function Book(int $packageID)
@@ -59,7 +58,7 @@ class BookingController extends BaseController
         }
 
         // Whitelist — only fields explicitly listed here can be patched via this endpoint
-        $allowedFields = ['note', 'status', 'total_package_cost']; // extend as needed
+        $allowedFields = ['note', 'status', 'total_package_cost', 'customer_access']; // extend as needed
 
         if (! in_array($field, $allowedFields, true)) {
             return $this->response->setStatusCode(422)->setJSON(['error' => 'Field not editable']);
@@ -177,17 +176,19 @@ class BookingController extends BaseController
             'contact_trip' => 'required|numeric|min_length[10]|max_length[10]',
             'contact_alt' => 'required|numeric|min_length[10]|max_length[10]|differs[contact_trip]',
             'gender' => 'required|in_list[Male,Female,Other]',
-            'trip_type' => 'required|in_list[community,personlised]',
+            'trip_type' => 'required|in_list[community,personalised]',
             'date' => 'required',
             'travelmode' => 'required',
             'address' => 'required',
             'pax_details' => 'required',
-            'boarding_city' => 'required',
-            'sharing' => 'required',
-            'adhaar_number' => 'required',
             'heard' => 'required',
-            'payment_screenshot_file' => 'uploaded[payment_screenshot_file]|is_image[payment_screenshot_file]'
-
+            'adhaarCard_file' => [
+                'uploaded[adhaarCard_file]',
+                'is_image[adhaarCard_file]',
+                'mime_in[adhaarCard_file,image/jpg,image/jpeg,image/png,image/webp]',
+                'max_size[adhaarCard_file,4096]', // 4MB limit
+            ],
+            'payment_screenshot_file' => 'uploaded[payment_screenshot_file]|is_image[payment_screenshot_file]',
         ];
         if (! $this->validate($rules)) {
             $this->session->setFlashdata('FlashMessage', [
@@ -198,6 +199,8 @@ class BookingController extends BaseController
         }
 
         $paymentScreenShot = $this->request->getFile('payment_screenshot_file');
+
+
         if ($paymentScreenShot->getSize() > 0) {
 
             $paymentScreenShotFileName = $this->request->getPost('order_id') . '-' . str_replace(' ', '-', $this->request->getPost('name')) . '.' . $paymentScreenShot->getExtension();
@@ -221,13 +224,13 @@ class BookingController extends BaseController
             'date' => $this->request->getPost('date'),
             'travelmode' => $this->request->getPost('travelmode'),
             'pax_details' => $this->request->getPost('pax_details'),
-            'address' => $this->request->getPost('boarding_city'),
-            'boarding_city' => $this->request->getPost('boarding_city'),
-            'sharing' => $this->request->getPost('sharing'),
-            'adhaar_number' => $this->request->getPost('adhaar_number'),
+            'address' => $this->request->getPost('address'),
             'heard' => $this->request->getPost('heard'),
             'customer_access' => 0
         ];
+
+        //uploading Adhaar of Travelers
+        $customerFilledData['pax_details'] = $this->AdhaarImagesUpload($customerFilledData['pax_details']);
 
         $customerFilledData['pay_screenshot'] = $paymentScreenShotFileName;
 
@@ -261,5 +264,36 @@ class BookingController extends BaseController
         ]);
 
         return $response->getBody();
+    }
+
+    public function PaymentScreenshotUpload() {}
+    public function AdhaarImagesUpload(string $paxDetails)
+    {
+        $pax_details = json_decode($paxDetails, true);
+
+        $adhaarImages = $this->request->getFileMultiple('adhaarCard_file');
+        $uploadedFiles = [];
+
+        if ($adhaarImages) {
+            foreach ($adhaarImages as $index => $file) {
+
+                // Check if file is valid and hasn't been moved
+                if ($file->isValid() && !$file->hasMoved()) {
+
+                    // Generate a random unique name
+                    $fileNamePrefix = $pax_details[$index]['adhaarCard_file'];
+                    $newName = $fileNamePrefix . '.' . $file->getExtension();
+                    $pax_details[$index]['adhaarCard_file'] = $newName;
+
+                    // Move file to writable/uploads/adhaar folder
+                    $file->move('upload/adhaar/', $newName);
+
+                    $uploadedFiles[] = $newName;
+                }
+            }
+        }
+        if (!empty($uploadedFiles)) {
+            return json_encode($pax_details);
+        }
     }
 }

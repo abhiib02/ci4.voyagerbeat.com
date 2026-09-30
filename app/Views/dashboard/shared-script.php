@@ -1,3 +1,4 @@
+<script src='/js/linkImgHover.js'></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-3.0.3/datatables.min.js" integrity="sha384-U3G//lYwFPbrDV7w5uhOUSxHgb+hj1XYov+neDtWPWsO+xB38Puvo2sTlUSNw/bj" crossorigin="anonymous"></script>
 
 <script>
@@ -40,42 +41,33 @@
 <script>
     function showTravelers(data, id) {
         document.getElementById(`travelers-dialog-${id}`).showModal();
-
-        let travelers = {};
-
         // Group data
-        for (let key in data) {
-            let match = key.match(/traveler_(\d+)_(\w+)/);
+        const TravelersData = data;
 
-            if (match) {
-                let num = match[1];
-                let field = match[2];
 
-                if (!travelers[num]) {
-                    travelers[num] = {};
-                }
-
-                travelers[num][field] = data[key];
-            }
-        }
-
-        // Output result
         let result = "";
-
-        for (let num in travelers) {
-            let t = travelers[num];
+        TravelersData.forEach((traveler) => {
 
             result += `
                   <li class="list-group-item d-flex justify-content-between align-items-start ">
                      <div class="ms-2 me-auto">
-                        <div class="fw-bold fs-6">${t.name || ''}</div>
-                        ${(t.gender || '').toLowerCase()} • <a href="tel:${t.contact || ''}">${t.contact || ''}</a> • <a href="mail:${t.email || ''}">${t.email || ''}</a>
-                        <p>Sharing Basis : ${t.sharing.split('|')[1] || t.sharing}</p>
+                        <div class="fw-bold fs-6">${traveler.name || ''}</div>
+                        ${(traveler.gender || '').toLowerCase()} • <a href="tel:${traveler.contact || ''}">${traveler.contact || ''}</a>
+                        <p class="m-0">Sharing Basis : ${traveler.sharing.split('|')[1] || traveler.sharing}</p>
+                        <p class="m-0">Adhaar Number : ${traveler.adhaar}</p>
+                        <button class="btn btn-sm btn-outline-dark" onclick="openModel('${traveler.name}_${traveler.adhaar}')">Open Adhaar Card </button>
+                        <dialog class="border-1 rounded" id="${traveler.name}_${traveler.adhaar}">
+                        <div class="card">
+                        <img width="auto" height="500px" src="/upload/adhaar/${traveler.adhaarCard_file}">
+                        <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#${traveler.name}_${traveler.adhaar}').close();">Close</button>
+                                </div>
+                                </div>
+                        </dialog>
                      </div>
                   </li>
          `;
-        }
-        // Show output
+        });
         document.getElementById(`output-dialog-${id}`).innerHTML = result;
     }
 </script>

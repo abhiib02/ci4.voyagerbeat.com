@@ -36,7 +36,7 @@
         <?php endif ?>
 
         <progress value="0" max="100" id="progress" style="width:100%;"></progress>
-        <form id="multiStep-booking-confirmation-form" method="post" action="/booking-confirmation-proces" enctype="multipart/form-data">
+        <form id="multiStep-booking-confirmation-form" method="post" action="/booking-confirmation-process" enctype="multipart/form-data">
             <input type="hidden" name="order_id" value="<?= esc($BookingData->order_id) ?>">
             <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
             <!-- Step 1: Basic Information -->
@@ -45,7 +45,34 @@
                     <div class="card-header">Basic Information</div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" class="form-control" name="name" id="name" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="contact">Email</label>
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        id="email"
+                                        name="email" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="gender">Gender:</label>
 
+                                    <select class="form-control" id="gender" name="gender" required>
+                                        <option value="" selected disabled>Choose One</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-12 col-md-4">
                                 <div class="form-group">
                                     <label for="contact">Contact (For During Trip)</label>
@@ -185,70 +212,10 @@
                 <div class="card">
                     <div class="card-header">Pax Details</div>
                     <div class="card-body">
-                        <div id="primary-traveler">
-                            <h5>Traveler 1</h5>
-                            <div class="row g-3">
-                                <div class="col-12 col-md-3">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" name="name" class="form-control" required>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <label class="form-label">Gender</label>
-                                    <select class="form-select" name="gender" required>
-                                        <option disabled="" selected="" value="">Choose your option</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <label class="form-label">Mobile No.</label>
-                                    <input type="number" inputmode="numeric" name="contact" class="form-control" required>
-                                </div>
-                                <div class="col-12 col-md-3">
-                                    <label class="form-label">Sharing</label>
-                                    <select name="" id="Sharing" name="sharing" class="form-select" required>
-                                        <?php if (!empty($PackageData->INFO_P1) && !$PackageData->INFO_P1 == 0): ?>
-                                            <option value="<?= esc($PackageData->INFO_P1) ?>"><?= esc($PackageData->INFO_P1) ?></option>
-                                        <?php endif; ?>
-                                        <?php if (!empty($PackageData->INFO_P2) && !$PackageData->INFO_P2 == 0): ?>
-                                            <option value="<?= esc($PackageData->INFO_P2) ?>"><?= esc($PackageData->INFO_P2) ?></option>
-                                        <?php endif; ?>
-                                        <?php if (!empty($PackageData->INFO_P3) && !$PackageData->INFO_P3 == 0): ?>
-                                            <option value="<?= esc($PackageData->INFO_P3) ?>"><?= esc($PackageData->INFO_P3) ?></option>
-                                        <?php endif; ?>
-                                        <?php if (!empty($PackageData->INFO_P4) && !$PackageData->INFO_P4 == 0): ?>
-                                            <option value="<?= esc($PackageData->INFO_P4) ?>"><?= esc($PackageData->INFO_P4) ?></option>
-                                        <?php endif; ?>
-                                        <?php if (!empty($PackageData->INFO_P5) && !$PackageData->INFO_P5 == 0): ?>
-                                            <option value="<?= esc($PackageData->INFO_P5) ?>"><?= esc($PackageData->INFO_P5) ?></option>
-                                        <?php endif; ?>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="place">Boarding City</label>
-                                        <input type="text" name="boarding_city" class="form-control" id="Boarding" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="place">Adhaar Card Number</label>
-                                        <input type="text" name="adhaar_number" class="form-control" id="adhaar_number" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="adhaarCard_file" class="form-label">Adhaar Card (Upload):</label>
-                                        <input class="form-control" type="file" name="adhaarCard_file[]" id="adhaarCard_file" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div id="pax-details-inputs">
-                            <?php for ($i = 0; $i < ($BookingData->adults - 1); $i++): ?>
+                            <?php for ($i = 0; $i < ($BookingData->adults); $i++): ?>
                                 <div class="traveler">
-                                    <h5>Traveler <?= $i + 2 ?></h5>
+                                    <h5>Traveler <?= $i + 1 ?></h5>
                                     <div class="row g-3">
                                         <div class="col-12 col-md-3">
                                             <label class="form-label">Name</label>
@@ -269,7 +236,7 @@
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <label class="form-label">Sharing</label>
-                                            <select name="" id="Sharing" class="form-select sharing" required>
+                                            <select id="Sharing" class="form-select sharing" required>
                                                 <?php if (!empty($PackageData->INFO_P1) && !$PackageData->INFO_P1 == 0): ?>
                                                     <option value="<?= esc($PackageData->INFO_P1) ?>"><?= esc($PackageData->INFO_P1) ?></option>
                                                 <?php endif; ?>
@@ -302,12 +269,13 @@
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="adhaarCard_file" class="form-label">Adhaar Card (Upload):</label>
-                                                <input class="form-control" type="file" name="adhaarCard_file[]" id="adhaarCard_file" required>
+                                                <input class="form-control" type="file" name="adhaarCard_file[]" id="adhaarCard_file" accept="image/*" capture="environment" required>
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
+
                                 </div>
+                                <hr>
                             <?php endfor; ?>
                         </div>
                         <textarea name="pax_details" class="hide" id="pax_details_json" required></textarea>
@@ -329,7 +297,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="payment_screenshot_file" class="form-label">Payment Screenshot (Upload):</label>
-                            <input class="form-control" type="file" name="payment_screenshot_file" id="payment_screenshot_file">
+                            <input class="form-control" type="file" name="payment_screenshot_file" accept="image/*" id="payment_screenshot_file">
                         </div>
 
 

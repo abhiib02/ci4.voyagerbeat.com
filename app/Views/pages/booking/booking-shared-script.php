@@ -23,15 +23,20 @@
 <script>
     function updateAll() {
         let travelers = document.querySelectorAll(".traveler");
-        let data = {};
+        let data = []; // Initialize as an array
 
-        travelers.forEach((t, index) => {
-            let num = index + 2;
-            // Update JSON
-            data[`traveler_${num}_name`] = t.querySelector(".name").value;
-            data[`traveler_${num}_gender`] = t.querySelector(".gender").value;
-            data[`traveler_${num}_contact`] = t.querySelector(".contact").value;
-            data[`traveler_${num}_sharing`] = t.querySelector(".sharing").value.toLowerCase();
+        travelers.forEach((t) => {
+            // Push a new object for each traveler
+
+            data.push({
+                name: t.querySelector(".name")?.value || "",
+                gender: t.querySelector(".gender")?.value || "",
+                contact: t.querySelector(".contact")?.value || "",
+                boarding_city: t.querySelector(".boarding_city")?.value || "",
+                adhaar: t.querySelector(".adhaar_number")?.value || "",
+                adhaarCard_file: (t.querySelector(".adhaar_number")?.value || "") + "_file",
+                sharing: (t.querySelector(".sharing")?.value || "").toLowerCase()
+            });
         });
 
         document.getElementById("pax_details_json").value = JSON.stringify(data);

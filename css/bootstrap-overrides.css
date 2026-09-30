@@ -35,3 +35,12 @@
   background-color: color-mix(in srgb, var(--maincolor) 20%, transparent);
   border-radius: var(--theme-border-radius);
 }
+
+.form-group:has(input[readonly]),
+.form-group:has(select[disabled]) {
+  opacity: 0.5;
+  & label:after {
+    content: "🔒";
+    font-size: 10px;
+  }
+}

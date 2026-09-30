@@ -1,18 +1,21 @@
-<table class="sortable table hover" id="datatable" data-order='[[ 2, "desc" ]]'>
+<table class="sortable table hover" id="datatable" data-order='[[ 0, "desc" ]]'>
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Order ID</th>
+            <!-- <th>ID</th> -->
+            <!-- <th>Order ID</th> -->
             <th>Booking Date</th>
             <th>Agent</th>
             <th>Name</th>
             <th>Contact</th>
+            <th>Adults</th>
             <th>Pax Details</th>
             <th>Pay Mode</th>
             <th>Amount Paid</th>
             <th>Total Package Cost</th>
+            <th>Remaining</th>
             <th>Payment Status</th>
             <th>Note</th>
+            <th>Customer Filled Form</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -23,13 +26,20 @@
         foreach (($Bookings ?? []) as $booking) : ?>
 
             <tr>
-                <td><?= $booking->ID ?></td>
-                <td><?= substr($booking->order_id, 0, 20) ?></td>
+                <!-- <td><?= $booking->ID ?></td> -->
+                <!-- <td><?= substr($booking->order_id, 0, 20) ?></td> -->
                 <td><?= $booking->created_at ?></td>
                 <td><?= $booking->agent_name ?></td>
                 <td><?= $booking->name ?></td>
 
                 <td><?= $booking->contact ?></td>
+                <td>
+                    <?php if ($isAdmin): ?>
+                        <input type="number" class="form-control form-control-sm" data-field="adults" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->adults ?>">
+                    <?php else: ?>
+                        <?= $booking->adults ?>
+                    <?php endif; ?>
+                </td>
                 <td>
                     <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
                         <button class="btn btn-sm  btn-outline-dark" onclick='showTravelers(<?= $booking->pax_details ?>,<?= $booking->ID ?>)'>Show</button>
@@ -57,6 +67,15 @@
                     <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>" <?= ($booking->status != 'Pending') ? 'readonly' : ''; ?>>
                 </td>
                 <td>
+                    <?php if ($booking->status == 'Pending'): ?>
+                        <?php
+                        $remainingAmount = $booking->total_package_cost - $booking->amount;
+                        if ($remainingAmount >= 0): ?>
+                            <?= $remainingAmount ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </td>
+                <td>
 
 
                     <select data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
@@ -69,17 +88,23 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <?php if ($booking->status == 'Pending'): ?>
-                        <?php
-                        $remainingAmount = $booking->total_package_cost - $booking->amount;
-                        if ($remainingAmount >= 0): ?>
-                            <span class="btn btn-sm fw-bold" disabled>Remaining : ₹<?= $remainingAmount ?></span>
-                        <?php endif; ?>
-                    <?php endif; ?>
+
                 </td>
 
                 <td>
                     <textarea name="note" data-field="note" class="form-control form-control-sm" data-booking-id="<?= $booking->ID; ?>"><?= esc($booking->note) ?></textarea>
+                </td>
+                <td>
+                    <?php if ($isAdmin): ?>
+                        <select data-field="customer_access" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>">
+                            <option class="" value="<?= esc($booking->customer_access) ?>"><?= (esc($booking->customer_access)) ? 'No' : 'Yes'; ?></option>
+                            <option class="" value="1">No</option>
+                            <option class="" value="0">Yes</option>
+                        </select>
+                    <?php else: ?>
+                        <?= (esc($booking->customer_access)) ? 'No ⏳' : 'Yes ✅'; ?>
+                    <?php endif; ?>
+
                 </td>
                 <td>
                     <div class="d-flex gap-1">
@@ -126,10 +151,6 @@
                                         <tr>
                                             <th>Adults</th>
                                             <td><?= $booking->adults ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Customer Sharing</th>
-                                            <td><?= $booking->sharing ?></td>
                                         </tr>
                                         <tr>
                                             <th>Batch Date</th>

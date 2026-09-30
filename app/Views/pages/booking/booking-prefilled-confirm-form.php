@@ -145,7 +145,7 @@
                             <label for="Date">Date</label>
                             <input type="hidden" name="date" value="<?= esc($BookingData->date) ?>" required>
                             <select id="date" name="date" class="form-select" required disabled>
-                                <option value="" disabled selected><?= esc(substr($BookingData->date, 0, -2)) ?></option>
+                                <option value="" disabled selected><?= esc($BookingData->date) ?></option>
                             </select>
                         </div>
 
@@ -158,19 +158,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="place">Boarding City</label>
-                            <input type="text" name="boarding_city" class="form-control" id="Boarding" required>
-                        </div>
 
-
-                        <div class="form-group">
-                            <label for="place">Choose Sharing</label>
-                            <input type="hidden" name="sharing" value="<?= esc($BookingData->sharing) ?>" required>
-                            <select name="sharing" id="Sharing" class="form-select" required disabled>
-                                <option value="" Selected disabled><?= esc(substr($BookingData->sharing, 2)) ?></option>
-                            </select>
-                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="button" class="btn btn-secondary prev">Previous</button>
@@ -179,6 +167,100 @@
                 </div>
 
             </div>
+            <!-- Step 4: Pax Details -->
+            <div class="step">
+                <div class="card">
+                    <div class="card-header">Pax Important Details</div>
+                    <div class="card-body">
+                        <div id="pax-details-inputs">
+                            <?php $Paxs = json_decode($BookingData->pax_details); ?>
+
+                            <?php foreach ($Paxs as $index => $pax): ?>
+                                <div class="traveler">
+                                    <h5>Traveler <?= $index + 1 ?></h5>
+                                    <div class="row g-3">
+                                        <div class="col-12 col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label">Name</label>
+                                                <input type="text" class="form-control name" required value="<?= $pax->name ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label">Gender</label>
+                                                <input type="hidden" class="form-control name" required value="<?= $pax->gender ?>" readonly>
+                                                <select class="form-select gender" disabled>
+                                                    <option disabled="" selected="" value=""><?= $pax->gender ?></option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label">Mobile No.</label>
+                                                <input type="number" inputmode="numeric" class="form-control contact" value="<?= $pax->contact ?>" required readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label">Sharing</label>
+                                                <input type="hidden" class="form-control name" required value="<?= $pax->sharing ?>" readonly>
+                                                <select id="Sharing" class="form-select sharing" required disabled>
+                                                    <option value="" selected><?= $pax->sharing ?></option>
+                                                    <?php if (!empty($PackageData->INFO_P1) && !$PackageData->INFO_P1 == 0): ?>
+                                                        <option value="<?= esc($PackageData->INFO_P1) ?>"><?= esc($PackageData->INFO_P1) ?></option>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($PackageData->INFO_P2) && !$PackageData->INFO_P2 == 0): ?>
+                                                        <option value="<?= esc($PackageData->INFO_P2) ?>"><?= esc($PackageData->INFO_P2) ?></option>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($PackageData->INFO_P3) && !$PackageData->INFO_P3 == 0): ?>
+                                                        <option value="<?= esc($PackageData->INFO_P3) ?>"><?= esc($PackageData->INFO_P3) ?></option>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($PackageData->INFO_P4) && !$PackageData->INFO_P4 == 0): ?>
+                                                        <option value="<?= esc($PackageData->INFO_P4) ?>"><?= esc($PackageData->INFO_P4) ?></option>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($PackageData->INFO_P5) && !$PackageData->INFO_P5 == 0): ?>
+                                                        <option value="<?= esc($PackageData->INFO_P5) ?>"><?= esc($PackageData->INFO_P5) ?></option>
+                                                    <?php endif; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <div class="form-group">
+                                                <label for="place">Boarding City</label>
+                                                <input type="text" class="form-control boarding_city" required value="<?= $pax->boarding_city ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <div class="form-group">
+                                                <label for="place">Adhaar Card Number</label>
+                                                <input type="text" class="form-control adhaar_number" id="" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <div class="form-group">
+                                                <label for="adhaarCard_file" class="form-label">Adhaar Card (Upload):</label>
+                                                <input class="form-control" type="file" name="adhaarCard_file[]" id="adhaarCard_file" accept="image/*" capture="environment" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <hr>
+                            <?php endforeach; ?>
+                        </div>
+                        <textarea name="pax_details" class="hide" id="pax_details_json" required></textarea>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-secondary prev">Previous</button>
+                        <button type="button" class="btn btn-primary next">Next</button>
+                    </div>
+                </div>
+
+            </div>
+
             <!-- Step 5: Extra Details -->
             <div class="step">
                 <div class="card">
@@ -187,11 +269,6 @@
                         <div class="form-group">
                             <label for="payment_screenshot_file" class="form-label">Payment Screenshot (Upload):</label>
                             <input class="form-control" type="file" name="payment_screenshot_file" id="payment_screenshot_file">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="height">Adhaar Number</label>
-                            <input type="number" class="form-control" name="adhaar_number" id="adhaar_number" required>
                         </div>
 
                         <div class="form-group">

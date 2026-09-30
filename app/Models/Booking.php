@@ -63,11 +63,9 @@ class Booking extends Model
         'package_name'       => 'required',
         'adults'             => 'required|integer',
         'pax_details'        => 'permit_empty|valid_json',
-        'sharing'            => 'required',
         'coupon_used'        => 'permit_empty',
         'date'               => 'required',
         'trip_type'          => 'required',
-        'boarding_city'      => 'required',
         'address'            => 'required',
         'travelmode'         => 'required',
         'paymode'            => 'required',
@@ -78,7 +76,6 @@ class Booking extends Model
         'amount'             => 'required|integer',
         'status'             => 'required',
         'pay_screenshot'     => 'required',
-        'adhaar_number'      => 'required|integer',
         'total_package_cost' => 'required|integer',
 
     ];
