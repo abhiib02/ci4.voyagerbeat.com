@@ -17,10 +17,14 @@ class RegisterController extends BaseController
     public Package $PackageModel;
     public Option $OptionModel;
     public User $UserModel;
-    // public Destination $DestinationModel;
-    // public Booking $BookingModel;
-    // public Category $CategoryModel;
-    public function __construct() {}
+
+    public function __construct()
+    {
+        $this->session = Services::session();
+        $this->UserModel = new User();
+        $this->PackageModel = new Package();
+        $this->OptionModel = new Option();
+    }
     public function index()
     {
         $this->data['noindex'] = 1;
@@ -38,36 +42,44 @@ class RegisterController extends BaseController
     }
     public function SignupValidation()
     {
-        $session = Services::session();
-        $UserModel = new User();
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|valid_email',
+            'password' => 'required|min_length[8]',
+            'cpassword' => 'required|min_length[8]',
+            'mobile' => 'required|numeric|exact_length[10]',
+        ];
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Some Input is Invalid',
+                'status'  => 'warning'
+            ]);
+            return redirect()->to('/signup')->withInput();
+        }
+
+
         $queryData = [
             "USER_NAME" => $this->request->getPost('name'),
             "USER_EMAIL" => $this->request->getPost('email'),
+            "USER_CONTACT" => $this->request->getPost('mobile')
         ];
         $password = $this->request->getPost('password');
         $cpassword = $this->request->getPost('cpassword');
         // check input valid or not
-        $rules = $this->validate([
-            'email' => 'required|valid_email',
-            'password' => 'required|min_length[8]',
-        ]);
-        if (!$rules) {
-            $session->setFlashdata('FlashMessage', ['message' => 'Some Input is Invalid', 'status' => 'warning']);
-            return redirect()->to('/login');
-        }
+
         if ($cpassword != $password) {
-            $session->setFlashdata('FlashMessage', ['message' => 'Password is not matching', 'status' => 'danger']);
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Password is not matching', 'status' => 'danger']);
             return redirect()->to('/signup');
         }
         // check user exist
-        $userExist = $UserModel->isUserExist($queryData['USER_EMAIL']);
+        $userExist = $this->UserModel->isUserExist($queryData['USER_EMAIL']);
         if ($userExist) {
-            $session->setFlashdata('FlashMessage', ['message' => 'User Already Exist', 'status' => 'warning']);
+            $this->session->setFlashdata('FlashMessage', ['message' => 'User Already Exist', 'status' => 'warning']);
             return redirect()->to('/login');
         }
         $queryData['PASSWORD'] = password_hash((string) $password, PASSWORD_DEFAULT);
-        $UserModel->insertUser($queryData);
-        $session->setFlashdata('FlashMessage', ['message' => 'Thank You For Signing Up', 'status' => 'success']);
+        $this->UserModel->insertUser($queryData);
+        $this->session->setFlashdata('FlashMessage', ['message' => 'Thank You For Signing Up', 'status' => 'success']);
         return redirect()->to('/login');
     }
     public function googleSignupValidation()
@@ -76,8 +88,8 @@ class RegisterController extends BaseController
         //  to make new id token use this url                                                   //                    
         //  https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid       //
         /*--------------------------------------------------------------------------------------*/
-        $UserModel = new User();
-        $session = Services::session();
+
+        $this->session = Services::session();
         $credential = $this->request->getPost('credential');
 
         $ch = curl_init();
@@ -94,7 +106,7 @@ class RegisterController extends BaseController
         $InvalidTokenerror = $data->error ?? 0;
 
         if ($InvalidTokenerror) {
-            $session->setFlashdata('FlashMessage', ['message' =>  $data->error, 'status' => 'warning']);
+            $this->session->setFlashdata('FlashMessage', ['message' =>  $data->error, 'status' => 'warning']);
             return redirect()->to('/login');
         }
 
@@ -102,10 +114,10 @@ class RegisterController extends BaseController
         $password = $data->kid;
         $name = $data->name;
 
-        $userExist = $UserModel->isUserExist($email);
+        $userExist = $this->UserModel->isUserExist($email);
 
         if ($userExist) {
-            $session->setFlashdata('FlashMessage', ['message' => 'User Already Exist', 'status' => 'warning']);
+            $this->session->setFlashdata('FlashMessage', ['message' => 'User Already Exist', 'status' => 'warning']);
             return redirect()->to('/login');
         }
 
@@ -113,18 +125,18 @@ class RegisterController extends BaseController
         $queryData['USER_EMAIL'] = $email;
         $queryData['PASSWORD'] = password_hash((string) $password, PASSWORD_DEFAULT);
 
-        $UserModel->insertUser($queryData);
+        $this->UserModel->insertUser($queryData);
 
-        $session->setFlashdata('FlashMessage', ['message' => 'Account Created', 'status' => 'success']);
+        $this->session->setFlashdata('FlashMessage', ['message' => 'Account Created', 'status' => 'success']);
         return redirect()->to('/login');
     }
 
     public function logout()
     {
-        $session = Services::session();
-        if ($session->has('logged_in') == true) {
+        $this->session = Services::session();
+        if ($this->session->has('logged_in') == true) {
             $LoggedInData = ['name', 'email', 'logged_in'];
-            $session->remove($LoggedInData);
+            $this->session->remove($LoggedInData);
             return redirect()->route('login');
         }
         return redirect()->route('login');

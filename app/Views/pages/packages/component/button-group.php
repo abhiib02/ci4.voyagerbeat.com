@@ -4,7 +4,17 @@
     <?= view('pages/packages/component/admin-actions', ['package' => $package]) ?>
 
     <div class="d-flex mb-1">
-        <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-lg btn-theme btn-success w-100" style="width:250px;">Book Now <i class='bx bx-right-arrow-alt'></i></a>
+        <?php if ($isUser | $isEmployee | $isAdmin): ?>
+            <?php if (!$package->REQUEST_PRICE): ?>
+                <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-lg btn-theme btn-success w-100" style="width:250px;">Book Now <i class='bx bx-right-arrow-alt'></i></a>
+            <?php else: ?>
+                <a href="https://wa.me/91<?= $defaultContact ?>?text=Hey! Voyagers Beat I am interested in your trip id <?= $package->PACKAGE_ID; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type=" button" class="btn btn-lg btn-theme btn-success w-100" style="width:250px;">Book Now on WhatsApp<i class='bx bx-right-arrow-alt'></i></a>
+            <?php endif; ?>
+        <?php else: ?>
+            <button class="btn btn-lg btn-theme btn-success w-100" data-bs-toggle="modal" data-bs-target="#LoginPopup">
+                Book Now <i class='bx bx-right-arrow-alt'></i>
+            </button>
+        <?php endif; ?>
     </div>
     <?php if (!empty($package->PACKAGE_PDF)): ?>
         <div class="d-flex mb-1">

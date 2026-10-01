@@ -27,6 +27,9 @@ class BookingController extends BaseController
 
     public function Book(int $packageID)
     {
+        if (!$this->AuthCheck() && !$this->AuthCheckAdmin() && !$this->AuthCheckEmployee()) {
+            return $this->RedirectWithtoast('Please Login to Book', 'info', '/login');
+        }
         $this->data['ValidCoupons'] = $this->CouponModel->getAllValidCoupons();
         $this->data['package'] = $this->PackageModel->getPackageByID($packageID);
         return $this->Render_Page('booking/booking-form', $this->data);

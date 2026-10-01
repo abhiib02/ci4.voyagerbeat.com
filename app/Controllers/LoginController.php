@@ -63,7 +63,7 @@ class LoginController extends BaseController
 
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
-
+        $redirectURL = $this->request->getPost('redirect_url');
         $user = $this->UserModel->getUser($email);
 
         // check user exist
@@ -92,6 +92,9 @@ class LoginController extends BaseController
 
         $this->session->set($LoggedInData);
 
+        if ($redirectURL && !empty($redirectURL)) {
+            return redirect()->to($redirectURL);
+        }
         return $this->RedirectToDashboard($LoggedInData);
     }
 

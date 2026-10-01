@@ -16,24 +16,42 @@
                 <!--</div>-->
                 <div class="divider-text"><span>Use Email</span></div>
                 <form action="/signupvalidation" class="" method="post">
-                    <div class=" mb-3">
-                        <label for="floatingInput">Name</label>
-                        <input type="text" class="form-control " id="floatingInput" name="name" placeholder="Name" required>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class=" mb-3">
+                                <label for="floatingInput">Name</label>
+                                <input type="text" class="form-control " id="floatingInput" name="name" placeholder="Name" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class=" mb-3">
+                                <label for="floatingInput">Email address</label>
+                                <input type="email" class="form-control " id="floatingInput" name="email" placeholder="name@example.com" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class=" mb-3">
+                                <label for="floatingInput">Mobile No.</label>
+                                <input type="text" class="form-control" inputmode="numeric"
+                                    pattern="\d{1,10}"
+                                    maxlength="10" name="mobile" placeholder="Mobile No." required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class=" mb-3 ">
+                                <label for="floatingInput">Password</label>
+                                <input type="password" class="form-control" minlength="8" id="password" name="password" required>
+                                <small class="">( Password Length must be more than 8 Characters )</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class=" mb-3 ">
+                                <label for="floatingInput">Confirm Password</label>
+                                <input type="password" class="form-control" minlength="8" id="cpassword" name="cpassword" required oninput="handlePasswordEvents()">
+                            </div>
+                        </div>
                     </div>
-                    <div class=" mb-3">
-                        <label for="floatingInput">Email address</label>
-                        <input type="email" class="form-control " id="floatingInput" name="email" placeholder="name@example.com" required>
-                    </div>
-                    <div class=" mb-3 ">
-                        <label for="floatingInput">Password</label>
-                        <input type="password" class="form-control" minlength="8" id="password" name="password" required oninput="handlePasswordEvents()">
-                        <small class="">( Password Length must be more than 8 Characters )</small>
-                    </div>
-                    <div class=" mb-3 ">
-                        <label for="floatingInput">Confirm Password</label>
-                        <input type="password" class="form-control" minlength="8" id="cpassword" name="cpassword" required oninput="handlePasswordEvents()">
-                    </div>
-                    <div id="match" class="hide mb-3">
+                    <div id="match" class="hide alert alert-danger" role="alert">
                     </div>
                     <button type="submit" id="submit" class="btn btn-success">Sign up</button>
                     <a href="/login" class="btn btn-outline-dark">Login</a>
@@ -59,7 +77,7 @@
         let cpassword = document.querySelector('#cpassword');
         let feedback = document.querySelector('#match');
         let submit = document.querySelector('#submit');
-        if (password.value != cpassword.value) {
+        if (password.value != cpassword.value && cpassword.value.length > 0) {
             feedback.classList.remove('hide');
             feedback.textContent = 'Password is not matching';
             feedback.classList.add('text-danger');

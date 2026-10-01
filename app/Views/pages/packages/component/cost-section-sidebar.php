@@ -73,6 +73,7 @@
     <script>
         const PackageID = <?= $package->PACKAGE_ID ?>;
         const AdvanceBookingAmount = <?= $package->BOOKING_AMOUNT ?>;
+        const LoggedInUser = <?= json_encode(session()->get('role')) ?>;
         const CostingObject = [
             <?php
             $info_blocks = [];
@@ -182,9 +183,9 @@
                 </p>
             </div>
             
-                
+            
             <div class="d-flex justify-content-between py-1 gap-2">
-                <a href="/book/${PackageID}" class="card btn btn-theme-2 btn-voyager px-2  flex-fill">
+                <a ${LoggedInUser ? 'href="/book/${PackageID}"' : 'href="#" data-bs-toggle="modal" data-bs-target="#LoginPopup"'} class="card btn btn-theme-2 btn-voyager px-2  flex-fill">
                     <div>
                         <em class="text-secondary">Pay Full</em><br>
                         <span class="fw-bold fs-3">
@@ -192,7 +193,7 @@
                     </div>
                     </a>
                 ${(AdvanceBookingAmount == 0 ) ? `` : `
-                <a href="/book/${PackageID  }" class="card px-2 card btn btn-outline-dark  flex-fill">
+                <a ${LoggedInUser ? 'href="/book/${PackageID}"' : 'href="#" data-bs-toggle="modal" data-bs-target="#LoginPopup"'} class="card px-2 card btn btn-outline-dark  flex-fill">
                     <div>
                         <em class="text-secondary">Pay Advance</em><br>
                         <span class="fw-bold fs-3">₹${AdvanceBookingAmount}</span>
