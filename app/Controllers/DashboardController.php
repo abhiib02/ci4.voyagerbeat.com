@@ -115,7 +115,17 @@ class DashboardController extends BaseController
                 $this->data['Customers'] = $this->UserModel->getAllCustomers();
                 break;
             case 'all-bookings':
-                $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard();
+
+                $employeeID = $this->request->getGet('employee_id');
+                $customer_id = $this->request->getGet('customer_id');
+
+                if ($employeeID !== null) {
+                    $this->data['Bookings'] = $this->BookingModel->getBookingsByEmployeeID($employeeID);
+                } else if ($customer_id !== null) {
+                    $this->data['Bookings'] = $this->BookingModel->getBookingsByCustomerID($customer_id);
+                } else {
+                    $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard();
+                }
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             case 'coupons':

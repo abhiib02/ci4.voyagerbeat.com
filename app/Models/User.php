@@ -10,7 +10,7 @@ class User extends Model
     protected $primaryKey       = 'USER_ID';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
 
     protected $allowedFields    = [
@@ -20,15 +20,16 @@ class User extends Model
         'USER_CONTACT',
         'PASSWORD',
         'PASSWORD_RESET_TOKEN',
-        'LOGIN_STATUS',
-        'Created_at',
+        'STATUS',
+        'created_at',
+        'updated_at'
     ];
 
     // Dates
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'Created_at';
-    protected $updatedField  = '';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 
     // Validation Rules
     protected $validationRules = [
@@ -38,7 +39,7 @@ class User extends Model
         'USER_CONTACT'         => 'required',
         'PASSWORD'             => 'required|min_length[6]',
         'PASSWORD_RESET_TOKEN' => 'permit_empty',
-        'LOGIN_STATUS'         => 'required|integer',
+        'STATUS'               => 'required|integer',
     ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
@@ -88,7 +89,7 @@ class User extends Model
 
     public function getUser(string $email): ?object
     {
-        return $this->select('USER_ID, USER_NAME, USER_EMAIL, ROLE')
+        return $this->select('USER_ID, USER_NAME, USER_EMAIL, ROLE, STATUS, USER_CONTACT')
             ->where('USER_EMAIL', $email)
             ->first();
     }
@@ -124,11 +125,7 @@ class User extends Model
 
     public function delUser(int $ID): bool
     {
-        if ($this->find($ID) !== null) {
-            return (bool) $this->delete($ID);
-        }
-
-        return false;
+        return (bool) $this->delete($ID);
     }
 
     public function isHashExist(string $hash): bool
@@ -155,15 +152,37 @@ class User extends Model
         return $user ? ((int) $user->ROLE === 1) : false;
     }
 
+
+
     public function MakeAdmin(int $id): bool
     {
         return $this->update($id, ['ROLE' => 1]);
     }
+    public function MakeEmployee(int $id): bool
+    {
+        return $this->update($id, ['ROLE' => 2]);
+    }
+    public function RemoveAdminAndEmployee(int $id): bool
+    {
+        $this->MakingroleZero($id);
+        return true;
+    }
+    public function MakeCustomer(int $id): bool
+    {
+        $this->MakingroleZero($id);
+        return true;
+    }
 
-    public function RemoveAdmin(int $id): bool
+    public function MakingroleZero(int $id): bool
     {
         return $this->update($id, ['ROLE' => 0]);
     }
+
+    public function ToogleStatus(int $id, int $status): bool
+    {
+        return $this->update($id, ['STATUS' => $status == 1 ? 0 : 1]);
+    }
+
 
     public function getUserPassHash(string $email): ?string
     {
@@ -188,9 +207,9 @@ class User extends Model
 
     public function can_login(string $username, string $password): bool
     {
-        $passHash = $this->getUserPassHash($username);
 
-        if (! $passHash) {
+        $passHash = $this->getUserPassHash($username);
+        if (!$passHash) {
             return false;
         }
 

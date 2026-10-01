@@ -5,7 +5,8 @@ namespace App\Controllers;
 use App\Models\Booking;
 use App\Models\Package;
 use App\Models\Coupon;
-use App\Controllers\EmailController;
+use App\Models\User;
+
 
 
 class BookingController extends BaseController
@@ -14,10 +15,11 @@ class BookingController extends BaseController
     public Booking $BookingModel;
     public Package $PackageModel;
     public Coupon $CouponModel;
+    public User $UserModel;
 
     public function __construct()
     {
-
+        $this->UserModel = new User();
         $this->BookingModel = new Booking();
         $this->CouponModel = new Coupon();
         $this->PackageModel = new Package();
@@ -198,6 +200,8 @@ class BookingController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $user_id = $this->createUserAccountifNotExist($this->request->getPost('email'), $this->request->getPost('name'), $this->request->getPost('contact_trip'));
+
         $paymentScreenShot = $this->request->getFile('payment_screenshot_file');
 
 
@@ -215,6 +219,7 @@ class BookingController extends BaseController
 
 
         $customerFilledData = [
+            'user_id' => $user_id,
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
             'contact_trip' => $this->request->getPost('contact_trip'),
@@ -248,6 +253,29 @@ class BookingController extends BaseController
         return $this->RedirectWithtoast('Booking Confirmed', 'Success', '/thanks?order_id=' . $orderId);
     }
 
+
+    public function createUserAccountifNotExist(string $email, string $name, string $contact)
+    {
+        $user = $this->UserModel->getUser($email);
+        if (!$user) {
+            $generatedPassword = $this->generateRandomPassword();
+            $AccountData = [
+                'USER_NAME' => $name,
+                'USER_EMAIL' => $email,
+                'USER_CONTACT' => $contact,
+                'PASSWORD' => password_hash($generatedPassword, PASSWORD_DEFAULT),
+                'ROLE' => 0, // Assuming 0 is the role for customers
+                'STATUS' => 1, // Assuming 1 is the status for active customers
+            ];
+            return $this->UserModel->insertUser($AccountData);
+        }
+        return $user->USER_ID; // Return existing user ID if user already exists
+    }
+
+    public function generateRandomPassword($length = 8)
+    {
+        return substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, $length);
+    }
 
     public function MaximumAmount()
     {

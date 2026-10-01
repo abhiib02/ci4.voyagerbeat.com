@@ -41,6 +41,12 @@ $routes->post('reset', 'UserController::reset');
 $routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
     $routes->get('dashboard', 'DashboardController::AdminDashboard', ['as' => 'Admin.Dashboard']);
     $routes->get('dashboard/(:any)', 'DashboardController::AdminDashboard/$1');
+    // --------Employee Management----------------
+    $routes->get('toggleStatus/(:num)/(:num)', 'UserController::ToogleStatus/$1/$2');
+    $routes->get('makeEmployee/(:num)', 'UserController::EmployeeRoleGrant/$1');
+    $routes->get('makeAdmin/(:num)', 'UserController::AdminRoleGrant/$1');
+    $routes->get('revokeAdminAndEmployeeRole/(:num)', 'UserController::revokeAdminAndEmployeeRole/$1');
+    $routes->get('deleteUser/(:num)', 'UserController::deleteUser/$1');
 });
 
 // Employee

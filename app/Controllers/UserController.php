@@ -19,9 +19,7 @@ class UserController extends BaseController
     public Option $OptionModel;
     public User $UserModel;
     protected EmailController $EmailController;
-    // public Destination $DestinationModel;
-    // public Booking $BookingModel;
-    // public Category $CategoryModel;
+
 
     public function __construct()
     {
@@ -37,21 +35,42 @@ class UserController extends BaseController
         return redirect()->to('/login');
     }
 
-    public function makeAdmin()
+    public function AdminRoleGrant(int $id)
     {
-        $id = $this->request->getPost('id');
         $this->UserModel->MakeAdmin($id);
-        return $this->RedirectWithtoast('UserID:' . $id . ' Admin Granted', 'info', '/dashboard/users-list');
+        return $this->RedirectWithtoast('UserID:' . $id . ' Admin Granted', 'info', '/dashboard/admins-list');
+    }
+    public function EmployeeRoleGrant(int $id)
+    {
+        $this->UserModel->MakeEmployee($id);
+        return $this->RedirectWithtoast('UserID:' . $id . ' Employee Granted', 'info', '/dashboard/employee-list');
     }
 
-    public function removeAdmin()
+    public function revokeAdminAndEmployeeRole(int $id)
     {
-        $id = $this->request->getPost('id');
         if (in_array($id, $this->data['permanentAdmins'])) {
-            return $this->RedirectWithtoast('Cant Revoke Admin of this user', 'danger', '/dashboard/users-list');
+            return $this->RedirectWithtoast('Cant Revoke Admin of this user', 'danger', '/dashboard/admins-list');
         }
-        $modelMsg = $this->UserModel->RemoveAdmin($id);
-        return $this->RedirectWithtoast('UserID:' . $id . ' ' . 'Admin Permission Revoked', 'Warning', '/dashboard/users-list');
+        $modelMsg = $this->UserModel->RemoveAdminAndEmployee($id);
+        return $this->RedirectWithtoast('UserID:' . $id . ' ' . 'Role Revoked', 'Warning', '/dashboard/customers-list');
+    }
+    public function ToogleStatus(int $id, int $status)
+    {
+        $empList = $this->request->getGet('empList');
+        $redirect = match ($empList) {
+            '1' => '/dashboard/employee-list',
+            default => '/dashboard/users-list',
+        };
+        ($this->UserModel->ToogleStatus($id, $status));
+        return $this->RedirectWithtoast('UserID:' . $id . ' Status Toggled', 'info', $redirect);
+    }
+    public function deleteUser(int $id)
+    {
+        if (in_array($id, $this->data['permanentAdmins'])) {
+            return $this->RedirectWithtoast('Cannot Delete This User', 'danger', '/dashboard/admins-list');
+        }
+        $modelMsg = $this->UserModel->delUser($id);
+        return $this->RedirectWithtoast('User Deleted', 'danger', '/dashboard/customers-list');
     }
 
     public function changePassword()
@@ -113,15 +132,5 @@ class UserController extends BaseController
         $newhash = password_hash((string) $password, PASSWORD_DEFAULT);
         $UserModel->resetpassword($token, $newhash);
         return $this->RedirectWithtoast('Password Reset Successfully', 'success', 'login');
-    }
-
-    public function deleteUser()
-    {
-        $id = $this->request->getPost('id');
-        if (in_array($id, $this->data['permanentAdmins'])) {
-            return $this->RedirectWithtoast('Cannot Delete This User', 'danger', '/dashboard/users-list');
-        }
-        $modelMsg = $this->UserModel->delUser($id);
-        return $this->RedirectWithtoast('User Deleted', 'danger', '/dashboard/users-list');
     }
 }

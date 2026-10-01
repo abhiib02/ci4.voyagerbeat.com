@@ -24,7 +24,13 @@
                         <td><?= $admin->USER_CONTACT ?></td>
                         <td><?= $admin->ROLE ?></td>
                         <td>
-                            <button class="btn btn-sm " disabled>... Actions Button Will Come Here</button>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
+                                <a type="button" class="btn btn-outline-primary" href="/dashboard/all-bookings?employee_id=<?= $admin->USER_ID ?>">See Bookings</a>
+                                <a type="button" class="btn btn-outline-primary" href="/revokeAdminAndEmployeeRole/<?= $admin->USER_ID ?>">Revoke Roles</a>
+                                <a type="button" class="btn btn-outline-primary" href="/toggleStatus/<?= $admin->USER_ID ?>/<?= $admin->STATUS ?>?empList=1">
+                                    <?= $admin->STATUS == 1 ? 'Deactivate' : 'Activate' ?>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 <?php } ?>

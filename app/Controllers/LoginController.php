@@ -66,14 +66,13 @@ class LoginController extends BaseController
 
         $user = $this->UserModel->getUser($email);
 
-
-        if (!$rules) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Some Input is Invalid', 'status' => 'warning']);
-            return redirect()->to('/login');
-        }
         // check user exist
         if (!$user) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'User Does not Exist', 'status' => 'danger']);
+            return redirect()->to('/login');
+        }
+        if (!($user->STATUS)) {
+            $this->session->setFlashdata('FlashMessage', ['message' => 'User is Deactivated.', 'status' => 'Danger']);
             return redirect()->to('/login');
         }
         $LoginStatus = $this->UserModel->can_login($email, $password);

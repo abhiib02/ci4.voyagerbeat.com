@@ -179,7 +179,7 @@
 
 
         packages.forEach((package) => {
-            generatedList += `<a onclick="addPackageID(${package.PACKAGE_ID})"class="list-group-item list-group-item-action text-capitalize">${package.PACKAGE_NAME}</a>`;
+            generatedList += `<a onclick="addPackageID(${package.PACKAGE_ID})"class="list-group-item list-group-item-action text-capitalize">${package.PACKAGE_ID} | ${package.PACKAGE_NAME}</a>`;
         })
         packagesLists.forEach((packagesList) => {
             packagesList.innerHTML = generatedList;

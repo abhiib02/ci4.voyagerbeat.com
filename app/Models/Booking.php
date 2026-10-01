@@ -16,6 +16,7 @@ class Booking extends Model
 
     protected $allowedFields    = [
         'order_id',
+        'user_id',
         'name',
         'email',
         'gender',
@@ -56,6 +57,7 @@ class Booking extends Model
     // Validation
     protected $validationRules      = [
         'order_id'           => 'required',
+        'user_id'           => 'required',
         'name'               => 'required',
         'email'              => 'required|valid_email|max_length[255]',
         'gender'             => 'permit_empty|max_length[6]',
@@ -113,7 +115,24 @@ class Booking extends Model
             ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
             ->orderBy('ID', 'DESC')
             ->find();
-        return $this->select()->orderBy('ID', 'DESC')->findAll();
+        //return $this->select()->orderBy('ID', 'DESC')->findAll();
+    }
+    public function getBookingsByEmployeeID(int $employeeID): array
+    {
+        return $this->select('payments_table.*, users.USER_NAME as agent_name')
+            ->join('users', 'users.USER_ID = payments_table.agent', 'left')
+            ->where('payments_table.agent', $employeeID)
+            ->orderBy('ID', 'DESC')
+            ->find();
+    }
+    public function getBookingsByCustomerID(int $customerID): array
+    {
+        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->where('payments_table.user_id', $customerID)
+            ->orderBy('ID', 'DESC')
+            ->find();
+        return $this->where('user_id', $customerID)->orderBy('ID', 'DESC')->find();
     }
     public function getAllBookingsofAgentForDashboard(int $userID): array
     {

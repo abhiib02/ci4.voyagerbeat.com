@@ -107,9 +107,9 @@
                 <td>
                     <?php if ($isAdmin): ?>
                         <select data-field="customer_access" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>">
-                            <option class="" value="<?= esc($booking->customer_access) ?>"><?= (esc($booking->customer_access)) ? 'No' : 'Yes'; ?></option>
-                            <option class="" value="1">No</option>
-                            <option class="" value="0">Yes</option>
+                            <option class="" value="<?= esc($booking->customer_access) ?>"><?= (esc($booking->customer_access)) ? 'No ⏳' : 'Yes ✅'; ?></option>
+                            <option class="" value="1">No ⏳</option>
+                            <option class="" value="0">Yes ✅</option>
                         </select>
                     <?php else: ?>
                         <?= (esc($booking->customer_access)) ? 'No ⏳' : 'Yes ✅'; ?>
