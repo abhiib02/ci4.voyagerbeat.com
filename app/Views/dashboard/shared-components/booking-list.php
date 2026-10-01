@@ -151,10 +151,6 @@
                                             <td><?= $booking->contact ?></td>
                                         </tr>
                                         <tr>
-                                            <th>Adhaar Number</th>
-                                            <td><?= $booking->adhaar_number ?></td>
-                                        </tr>
-                                        <tr>
                                             <th>Booked Package</th>
                                             <td><a href="/packageid/<?= $booking->package_id; ?>"><?= $booking->package_id ?> | <?= $booking->package_name ?></a></td>
                                         </tr>
