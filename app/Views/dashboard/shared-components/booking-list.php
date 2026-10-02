@@ -42,7 +42,7 @@
                 </td>
                 <td>
                     <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
-                        <button class="btn btn-sm  btn-outline-dark" onclick='showTravelers(<?= $booking->pax_details ?>,<?= $booking->ID ?>)'>Show</button>
+                        <button id="showTravelerbtn" class="btn btn-sm btn-outline-dark" data-booking-id="<?= $booking->ID ?>" data-travelers="<?= esc($booking->pax_details, 'attr') ?>">Show</button>
                         <dialog class="border-1 rounded" id="travelers-dialog-<?= $booking->ID; ?>">
                             <div class="card">
                                 <div class="card-header">
@@ -223,14 +223,15 @@
 
                     <script>
                         async function copyLink() {
-                            const button = document.getElementById('copyLinkBtn');
+
                             // Get the current page URL (or replace with any link string)
-                            const link = button.dataset.link;
+                            const button = this.event.target;
+                            const link = this.event.target.dataset.link;
 
                             try {
                                 // Copy the text to the clipboard
                                 await navigator.clipboard.writeText(link);
-
+                                
                                 // Provide temporary visual feedback
                                 button.innerText = "Copied!";
                                 runToast('Link Copied', 'success');
@@ -238,7 +239,7 @@
                                     button.innerText = "Copy Link";
                                 }, 3500);
                             } catch (err) {
-                                runToast('Failed To Copy Link', 'danger');
+                                runToast(`Failed To Copy Link due to ${err}`, 'danger');
                             }
                         }
                     </script>

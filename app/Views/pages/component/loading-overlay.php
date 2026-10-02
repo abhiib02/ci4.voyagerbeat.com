@@ -1,242 +1,71 @@
 <style>
-    /* From Uiverse.io by Nawsome */
-    .pl {
-        width: 6em;
-        height: 6em;
-    }
-
-    .pl__ring {
-        animation: ringA 2s linear infinite;
-    }
-
-    .pl__ring--a {
-        stroke: #f42f25;
-    }
-
-    .pl__ring--b {
-        animation-name: ringB;
-        stroke: #f49725;
-    }
-
-    .pl__ring--c {
-        animation-name: ringC;
-        stroke: #255ff4;
-    }
-
-    .pl__ring--d {
-        animation-name: ringD;
-        stroke: #f42582;
-    }
-
-    /* Animations */
-    @keyframes ringA {
-
-        from,
-        4% {
-            stroke-dasharray: 0 660;
-            stroke-width: 20;
-            stroke-dashoffset: -330;
-        }
-
-        12% {
-            stroke-dasharray: 60 600;
-            stroke-width: 30;
-            stroke-dashoffset: -335;
-        }
-
-        32% {
-            stroke-dasharray: 60 600;
-            stroke-width: 30;
-            stroke-dashoffset: -595;
-        }
-
-        40%,
-        54% {
-            stroke-dasharray: 0 660;
-            stroke-width: 20;
-            stroke-dashoffset: -660;
-        }
-
-        62% {
-            stroke-dasharray: 60 600;
-            stroke-width: 30;
-            stroke-dashoffset: -665;
-        }
-
-        82% {
-            stroke-dasharray: 60 600;
-            stroke-width: 30;
-            stroke-dashoffset: -925;
-        }
-
-        90%,
-        to {
-            stroke-dasharray: 0 660;
-            stroke-width: 20;
-            stroke-dashoffset: -990;
-        }
-    }
-
-    @keyframes ringB {
-
-        from,
-        12% {
-            stroke-dasharray: 0 220;
-            stroke-width: 20;
-            stroke-dashoffset: -110;
-        }
-
-        20% {
-            stroke-dasharray: 20 200;
-            stroke-width: 30;
-            stroke-dashoffset: -115;
-        }
-
-        40% {
-            stroke-dasharray: 20 200;
-            stroke-width: 30;
-            stroke-dashoffset: -195;
-        }
-
-        48%,
-        62% {
-            stroke-dasharray: 0 220;
-            stroke-width: 20;
-            stroke-dashoffset: -220;
-        }
-
-        70% {
-            stroke-dasharray: 20 200;
-            stroke-width: 30;
-            stroke-dashoffset: -225;
-        }
-
-        90% {
-            stroke-dasharray: 20 200;
-            stroke-width: 30;
-            stroke-dashoffset: -305;
-        }
-
-        98%,
-        to {
-            stroke-dasharray: 0 220;
-            stroke-width: 20;
-            stroke-dashoffset: -330;
-        }
-    }
-
-    @keyframes ringC {
-        from {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: 0;
-        }
-
-        8% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -5;
-        }
-
-        28% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -175;
-        }
-
-        36%,
-        58% {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: -220;
-        }
-
-        66% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -225;
-        }
-
-        86% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -395;
-        }
-
-        94%,
-        to {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: -440;
-        }
-    }
-
-    @keyframes ringD {
-
-        from,
-        8% {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: 0;
-        }
-
-        16% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -5;
-        }
-
-        36% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -175;
-        }
-
-        44%,
-        50% {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: -220;
-        }
-
-        58% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -225;
-        }
-
-        78% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -395;
-        }
-
-        86%,
-        to {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: -440;
-        }
-    }
-
-    #loader {
+    /* ---- Loader ---- */
+    #form-loader {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.5);
-        backdrop-filter: blur(5px);
+        inset: 0;
         z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 23, 42, .65);
+        backdrop-filter: blur(3px);
+    }
+
+    #form-loader.show {
+        display: flex;
+    }
+
+    #form-loader .box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 28px 36px;
+        min-width: 280px;
+        max-width: 90vw;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, .25);
+    }
+
+    #form-loader .spinner {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 16px;
+        border: 4px solid #e2e8f0;
+        border-top-color: #2563eb;
+        border-radius: 50%;
+        animation: fl-spin .8s linear infinite;
+    }
+
+    #form-loader h4 {
+        margin: 0 0 6px;
+        font-size: 18px;
+    }
+
+    #form-loader p {
+        margin: 0;
+        font-size: 14px;
+        color: #64748b;
+        min-height: 20px;
+    }
+
+    #form-loader small {
+        display: block;
+        margin-top: 12px;
+        color: #94a3b8;
+        font-size: 12px;
+    }
+
+    @keyframes fl-spin {
+        to {
+            transform: rotate(360deg);
+        }
     }
 </style>
-<div id="loader" class="hide">
-    <div class="full-vh grid-center">
-        <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
-            <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
-            <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
-            <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
-            <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke="#000" stroke-width="20" stroke-dasharray="0 440" stroke-linecap="round"></circle>
-        </svg>
+<!-- Loader markup -->
+<div id="form-loader" role="alert" aria-live="polite">
+    <div class="box">
+        <div class="spinner"></div>
+        <h4 id="fl-title">Please wait...</h4>
+        <p id="fl-message"></p>
+        <small>Please don't close or refresh this page.</small>
     </div>
 </div>

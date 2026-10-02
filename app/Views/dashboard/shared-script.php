@@ -39,12 +39,17 @@
     });
 </script>
 <script>
+    document.addEventListener("click", (e) => {
+        const btn = e.target.closest("#showTravelerbtn");
+        if (!btn) return;
+        const travelers = JSON.parse(btn.dataset.travelers);
+        showTravelers(travelers, btn.dataset.bookingId);
+    });
+
     function showTravelers(data, id) {
         document.getElementById(`travelers-dialog-${id}`).showModal();
         // Group data
         const TravelersData = data;
-
-
         let result = "";
         TravelersData.forEach((traveler) => {
 
