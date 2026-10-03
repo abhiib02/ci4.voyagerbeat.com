@@ -1,10 +1,10 @@
-<?php if ($isAdmin ?? false): ?>
+<?php if (auth('Admin')): ?>
     <a href="/dashboard">Dashboard</a> |
     <a href="/logout">Logout</a>
-<?php elseif ($isEmployee ?? false): ?>
+<?php elseif (auth('Employee')): ?>
     <a href="/employee-dashboard">Employee Dashboard</a> |
     <a href="/logout">Logout</a>
-<?php elseif ($isUser ?? false): ?>
+<?php elseif (auth('User')): ?>
     <a href="/account">Account</a> |
     <a href="/logout">Logout</a>
 <?php else: ?>

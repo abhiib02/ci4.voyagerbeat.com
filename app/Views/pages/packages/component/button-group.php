@@ -4,7 +4,7 @@
     <?= view('pages/packages/component/admin-actions', ['package' => $package]) ?>
 
     <div class="d-flex mb-1">
-        <?php if ($isUser | $isEmployee | $isAdmin): ?>
+        <?php if (auth('Admin', 'Employee', 'User')): ?>
             <?php if (!$package->REQUEST_PRICE): ?>
                 <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-lg btn-theme btn-success w-100" style="width:250px;">Book Now <i class='bx bx-right-arrow-alt'></i></a>
             <?php else: ?>

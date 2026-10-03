@@ -42,7 +42,7 @@ abstract class BaseController extends Controller
     {
         // Load here all helpers you want to be available in your controllers that extend BaseController.
         // Caution: Do not put the this below the parent::initController() call below.
-        $this->helpers = ['country', 'useragent', 'navbar', 'custom', 'dates'];
+        $this->helpers = ['country', 'useragent', 'navbar', 'custom', 'dates', 'role'];
 
 
         // Caution: Do not edit this line.
@@ -86,28 +86,9 @@ abstract class BaseController extends Controller
         }
         //Caching Nav Data As it will be used on every page ⬆
 
-        \Config\Services::renderer()->setData([
-            'isAdmin' => $this->AuthCheckAdmin(),
-            'isEmployee'  => $this->AuthCheckEmployee(),
-            'isUser'  => $this->AuthCheck(),
 
-        ]);
     }
-    protected function AuthCheck()
-    {
-        $condition = ($this->session->has('logged_in') && $this->session->get('role') == 0);
-        return ($condition) ? 1 : 0;
-    }
-    protected function AuthCheckAdmin()
-    {
-        $condition = ($this->session->has('logged_in') && $this->session->get('role') == 1);
-        return ($condition) ? 1 : 0;
-    }
-    protected function AuthCheckEmployee()
-    {
-        $condition = ($this->session->has('logged_in') && $this->session->get('role') == 2);
-        return ($condition) ? 1 : 0;
-    }
+
     protected function Render_Page(string $view, array $data)
     {
         return

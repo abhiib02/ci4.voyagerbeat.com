@@ -1,6 +1,5 @@
 function runToast(message, status, duration) {
-
-  let styleTag = document.createElement('style');
+  let styleTag = document.createElement("style");
   styleTag.innerHTML = `
   
   .eztoast{
@@ -12,14 +11,16 @@ function runToast(message, status, duration) {
   top:100px;
   right:50px;
   border-radius:5px;
-  background:var(--status,#aaa);
+  border:1px solid var(--status,#aaa);
+  background-color:color-mix(in srgb, var(--status,#aaa) 20%, #fff);
   box-shadow:1px 1px 2px #999;
   opacity:0;
   pointer-events:none;
   z-index:10000;
   & p {
-    text-shadow: 0 px 0 px 1 px #000;
-    color:#fff !important;
+    font-size:14px;
+    font-weight:bold;
+    color:#222 !important;
     margin: 0;
   }
 }
@@ -48,29 +49,28 @@ function runToast(message, status, duration) {
     display:none;
   }
 }`;
-  let toast = document.createElement('div');
-  toast.classList.add('eztoast');
+  let toast = document.createElement("div");
+  toast.classList.add("eztoast");
   document.body.appendChild(styleTag);
   document.body.appendChild(toast);
 
-
   let statusObject = {
-    danger: '#dc3545',
-    warning: '#ffc107',
-    success: '#198754',
-    info: '#0d6efd',
-  }
+    danger: "#dc3545",
+    warning: "#ffc107",
+    success: "#198754",
+    info: "#0d6efd",
+  };
   if (status) {
-    toast.style.setProperty('--status', statusObject[status.toLowerCase()])
+    toast.style.setProperty("--status", statusObject[status.toLowerCase()]);
   }
   if (duration) {
-    toast.style.setProperty('--duration', duration)
+    toast.style.setProperty("--duration", duration);
   }
 
   toast.innerHTML = `<p>${message}</p>`;
-  toast.classList.add('toast-show');
-  toast.addEventListener('animationend', () => {
+  toast.classList.add("toast-show");
+  toast.addEventListener("animationend", () => {
     document.body.removeChild(toast);
     document.body.removeChild(styleTag);
-  })
+  });
 }

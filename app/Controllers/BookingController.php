@@ -27,7 +27,7 @@ class BookingController extends BaseController
 
     public function Book(int $packageID)
     {
-        if (!$this->AuthCheck() && !$this->AuthCheckAdmin() && !$this->AuthCheckEmployee()) {
+        if (!auth('User') && !auth('Admin') && !auth('Employee')) {
             return $this->RedirectWithtoast('Please Login to Book', 'info', '/login');
         }
         $this->data['ValidCoupons'] = $this->CouponModel->getAllValidCoupons();
@@ -63,7 +63,7 @@ class BookingController extends BaseController
         }
 
         // Whitelist — only fields explicitly listed here can be patched via this endpoint
-        $allowedFields = ['note', 'status', 'total_package_cost', 'customer_access']; // extend as needed
+        $allowedFields = ['note', 'status', 'amount', 'total_package_cost', 'customer_access', 'adults']; // extend as needed
 
         if (! in_array($field, $allowedFields, true)) {
             return $this->response->setStatusCode(422)->setJSON(['error' => 'Field not editable']);

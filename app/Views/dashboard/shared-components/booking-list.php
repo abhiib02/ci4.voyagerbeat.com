@@ -34,7 +34,7 @@
 
                 <td><?= $booking->contact ?></td>
                 <td>
-                    <?php if ($isAdmin): ?>
+                    <?php if (auth('Admin')): ?>
                         <input type="number" class="form-control form-control-sm" data-field="adults" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->adults ?>">
                     <?php else: ?>
                         <?= $booking->adults ?>
@@ -63,14 +63,14 @@
                 </td>
                 <td class="text-capitalize"><?= $booking->paymode ?></td>
                 <td>
-                    <?php if ($isAdmin): ?>
+                    <?php if (auth('Admin')): ?>
                         <input type="number" class="form-control form-control-sm" data-field="amount" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->amount ?>">
                     <?php else: ?>
                         <?= $booking->amount ?>
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if ($isAdmin): ?>
+                    <?php if (auth('Admin')): ?>
                         <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>" <?= ($booking->status != 'Pending') ? 'readonly' : ''; ?>>
                     <?php else: ?>
                         <?= $booking->total_package_cost ?>
@@ -105,7 +105,7 @@
                     <textarea name="note" data-field="note" class="form-control form-control-sm" data-booking-id="<?= $booking->ID; ?>"><?= esc($booking->note) ?></textarea>
                 </td>
                 <td>
-                    <?php if ($isAdmin): ?>
+                    <?php if (auth('Admin')): ?>
                         <select data-field="customer_access" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>">
                             <option class="" value="<?= esc($booking->customer_access) ?>"><?= (esc($booking->customer_access)) ? 'No ⏳' : 'Yes ✅'; ?></option>
                             <option class="" value="1">No ⏳</option>
@@ -231,7 +231,7 @@
                             try {
                                 // Copy the text to the clipboard
                                 await navigator.clipboard.writeText(link);
-                                
+
                                 // Provide temporary visual feedback
                                 button.innerText = "Copied!";
                                 runToast('Link Copied', 'success');

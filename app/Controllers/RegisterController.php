@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models;
+
 use App\Models\User;
 use App\Models\Package;
-use App\Models\Destination;
 use App\Models\Option;
 use Config\Services;
 
@@ -29,13 +28,13 @@ class RegisterController extends BaseController
     {
         $this->data['noindex'] = 1;
 
-        if ($this->AuthCheckAdmin()) {
+        if (auth('Admin')) {
             return redirect()->route('Admin.Dashboard');
         }
-        if ($this->AuthCheckEmployee()) {
+        if (auth('Employee')) {
             return redirect()->route('Employee.Dashboard');
         }
-        if ($this->AuthCheck()) {
+        if (auth('User')) {
             return redirect()->route('Customer.Dashboard');
         }
         return $this->Render_Page('signup', $this->data);
@@ -47,11 +46,23 @@ class RegisterController extends BaseController
             'email' => 'required|valid_email',
             'password' => 'required|min_length[8]',
             'cpassword' => 'required|min_length[8]',
-            'mobile' => 'required|numeric|exact_length[10]',
+            'mobile' => [
+                'label'  => 'Mobile Number',
+                'rules'  => 'required|numeric|exact_length[10]|is_unique[users.USER_CONTACT]',
+                'errors' => [
+                    'required'    => 'We need your mobile number to register your account.',
+                    'numeric'     => 'Please provide a valid numeric format for your {field}.',
+                    'exact_length' => 'Your {field} must be exactly 10 digits long.',
+                    'is_unique'   => 'Sorry, that{field} is already registered. Please use a different {field}.',
+                ]
+            ]
+
         ];
         if (!$this->validate($rules)) {
+            $errors = $this->validator->getErrors();
+            $firstError = current($errors);
             $this->session->setFlashdata('FlashMessage', [
-                'message' => 'Some Input is Invalid',
+                'message' => $firstError ?? 'Some Input is Invalid',
                 'status'  => 'warning'
             ]);
             return redirect()->to('/signup')->withInput();
@@ -61,7 +72,9 @@ class RegisterController extends BaseController
         $queryData = [
             "USER_NAME" => $this->request->getPost('name'),
             "USER_EMAIL" => $this->request->getPost('email'),
-            "USER_CONTACT" => $this->request->getPost('mobile')
+            "USER_CONTACT" => $this->request->getPost('mobile'),
+            "ROLE" => 0,
+            "STATUS" => 1,
         ];
         $password = $this->request->getPost('password');
         $cpassword = $this->request->getPost('cpassword');
@@ -78,7 +91,13 @@ class RegisterController extends BaseController
             return redirect()->to('/login');
         }
         $queryData['PASSWORD'] = password_hash((string) $password, PASSWORD_DEFAULT);
-        $this->UserModel->insertUser($queryData);
+        $result = $this->UserModel->insertUser($queryData);
+
+        if ($result === false) {
+            //dd($this->UserModel->errors());
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Some error occurred, Please Try Again', 'status' => 'danger']);
+            return redirect()->to('/login');
+        }
         $this->session->setFlashdata('FlashMessage', ['message' => 'Thank You For Signing Up', 'status' => 'success']);
         return redirect()->to('/login');
     }
@@ -124,6 +143,8 @@ class RegisterController extends BaseController
         $queryData['USER_NAME'] = $name;
         $queryData['USER_EMAIL'] = $email;
         $queryData['PASSWORD'] = password_hash((string) $password, PASSWORD_DEFAULT);
+        $queryData['ROLE'] = 0;
+        $queryData['STATUS'] = 1;
 
         $this->UserModel->insertUser($queryData);
 

@@ -23,13 +23,13 @@ class LoginController extends BaseController
     {
         $this->data['noindex'] = 1;
 
-        if ($this->AuthCheckAdmin()) {
+        if (auth('Admin')) {
             return redirect()->route('Admin.Dashboard');
         }
-        if ($this->AuthCheckEmployee()) {
+        if (auth('Employee')) {
             return redirect()->route('Employee.Dashboard');
         }
-        if ($this->AuthCheck()) {
+        if (auth('User')) {
             return redirect()->route('Customer.Dashboard');
         }
         return $this->Render_Page('login', $this->data);
