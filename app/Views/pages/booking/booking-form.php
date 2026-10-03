@@ -27,7 +27,8 @@
         <input type="hidden" name="package_name" :value="pkg.PACKAGE_NAME">
         <input type="hidden" name="bookingamount" :value="pkg.BOOKING_AMOUNT">
         <input type="hidden" name="amounttopay" :value="payNowAmount">
-        <input type="hidden" name="pax_details" :value="paxDetailsJson">
+        <textarea name="pax_details" hidden id="">{{paxDetailsJson}}</textarea>
+
         <div class="container mb-5">
             <div class="row g-2">
 
@@ -46,6 +47,26 @@
                             <div class="accordion-collapse collapse scroll-margin" :class="{show: openIndex === 0}" ref="section0">
                                 <div class="accordion-body">
 
+                                    <h6 class="fw-bold mb-3">Account Holder</h6>
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-12 col-md-3">
+                                            <label class="form-label">Name</label>
+                                            <input type="text" name="name" class="form-control" value="<?= session()->get('name') ?>" readonly>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <label class="form-label">Gender</label>
+                                            <input type="text" name="gender" class="form-control" value="<?= session()->get('gender') ?>" readonly>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <label class="form-label">Contact No</label>
+                                            <input type="text" name="mobile" class="form-control" value="<?= session()->get('contact') ?>" readonly>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="email" class="form-control" value="<?= session()->get('email') ?>" readonly>
+                                        </div>
+                                    </div>
+
                                     <div class="row mb-3">
                                         <div class="col-6 col-md-4">
                                             <label class="form-label fw-bold">Number of Adults</label>
@@ -54,39 +75,7 @@
                                     </div>
                                     <hr>
 
-                                    <h6 class="fw-bold mb-3">Personal Details</h6>
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-12 col-md-3">
-                                            <label class="form-label">Name</label>
-                                            <input type="text" name="name" class="form-control" :class="{'is-invalid': errors.name}" v-model.trim="lead.name" required>
-                                        </div>
-                                        <div class="col-6 col-md-3">
-                                            <label class="form-label">Gender</label>
-                                            <select name="gender" class="form-select" :class="{'is-invalid': errors.gender}" v-model="lead.gender" required>
-                                                <option value="" disabled selected>Choose option</option>
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-6 col-md-3">
-                                            <label class="form-label">Contact No</label>
-                                            <input type="number" name="mobile" inputmode="numeric"
-                                                pattern="\d{1,10}"
-                                                maxlength="10" class="form-control" :class="{'is-invalid': errors.mobile}" v-model="lead.mobile" required>
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <label class="form-label">Email</label>
-                                            <input type="email" name="email" class="form-control" :class="{'is-invalid': errors.email}" v-model.trim="lead.email" required>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <label class="form-label">Sharing</label>
-                                            <select name="sharing[]" class="form-select" :class="{'is-invalid': errors.sharing}" v-model="lead.sharing" required>
-                                                <option value="" disabled selected>Choose your option</option>
-                                                <option v-for="opt in sharingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
+
 
                                     <div v-for="(t, i) in travelers" :key="t.id" class="border-top pt-3 mb-3">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -112,8 +101,8 @@
                                                 <input type="number" inputmode="numeric" class="form-control" v-model="t.contact" required>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" v-model.trim="t.email" required>
+                                                <label class="form-label">Boarding City</label>
+                                                <input type="text" class="form-control" v-model.trim="t.boarding_city" required>
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <label class="form-label">Sharing</label>
@@ -122,6 +111,7 @@
                                                     <option v-for="opt in sharingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
                                                 </select>
                                             </div>
+
                                         </div>
                                     </div>
 
@@ -213,51 +203,7 @@
 
                 <!-- RIGHT COLUMN: SUMMARY -->
                 <div class="col-12 col-lg-4 hide-on-mobile">
-                    <div id="confirm-details" class="card mb-2">
-                        <div class="card-header">
-                            Booking Details
-                        </div>
-                        <div class="card-body" v-if="lead.name">
-                            <table class="table">
-                                <tr>
-                                    <th colspan="2">Traveler Detail</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">{{lead.name}} • {{lead.gender}} • {{lead.mobile}} • {{lead.email}}</td>
-                                </tr>
-                                <tr>
-                                    <th colspan="2">Sharing</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">{{lead.sharing.split('|')[1]}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Departure Date</th>
-                                    <th>Boarding</th>
-                                </tr>
-                                <tr>
-                                    <td><em>{{ selectedDate.split('|')[0] }}</em></td>
-                                    <td><em>{{ travelMode.split('|')[1] }}</em></td>
-                                </tr>
-                                <tr>
-                                    <th colspan="2">Pax Detail</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <ol>
-                                            <li v-for="t in parsedTravelers" :key="t.traveler">
-                                                <b>{{ t.name }}</b> | {{ t.sharing.split('|')[1] || t.sharing }}
-                                            </li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                            </table>
 
-
-
-
-                        </div>
-                    </div>
                     <div id="details-right" class="card scroll-margin">
                         <div class="card-header">
                             Costing Structure
@@ -509,17 +455,11 @@
 
 
             // ---------------- Form state ----------------
-            const lead = reactive({
-                name: '',
-                gender: '',
-                mobile: '',
-                email: '',
-                sharing: ''
-            });
-            const travelers = reactive([]); // additional travelers beyond the lead
+
+            const travelers = reactive([]);
             let travelerSeq = 1;
 
-            const adults = computed(() => 1 + travelers.length);
+            const adults = computed(() => travelers.length);
 
             const selectedDate = ref('');
             const travelMode = ref('');
@@ -530,11 +470,6 @@
 
             const openIndex = ref(0);
             const errors = reactive({
-                name: false,
-                gender: false,
-                mobile: false,
-                email: false,
-                sharing: false,
                 date: false,
             });
             const errorMessage = ref('');
@@ -616,8 +551,8 @@
                     name: '',
                     gender: '',
                     contact: '',
-                    email: '',
-                    sharing: ''
+                    sharing: '',
+                    boarding_city: ''
                 });
             }
 
@@ -650,11 +585,10 @@
             // ---------------- Main calculation ----------------
             const calc = computed(() => {
                 const tmode = parseInt(travelMode.value, 10);
-                const allSharing = [lead.sharing, ...travelers.map(t => t.sharing)];
+                const allSharing = [...travelers.map(t => t.sharing)];
                 const indices = allSharing.map(parseSharingIndex);
 
-                const ready = !!lead.sharing &&
-                    travelers.every(t => t.sharing) &&
+                const ready = travelers.every(t => t.sharing) &&
                     !!selectedDate.value &&
                     !isNaN(tmode) &&
                     indices.every(i => i !== null);
@@ -732,25 +666,21 @@
             // JSON blob for the hidden pax_details field, kept in sync automatically
             // since it's a computed value re-evaluated whenever travelers change.
             const paxDetailsJson = computed(() => {
-                const paxDetails = {};
-                travelers.forEach((t, i) => {
-                    const n = i + 2;
-                    paxDetails[`traveler_${n}_name`] = t.name;
-                    paxDetails[`traveler_${n}_gender`] = t.gender;
-                    paxDetails[`traveler_${n}_contact`] = t.contact;
-                    paxDetails[`traveler_${n}_email`] = (t.email || '').toLowerCase();
-                    paxDetails[`traveler_${n}_sharing`] = (t.sharing || '').toLowerCase();
-                });
-                return JSON.stringify(paxDetails);
+                return JSON.stringify(
+                    travelers.map(t => ({
+                        name: t.name,
+                        gender: t.gender,
+                        contact: t.contact,
+                        boarding_city: t.boarding_city,
+                        sharing: (t.sharing.split('|')[1] || '').toLowerCase(),
+                    }))
+                );
             });
 
             const storageKey = `voyager_booking_${pkg.PACKAGE_ID}`;
 
             function saveFormState() {
                 const state = {
-                    lead: {
-                        ...lead
-                    },
                     travelers: travelers.map(t => ({
                         ...t
                     })),
@@ -802,7 +732,7 @@
                 if (!stillValid) selectedDate.value = '';
             }
             watch(
-                [lead, travelers, selectedDate, travelMode, paymode, couponCode, couponApplied, couponDiscount, openIndex],
+                [travelers, selectedDate, travelMode, paymode, couponCode, couponApplied, couponDiscount, openIndex],
                 saveFormState, {
                     deep: true
                 }
@@ -907,7 +837,6 @@
 
             return {
                 pkg,
-                lead,
                 travelers,
                 adults,
                 selectedDate,

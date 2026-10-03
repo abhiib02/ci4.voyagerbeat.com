@@ -198,7 +198,7 @@
                                         <div class="col-6 col-md-3">
                                             <div class="form-floating mb-3">
 
-                                                <input type="hidden" class="form-control-plaintext name" required value="<?= $pax->gender ?>" readonly>
+                                                <input type="hidden" class="form-control-plaintext gender" required value="<?= $pax->gender ?>" readonly>
                                                 <select class="form-select gender" id="gender" disabled>
                                                     <option disabled="" selected="" value=""><?= $pax->gender ?></option>
                                                     <option value="Male">Male</option>
@@ -217,7 +217,7 @@
                                         <div class="col-12 col-md-3">
                                             <div class="form-floating mb-3">
 
-                                                <input type="hidden" class="form-control-plaintext name" required value="<?= $pax->sharing ?>" readonly>
+                                                <input type="hidden" class="form-control-plaintext sharing" required value="<?= $pax->sharing ?>" readonly>
                                                 <select id="Sharing" class="form-select sharing" required disabled>
                                                     <option value="" selected><?= $pax->sharing ?></option>
                                                     <?php if (!empty($PackageData->INFO_P1) && !$PackageData->INFO_P1 == 0): ?>
@@ -292,6 +292,7 @@
                                 <option value="Repeat">Repeat</option>
                                 <label for="weight">Where did you hear about us?</label>
                             </select>
+                            <label for="heard">Where did you hear about us?</label>
                         </div>
                     </div>
                     <div class="card-footer"><button type="button" class="btn btn-secondary prev">Previous</button>
