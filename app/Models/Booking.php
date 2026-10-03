@@ -57,7 +57,7 @@ class Booking extends Model
     // Validation
     protected $validationRules      = [
         'order_id'           => 'required',
-        'user_id'           => 'required',
+        'user_id'            => 'required',
         'name'               => 'required',
         'email'              => 'required|valid_email|max_length[255]',
         'gender'             => 'permit_empty|max_length[6]',

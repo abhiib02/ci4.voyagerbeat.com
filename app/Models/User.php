@@ -89,7 +89,7 @@ class User extends Model
 
     public function getUser(string $email): ?object
     {
-        return $this->select('USER_ID, USER_NAME, USER_EMAIL, ROLE, STATUS, USER_CONTACT')
+        return $this->select()
             ->where('USER_EMAIL', $email)
             ->first();
     }

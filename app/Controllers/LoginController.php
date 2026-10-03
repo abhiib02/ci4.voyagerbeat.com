@@ -86,6 +86,8 @@ class LoginController extends BaseController
             'id' => $user->USER_ID,
             'name' => $user->USER_NAME,
             'email' => $user->USER_EMAIL,
+            'contact' => $user->USER_CONTACT,
+            'gender' => $user->USER_GENDER,
             'logged_in' => true,
             'role' => (int)$user->ROLE,
         ];
@@ -134,6 +136,8 @@ class LoginController extends BaseController
             'id' => $user->USER_ID,
             'name' => $user->USER_NAME,
             'email' => $user->USER_EMAIL,
+            'contact' => $user->USER_CONTACT,
+            'gender' => $user->USER_GENDER,
             'logged_in' => true,
             'role' => (int)$user->ROLE,
         ];

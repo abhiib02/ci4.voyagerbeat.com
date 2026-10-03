@@ -49,6 +49,10 @@ input[type="radio"] {
   --theme-border-radius: 10px;
   color-scheme: light;
   --defaultBg: url("/assets/hero-images/1.jpg");
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
 }
 /* Default (Dark) Styles */
 /* :root {

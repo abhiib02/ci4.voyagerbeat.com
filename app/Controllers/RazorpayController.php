@@ -398,35 +398,36 @@ class RazorpayController extends BaseController
 
     public function saveBookingData(string $order_id, array $BookingData)
     {
+        $data['user_id'] = (int)session()->get('id');
         $data['order_id'] = $order_id;
         $data['name'] = (string)$BookingData['name'];
         $data['email'] = (string)$BookingData['email'];
         $data['gender'] = (string)$BookingData['gender'];
-        $data['contact'] = (string)$BookingData['contact'];
         $data['package_id'] = (int)$BookingData['package_id'];
         $data['package_name'] = (string)$BookingData['package_name'];
-        $data['travelmode'] = (string)$BookingData['travelmode'];
-        $data['sharing'] = $BookingData['sharingArr'][0];
-        $data['coupon_used'] = (string)$BookingData['coupon_code'];
         $data['adults'] = (int)$BookingData['adults'];
         $data['pax_details'] = (string)$BookingData['pax_details'];
+        $data['sharing'] = $BookingData['sharingArr'][0];
+        $data['coupon_used'] = (string)$BookingData['coupon_code'];
         $data['date'] = (string)$BookingData['date'];
-        $data['paymode'] = (string)$BookingData['paymode'];
-        $data['total_package_cost'] = (int)$BookingData['GrandTotal'];
-        $data['amount'] = (int)$BookingData['AmountPayable'];
-
         $data['trip_type'] = (string)$BookingData['trip_type'];
         $data['boarding_city'] = (string)$BookingData['boarding_city'];
         $data['address'] = (string)$BookingData['address'];
+        $data['travelmode'] = (string)$BookingData['travelmode'];
+        $data['paymode'] = (string)$BookingData['paymode'];
+        $data['contact'] = (string)$BookingData['contact'];
         $data['contact_trip'] = (int)$BookingData['contact_trip'];
         $data['contact_alt'] = (int)$BookingData['contact_alt'];
         $data['heard'] = (string)$BookingData['heard'];
-        $data['pay_screenshot'] = (string)$BookingData['pay_screenshot'];
-        $data['adhaar_number'] = (int)$BookingData['adhaar_number'];
-
-
-
+        $data['amount'] = (int)$BookingData['AmountPayable'];
         $data['status'] = 'Pending';
+        $data['pay_screenshot'] = (string)$BookingData['pay_screenshot'];
+        $data['total_package_cost'] = (int)$BookingData['GrandTotal'];
+
+
+
+
+
 
         $insertResult = $this->BookingModel->insertBooking($data); // Calling Modal Function for Insertion
 

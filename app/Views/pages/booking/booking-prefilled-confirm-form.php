@@ -41,7 +41,7 @@
             </ul>
         <?php endif ?>
 
-        <progress value="0" max="100" id="progress" style="width:100%;"></progress>
+
         <form id="multiStep-booking-confirmation-form" method="post" action="/booking-confirmation-process" enctype="multipart/form-data">
             <input type="hidden" name="order_id" value="<?= esc($BookingData->order_id) ?>">
             <input type="hidden" name="prefill" value="1">
@@ -54,25 +54,38 @@
                     <div class="card-header">Basic Information</div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-4">
-                                <div class="form-group">
+                            <div class="col-6 col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control-plaintext" name="name" id="name" required value="<?= esc($BookingData->name) ?>" readonly>
                                     <label for="name">Name:</label>
-                                    <input type="text" class="form-control" name="name" id="name" required value="<?= esc($BookingData->name) ?>" readonly>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <div class="form-group">
-                                    <label for="contact">Email</label>
+                            <div class="col-6 col-md-6">
+                                <div class="form-floating mb-3">
                                     <input
                                         type="email"
-                                        class="form-control"
+                                        class="form-control-plaintext"
                                         id="email"
                                         name="email" required value="<?= esc($BookingData->email) ?>" readonly>
+                                    <label for="email">Email</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <div class="form-group">
-                                    <label for="contact">Contact (For During Trip)</label>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+
+                                    <input type="hidden" name="gender" value="<?= esc($BookingData->gender) ?>">
+                                    <select class="form-control-plaintext" id="gender" name="gender" required disabled>
+                                        <option value="" selected disabled><?= esc($BookingData->gender) ?></option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <label for="gender">Gender:</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+
                                     <input
                                         type="text"
                                         class="form-control"
@@ -80,12 +93,13 @@
                                         name="contact_trip"
                                         inputmode="numeric"
                                         pattern="\d{1,10}"
-                                        maxlength="10" required>
+                                        minlength="10" maxlength="10" required>
+                                    <label for="contact_trip">Contact (For During Trip)</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <div class="form-group">
-                                    <label for="contact">Alternative Contact (For Emergency Purpose)</label>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+
                                     <input
                                         type="text"
                                         class="form-control"
@@ -93,32 +107,23 @@
                                         name="contact_alt"
                                         inputmode="numeric"
                                         pattern="\d{1,10}"
-                                        maxlength="10" required>
+                                        minlength="10" maxlength="10" required>
+                                    <label for="contact_alt">Alternative Contact (For Emergency Purpose)</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <div class="form-group">
-                                    <label for="contact">Address</label>
+                            <div class="col-12 col-md-12">
+                                <div class="form-floating mb-3">
+
                                     <input
                                         type="text"
                                         class="form-control"
                                         id="address"
                                         name="address"
                                         required>
+                                    <label for="address">Address</label>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <div class="form-group">
-                                    <label for="gender">Gender:</label>
-                                    <input type="hidden" name="gender" value="<?= esc($BookingData->gender) ?>">
-                                    <select class="form-control" id="gender" name="gender" required disabled>
-                                        <option value="" selected disabled><?= esc($BookingData->gender) ?></option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="card-footer">
@@ -132,30 +137,34 @@
                 <div class="card">
                     <div class="card-header">Package Related Details</div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="place">Trip Type</label>
+                        <div class="form-floating mb-3">
+
+
                             <select name="trip_type" id="trip_type" class="form-select" required>
-                                <option value="" selected disabled>Choose Trip Type</option>
+                                <option value="" selected disabled>Choose One</option>
                                 <option value="community">Community trips with Strangers</option>
                                 <option value="personalised">Personalised Trip</option>
                             </select>
+                            <label for="trip_type">Trip Type</label>
                         </div>
 
-                        <div class="form-group" id="custom-date">
-                            <label for="Date">Date</label>
+                        <div class="form-floating mb-3" id="custom-date">
+
                             <input type="hidden" name="date" value="<?= esc($BookingData->date) ?>" required>
                             <select id="date" name="date" class="form-select" required disabled>
                                 <option value="" disabled selected><?= esc($BookingData->date) ?></option>
                             </select>
+                            <label for="Date">Date</label>
                         </div>
 
-                        <div class="form-group">
-                            <label for="place">Travel Mode</label>
+                        <div class="form-floating">
+
                             <input type="hidden" name="travelmode" value="<?= esc($BookingData->travelmode) ?>" required>
-                            <select name="travelmode" class="form-select" required disabled>
-                                <option value="" Selected disabled><?= esc(substr($BookingData->travelmode, 2)) ?></option>
+                            <select name="travelmode" id="travelmode" class="form-select" required disabled>
+                                <option value="" Selected disabled><?= esc($BookingData->travelmode) ?></option>
 
                             </select>
+                            <label for="travelmode">Travel Mode</label>
                         </div>
 
 
@@ -180,33 +189,35 @@
                                     <h5>Traveler <?= $index + 1 ?></h5>
                                     <div class="row g-3">
                                         <div class="col-12 col-md-3">
-                                            <div class="form-group">
+                                            <div class="form-floating mb-3">
+
+                                                <input type="text" class="form-control-plaintext name" required value="<?= $pax->name ?>" readonly>
                                                 <label class="form-label">Name</label>
-                                                <input type="text" class="form-control name" required value="<?= $pax->name ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-3">
-                                            <div class="form-group">
-                                                <label class="form-label">Gender</label>
-                                                <input type="hidden" class="form-control name" required value="<?= $pax->gender ?>" readonly>
-                                                <select class="form-select gender" disabled>
+                                            <div class="form-floating mb-3">
+
+                                                <input type="hidden" class="form-control-plaintext name" required value="<?= $pax->gender ?>" readonly>
+                                                <select class="form-select gender" id="gender" disabled>
                                                     <option disabled="" selected="" value=""><?= $pax->gender ?></option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
                                                     <option value="Other">Other</option>
                                                 </select>
+                                                <label class="gender">Gender</label>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-3">
-                                            <div class="form-group">
+                                            <div class="form-floating mb-3">
+                                                <input type="number" inputmode="numeric" class="form-control-plaintext contact" value="<?= $pax->contact ?>" required readonly>
                                                 <label class="form-label">Mobile No.</label>
-                                                <input type="number" inputmode="numeric" class="form-control contact" value="<?= $pax->contact ?>" required readonly>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <div class="form-group">
-                                                <label class="form-label">Sharing</label>
-                                                <input type="hidden" class="form-control name" required value="<?= $pax->sharing ?>" readonly>
+                                            <div class="form-floating mb-3">
+
+                                                <input type="hidden" class="form-control-plaintext name" required value="<?= $pax->sharing ?>" readonly>
                                                 <select id="Sharing" class="form-select sharing" required disabled>
                                                     <option value="" selected><?= $pax->sharing ?></option>
                                                     <?php if (!empty($PackageData->INFO_P1) && !$PackageData->INFO_P1 == 0): ?>
@@ -225,24 +236,25 @@
                                                         <option value="<?= esc($PackageData->INFO_P5) ?>"><?= esc($PackageData->INFO_P5) ?></option>
                                                     <?php endif; ?>
                                                 </select>
+                                                <label class="form-label">Sharing</label>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <div class="form-group">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control-plaintext boarding_city" required value="<?= $pax->boarding_city ?>" readonly>
                                                 <label for="place">Boarding City</label>
-                                                <input type="text" class="form-control boarding_city" required value="<?= $pax->boarding_city ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <div class="form-group">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control adhaar_number" minlength="12" maxlength="12" id="" required>
                                                 <label for="place">Adhaar Card Number</label>
-                                                <input type="text" class="form-control adhaar_number" id="" required>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <div class="form-group">
-                                                <label for="adhaarCard_file" class="form-label">Adhaar Card (Upload):</label>
+                                            <div class="form-floating mb-3">
                                                 <input class="form-control" type="file" name="adhaarCard_file[]" id="adhaarCard_file" accept="image/*" capture="environment" required>
+                                                <label for="adhaarCard_file" class="form-label">Adhaar Card (Upload):</label>
                                             </div>
                                         </div>
                                     </div>
@@ -266,19 +278,19 @@
                 <div class="card">
                     <div class="card-header">Extra Details</div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="payment_screenshot_file" class="form-label">Payment Screenshot (Upload):</label>
+                        <div class="form-floating mb-3">
                             <input class="form-control" type="file" name="payment_screenshot_file" id="payment_screenshot_file">
+                            <label for="payment_screenshot_file" class="form-label">Payment Screenshot (Upload):</label>
                         </div>
 
-                        <div class="form-group">
-                            <label for="weight">Where did you hear about us?</label>
+                        <div class="form-floating mb-3">
                             <select class="form-select" name="heard" id="heard" required>
                                 <option value="Instagram">Instagram</option>
                                 <option value="Facebook">Facebook</option>
                                 <option value="Friend_Family">Friend & Family</option>
                                 <option value="Website">Website</option>
                                 <option value="Repeat">Repeat</option>
+                                <label for="weight">Where did you hear about us?</label>
                             </select>
                         </div>
                     </div>

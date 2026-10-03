@@ -36,8 +36,8 @@
   border-radius: var(--theme-border-radius);
 }
 
-.form-group:has(input[readonly]),
-.form-group:has(select[disabled]) {
+.form-floating:has(input[readonly]),
+.form-floating:has(select[disabled]) {
   opacity: 0.5;
   & label:after {
     content: "🔒";

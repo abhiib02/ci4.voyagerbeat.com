@@ -24,9 +24,6 @@
     <div class="text-center">
         <a href="/">Home</a> |
         <a href="/about">About Us</a> |
-        <a href="/destinations">Destinations</a> |
-
-
         <?= view('layout/footer-partials/role-based-navigation') ?>
 
     </div>

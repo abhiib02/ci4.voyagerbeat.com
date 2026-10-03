@@ -17,16 +17,36 @@
                 <div class="divider-text"><span>Use Email</span></div>
                 <form action="/signupvalidation" class="" method="post">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class=" mb-3">
                                 <label for="floatingInput">Name</label>
                                 <input type="text" class="form-control " id="floatingInput" name="name" placeholder="Name" required>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class=" mb-3">
                                 <label for="floatingInput">Email address</label>
                                 <input type="email" class="form-control " id="floatingInput" name="email" placeholder="name@example.com" required>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class=" mb-3">
+                                <label for="floatingInput">Gender</label>
+                                <div class="form-group">
+                                    <label class="btn btn-outline-dark" for="male">
+                                        <input type="radio" name="gender" id="male" value="Male" required>
+                                        Male
+                                    </label>
+                                    <label class="btn btn-outline-dark" for="female">
+                                        <input type="radio" name="gender" id="female" value="Female" required>
+                                        Female
+                                    </label>
+                                    <label class="btn btn-outline-dark" for="Other">
+                                        <input type="radio" name="gender" id="Other" value="Other" required>
+                                        Other
+                                    </label>
+
+                                </div>
                             </div>
                         </div>
                         <div class="col-12">

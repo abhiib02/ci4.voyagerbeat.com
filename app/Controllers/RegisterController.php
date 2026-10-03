@@ -44,6 +44,7 @@ class RegisterController extends BaseController
         $rules = [
             'name' => 'required',
             'email' => 'required|valid_email',
+            'gender' => 'required|in_list[Male,Female,Other]',
             'password' => 'required|min_length[8]',
             'cpassword' => 'required|min_length[8]',
             'mobile' => [
@@ -73,6 +74,7 @@ class RegisterController extends BaseController
             "USER_NAME" => $this->request->getPost('name'),
             "USER_EMAIL" => $this->request->getPost('email'),
             "USER_CONTACT" => $this->request->getPost('mobile'),
+            "USER_GENDER" => $this->request->getPost('gender'),
             "ROLE" => 0,
             "STATUS" => 1,
         ];

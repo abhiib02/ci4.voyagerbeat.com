@@ -48,9 +48,9 @@
 
 <script>
     const steps = document.querySelectorAll('.step');
-    const progress = document.querySelector('#progress');
-    let value = 100 / steps.length;
-    progress.value = value;
+    //const progress = document.getElementById('progress');
+    const value = 100 / (steps.length - 1);
+    //progress.value = 0;
     let currentStep = 0;
 
     document.querySelectorAll('.next').forEach(button => {
@@ -83,7 +83,7 @@
         const inputs = steps[step].querySelectorAll('input, select');
         for (let input of inputs) {
             if (!input.checkValidity()) {
-                console.log(input);
+
                 input.reportValidity();
                 return false;
             }
