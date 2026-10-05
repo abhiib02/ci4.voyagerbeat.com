@@ -1,6 +1,6 @@
  <div class="card">
      <div class="card-header">
-         <div class="fw-bold">Travel Buddy Bookings</div>
+         <div class="fw-bold">You as TravelBuddy</div>
      </div>
      <div class="card-body">
          <table class="table" id="datatable">
@@ -21,14 +21,9 @@
              <tbody>
                  <?php foreach (($CustomerAsTravelBuddy ?? []) as $tbbooking) { ?>
                      <tr>
-                         <td><?php echo $tbbooking->name; ?></td>
+                         <td><?= esc($tbbooking->name) ?></td>
 
-                         <td><?php
-                                $tbtime = explode(' ', $tbbooking->booking_date_utc);
-                                $UTCtime2 = strtotime($tbtime[1]);
-                                $INDIANTime2 = date("H:i:s", strtotime('+4 hours 30 minutes', $UTCtime2));
-                                echo $tbtime[0] . ' ' . $INDIANTime2;
-                                ?></td>
+                         <td><?= esc($tbbooking->created_at) ?>
 
                          <td><?php echo $tbbooking->adults; ?></td>
                          <td>

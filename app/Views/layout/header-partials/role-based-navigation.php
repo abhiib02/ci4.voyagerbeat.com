@@ -19,7 +19,6 @@
     <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
         Logout
     </a>
-    user
 <?php else: ?>
     <a class="list-group-item list-group-item-action" href="/login">
         Login

@@ -30,7 +30,7 @@
                                 <a type="button" class="btn btn-outline-primary" href="/toggleStatus/<?= $customer->USER_ID ?>/<?= $customer->STATUS ?>?empList=1">
                                     <?= $customer->STATUS == 1 ? 'Deactivate' : 'Activate' ?>
                                 </a>
-                                <a type="button" class="btn btn-outline-danger" href="/deleteUser/<?= $customer->USER_ID ?>">Delete User</a>
+                                <a type="button" class="btn btn-outline-danger" onclick="deleteCustomer()" data-href="/deleteUser/<?= $customer->USER_ID ?>">Delete User</a>
                             </div>
                         </td>
                     </tr>
@@ -39,3 +39,13 @@
         </table>
     </div>
 </div>
+<script>
+    function deleteCustomer() {
+
+        let deleteConfirm = window.confirm('Are You Sure Do you want to Delete This Customer ?');
+        if (deleteConfirm) {
+            window.location.href = this.event.target.dataset.href;
+        }
+        return;
+    }
+</script>

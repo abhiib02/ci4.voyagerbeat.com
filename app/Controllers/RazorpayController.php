@@ -425,10 +425,6 @@ class RazorpayController extends BaseController
         $data['total_package_cost'] = (int)$BookingData['GrandTotal'];
 
 
-
-
-
-
         $insertResult = $this->BookingModel->insertBooking($data); // Calling Modal Function for Insertion
 
         if ($insertResult === false) {

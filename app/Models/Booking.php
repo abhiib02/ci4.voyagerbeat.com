@@ -143,21 +143,55 @@ class Booking extends Model
             ->find();
         //return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
     }
-    public function getUserBookingsByEmail(string $email): array
-    {
-        return $this->where('email', $email)
-            ->findAll();
-    }
+
+
+
+
+    //--------------------- Email Based ------------------------------
+
     public function getUserBookingsCountByEmail(string $email): int
     {
         return $this->where('email', $email)->countAllResults();
+    }
+    public function getUserBookingsByEmail(string $email): array
+    {
+        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->where('payments_table.email', $email)
+            ->orderBy('ID', 'DESC')
+            ->find();
     }
     public function getBookingWherePaxEmailExist(string $email): array
     {
         return $this->like('pax_details', $email, 'both')->findAll();
     }
+
     public function getBookingCountWherePaxEmailExist(string $email): int
     {
         return $this->like('pax_details', $email, 'both')->countAllResults();
+    }
+
+    //--------------------- Contact / Mobile Based ------------------------------
+
+    public function getUserBookingsCountByContact(int $contact): int
+    {
+        return $this->where('contact', $contact)->countAllResults();
+    }
+    public function getUserBookingsByContact(int $contact): array
+    {
+        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->where('payments_table.contact', $contact)
+            ->orderBy('ID', 'DESC')
+            ->find();
+    }
+
+    public function getBookingWherePaxContactExist(string $contact): array
+    {
+        return $this->where('contact!=', $contact)->like('pax_details', $contact, 'both')->findAll();
+    }
+    public function getBookingCountWherePaxContactExist(string $contact): int
+    {
+        return $this->where('contact!=', $contact)->like('pax_details', $contact, 'both')->countAllResults();
     }
 }

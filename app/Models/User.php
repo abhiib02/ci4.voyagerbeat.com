@@ -18,6 +18,7 @@ class User extends Model
         'ROLE',
         'USER_EMAIL',
         'USER_CONTACT',
+        'USER_GENDER',
         'PASSWORD',
         'PASSWORD_RESET_TOKEN',
         'STATUS',

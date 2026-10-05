@@ -6,7 +6,7 @@ use App\Models;
 
 use App\Models\User;
 use App\Models\Package;
-use App\Models\Destination;
+use App\Models\Point;
 use App\Models\Option;
 use App\Models\Booking;
 use App\Models\Category;
@@ -20,7 +20,7 @@ class DashboardController extends BaseController
     public Option $OptionModel;
     public User $UserModel;
     public Coupon $CouponModel;
-    // public Destination $DestinationModel;
+    public Point $PointModel;
     public Booking $BookingModel;
     // public Category $CategoryModel;
 
@@ -30,8 +30,9 @@ class DashboardController extends BaseController
         $this->data['id'] = $this->session->get('id');
         $this->data['name'] = $this->session->get('name');
         $this->data['email'] = $this->session->get('email');
+        $this->data['contact'] = $this->session->get('contact');
         $this->data['noindex'] = 1;
-        // $this->DestinationModel = new Destination();
+        $this->PointModel = new Point();
         $this->PackageModel = new Package();
         $this->OptionModel = new Option();
         // $this->CategoryModel = new Category();
@@ -55,14 +56,14 @@ class DashboardController extends BaseController
     protected function AdminPages(): array
     {
         return [
-            'option-list'    => ['title' => 'Options',   'permission' => 'options.view'],
+            'all-bookings'   => ['title' => 'Bookings',  'permission' => 'bookings.view'],
             'packages-list'  => ['title' => 'Packages',  'permission' => 'packages.view'],
             'package-create' => ['title' => 'New Package', 'permission' => 'packages.create'],
             'admins-list'    => ['title' => 'Admins',    'permission' => 'admins.view'],
             'employee-list'  => ['title' => 'Employees', 'permission' => 'employees.view'],
             'customers-list' => ['title' => 'Customers', 'permission' => 'customers.view'],
-            'all-bookings'   => ['title' => 'Bookings',  'permission' => 'bookings.view'],
             'coupons'        => ['title' => 'Coupons',   'permission' => 'coupons.view'],
+            'option-list'    => ['title' => 'Options',   'permission' => 'options.view'],
         ];
     }
 
@@ -76,7 +77,7 @@ class DashboardController extends BaseController
     {
         return [
             'bookings'    => ['title' => 'My Bookings'],
-            'travelbuddy' => ['title' => 'Travel Buddy Bookings'],
+            'you-as-travelbuddy' => ['title' => 'You as Travel Buddy'],
         ];
     }
     // ------------------- Pages -----------------------//
@@ -166,14 +167,15 @@ class DashboardController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         $this->data['pagename'] = $pageName;
-        $this->data['CustomerBookingsCount'] = $this->BookingModel->getUserBookingsCountByEmail($this->data['email']);
-        $this->data['CustomerAsTravelBuddyCount'] = $this->BookingModel->getBookingCountWherePaxEmailExist($this->data['email']);
+        $this->data['CustomerBookingsCount'] = $this->BookingModel->getUserBookingsCountByContact($this->data['contact']);
+        $this->data['CustomerAsTravelBuddyCount'] = $this->BookingModel->getBookingCountWherePaxContactExist($this->data['contact']);
+        $this->data['Points'] = $this->PointModel->getUserPointsBalance((int) $this->data['id']);
         switch ($pageName) {
             case 'bookings':
-                $this->data['CustomerBookings'] = $this->BookingModel->getUserBookingsByEmail($this->data['email']);
+                $this->data['Bookings'] = $this->BookingModel->getUserBookingsByContact($this->data['contact']);
                 break;
-            case 'travelbuddy':
-                $this->data['CustomerAsTravelBuddy'] = $this->BookingModel->getUserBookingsByEmail($this->data['email']);
+            case 'you-as-travelbuddy':
+                $this->data['CustomerAsTravelBuddy'] = $this->BookingModel->getBookingWherePaxContactExist($this->data['contact']);
                 break;
         }
         return $this->Render_Page_dashboard('user-dashboard', $this->data);

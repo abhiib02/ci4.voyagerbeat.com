@@ -139,6 +139,10 @@
                                             <td><?= $booking->order_id ?></td>
                                         </tr>
                                         <tr>
+                                            <th>User ID</th>
+                                            <td><?= $booking->user_id ?></td>
+                                        </tr>
+                                        <tr>
                                             <th>Name</th>
                                             <td><?= $booking->name ?> | <?= $booking->gender ?></td>
                                         </tr>

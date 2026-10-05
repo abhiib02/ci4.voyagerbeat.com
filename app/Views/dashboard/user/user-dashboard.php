@@ -22,12 +22,12 @@
             <div class="col-12 col-sm-6 col-xl-3">
                 <div class="card border-0 shadow-sm rounded-3">
                     <div class="card-body p-3 d-flex align-items-center">
-                        <div class="rounded-3 bg-primary bg-opacity-10 text-primary p-3 me-3">
-                            <i class="bx bx-calendar fs-3"></i>
+                        <div class="rounded-3 bg-primary bg-opacity-10 text-primary p-3 me-3 hue-rotate">
+                            <i class='bx bx-star fs-3'></i>
                         </div>
                         <div>
-                            <span class="text-muted small fw-semibold text-uppercase">Customer Since</span>
-                            <h4 class="mb-0 fw-bold text-dark fs-5">05/09/2026</h4>
+                            <span class="text-muted small fw-semibold text-uppercase">Loyalty Points</span>
+                            <h4 class="mb-0 fw-bold text-dark fs-5"><?= esc($Points) ?></h4>
                         </div>
                     </div>
                 </div>
@@ -62,24 +62,25 @@
                             <h3 class="mb-0 fw-bold fs-4 text-dark"><?= esc($CustomerAsTravelBuddyCount ?? 'Not Loaded') ?> Trips</h3>
                         </div>
                     </div>
-                    <a href="/account/travelbuddy" class="btn btn-sm">See Detail</a>
+                    <a href="/account/you-as-travelbuddy" class="btn btn-sm">See Detail</a>
                 </div>
             </div>
 
-            <!-- Registered Customer ID/Number -->
+            <!-- Customer Since Card -->
             <div class="col-12 col-sm-6 col-xl-3">
                 <div class="card border-0 shadow-sm rounded-3">
                     <div class="card-body p-3 d-flex align-items-center">
-                        <div class="rounded-3 bg-warning bg-opacity-10 text-warning p-3 me-3">
-                            <i class="bx bx-id-card fs-3"></i>
+                        <div class="rounded-3 bg-primary bg-opacity-10 text-primary p-3 me-3">
+                            <i class="bx bx-calendar fs-3"></i>
                         </div>
                         <div>
-                            <span class="text-muted small fw-semibold text-uppercase">Customer ID</span>
-                            <h3 class="mb-0 fw-bold fs-4 text-dark">#194</h3>
+                            <span class="text-muted small fw-semibold text-uppercase">Customer Since</span>
+                            <h4 class="mb-0 fw-bold text-dark fs-5">05/09/2026</h4>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
     <?php endif; ?>

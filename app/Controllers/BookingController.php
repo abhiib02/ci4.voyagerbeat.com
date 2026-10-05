@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\Package;
 use App\Models\Coupon;
 use App\Models\User;
+use App\Models\Point;
 
 
 
@@ -16,6 +17,7 @@ class BookingController extends BaseController
     public Package $PackageModel;
     public Coupon $CouponModel;
     public User $UserModel;
+    public Point $PointModel;
 
     public function __construct()
     {
@@ -23,6 +25,7 @@ class BookingController extends BaseController
         $this->BookingModel = new Booking();
         $this->CouponModel = new Coupon();
         $this->PackageModel = new Package();
+        $this->PointModel = new Point();
     }
 
     public function Book(int $packageID)
@@ -247,6 +250,8 @@ class BookingController extends BaseController
             $customerFilledData['paymode'] = 'UPI Advance Payment';
         }
 
+        $this->AddingLoyalityPoints((int)$user_id, $orderId);
+
         $this->BookingModel->updateConfirmedBooking($orderId, $customerFilledData);
 
         if (!$this->sendEmail($orderId)) {
@@ -327,5 +332,13 @@ class BookingController extends BaseController
         if (!empty($uploadedFiles)) {
             return json_encode($pax_details);
         }
+    }
+
+    public function AddingLoyalityPoints(int $user_id, string $order_id)
+    {
+        $bookingData = $this->BookingModel->getBookingByOrderId($order_id);
+        $PointsEarned = ($bookingData->total_package_cost * POINTS_EARNING_RATE);
+        $this->PointModel->UpdatePointsEarned($user_id, $PointsEarned);
+        return $PointsEarned;
     }
 }
