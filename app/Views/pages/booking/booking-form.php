@@ -80,7 +80,7 @@
 
                                     <div v-for="(t, i) in travelers" :key="t.id" class="border-top pt-3 mb-3">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span class="fw-bold fs-6">Traveler {{ i + 2 }}</span>
+                                            <span class="fw-bold fs-6">Traveler {{ i + 1 }}</span>
                                             <button type="button" class="btn btn-sm btn-danger" @click="removeTraveler(i)">Remove</button>
                                         </div>
                                         <div class="row g-3">
@@ -203,7 +203,7 @@
                 </div>
 
                 <!-- RIGHT COLUMN: SUMMARY -->
-                <div class="col-12 col-lg-4 hide-on-mobile">
+                <div class="col-12 col-lg-4">
 
                     <div id="details-right" class="card scroll-margin">
                         <div class="card-header">
