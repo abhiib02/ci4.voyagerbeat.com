@@ -23,11 +23,12 @@
 
         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 
-        <input type="hidden" name="id" :value="pkg.PACKAGE_ID">
-        <input type="hidden" name="package_name" :value="pkg.PACKAGE_NAME">
-        <input type="hidden" name="bookingamount" :value="pkg.BOOKING_AMOUNT">
-        <input type="hidden" name="amounttopay" :value="payNowAmount">
-        <textarea name="pax_details" hidden id="">{{paxDetailsJson}}</textarea>
+        <input type="hidden" name="id" :value="pkg.PACKAGE_ID" required>
+        <input type="hidden" name="package_name" :value="pkg.PACKAGE_NAME" required>
+        <input type="hidden" name="bookingamount" :value="pkg.BOOKING_AMOUNT" required>
+        <input type="hidden" name="amounttopay" :value="payNowAmount" required>
+        <input type="hidden" name="points_used" :value="usePoints ? pointsDiscount : 0" required>
+        <textarea name="pax_details" hidden id="" required>{{paxDetailsJson}}</textarea>
 
         <div class="container mb-5">
             <div class="row g-2">
@@ -267,6 +268,15 @@
                                             <span class="text-success"><b>₹ {{ finalPayable }}</b></span>
                                         </td>
                                     </tr>
+                                    <tr v-if="calc.ready && UsablePoints > 0">
+                                        <td>
+                                            <label for="points">
+                                                <input type="checkbox" id="points" v-model="usePoints">
+                                                <i class='bx bx-star'></i> Use {{ UsablePoints }} Loyalty Points
+                                                <span v-if="usePoints" class="text-success">(−₹{{ pointsDiscount }})</span>
+                                            </label>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <br>
@@ -319,6 +329,11 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="small text-muted">{{ perPersonText }}</td>
+                                    </tr>
+                                    <tr v-if="calc.ready && earnedPoints > 0">
+                                        <td colspan="2" class="small text-success">
+                                            <i class='bx bx-star'></i> You'll earn <b>{{ earnedPoints }}</b> loyalty points on this booking
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="text-primary fw-bold">Booking Amount per person</td>
@@ -450,7 +465,10 @@
 
             const GST = 0.05;
             const MAX_ONLINE_AMOUNT = 500000;
-            const availableCoupons = <?= json_encode($ValidCoupons) ?>
+            const availableCoupons = <?= json_encode($ValidCoupons) ?>;
+
+            // Server-injected loyalty points balance for this logged-in user
+            const UsablePoints = ref(<?= (int)$UsablePoints ?>);
 
 
 
@@ -463,6 +481,7 @@
 
             const selectedDate = ref('');
             const travelMode = ref('');
+
             const paymode = ref('full');
             const couponCode = ref('');
             const couponApplied = ref(false);
@@ -475,6 +494,28 @@
             const errorMessage = ref('');
             const toastMsg = ref('');
             let toastTimer = null;
+
+            //-----------------Loyalty Point state
+
+            const usePoints = ref(false);
+            const POINT_VALUE = 1; // adjust if 1 point isn't worth exactly ₹1
+
+            const pointsDiscount = computed(() => {
+                if (!usePoints.value || !calc.value.ready) return 0;
+                const maxUsable = Math.min(UsablePoints.value * POINT_VALUE, calc.value.amountToPay);
+                return Math.round(maxUsable);
+            });
+
+            //---------------- earning loyalty point 
+            const POINTS_EARN_RATE = 0.05; // 5%
+
+            const earnedPoints = computed(() => {
+                if (!calc.value.ready) return 0;
+                // Based on the total package cost before any coupon/points deduction
+                return Math.round(calc.value.amountToPay * POINTS_EARN_RATE);
+            });
+
+
 
             // ---------------- Derived Pax Details lists ----------------
             const parsedTravelers = computed(() => parsePaxDetails(paxDetailsJson.value));
@@ -644,15 +685,18 @@
             }
             const finalPayable = computed(() => {
                 if (!calc.value.ready) return 0;
-                return couponApplied.value ? calc.value.amountToPay - couponDiscount.value : calc.value.amountToPay;
+                let amount = calc.value.amountToPay;
+                if (couponApplied.value) amount -= couponDiscount.value;
+                if (usePoints.value) amount -= pointsDiscount.value;
+                return Math.max(amount, 0);
             });
 
             const payNowAmount = computed(() => {
                 if (!calc.value.ready) return 0;
                 return paymode.value === 'booking' ?
-                    pkg.BOOKING_AMOUNT * adults.value // booking mode: fixed amount per adult, coupon doesn't apply
+                    pkg.BOOKING_AMOUNT * adults.value // booking mode: fixed amount per adult, coupon/points don't apply
                     :
-                    finalPayable.value; // full mode: full price minus coupon discount (if any)
+                    finalPayable.value; // full mode: full price minus coupon discount and points (if used)
             });
 
             const perPersonText = computed(() => {
@@ -842,6 +886,10 @@
                 selectedDate,
                 travelMode,
                 paymode,
+                UsablePoints,
+                usePoints,
+                pointsDiscount,
+                earnedPoints,
                 couponCode,
                 couponApplied,
                 couponDiscount,

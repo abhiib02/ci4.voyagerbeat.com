@@ -66,16 +66,25 @@ class Point extends Model
             ];
             return $this->insertPoints($data);
         }
-        return $this->update($user_id, ['points_earned' => $pointsEarned]);
+        return $this->where(["user_id" => $user_id])->increment("points_earned", $pointsEarned);
     }
     public function UpdatePointsUsed(int $user_id, int $pointsUsed)
     {
-        return $this->update($user_id, ['points_used' => $pointsUsed]);
+        return $this->where(["user_id" => $user_id])->increment("points_used", $pointsUsed);
     }
 
     public function getUserPointsBalance(int $user_id)
     {
         $Points =  $this->select('points_balance')->where('user_id', $user_id)->first();
-        return $Points->points_balance ?? 0;
+        if ($Points) {
+            return $Points->points_balance ?? 0;
+        }
+    }
+    public function getUserOneTimePointsBalance(int $user_id)
+    {
+        $Points =  $this->select('points_balance')->where('user_id', $user_id)->first();
+        if ($Points) {
+            return ($Points->points_balance / 2) ?? 0;
+        }
     }
 }

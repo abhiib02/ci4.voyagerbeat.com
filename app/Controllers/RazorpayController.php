@@ -214,6 +214,7 @@ class RazorpayController extends BaseController
         $BookingData['booking_amount'] = $this->request->getPost('bookingamount');
         $BookingData['total_amount'] = $this->request->getPost('amounttopay');
         $BookingData['coupon_code'] = $this->request->getPost('coupon_code');
+        $BookingData['points_used'] = $this->request->getPost('points_used');
         $BookingData['paymode'] = $this->request->getPost('paymode');
 
         $BookingData['date'] = explode('#', $this->request->getPost('date'))[0] ?? $this->request->getPost('date');
@@ -279,7 +280,7 @@ class RazorpayController extends BaseController
 
         // Subtract all offers from total cost ( spacial offer + coupon + loyalty points)
 
-        $TOTAL_COST = $TOTAL_COST - $this->CouponCost($BookingData['coupon_code'], $TOTAL_COST); // Append Loyalty Point Subtraction Here
+        $TOTAL_COST = $TOTAL_COST - ($this->CouponCost($BookingData['coupon_code'], $TOTAL_COST) + $BookingData['points_used']);
 
 
 
@@ -409,6 +410,7 @@ class RazorpayController extends BaseController
         $data['pax_details'] = (string)$BookingData['pax_details'];
         $data['sharing'] = $BookingData['sharingArr'][0];
         $data['coupon_used'] = (string)$BookingData['coupon_code'];
+        $data['points_used'] = (int)$BookingData['points_used'];
         $data['date'] = (string)$BookingData['date'];
         $data['trip_type'] = (string)$BookingData['trip_type'];
         $data['boarding_city'] = (string)$BookingData['boarding_city'];

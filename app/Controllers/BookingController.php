@@ -33,6 +33,7 @@ class BookingController extends BaseController
         if (!auth('User') && !auth('Admin') && !auth('Employee')) {
             return $this->RedirectWithtoast('Please Login to Book', 'info', '/login');
         }
+        $this->data['UsablePoints'] = $this->PointModel->getUserOneTimePointsBalance((int)session()->get('id')) ?? 0;
         $this->data['ValidCoupons'] = $this->CouponModel->getAllValidCoupons();
         $this->data['package'] = $this->PackageModel->getPackageByID($packageID);
         return $this->Render_Page('booking/booking-form', $this->data);
@@ -250,7 +251,10 @@ class BookingController extends BaseController
             $customerFilledData['paymode'] = 'UPI Advance Payment';
         }
 
+        //--------Loyalty Points-------------------
+        $this->UsingLoyalityPoints((int)$user_id, $orderId);
         $this->AddingLoyalityPoints((int)$user_id, $orderId);
+
 
         $this->BookingModel->updateConfirmedBooking($orderId, $customerFilledData);
 
@@ -338,7 +342,14 @@ class BookingController extends BaseController
     {
         $bookingData = $this->BookingModel->getBookingByOrderId($order_id);
         $PointsEarned = ($bookingData->total_package_cost * POINTS_EARNING_RATE);
-        $this->PointModel->UpdatePointsEarned($user_id, $PointsEarned);
+        $this->PointModel->UpdatePointsEarned($user_id, (int)$PointsEarned);
         return $PointsEarned;
+    }
+    public function UsingLoyalityPoints(int $user_id, string $order_id)
+    {
+        $bookingData = $this->BookingModel->getBookingByOrderId($order_id);
+        $PointsUsed = ($bookingData->points_used);
+        $this->PointModel->UpdatePointsUsed($user_id, (int)$PointsUsed);
+        return $PointsUsed;
     }
 }
