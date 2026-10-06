@@ -5,7 +5,7 @@
     <?= view('layout/header-partials/header-function') ?>
     <?= view('layout/header-partials/meta-tags') ?>
     <?= view('layout/header-partials/stylesheets') ?>
-
+    <?= view('layout/header-partials/js-scripts') ?>
 </head>
 
 <body>

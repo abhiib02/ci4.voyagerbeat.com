@@ -9,7 +9,7 @@ const groupedDates = {};
 dateElements.forEach((element) => {
   const dateText = element;
   const onlyDate = dateText.split("|")[0].trim(); // Get the date part before '|'
-  const DateSurcharge = dateText.split("|")[1].trim();
+  const DateSurcharge = dateText.split("|")[1]?.trim();
   const parts = onlyDate.split("/");
   const monthIndex = parseInt(parts[1]);
 

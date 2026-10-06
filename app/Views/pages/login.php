@@ -1,8 +1,30 @@
-<div class="container-fluid">
-    <div class="row full-vh custom-background" style="--bgUrl:url(/assets/backgrounds/1.jpg);--bg-attachment:fixed;">
+<style>
+    .swiper-slide>img {
+        height: 100vh;
+    }
+</style>
+<div class="container-fluid " style="position:fixed;">
+    <div class="row">
+        <div class="col-lg-6 hide-on-mobile p-0">
+            <div class="swiper login-page-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img width="100%" height="100vh" src="/assets/backgrounds/1.jpg" style="object-fit:cover; object-position:bottom;" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img width="100%" height="100vh" src="/assets/backgrounds/2.jpg" style="object-fit:cover; object-position:bottom;" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img width="100%" height="100vh" src="/assets/backgrounds/3.jpg" style="object-fit:cover; object-position:bottom;" />
+                    </div>
 
-
-        <div class="col-lg-12 grid-center">
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="col-lg-6 full-vh grid-center ">
             <?= view('pages/component/login-form') ?>
         </div>
     </div>
@@ -14,4 +36,18 @@
         let password = document.querySelector('#password');
         return password.type = password.type === "password" ? "text" : "password";
     }
+</script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.login-page-swiper', {
+        effect: 'fade',
+        autoplay: true,
+        pagination: {
+            el: '.swiper-pagination',
+            dynamicBullets: true,
+        },
+    });
 </script>
