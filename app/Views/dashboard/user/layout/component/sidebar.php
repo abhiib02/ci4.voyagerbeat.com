@@ -46,7 +46,7 @@
     </div>
 
 </div>
-<nav class="fixed-bottom p-0" style="z-index: 1100;" id="mobile-nav">
+<nav class="fixed-bottom p-0 show-on-mobile" style="z-index: 1100;" id="mobile-nav">
     <ul class="nav nav-pills gap-2 nav-fill  bg-white rounded-3 shadow-sm flex-nowrap border border-top">
 
         <li class="nav-item text-center" role="presentation">

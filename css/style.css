@@ -523,7 +523,8 @@ body {
   }
 }
 .hide,
-.hide-on-pc {
+.hide-on-pc,
+.show-on-mobile {
   display: none;
 }
 
@@ -534,15 +535,24 @@ body {
   .hide-on-mobile {
     display: none !important;
   }
+  .show-on-mobile {
+    display: block;
+  }
 }
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2) {
   .hide-on-mobile {
     display: none !important;
   }
+  .show-on-mobile {
+    display: block;
+  }
 }
 @media (width < 992px) {
   .hide-on-mobile {
     display: none !important;
+  }
+  .show-on-mobile {
+    display: block;
   }
 }
 /*------------------- Mobile Nav*/
