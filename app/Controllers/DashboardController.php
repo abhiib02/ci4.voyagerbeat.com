@@ -170,6 +170,8 @@ class DashboardController extends BaseController
         $this->data['CustomerBookingsCount'] = $this->BookingModel->getUserBookingsCountByContact($this->data['contact']);
         $this->data['CustomerAsTravelBuddyCount'] = $this->BookingModel->getBookingCountWherePaxContactExist($this->data['contact']);
         $this->data['Points'] = $this->PointModel->getUserPointsBalance((int) $this->data['id']);
+        $this->data['PointsUsed'] = $this->PointModel->getUserPointsUsed((int) $this->data['id']);
+
         switch ($pageName) {
             case 'bookings':
                 $this->data['Bookings'] = $this->BookingModel->getUserBookingsByContact($this->data['contact']);

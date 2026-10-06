@@ -11,7 +11,7 @@
                 <h1 class="h2 fw-bold mb-1">Hello, <?= esc($name ?? 'Traveller') ?>! 👋</h1>
                 <p class="text-muted small mb-0">Here is a quick overview of your account activity.</p>
             </div>
-            <a href="/logout" class="btn btn-warning text-dark fw-bold px-4">
+            <a href="/logout" class="btn btn-warning text-dark fw-bold px-4 hide-on-mobile">
                 <i class="bx bx-log-out me-1"></i> Logout
             </a>
         </div>
@@ -28,6 +28,7 @@
                         <div>
                             <span class="text-muted small fw-semibold text-uppercase">Loyalty Points</span>
                             <h4 class="mb-0 fw-bold text-dark fs-5"><?= esc($Points) ?></h4>
+                            <sub>Points Used : <?= esc($PointsUsed) ?></sub>
                         </div>
                     </div>
                 </div>

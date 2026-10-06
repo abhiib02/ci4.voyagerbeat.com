@@ -80,6 +80,13 @@ class Point extends Model
             return $Points->points_balance ?? 0;
         }
     }
+    public function getUserPointsUsed(int $user_id)
+    {
+        $Points =  $this->select('points_used')->where('user_id', $user_id)->first();
+        if ($Points) {
+            return $Points->points_used ?? 0;
+        }
+    }
     public function getUserOneTimePointsBalance(int $user_id)
     {
         $Points =  $this->select('points_balance')->where('user_id', $user_id)->first();

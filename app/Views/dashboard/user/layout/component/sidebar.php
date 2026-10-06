@@ -1,4 +1,4 @@
-<div class="sidebar col-md-3 col-lg-2 p-0 bg-white border-end min-vh-100 shadow-sm">
+<div class="sidebar col-md-3 col-lg-2 p-0 bg-white border-end  shadow-sm">
     <!-- User Profile Header -->
     <div class="p-3 border-bottom bg-light">
         <div class="d-flex align-items-center justify-content-between">
@@ -15,14 +15,14 @@
                     </small>
                 </div>
             </div>
-            <a href="/logout" class="btn btn-outline-danger btn-sm rounded-circle p-0 flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="Logout">
+            <a href="/logout" class="btn btn-outline-danger btn-sm rounded-circle p-0 flex-shrink-0 d-flex align-items-center justify-content-center hide-on-mobile" style="width: 32px; height: 32px;" title="Logout">
                 <i class="bx bx-log-out fs-5"></i>
             </a>
         </div>
     </div>
 
     <!-- Navigation Menu -->
-    <div class="p-2">
+    <div class="p-2 hide-on-mobile">
         <div class="text-uppercase text-muted fw-bold px-3 py-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
             Menu
         </div>
@@ -44,4 +44,35 @@
             <?php endif; ?>
         </div>
     </div>
+
 </div>
+<nav class="fixed-bottom p-0" style="z-index: 1100;" id="mobile-nav">
+    <ul class="nav nav-pills gap-2 nav-fill  bg-white rounded-3 shadow-sm flex-nowrap border border-top">
+
+        <li class="nav-item text-center" role="presentation">
+            <a href="/" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
+                <i class='bx bx-home fs-1'></i>
+                <br>
+                <sub>Home</sub>
+            </a>
+        </li>
+        <li class="nav-item text-center" role="presentation">
+            <a href="/account" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
+                <i class='bx bx-user-circle fs-1'></i>
+                <br>
+                <sub class="text-capitalize">Profile</sub>
+            </a>
+        </li>
+        <?php if (!empty($pagenames)): ?>
+            <?php foreach ($pagenames as $page): ?>
+                <li class="nav-item text-center" role="presentation">
+                    <a href="/account/<?= esc($page) ?>" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
+                        <i class='bx bx-link-alt fs-1'></i>
+                        <br>
+                        <sub class="text-capitalize"><?= esc(str_replace(['-', '_'], ' ', $page)) ?></sub>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </ul>
+</nav>
