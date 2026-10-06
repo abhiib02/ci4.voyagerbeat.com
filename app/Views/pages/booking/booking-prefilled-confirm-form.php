@@ -42,7 +42,11 @@
         <?php endif ?>
 
 
-        <form id="multiStep-booking-confirmation-form" method="post" action="/booking-confirmation-process" enctype="multipart/form-data">
+        <form id="multiStep-booking-confirmation-form" method="post" action="/booking-confirmation-process" enctype="multipart/form-data"
+            data-loader
+            data-loader-title="Booking Confirmation In Progress"
+            data-loader-steps="Validating your details...|Updating in Database... |Sending Email... |Generating Reciept... |Almost done...">
+
             <input type="hidden" name="order_id" value="<?= esc($BookingData->order_id) ?>">
             <input type="hidden" name="prefill" value="1">
             <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />

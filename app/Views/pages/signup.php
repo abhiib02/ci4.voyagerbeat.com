@@ -15,7 +15,10 @@
                 <!--</div>-->
                 <!--</div>-->
                 <div class="divider-text"><span>Use Email</span></div>
-                <form action="/signupvalidation" class="" method="post">
+                <form action="/signupvalidation" class="" method="post"
+                    data-loader
+                    data-loader-title="Signing Up Your Account"
+                    data-loader-steps="Validating your details...|Saving to the database...|Almost done...">
                     <div class="row">
                         <div class="col-4">
                             <div class=" mb-3">

@@ -6,7 +6,10 @@
     </div>
 
     <div class="divider-text"><span>Use Email</span></div>
-    <form action="/login-validation" method="post" id="login-form">
+    <form action="/login-validation" method="post" id="login-form"
+        data-loader
+        data-loader-title="Logging into Account"
+        data-loader-steps="Validating your details...|Checking Your Password...|Checking your Status... |Almost done...">
 
         <input type="hidden" name="redirect_url" value="<?= current_url() ?>">
         <div class="form-floating">

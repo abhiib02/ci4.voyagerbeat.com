@@ -19,7 +19,11 @@
         </div>
     </div>
 
-    <form id="bookingForm" action="/booking-payment" method="POST" @submit="onSubmit" novalidate>
+    <form id="bookingForm" action="/booking-payment" method="POST" @submit="onSubmit" novalidate
+        data-loader
+        data-loader-title="Booking In Progress"
+        data-loader-steps="Validating your details...|Saving it into Bookings... |You will Be Redirected to Booking Confirmation Form |Almost done...">
+
 
         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 
