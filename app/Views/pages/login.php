@@ -25,7 +25,9 @@
             </div>
         </div>
         <div class="col-lg-6 full-vh grid-center ">
-            <?= view('pages/component/login-form') ?>
+            <div class=" dw-50-mw-100">
+                <?= view('pages/component/login-form') ?>
+            </div>
         </div>
     </div>
 </div>

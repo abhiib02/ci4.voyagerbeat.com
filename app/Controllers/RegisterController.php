@@ -37,7 +37,10 @@ class RegisterController extends BaseController
         if (auth('User')) {
             return redirect()->route('Customer.Dashboard');
         }
-        return $this->Render_Page('signup', $this->data);
+        return
+            view('layout/header', $this->data) .
+            view('pages/signup', $this->data);
+        //view('layout/footer', $this->data);
     }
     public function SignupValidation()
     {
