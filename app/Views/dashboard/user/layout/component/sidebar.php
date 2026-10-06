@@ -15,7 +15,7 @@
                     </small>
                 </div>
             </div>
-            <a href="/logout" class="btn btn-outline-danger btn-sm rounded-circle p-0 flex-shrink-0 d-flex align-items-center justify-content-center hide-on-mobile" style="width: 32px; height: 32px;" title="Logout">
+            <a href="/logout" class="btn btn-outline-danger btn-sm rounded-circle p-0 flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="Logout">
                 <i class="bx bx-log-out fs-5"></i>
             </a>
         </div>
