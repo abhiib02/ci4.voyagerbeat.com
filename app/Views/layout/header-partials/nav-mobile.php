@@ -62,11 +62,32 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
+
+
+
+
     <div class="offcanvas-body pb-5 mb-3">
         <ul class="list-group list-group-flush" id="listgroupaccordion">
+
+            <li class="list-group-item">
+
+                <?php if (auth('User', 'Admin', 'Employee')): ?>
+                    <a class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" href="/account">
+                        <span><i class='bx bx-user-circle'></i> Hello, <?= session()->get('name') ?? 'Login' ?></span>
+                    </a>
+                <?php else: ?>
+                    <a class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" href="/login">
+                        <span><i class='bx bx-user-circle'></i> Login</span>
+                    </a>
+                <?php endif; ?>
+
+
+
+            </li>
+
             <li class="list-group-item">
                 <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#weekend-getaway-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                    <span><span class="fs-3">📅</span> Weekend Getaway</span>
+                    <span>📅 Weekend Getaway</span>
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="weekend-getaway-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -206,7 +227,7 @@
             </li>
             <li class="list-group-item">
                 <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#family-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                    <span><span class="fs-3">👨‍👩‍👧‍👧</span>Family Trips</span>
+                    <span>👨‍👩‍👧‍👧 Family Trips</span>
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="family-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -235,7 +256,7 @@
             </li>
             <li class="list-group-item">
                 <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#leh-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                    <span><span class="fs-3">🏕</span>Leh Trips</span>
+                    <span>🏕 Leh Trips</span>
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="leh-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -250,7 +271,7 @@
             </li>
             <li class="list-group-item">
                 <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#Spiti-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                    <span><span class="fs-3">🏔</span> Spiti Trips</span>
+                    <span>🏔 Spiti Trips</span>
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="Spiti-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -266,7 +287,7 @@
             <?php if (!empty(seasonNavMobile())): ?>
                 <li class="list-group-item">
                     <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#season-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                        <span><span class="fs-3">🌦</span>Season Trips</span>
+                        <span>🌦 Season Trips</span>
                         <span><i class='bx bxs-chevron-down'></i></span>
                     </button>
                     <div id="season-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -278,7 +299,7 @@
             <?php endif; ?>
             <li class="list-group-item">
                 <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#trip-types-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                    <span><span class="fs-3">📃</span> Trip Types</span>
+                    <span>📃 Trip Types</span>
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="trip-types-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -291,7 +312,7 @@
             </li>
             <li class="list-group-item">
                 <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#International-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                    <span><span class="fs-3">✈</span> International Trips</span>
+                    <span>✈ International Trips</span>
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="International-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -312,7 +333,7 @@
 
             <li class="list-group-item">
                 <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#more-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                    <span><span class="fs-3">📱</span> More</span>
+                    <span>📱 More</span>
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="more-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -365,7 +386,7 @@
             </li>
             <li class="list-group-item">
                 <button class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" data-bs-toggle="collapse" data-bs-target="#Socials-nav-mobile" aria-expanded="false" aria-controls="weekend-getaway" data-bs-parent="#listgroupaccordion">
-                    <span><span class="fs-3">🔔</span> Social</span>
+                    <span>🔔 Social</span>
                     <span><i class='bx bxs-chevron-down'></i></span>
                 </button>
                 <div id="Socials-nav-mobile" class="accordion-collapse collapse  p-2" data-bs-parent="#listgroupaccordion">
@@ -381,7 +402,7 @@
             </li>
             <li class="list-group-item">
                 <a class="nav-link icon-link d-flex justify-content-between w-100" href="/packages">
-                    <span><span class="fs-3">🧭</span>All Packages</span>
+                    <span>🧭 All Packages</span>
                     <span><i class='bx bx-link-alt'></i></span>
                 </a>
             </li>
