@@ -7,17 +7,7 @@
         // Options
     });
 </script>
-<script>
-    function openModel(id) {
-        let dialog = document.getElementById(id);
-        dialog.showModal();
-    };
-
-    function closeModal(id) {
-        let dialog = document.getElementById(id);
-        dialog.close();
-    };
-</script>
+<script src="/js/dialogScript.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 

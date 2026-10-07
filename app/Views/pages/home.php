@@ -71,3 +71,4 @@
         layers.style.setProperty('--y', y);
     })
 </script>
+<?= view('pages/component/popupQueryForm') ?>

@@ -27,7 +27,6 @@ $TAGS = explode(',', $package->TAGS);
                     <div class=" pb-5">
                         <div class="d-flex justify-content-between">
                             <h1><?= $package->PACKAGE_NAME ?></h1>
-                            <h1>PACKAGE ID : <?= $package->PACKAGE_ID ?></h1>
                         </div>
                         <hr>
                         <p><?= $package->META_DESC ?></p>

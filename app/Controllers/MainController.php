@@ -27,6 +27,7 @@ class MainController extends BaseController
             $this->data['pager'] = $this->PackageModel->pager;
             return $this->Render_Page('home-mobile', $this->data);
         } else {
+            $this->data['MainFormImage'] = $this->OptionModel->getOptionValue('MainFormImage');
             return $this->Render_Page('home', $this->data);
         }
     }
