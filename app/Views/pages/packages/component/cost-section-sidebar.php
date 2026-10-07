@@ -73,7 +73,7 @@
     <script>
         const PackageID = <?= $package->PACKAGE_ID ?>;
         const AdvanceBookingAmount = <?= $package->BOOKING_AMOUNT ?>;
-        const LoggedInUser = <?= json_encode(session()->get('role')) ?>;
+        const LoggedInUser = <?= json_encode(session()->get('logged_in')) ?>;
         const CostingObject = [
             <?php
             $info_blocks = [];
