@@ -23,15 +23,15 @@
     <?php endif; ?>
     <div class="d-flex gap-2  mb-1">
         <?php if (!empty($package->WHATSAPP_LINK)) : ?>
-            <a href="<?= $package->WHATSAPP_LINK; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type="button" class="w-100 btn btn-outline-whatsapp d-flex justify-content-center"><i class='bx bxl-whatsapp fs-4'></i> Chat with Expert</a>
+            <a href="<?= $package->WHATSAPP_LINK; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type="button" class="w-100 btn btn-outline-whatsapp d-flex justify-content-center gap-2"><i class='bx bxl-whatsapp fs-4'></i> Chat with Expert</a>
             <?php
             preg_match('/wa\.me\/(\d+)/', $package->WHATSAPP_LINK, $matches);
             $ExtractedphoneNumber = $matches[1] ?? null;
             ?>
-            <a href="tel:+<?= $ExtractedphoneNumber ?>" type="button" class="w-100 btn btn-theme btn-warning d-flex justify-content-center"><i class='bx bxs-phone-call fs-4'></i>Call Travel Consultant</a>
+            <a href="tel:+<?= $ExtractedphoneNumber ?>" type="button" class="w-100 btn btn-theme btn-warning d-flex justify-content-center gap-2"><i class='bx bxs-phone-call fs-4'></i>Call Expert</a>
         <?php else: ?>
-            <a href="https://wa.me/91<?= $defaultContact ?>?text=Hey! Voyagers Beat I am interested in your trip id <?= $package->PACKAGE_ID; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type="button" class="w-100 btn btn-outline-whatsapp d-flex justify-content-center"><i class='bx bxl-whatsapp fs-4'></i> Chat with Expert</a>
-            <a href="tel:+<?= $defaultContact ?>" type="button" class="w-100 btn btn-outline-voyagers  d-flex justify-content-center"><i class='bx bxs-phone-call fs-4'></i>Call Travel Consultant</a>
+            <a href="https://wa.me/91<?= $defaultContact ?>?text=Hey! Voyagers Beat I am interested in your trip id <?= $package->PACKAGE_ID; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type="button" class="w-100 btn btn-outline-whatsapp d-flex justify-content-center gap-2"><i class='bx bxl-whatsapp fs-4'></i> Chat with Expert</a>
+            <a href="tel:+<?= $defaultContact ?>" type="button" class="w-100 btn btn-outline-dark  d-flex justify-content-center gap-2"><i class='bx bxs-phone-call fs-4'></i>Call Expert</a>
         <?php endif; ?>
     </div>
 
