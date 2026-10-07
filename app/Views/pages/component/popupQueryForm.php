@@ -29,7 +29,7 @@
             <div style="flex:1;" class="p-2 align-content-center">
                 <button type="button" class="btn-close" style="position:absolute;top:10px;right:10px;" onclick="closeModal('popup-form')"></button>
                 <div class="">
-                    <h3 class="text-center">Plan Your Trip with Voyagers Beat</h3>
+                    <h3 class="text-center fw-bold">Plan Your Trip with Voyagers Beat</h3>
                     <div class=" p-2">
                         <form id="package-form" method="post" class="d-flex flex-column gap-3">
 

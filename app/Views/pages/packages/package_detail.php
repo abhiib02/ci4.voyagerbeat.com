@@ -254,8 +254,7 @@ $TAGS = explode(',', $package->TAGS);
                 <div class="similar-packages outline-card style-border p-2 hide-on-mobile">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>More Trips Like This</h5>
-                            <p>Exciting Group Departures Coming Your Way</p>
+                            <h3 class="fw-bold">Recommended for You</h3>
                         </div>
                         <div>
                             <button id="carousel-prevBtn" class="btn btn-sm btn-dark"><i class='bx bx-left-arrow-alt'></i></button>
