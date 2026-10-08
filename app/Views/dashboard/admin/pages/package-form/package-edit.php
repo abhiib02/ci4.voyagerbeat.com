@@ -28,6 +28,7 @@
                 <a type="button" href="#Costadd" class="btn btn-primary">Sharing</a>
                 <a type="button" href="#Miscupdate" class="btn btn-primary">Misc</a>
                 <a type="button" href="#Terms" class="btn btn-primary">Terms & Condition</a>
+                <a type="button" href="#Faq" class="btn btn-primary">FAQ</a>
             </div>
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                 <input type="submit" id="add_pack_btn" value="Update package" class="btn btn-success">
@@ -577,6 +578,24 @@
                     </div>
                     <br>
                 </div>
+                <div id="Faq" class="">
+
+                    <div class="">
+                        <div class="d-flex justify-content-between">
+                            <h3>Frequently Asked Question</h3>
+                            <button type="button" class="btn btn-primary" onclick="addQuestion()">Add Question</button>
+                        </div>
+                        <hr>
+                        <textarea id="faq_textarea" name="PACKAGE_FAQ" hidden><?= $package->PACKAGE_FAQ ?></textarea>
+                        <div id="faq_inputs">
+
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                </div>
 
             </div>
     </form>
@@ -596,6 +615,7 @@
 <script src="/js/date_input_script.js"></script>
 <script src="/js/slug_script.js"></script>
 <script src="/js/selling_price_script.js"></script>
+<script src="/js/faq_script.js"></script>
 <script src="/js/itinerary_script.js"></script>
 <script src="/js/tags_badges_script.js"></script>
 <script src="/js/json_util__script.js"></script>

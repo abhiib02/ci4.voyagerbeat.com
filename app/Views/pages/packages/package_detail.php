@@ -245,9 +245,17 @@ $TAGS = explode(',', $package->TAGS);
                                 <?= $package->PACKAGE_TNC ?>
                             </div>
                         </div>
+
                     </div>
                 </div>
-                <!-- Details Section -->
+                <?php if (!empty($package->PACKAGE_FAQ)): ?>
+                    <!-- Faq Section -->
+                    <div id="faq" class="outline-card style-border p-2 mb-2">
+                        <h5 class="">Frequently Asked Questions</h5>
+                        <hr>
+                        <?= view('pages/packages/component/faq-section', ['FAQS' => $package->PACKAGE_FAQ]) ?>
+                    </div>
+                <?php endif; ?>
                 <div class="why-voyagers">
                     <?= view('pages/packages/component/why-voyager-info') ?>
                 </div>

@@ -81,6 +81,7 @@ class Package extends Model
         'IMAGE_4',
         'PACKAGE_MISC',
         'PACKAGE_TNC',
+        'PACKAGE_FAQ',
         'updated_at',
     ];
 

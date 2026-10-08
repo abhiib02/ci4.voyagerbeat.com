@@ -39,6 +39,8 @@
 
                 <a type="button" href="#Terms" class="btn btn-sm btn-primary">Terms & Condition</a>
 
+                <a type="button" href="#Faq" class="btn btn-sm btn-primary">Faq</a>
+
             </div>
 
             <div class="btn-group" role="group" aria-label="Basic example">
@@ -1021,6 +1023,24 @@
                     <br>
 
                 </div>
+                <div id="Faq" class="">
+
+                    <div class="">
+                        <div class="d-flex justify-content-between">
+                            <h3>Frequently Asked Question</h3>
+                            <button type="button" class="btn btn-primary" onclick="addQuestion()">Add Question</button>
+                        </div>
+                        <hr>
+                        <textarea id="faq_textarea" name="PACKAGE_FAQ"></textarea>
+                        <div id="faq_inputs">
+
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                </div>
 
 
 
@@ -1046,6 +1066,7 @@
 <script src="/js/date_input_script.js"></script>
 <script src="/js/slug_script.js"></script>
 <script src="/js/selling_price_script.js"></script>
+<script src="/js/faq_script.js"></script>
 <script src="/js/itinerary_script.js"></script>
 <script src="/js/tags_badges_script.js"></script>
 <script src="/js/json_util__script.js"></script>

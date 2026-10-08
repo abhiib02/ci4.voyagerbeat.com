@@ -335,10 +335,9 @@ $TAGS = explode(',', $package->TAGS);
             </div>
 
         </section>
-        <section class="container mb-3" id="tnc">
-            <h3 class="text-theme-secondary">Terms & Condition</h3>
-            <?php if (!empty($package->PACKAGE_TNC)): ?>
-
+        <?php if (!empty($package->PACKAGE_TNC)): ?>
+            <section class="container mb-3" id="tnc">
+                <h3 class="text-theme-secondary">Terms & Condition</h3>
                 <div class="accordion accordion-flush" id="tncAccordion">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTnc">
@@ -355,13 +354,19 @@ $TAGS = explode(',', $package->TAGS);
                         </div>
                     </div>
                 </div>
+            </section>
+        <?php endif; ?>
+        <?php if (!empty($package->PACKAGE_FAQ)): ?>
+            <section class="container mb-5 pb-5" id="tnc">
+                <h3 class="text-theme-secondary">Frequently Asked Questions</h3>
+                <?= view('pages/packages/component/faq-section', ['FAQS' => $package->PACKAGE_FAQ]) ?>
+            </section>
 
-            <?php endif; ?>
-        </section>
+        <?php endif; ?>
     </div>
 </div>
 
-<div id="trigger-nav-menu-animation"></div>
+<div id="trigger-nav-menu-animation" class="mb-5"></div>
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
