@@ -32,7 +32,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0px;
 }
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px grey;
@@ -51,6 +51,7 @@ input[type="radio"] {
 /* Default (Light) Styles  */
 :root {
   --font-family: "Roboto Condensed", sans-serif;
+  --style-font: "Story Script", sans-serif;
   --font-size: 14px;
   --maincolor: #ffd600;
   --secondaryColor: #e2a438;
@@ -167,6 +168,7 @@ body {
 .text-theme-secondary {
   color: var(--secondaryColor);
 }
+
 /* Typography ends*/
 
 /* buttons */
@@ -322,6 +324,9 @@ body {
   }
 } */
 /*----------- Custom Styling ------------------*/
+.style-font {
+  font-family: var(--style-font);
+}
 .style-border {
   box-shadow:
     0px 0 0px var(--maincolor),
