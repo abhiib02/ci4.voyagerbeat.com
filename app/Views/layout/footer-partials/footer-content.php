@@ -1,4 +1,4 @@
-<footer class="bg-light py-3 no-print">
+<footer class="bg-light py-3 no-print hide-on-mobile">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">

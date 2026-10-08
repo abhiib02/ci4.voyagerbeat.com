@@ -32,10 +32,7 @@ class LoginController extends BaseController
         if (auth('User')) {
             return redirect()->route('Customer.Dashboard');
         }
-        return
-            view('layout/header', $this->data) .
-            view('pages/login', $this->data);
-        //view('layout/footer', $this->data);
+        return $this->Render_Page('login', $this->data);
     }
 
     public function RedirectToDashboard(array $session)
