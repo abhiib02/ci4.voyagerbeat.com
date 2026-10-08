@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 grid-center">
-                        <?= //view('pages/component/reviewCardCarousel') ?>
+                        <= //view('pages/component/reviewCardCarousel') ?>
                     </div>
                 </div>
             </div>
