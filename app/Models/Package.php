@@ -196,6 +196,10 @@ class Package extends Model
     {
         return $this->find($ID);
     }
+    public function getPackageDatesByID(int $ID)
+    {
+        return $this->select('DATES')->find($ID);
+    }
     public function getPackageByIDForSearch(int $ID): array
     {
         return $this->where('PACKAGE_ID', $ID)->findAll();

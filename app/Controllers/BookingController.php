@@ -67,7 +67,7 @@ class BookingController extends BaseController
         }
 
         // Whitelist — only fields explicitly listed here can be patched via this endpoint
-        $allowedFields = ['note', 'status', 'amount', 'total_package_cost', 'customer_access', 'adults']; // extend as needed
+        $allowedFields = ['date', 'note', 'status', 'amount', 'total_package_cost', 'customer_access', 'adults']; // extend as needed
 
         if (! in_array($field, $allowedFields, true)) {
             return $this->response->setStatusCode(422)->setJSON(['error' => 'Field not editable']);
@@ -76,6 +76,7 @@ class BookingController extends BaseController
         $value = $this->sanitizeFieldValue($field, $value);
 
         $updated = $this->BookingModel->update($bookingId, [$field => $value]);
+
 
         if (! $updated) {
             return $this->response->setStatusCode(500)->setJSON(['error' => 'Failed to update field']);
@@ -95,7 +96,7 @@ class BookingController extends BaseController
                 return trim(strip_tags($value));
             case 'status':
                 // e.g. validate against an enum of allowed statuses
-                $validStatuses = ['Pending', 'Complete', 'Cancel', 'Failed / Unknown'];
+                $validStatuses = ['Pending', 'Complete', 'Cancel', 'Postponed', 'Failed / Unknown'];
                 return in_array($value, $validStatuses, true) ? $value : null;
             default:
                 return $value;
@@ -253,7 +254,7 @@ class BookingController extends BaseController
 
         //--------Loyalty Points-------------------
         $this->UsingLoyalityPoints((int)$user_id, $orderId);
-        $this->AddingLoyalityPoints((int)$user_id, $orderId);
+
 
 
         $this->BookingModel->updateConfirmedBooking($orderId, $customerFilledData);

@@ -775,4 +775,10 @@ class PackageController extends BaseController
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package Imported Sucessfully.', 'status' => 'success']);
         return redirect()->to("/update-package/$ID");
     }
+
+    public function packageDatesJSON(int $id)
+    {
+        $this->data['packageDates'] = $this->PackageModel->getPackageDatesByID($id);
+        return $this->response->setJSON($this->data['packageDates']);
+    }
 }

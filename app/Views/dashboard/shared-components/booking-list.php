@@ -87,17 +87,33 @@
                 </td>
                 <td>
 
-
-                    <select data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
-                        <?php
-                        $statuses = ['Pending', 'Complete', 'Cancel', 'Failed / Unknown'];
-                        foreach ($statuses as $status):
-                        ?>
-                            <option class="<?= statusToClass($status) ?>" value="<?= esc($status) ?>" <?= $booking->status === $status ? 'selected' : '' ?>>
-                                <?= esc($status) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <?php if (auth('Admin')): ?>
+                        <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
+                            <?php
+                            $statuses = ['Pending', 'Complete', 'Cancel', 'Postponed', 'Failed / Unknown'];
+                            foreach ($statuses as $status):
+                            ?>
+                                <option class="<?= statusToClass($status) ?>" value="<?= esc($status) ?>" <?= $booking->status === $status ? 'selected' : '' ?>>
+                                    <?= esc($status) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <?php if ($booking->status != 'Complete'): ?>
+                            <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
+                                <?php
+                                $statuses = ['Pending', 'Complete', 'Cancel', 'Postponed', 'Failed / Unknown'];
+                                foreach ($statuses as $status):
+                                ?>
+                                    <option class="<?= statusToClass($status) ?>" value="<?= esc($status) ?>" <?= $booking->status === $status ? 'selected' : '' ?>>
+                                        <?= esc($status) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php else: ?>
+                            <span class="badge text-bg-success"><?= $booking->status ?></span>
+                        <?php endif; ?>
+                    <?php endif; ?>
 
                 </td>
 
@@ -118,6 +134,7 @@
                 </td>
                 <td>
                     <div class="d-flex gap-1">
+
                         <button type="button" class="waves-effect  btn btn-sm btn-outline-dark" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
                         <?php if (!str_contains($booking->order_id, 'order_') && $booking->customer_access): ?>
                             <button type="button" id="copyLinkBtn" class="waves-effect  btn btn-sm btn-outline-dark" data-link="<?= base_url() ?>booking-confirmation-form/<?= $booking->order_id; ?>" onclick="copyLink()">Copy Link</button>
@@ -164,7 +181,22 @@
                                         </tr>
                                         <tr>
                                             <th>Batch Date</th>
-                                            <td><?= $booking->date ?></td>
+                                            <td>
+                                                <?php if ($booking->status == 'Postponed'): ?>
+                                                    <select name="date"
+                                                        data-field="date"
+                                                        class="form-select form-control-sm"
+                                                        data-booking-id="<?= $booking->ID; ?>"
+                                                        onclick="getPackageDates(<?= $booking->package_id; ?>, this)">
+                                                        <option value="<?= $booking->date ?>" selected><?= $booking->date ?></option>
+
+                                                    </select>
+
+                                                <?php else: ?>
+                                                    <?= $booking->date ?>
+                                                <?php endif; ?>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Coupon Used</th>
@@ -224,7 +256,69 @@
                     <?php endforeach; ?>
 
 
+                    <script>
+                        async function getPackageDates(packageId, selectElement) {
+                            // Prevent re-fetching if options have already been populated
+                            if (selectElement.dataset.loaded === 'true') return;
 
+                            try {
+                                const response = await fetch(`/api/packageDatesJSON/${packageId}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'X-Requested-With': 'XMLHttpRequest',
+                                        'Content-Type': 'application/json'
+                                    }
+                                });
+
+                                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                                const data = await response.json();
+
+                                if (!data || !data.DATES) return;
+
+                                // Save the currently selected option value
+                                const currentValue = selectElement.value;
+
+                                // Split data by comma into individual date range entries
+                                const dateEntries = data.DATES.split(',');
+
+                                // Build document fragment to insert options efficiently
+                                const fragment = document.createDocumentFragment();
+
+                                dateEntries.forEach(entry => {
+                                    // Split entry by pipe '|' to isolate date range and cost modifier
+                                    const [dateRange, cost] = entry.split('|');
+
+                                    if (!dateRange) return;
+
+                                    const trimmedDate = dateRange.trim();
+
+                                    // Avoid duplicating the already existing selected option
+                                    if (trimmedDate === currentValue) return;
+
+                                    const option = document.createElement('option');
+                                    option.value = trimmedDate;
+
+                                    // Format option label to highlight extra package cost if non-zero
+                                    const extraCost = parseInt(cost, 10);
+                                    option.textContent = extraCost > 0 ?
+                                        `${trimmedDate} (+₹${extraCost})` :
+                                        trimmedDate;
+
+                                    fragment.appendChild(option);
+                                });
+
+                                // Append newly formatted options to the select dropdown
+                                selectElement.appendChild(fragment);
+
+                                // Mark as loaded so subsequent clicks don't re-trigger fetch
+                                selectElement.dataset.loaded = 'true';
+
+                            } catch (error) {
+                                console.error('Error loading package dates:', error);
+                            }
+                        }
+                    </script>
                     <script>
                         async function copyLink() {
 
@@ -254,6 +348,8 @@
                                 const bookingId = this.dataset.bookingId;
                                 const field = this.dataset.field;
                                 const value = this.value;
+                                const userId = parseInt(this.dataset.userId);
+                                const totalPackageCost = parseInt(this.dataset.tpc);
 
                                 fetch(`/bookings-patch/${bookingId}`, {
                                         method: 'PATCH',
@@ -266,17 +362,46 @@
                                             value: value
                                         })
                                     })
-                                    .then(res => {
-                                        if (!res.ok) throw new Error('Request failed: ' + res.status);
+                                    .then(async res => {
+                                        const contentType = res.headers.get('content-type');
+                                        if (!contentType || !contentType.includes('application/json')) {
+                                            const text = await res.text();
+                                            console.error('PATCH request returned non-JSON:', text);
+                                            throw new Error(`PATCH server error (${res.status}). Check browser console.`);
+                                        }
+                                        if (!res.ok) throw new Error('PATCH request failed: ' + res.status);
                                         return res.json();
                                     })
                                     .then(data => {
-
                                         runToast(`Field saved : ${data.field}`, 'Success');
+
+                                        // Trigger loyalty points GET request after successful update
+                                        if (field === 'status' && value === 'Complete') {
+                                            if (isNaN(userId) || isNaN(totalPackageCost)) {
+                                                throw new Error(`Invalid parameters: userId (${this.dataset.userId}) or tpc (${this.dataset.tpc}) is missing or not a number.`);
+                                            }
+
+                                            return fetch(`/points/${userId}/${totalPackageCost}`)
+                                                .then(async res => {
+                                                    const contentType = res.headers.get('content-type');
+                                                    if (!contentType || !contentType.includes('application/json')) {
+                                                        const text = await res.text();
+                                                        console.error('GET points request returned non-JSON:', text);
+                                                        throw new Error(`Points route error (${res.status}). Check browser console.`);
+                                                    }
+                                                    if (!res.ok) throw new Error('GET points request failed: ' + res.status);
+                                                    return res.json();
+                                                })
+                                                .then(getData => {
+                                                    runToast(`Loyalty Points Added`, 'Success');
+                                                    window.location.reload();
+                                                });
+                                        }
+                                        window.location.reload();
                                     })
                                     .catch(err => {
-
-                                        runToast(`Failed to save field ${err}`, 'danger');
+                                        console.error(err);
+                                        runToast(`Failed: ${err.message || err}`, 'danger');
                                     });
                             });
                         });

@@ -58,6 +58,7 @@ $routes->group('', ['filter' => 'EmployeeAuthGuard'], static function ($routes) 
 $routes->group('', ['filter' => ['AdminOrEmployeeAuthGuard']], function ($routes) {
     $routes->patch('bookings-patch/(:num)', 'BookingController::updateField/$1');
     $routes->post('create-booking', 'BookingController::createBookingProcess');
+    $routes->get('points/(:num)/(:num)', 'PointsController::AddPointsToCustomer/$1/$2');
 });
 
 
@@ -81,6 +82,9 @@ $routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
     $routes->post('delete-user', 'UserController::deleteUser');
     $routes->post('makeAdmin', 'UserController::makeAdmin');
     $routes->post('removeAdmin', 'UserController::removeAdmin');
+
+    //Points Management 
+
 
     // Coupon management
     $routes->post('createCoupon', 'CouponController::createCoupon');
@@ -115,6 +119,8 @@ $routes->get('packages', 'PackageController::index');
 $routes->get('packages/(:any)', 'PackageController::index/$1');
 $routes->get('package/(:any)', 'PackageController::packageBySlug/$1');
 $routes->get('packageid/(:num)', 'PackageController::packageByID/$1');
+$routes->get('api/packageDatesJSON/(:num)', 'PackageController::packageDatesJSON/$1');
+
 
 // Filter "index" pages (render the same base view with different filters applied client-side)
 $routes->get('category', 'PackageController::index');

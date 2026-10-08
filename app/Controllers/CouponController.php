@@ -23,9 +23,6 @@ class CouponController extends BaseController
         helper('json');
         $this->PackageModel = new Package();
         $this->CouponModel = new Coupon();
-
-        $this->data['States'] = $this->PackageModel->getAllDistinctStates();
-        $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
     }
 
 
