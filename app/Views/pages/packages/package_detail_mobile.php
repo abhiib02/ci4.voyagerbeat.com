@@ -55,10 +55,10 @@ $TAGS = explode(',', $package->TAGS);
         </section>
 
         <section class="container" id="package_name">
-            <h5 class="mt-2"><?= $package->PACKAGE_NAME; ?></h5>
+            <h5 class="mt-2 fw-bold "><?= $package->PACKAGE_NAME; ?></h5>
 
             <p><?= $package->META_DESC ?></p>
-            <div class="my-2">
+            <div class="my-2" hidden>
                 <a href="/type/<?= urlencode($package->PACKAGE_TYPE) ?>"><span class=" badge rounded-pill text-bg-dark"><?= $package->PACKAGE_TYPE ?></span></a>
                 <a href="/badge/<?= urlencode($package->BADGE) ?>" class="text-decoration-none"><span class="badge rounded-pill text-bg-warning"><?= $package->BADGE ?></span></a>
                 <?php foreach ($TAGS as $tag): ?>
@@ -119,7 +119,6 @@ $TAGS = explode(',', $package->TAGS);
         </section>
         <br>
         <section class="container mb-3" id="Inclusion">
-            <h3 class="text-success">Inclusion</h3>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="alert alert-success">
@@ -133,7 +132,6 @@ $TAGS = explode(',', $package->TAGS);
             </div>
         </section>
         <section class="container mb-3" id="Exclusion">
-            <h3 class="text-danger">Exclusion</h3>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="alert alert-danger">
@@ -148,8 +146,24 @@ $TAGS = explode(',', $package->TAGS);
         </section>
         <section class="container mb-3" id="Highlight">
             <h3 class="text-theme-secondary">Highlight</h3>
-            <div class="wysiwyg">
-                <?= $package->TRIP_HIGHLIGHT ?>
+
+            <div class="accordion accordion-flush" id="HighlightAccordion">
+
+                <!-- Gadgets -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="Highlight">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Highlight" aria-expanded="false" aria-controls="collapseGadgets">
+                            Highlight
+                        </button>
+                    </h2>
+                    <div id="collapse-Highlight" class="accordion-collapse collapse" aria-labelledby="Highlight">
+                        <div class="accordion-body">
+                            <div class="wysiwyg">
+                                <?= $package->TRIP_HIGHLIGHT ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         <?php if (!empty($package->PACKAGE_MISC)): ?>
