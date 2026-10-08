@@ -248,7 +248,8 @@ $TAGS = explode(',', $package->TAGS);
 
                     </div>
                 </div>
-                <?php if (!empty($package->PACKAGE_FAQ)): ?>
+                <?php $faqs = !empty($package->PACKAGE_FAQ) ? json_decode($package->PACKAGE_FAQ, true) : []; ?>
+                <?php if (!empty($faqs)): ?>
                     <!-- Faq Section -->
                     <div id="faq" class="outline-card style-border p-2 mb-2">
                         <h5 class="">Frequently Asked Questions</h5>

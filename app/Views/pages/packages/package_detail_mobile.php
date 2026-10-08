@@ -356,7 +356,8 @@ $TAGS = explode(',', $package->TAGS);
                 </div>
             </section>
         <?php endif; ?>
-        <?php if (!empty($package->PACKAGE_FAQ)): ?>
+        <?php $faqs = !empty($package->PACKAGE_FAQ) ? json_decode($package->PACKAGE_FAQ, true) : []; ?>
+        <?php if (!empty($faqs)): ?>
             <section class="container mb-5 pb-5" id="tnc">
                 <h3 class="text-theme-secondary">Frequently Asked Questions</h3>
                 <?= view('pages/packages/component/faq-section', ['FAQS' => $package->PACKAGE_FAQ]) ?>
