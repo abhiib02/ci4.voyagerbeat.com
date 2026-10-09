@@ -496,7 +496,10 @@ class EmailController extends BaseController
         $Bookingdata->sharing = explode('|', $Bookingdata->sharing)[1] ?? $Bookingdata->sharing;
         $Bookingdata->sharingNumber = explode('|', $Bookingdata->sharing)[0];
         $Bookingdata->boarding = explode('|', $Bookingdata->travelmode)[0];
-        $Bookingdata->gstCost = ($Bookingdata->gst_include) ? 0 : ($Bookingdata->total_package_cost * GST);
+        $Bookingdata->costWithoutGST = ($Bookingdata->total_package_cost / (1 + GST));
+        $Bookingdata->gstCost = ($Bookingdata->gst_include) ? ($Bookingdata->costExGST * GST) : 0;
+        $Bookingdata->perPersonCost = $Bookingdata->costExGST /  $Bookingdata->adults;
+
 
 
 
@@ -640,12 +643,12 @@ class EmailController extends BaseController
     </thead>
     <tbody>
       <tr>
-        <td>' . $data->adults . ' Adult x ' . $data->sharing . '</td>
-        <td>₹ ' . number_format($data->total_package_cost, 2) . '</td>
+        <td>' . $data->sharing . '</td>
+        <td>₹ ' . number_format($data->perPersonCost, 2) . '</td>
       </tr>
       <tr>
-        <td>Total</td>
-        <td>₹ ' . number_format($data->total_package_cost, 2) . '</td>
+        <td> X ' . $data->adults . ' Adults</td>
+        <td>₹ ' . number_format($data->costExGST, 2) . '</td>
       </tr>
       <tr>
         <td>GST @ 5% (Zero if inclusive / adjusted)</td>
