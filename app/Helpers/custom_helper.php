@@ -54,10 +54,12 @@ if (! function_exists('statusToClass')) {
     function statusToClass(string $status): string
     {
         $map = [
-            'Pending'          => 'status-pending',
-            'Complete'         => 'status-complete',
-            'Cancel'           => 'status-cancel',
-            'Failed / Unknown' => 'status-failed-unknown',
+            'Pending'           => 'status-pending',
+            'Complete'          => 'status-complete',
+            'Complete_no_points' => 'status-complete_no_points',
+            'Cancel'            => 'status-cancel',
+            'Postponed'         => 'status-postponed',
+            'Failed / Unknown'  => 'status-failed',
         ];
 
         return $map[$status] ?? 'status-unknown';

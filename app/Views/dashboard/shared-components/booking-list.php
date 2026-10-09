@@ -88,9 +88,9 @@
                 <td>
 
                     <?php if (auth('Admin')): ?>
-                        <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
+                        <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" data-status="<?= esc($booking->status) ?>" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onclick="showStatusWarnings()" onchange="setPaymentStatusClass()">
                             <?php
-                            $statuses = ['Pending', 'Complete', 'Cancel', 'Postponed', 'Failed / Unknown'];
+                            $statuses = ['Pending', 'Complete', 'Complete_no_points', 'Cancel', 'Postponed', 'Failed / Unknown'];
                             foreach ($statuses as $status):
                             ?>
                                 <option class="<?= statusToClass($status) ?>" value="<?= esc($status) ?>" <?= $booking->status === $status ? 'selected' : '' ?>>
@@ -100,9 +100,9 @@
                         </select>
                     <?php else: ?>
                         <?php if ($booking->status != 'Complete'): ?>
-                            <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
+                            <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" data-status="<?= esc($booking->status) ?>" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
                                 <?php
-                                $statuses = ['Pending', 'Complete', 'Cancel', 'Postponed', 'Failed / Unknown'];
+                                $statuses = ['Pending', 'Complete', 'Complete_no_points', 'Cancel', 'Postponed', 'Failed / Unknown'];
                                 foreach ($statuses as $status):
                                 ?>
                                     <option class="<?= statusToClass($status) ?>" value="<?= esc($status) ?>" <?= $booking->status === $status ? 'selected' : '' ?>>
@@ -188,7 +188,9 @@
                                                         class="form-select form-control-sm"
                                                         data-booking-id="<?= $booking->ID; ?>"
                                                         onclick="getPackageDates(<?= $booking->package_id; ?>, this)">
+
                                                         <option value="<?= $booking->date ?>" selected><?= $booking->date ?></option>
+                                                        <option value="" disabled>Loading....</option>
 
                                                     </select>
 
@@ -308,6 +310,7 @@
                                     fragment.appendChild(option);
                                 });
 
+                                selectElement.querySelector('option[disabled]').remove();
                                 // Append newly formatted options to the select dropdown
                                 selectElement.appendChild(fragment);
 

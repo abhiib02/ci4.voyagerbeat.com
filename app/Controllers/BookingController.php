@@ -96,7 +96,7 @@ class BookingController extends BaseController
                 return trim(strip_tags($value));
             case 'status':
                 // e.g. validate against an enum of allowed statuses
-                $validStatuses = ['Pending', 'Complete', 'Cancel', 'Postponed', 'Failed / Unknown'];
+                $validStatuses = ['Pending', 'Complete', 'Complete_no_points', 'Cancel', 'Postponed', 'Failed / Unknown'];
                 return in_array($value, $validStatuses, true) ? $value : null;
             default:
                 return $value;

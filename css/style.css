@@ -472,24 +472,40 @@ body {
   white-space: nowrap;
 }
 
+/* Pending */
 .status-pending {
-  background-color: #fff3cd;
-  color: #997404;
+  background-color: #fef9c3;
+  color: #854d0e;
 }
 
+/* Complete */
 .status-complete {
-  background-color: #d1e7dd;
-  color: #0f5132;
+  background-color: #dcfce7;
+  color: #166534;
 }
 
+/* Complete without points */
+.status-complete_no_points {
+  background-color: #4b5563;
+  color: #ffffff;
+}
+
+/* Cancel */
 .status-cancel {
-  background-color: #f8d7da;
-  color: #842029;
+  background-color: #fee2e2;
+  color: #991b1b;
 }
 
-.status-failed-unknown {
-  background-color: #e2e3e5;
-  color: #41464b;
+/* Postponed */
+.status-postponed {
+  background-color: #e0f2fe;
+  color: #075985;
+}
+
+/* Failed / Unknown */
+.status-failed {
+  background-color: #e5e7eb;
+  color: #374151;
 }
 /*----------- Social Colors ------------------*/
 .fb-bg {
