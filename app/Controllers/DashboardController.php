@@ -35,21 +35,9 @@ class DashboardController extends BaseController
         $this->PointModel = new Point();
         $this->PackageModel = new Package();
         $this->OptionModel = new Option();
-        // $this->CategoryModel = new Category();
         $this->BookingModel = new Booking();
         $this->UserModel = new User();
         $this->CouponModel = new Coupon();
-        // $this->data['Destinations'] = $this->DestinationModel->getAllDestinations();
-        // $this->data['AllCategories'] = $this->CategoryModel->getAllCategories();
-        // $this->data['Contact'] = $this->OptionModel->getOptionValue('contact');
-        // 
-        // $this->data['LatestBookings'] = $this->BookingModel->getBookings(5);
-        // $this->data['TotalPackageCount'] = $this->PackageModel->getAllPackagesCount();
-        // $this->data['TotalCategoryCount'] = $this->CategoryModel->getAllCategoriesCount();        
-        // $this->data['TotalDestinationCount'] = $this->DestinationModel->getAllDestinationsCount();        
-        // $this->data['TotalAdminCount'] = $this->UserModel->getAdminCount();        
-        // $this->data['TotalCustomerCount'] = $this->UserModel->getCustomerCount();        
-
     }
 
     // ------------------- Pages -----------------------//
