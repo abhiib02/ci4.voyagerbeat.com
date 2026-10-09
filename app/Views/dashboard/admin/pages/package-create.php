@@ -1032,7 +1032,7 @@
                             <button type="button" class="btn btn-secondary" onclick="removeQuestion()">Remove Question</button>
                         </div>
                         <hr>
-                        <textarea id="faq_textarea" name="PACKAGE_FAQ" hidden></textarea>
+                        <textarea id="faq_textarea" name="PACKAGE_FAQ" hidden>[]</textarea>
                         <div id="faq_inputs">
 
                         </div>

@@ -431,6 +431,11 @@ class PackageController extends BaseController
             'it' => 'required',
             'duration' => 'required',
         ];
+        if (!$this->validate($rules)) {
+            print_r($this->validator->listErrors());
+            exit;
+        }
+
         $DataArr = [
             'PACKAGE_NAME'      => $this->request->getPost('package_name'),
             'SLUG'      => $this->request->getPost('slug'),
@@ -438,6 +443,7 @@ class PackageController extends BaseController
             'PICKNDROP'         => $this->request->getPost('PICKNDROP'),
             'PACKAGE_DAYS'      => $this->request->getPost('days'),
             'DURATION'          => $this->request->getPost('duration'),
+            'STAY'              => convertDuration($this->request->getPost('days')),
             'PACKAGE_TYPE'      => $this->request->getPost('type'),
             'TAGS'              => $this->request->getPost('tags'),
             'BADGE'             => $this->request->getPost('badge'),
@@ -455,6 +461,7 @@ class PackageController extends BaseController
             'TRIP_HIGHLIGHT'    => $this->request->getPost('TRIP_HIGHLIGHT'),
             'META_DESC'         => $this->request->getPost('META_DESC'),
             'PACKAGE_IMAGE'     => $this->request->getPost('image'),
+            'PACKAGE_THUMBNAIL' => $this->request->getPost('image'),
             'IMAGE_1'           => $this->request->getPost('IMAGE_1'),
             'IMAGE_2'           => $this->request->getPost('IMAGE_2'),
             'IMAGE_3'           => $this->request->getPost('IMAGE_3'),
@@ -500,12 +507,8 @@ class PackageController extends BaseController
         if ($this->PackageModel->isSlugExist($this->request->getPost('slug'))) {
             $DataArr['SLUG'] = $this->request->getPost('slug') . date('his');
         }
-        if (!$this->validate($rules)) {
-            print_r($this->validator->listErrors());
-            exit;
-        } else {
-            $this->PackageModel->insertPackage($DataArr);
-        }
+        $this->PackageModel->insertPackage($DataArr);
+        //print_r($this->PackageModel->errors());
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package Added Sucessfully.', 'status' => 'success']);
         return redirect()->to('/dashboard/packages-list');
     }
@@ -540,10 +543,11 @@ class PackageController extends BaseController
         }
         $DataArr = [
             'PACKAGE_NAME'      => $this->request->getPost('package_name'),
-            'SLUG'      => $this->request->getPost('slug'),
+            'SLUG'              => $this->request->getPost('slug'),
             'PICKNDROP'         => $this->request->getPost('PICKNDROP'),
             'PACKAGE_DAYS'      => $this->request->getPost('days'),
             'DURATION'          => $this->request->getPost('duration'),
+            'STAY'              => convertDuration($this->request->getPost('days')),
             'PACKAGE_TYPE'      => $this->request->getPost('type'),
             'TAGS'              => $this->request->getPost('tags'),
             'BADGE'             => $this->request->getPost('badge'),
@@ -561,6 +565,7 @@ class PackageController extends BaseController
             'TRIP_HIGHLIGHT'    => $this->request->getPost('TRIP_HIGHLIGHT'),
             'META_DESC'         => $this->request->getPost('META_DESC'),
             'PACKAGE_IMAGE'     => $this->request->getPost('image'),
+            'PACKAGE_THUMBNAIL' => $this->request->getPost('image'),
             'IMAGE_1'           => $this->request->getPost('IMAGE_1'),
             'IMAGE_2'           => $this->request->getPost('IMAGE_2'),
             'IMAGE_3'           => $this->request->getPost('IMAGE_3'),
