@@ -46,7 +46,7 @@
             data-loader
             data-loader-title="Booking Confirmation In Progress"
             data-loader-steps="Validating your details...|Updating in Database... |Sending Email... |Generating Reciept... |Almost done...">
-
+            <input type="hidden" name="package_id" value="<?= esc($BookingData->package_id) ?>">
             <input type="hidden" name="order_id" value="<?= esc($BookingData->order_id) ?>">
             <input type="hidden" name="prefill" value="1">
             <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
@@ -224,21 +224,6 @@
                                                 <input type="hidden" class="form-control-plaintext sharing" required value="<?= $pax->sharing ?>" readonly>
                                                 <select id="Sharing" class="form-select sharing" required disabled>
                                                     <option value="" selected><?= $pax->sharing ?></option>
-                                                    <?php if (!empty($PackageData->INFO_P1) && !$PackageData->INFO_P1 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P1) ?>"><?= esc($PackageData->INFO_P1) ?></option>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($PackageData->INFO_P2) && !$PackageData->INFO_P2 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P2) ?>"><?= esc($PackageData->INFO_P2) ?></option>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($PackageData->INFO_P3) && !$PackageData->INFO_P3 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P3) ?>"><?= esc($PackageData->INFO_P3) ?></option>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($PackageData->INFO_P4) && !$PackageData->INFO_P4 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P4) ?>"><?= esc($PackageData->INFO_P4) ?></option>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($PackageData->INFO_P5) && !$PackageData->INFO_P5 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P5) ?>"><?= esc($PackageData->INFO_P5) ?></option>
-                                                    <?php endif; ?>
                                                 </select>
                                                 <label class="form-label">Sharing</label>
                                             </div>

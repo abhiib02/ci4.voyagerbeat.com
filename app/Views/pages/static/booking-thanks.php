@@ -142,6 +142,10 @@
                                                 <span class="text-muted">Adhaar Number</span>
                                                 <span><?= $pax->adhaar ?></span>
                                             </li>
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span class="text-muted">Cost </span>
+                                                <span><?= $pax->cost ?></span>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

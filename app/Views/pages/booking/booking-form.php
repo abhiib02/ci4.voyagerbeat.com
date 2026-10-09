@@ -720,7 +720,7 @@
                         gender: t.gender,
                         contact: t.contact,
                         boarding_city: t.boarding_city,
-                        sharing: (t.sharing.split('|')[1] || '').toLowerCase(),
+                        sharing: (t.sharing || '').toLowerCase(),
                     }))
                 );
             });

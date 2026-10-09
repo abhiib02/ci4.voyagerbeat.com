@@ -38,6 +38,7 @@
             data-loader-title="Booking Confirmation In Progress"
             data-loader-steps="Validating your details...|Updating in Database... |Sending Email... |Generating Reciept... |Almost done...">
 
+            <input type="hidden" name="package_id" value="<?= esc($BookingData->package_id) ?>">
             <input type="hidden" name="order_id" value="<?= esc($BookingData->order_id) ?>">
             <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
             <!-- Step 1: Basic Information -->
@@ -194,13 +195,13 @@
                             <select name="travelmode" class="form-select" required>
                                 <option value="" Selected disabled>Choose your option</option>
                                 <?php if (!empty($PackageData->HEAD_WT2PRICE) && !$PackageData->HEAD_WT2PRICE == 0): ?>
-                                    <option value="<?= esc(strip_tags($PackageData->HEAD_WT2PRICE)) ?>"><?= esc(strip_tags($PackageData->HEAD_WT2PRICE)) ?></option>
+                                    <option value="1|<?= esc(strip_tags($PackageData->HEAD_WT2PRICE)) ?>"><?= esc(strip_tags($PackageData->HEAD_WT2PRICE)) ?></option>
                                 <?php endif; ?>
                                 <?php if (!empty($PackageData->HEAD_WTPRICE) && !$PackageData->HEAD_WTPRICE == 0): ?>
-                                    <option value="<?= esc(strip_tags($PackageData->HEAD_WTPRICE)) ?>"><?= esc(strip_tags($PackageData->HEAD_WTPRICE)) ?></option>
+                                    <option value="2|<?= esc(strip_tags($PackageData->HEAD_WTPRICE)) ?>"><?= esc(strip_tags($PackageData->HEAD_WTPRICE)) ?></option>
                                 <?php endif; ?>
                                 <?php if (!empty($PackageData->HEAD_PRICE) && !$PackageData->HEAD_PRICE == 0): ?>
-                                    <option value="<?= esc(strip_tags($PackageData->HEAD_PRICE)) ?>"><?= esc(strip_tags($PackageData->HEAD_PRICE)) ?></option>
+                                    <option value="3|<?= esc(strip_tags($PackageData->HEAD_PRICE)) ?>"><?= esc(strip_tags($PackageData->HEAD_PRICE)) ?></option>
                                 <?php endif; ?>
                             </select>
                             <label for="place">Choose Any One</label>
@@ -257,19 +258,19 @@
                                             <div class="form-floating">
                                                 <select id="Sharing" class="form-select sharing" required>
                                                     <?php if (!empty($PackageData->INFO_P1) && !$PackageData->INFO_P1 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P1) ?>"><?= esc($PackageData->INFO_P1) ?></option>
+                                                        <option value="4|<?= esc($PackageData->INFO_P1) ?>"><?= esc($PackageData->INFO_P1) ?></option>
                                                     <?php endif; ?>
                                                     <?php if (!empty($PackageData->INFO_P2) && !$PackageData->INFO_P2 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P2) ?>"><?= esc($PackageData->INFO_P2) ?></option>
+                                                        <option value="3|<?= esc($PackageData->INFO_P2) ?>"><?= esc($PackageData->INFO_P2) ?></option>
                                                     <?php endif; ?>
                                                     <?php if (!empty($PackageData->INFO_P3) && !$PackageData->INFO_P3 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P3) ?>"><?= esc($PackageData->INFO_P3) ?></option>
+                                                        <option value="2|<?= esc($PackageData->INFO_P3) ?>"><?= esc($PackageData->INFO_P3) ?></option>
                                                     <?php endif; ?>
                                                     <?php if (!empty($PackageData->INFO_P4) && !$PackageData->INFO_P4 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P4) ?>"><?= esc($PackageData->INFO_P4) ?></option>
+                                                        <option value="1|<?= esc($PackageData->INFO_P4) ?>"><?= esc($PackageData->INFO_P4) ?></option>
                                                     <?php endif; ?>
                                                     <?php if (!empty($PackageData->INFO_P5) && !$PackageData->INFO_P5 == 0): ?>
-                                                        <option value="<?= esc($PackageData->INFO_P5) ?>"><?= esc($PackageData->INFO_P5) ?></option>
+                                                        <option value="0|<?= esc($PackageData->INFO_P5) ?>"><?= esc($PackageData->INFO_P5) ?></option>
                                                     <?php endif; ?>
                                                 </select>
                                                 <label class="form-label">Sharing</label>

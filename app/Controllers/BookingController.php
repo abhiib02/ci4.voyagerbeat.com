@@ -224,7 +224,11 @@ class BookingController extends BaseController
 
 
         $orderId = $this->request->getPost('order_id');
+        $packageId = $this->request->getPost('package_id');
+        $travelMode = $this->request->getPost('travelmode');
+        $paxDetails = $this->request->getPost('pax_details');
 
+        $updatedPaxDetails = $this->addEachPersonCost($packageId, $travelMode, $paxDetails);
 
         $customerFilledData = [
             'user_id' => $user_id,
@@ -236,7 +240,7 @@ class BookingController extends BaseController
             'trip_type' => $this->request->getPost('trip_type'),
             'date' => $this->request->getPost('date'),
             'travelmode' => $this->request->getPost('travelmode'),
-            'pax_details' => $this->request->getPost('pax_details'),
+            'pax_details' => $updatedPaxDetails,
             'address' => $this->request->getPost('address'),
             'heard' => $this->request->getPost('heard'),
             'status' => 'Pending',
@@ -306,6 +310,57 @@ class BookingController extends BaseController
         ]);
 
         return $response->getBody();
+    }
+
+
+    public function addEachPersonCost(int $package_id, string $travelmode, string $jsonString)
+    {
+        $PackagePriceDetails = $this->PackageModel->getPackageByID($package_id);
+        $priceArr = [
+            $PackagePriceDetails->PRICE_5,
+            $PackagePriceDetails->PRICE_4,
+            $PackagePriceDetails->PRICE_3,
+            $PackagePriceDetails->PRICE_2,
+            $PackagePriceDetails->PRICE_1
+        ];
+        $WTpriceArr = [
+            $PackagePriceDetails->WT_PRICE_5,
+            $PackagePriceDetails->WT_PRICE_4,
+            $PackagePriceDetails->WT_PRICE_3,
+            $PackagePriceDetails->WT_PRICE_2,
+            $PackagePriceDetails->WT_PRICE_1
+        ];
+        $WT2priceArr = [
+            $PackagePriceDetails->WT2_PRICE_5,
+            $PackagePriceDetails->WT2_PRICE_4,
+            $PackagePriceDetails->WT2_PRICE_3,
+            $PackagePriceDetails->WT2_PRICE_2,
+            $PackagePriceDetails->WT2_PRICE_1
+        ];
+        $travelmodeInt = (int)$travelmode;
+
+        switch ($travelmodeInt) {
+            case 1:
+                $selectedPriceArr = $WT2priceArr;
+                break;
+            case 2:
+                $selectedPriceArr = $WTpriceArr;
+                break;
+            case 3:
+                $selectedPriceArr = $priceArr;
+                break;
+            default:
+                return $jsonString;
+        }
+        $paxDetails = json_decode($jsonString, true);
+        foreach ($paxDetails as &$pax) {
+            $sharingParts = explode('|', $pax['sharing'] ?? '');
+            $sharingKey = (int)($sharingParts[0] ?? 0);
+
+            $pax['cost'] = $selectedPriceArr[$sharingKey] ?? 0;
+        }
+        $updatedJson = json_encode($paxDetails, JSON_PRETTY_PRINT);
+        return $updatedJson;
     }
 
     public function PaymentScreenshotUpload() {}
