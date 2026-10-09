@@ -1029,9 +1029,10 @@
                         <div class="d-flex justify-content-between">
                             <h3>Frequently Asked Question</h3>
                             <button type="button" class="btn btn-primary" onclick="addQuestion()">Add Question</button>
+                            <button type="button" class="btn btn-secondary" onclick="removeQuestion()">Remove Question</button>
                         </div>
                         <hr>
-                        <textarea id="faq_textarea" name="PACKAGE_FAQ" hidden   ></textarea>
+                        <textarea id="faq_textarea" name="PACKAGE_FAQ" hidden></textarea>
                         <div id="faq_inputs">
 
                         </div>
