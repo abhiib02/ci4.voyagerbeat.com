@@ -525,17 +525,16 @@ class EmailController extends BaseController
         $email->setCC(env('contact_form_receiver_email'));
         $email->setSubject($subject);
         $email->setMessage($message);
-        print_r($message);
-        return;
-        // if ($email->send()) {
-        //     $this->session->setFlashdata('FlashMessage', ['message' => 'Booking Confirmed Please Check Mail', 'status' => 'Success']);
-        //     return 1;
-        // } else {
-        //     $data = $email->printDebugger(['headers']);
-        //     // print_r($data);
-        //     $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'danger']);
-        //     return 0;
-        // }
+
+        if ($email->send()) {
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Booking Confirmed Please Check Mail', 'status' => 'Success']);
+            return 1;
+        } else {
+            $data = $email->printDebugger(['headers']);
+            // print_r($data);
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'danger']);
+            return 0;
+        }
     }
     public function bookingDetailTemplate(object $data)
     {
