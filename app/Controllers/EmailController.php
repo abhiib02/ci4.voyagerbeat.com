@@ -492,7 +492,12 @@ class EmailController extends BaseController
 
         //Manupulating Data 
         $Bookingdata->date = explode('|', $Bookingdata->date)[0] ?? $Bookingdata->date;
+        $Bookingdata->surcharge = explode('|', $Bookingdata->date)[1] ?? 0;
         $Bookingdata->sharing = explode('|', $Bookingdata->sharing)[1] ?? $Bookingdata->sharing;
+        $Bookingdata->sharingNumber = explode('|', $Bookingdata->sharing)[0];
+        $Bookingdata->boarding = explode('|', $Bookingdata->travelmode)[0];
+        $Bookingdata->gstCost = ($Bookingdata->gst_include) ? 0 : ($Bookingdata->total_package_cost * GST);
+
 
 
         if ($Bookingdata->remainingAmount < 0) {
@@ -517,15 +522,17 @@ class EmailController extends BaseController
         $email->setCC(env('contact_form_receiver_email'));
         $email->setSubject($subject);
         $email->setMessage($message);
-        if ($email->send()) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Booking Confirmed Please Check Mail', 'status' => 'Success']);
-            return 1;
-        } else {
-            $data = $email->printDebugger(['headers']);
-            // print_r($data);
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'danger']);
-            return 0;
-        }
+        print_r($message);
+        return;
+        // if ($email->send()) {
+        //     $this->session->setFlashdata('FlashMessage', ['message' => 'Booking Confirmed Please Check Mail', 'status' => 'Success']);
+        //     return 1;
+        // } else {
+        //     $data = $email->printDebugger(['headers']);
+        //     // print_r($data);
+        //     $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'danger']);
+        //     return 0;
+        // }
     }
     public function bookingDetailTemplate(object $data)
     {
@@ -620,6 +627,59 @@ class EmailController extends BaseController
                 <tr><td><strong>Amount Paid</strong></td><td>₹ ' . number_format($data->amount, 2) . '</td></tr>
                 <tr><td><strong>Remaining Payable</strong></td><td>' . $data->remainingAmount . '</td></tr>
                 </table>
+
+                <div>
+
+  <h3>PRICING DETAILS :</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>' . $data->adults . ' Adult x ' . $data->sharing . '</td>
+        <td>₹ ' . number_format($data->total_package_cost, 2) . '</td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td>₹ ' . number_format($data->total_package_cost, 2) . '</td>
+      </tr>
+      <tr>
+        <td>GST @ 5% (Zero if inclusive / adjusted)</td>
+        <td>₹ ' . number_format($data->gstCost, 2) . '</td>
+      </tr>
+      <tr>
+        <td>Total payable</td>
+        <td>₹ ' . number_format($data->total_package_cost, 2) . '</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>PAYMENT DETAILS :</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Payment Made by UPI</td>
+        <td>INR 7,500.00</td>
+      </tr>
+      <tr>
+        <td>BALANCE (<b>To be paid 1 day prior to the trip</b>)</td>
+        <td>INR 17,700.00</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
                 <a style="font-size: 12px;" href="' . $data->bookingConfirmationURL . '">Click here For All Details</a>
                 <p style="font-size: 12px; color: #666;">* This is a system generated Booking Confirmation Receipt.</p>
 

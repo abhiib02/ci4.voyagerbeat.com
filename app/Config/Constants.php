@@ -82,3 +82,4 @@ defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125);    // highest a
 
 /*-------------------- Custom Constants -------------------------*/
 defined('POINTS_EARNING_RATE') || define('POINTS_EARNING_RATE', 0.05);
+defined('GST') || define('GST', 0.05);
