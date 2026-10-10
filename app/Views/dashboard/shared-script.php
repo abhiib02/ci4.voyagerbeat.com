@@ -1,4 +1,3 @@
-<script src='/js/linkImgHover.js'></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-3.0.3/datatables.min.js" integrity="sha384-U3G//lYwFPbrDV7w5uhOUSxHgb+hj1XYov+neDtWPWsO+xB38Puvo2sTlUSNw/bj" crossorigin="anonymous"></script>
 
 <script>
@@ -50,6 +49,7 @@
                         ${(traveler.gender || '').toLowerCase()} • <a href="tel:${traveler.contact || ''}">${traveler.contact || ''}</a>
                         <p class="m-0">Sharing Basis : ${traveler.sharing.split('|')[1] || traveler.sharing}</p>
                         <p class="m-0">Adhaar Number : ${traveler.adhaar}</p>
+                        <p class="m-0">Cost : ${traveler.cost ?? ''}</p>
                         <button class="btn btn-sm btn-outline-dark" onclick="openModel('Trav-${traveler.contact}_${traveler.adhaar}')">Open Adhaar Card </button>
                         <dialog class="border-1 rounded" id="Trav-${traveler.contact}_${traveler.adhaar}">
                         <div class="card">

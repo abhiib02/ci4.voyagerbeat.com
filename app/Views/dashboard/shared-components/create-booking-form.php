@@ -18,8 +18,7 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="package_id" class="form-label fw-bold">Package ID</label>
-                                    <div class="input-group mb-3">
-
+                                    <div class="input-group">
                                         <input
                                             type="number"
                                             class="form-control"
@@ -30,24 +29,10 @@
                                             required
                                             readonly>
                                     </div>
+                                    <p class="m-0" id="package_name"></p>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="adults" class="form-label fw-bold">Adults</label>
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        id="adults"
-                                        name="adults"
-                                        min="1"
-                                        step="1"
-                                        required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-12">
                                 <div class="mb-3">
                                     <label for="contact" class="form-label fw-bold">Contact No</label>
                                     <input
@@ -64,7 +49,33 @@
                             </div>
                         </div>
                         <div class="row ">
-                            <div class="col-6">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="adults" class="form-label fw-bold">Adults</label>
+                                    <div class="input-group mb-3">
+                                        <input type="number"
+                                            class="form-control"
+                                            id="adults"
+                                            name="adults"
+                                            min="1"
+                                            step="1"
+                                            oninput="addPaxSharingCostInput(event)"
+                                            required>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="" class="fw-bold">Each Traveler Cost</label>
+                                <div id="pax_sharing_cost_inputs">
+
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row ">
+                            <div class="col-12">
                                 <div class="mb-3">
                                     <label for="amount" class="form-label fw-bold">Amount Paid</label>
                                     <input
@@ -77,17 +88,15 @@
                                         required>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label for="amount" class="form-label fw-bold">Total Amount</label>
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        id="total_package_cost"
-                                        name="total_package_cost"
-                                        min="0"
-                                        step="0.01"
-                                        required>
+                            <div class="col-12">
+                                <div class="form-check">
+
+                                    <label class="form-check-label" for="gst_include">
+                                        <input class="form-check-input" type="hidden" name="gst_include" value="0" id="gst_include">
+                                        <input class="form-check-input" type="checkbox" name="gst_include" value="1" id="gst_include">
+                                        Include 5% GST
+
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -108,10 +117,41 @@
 
 
 </dialog>
+
 <script>
-    function addPackageID(ID) {
+    function addPaxSharingCostInput(event) {
+        const targetEle = document.getElementById('pax_sharing_cost_inputs');
+        let AdultCount = parseInt(document.getElementById('adults').value) || 0;
+        let HTMLstring = '';
+        for (let i = 0; i < AdultCount; i++) {
+            HTMLstring += `
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">₹</span>
+                        <input type="number" class="form-control" placeholder="Traveler Cost" name="perPersonCost[]">
+                        <select class="form-select" name="perPersonSharing[]">
+                        <option selected Disabled>Choose...</option>
+                        <option value="Quad Sharing">Quad Sharing</option>
+                        <option value="Triple Sharing">Triple Sharing</option>
+                        <option value="Double Sharing">Double Sharing</option>
+                        <option value="Solo Sharing">Solo Sharing</option>
+                    </select>
+                    </div>
+                    
+                </div>
+            `;
+        }
+        targetEle.innerHTML = HTMLstring;
+    }
+</script>
+
+
+<script>
+    function addPackageID(ID, PACKAGE_NAME) {
 
         document.getElementById('package_id').value = ID;
+        document.getElementById('package_name').textContent = PACKAGE_NAME;
+
         document.querySelector('.searchBoxInput').value = '';
         let packagesLists = document.querySelectorAll('#packagesList');
         packagesLists.forEach((packagesList) => {
@@ -120,7 +160,7 @@
     }
 </script>
 <script>
-    const packages = <?= json_encode($AllPackagesNameAndID); ?>;
+    const packages = <?= json_encode($AllPackagesNameAndID ?? ''); ?>;
     const packagesTitleandID = packages.map((obj) => {
         return {
             PACKAGE_ID: obj.PACKAGE_ID,
@@ -179,7 +219,7 @@
 
 
         packages.forEach((package) => {
-            generatedList += `<a onclick="addPackageID(${package.PACKAGE_ID})"class="list-group-item list-group-item-action text-capitalize">${package.PACKAGE_ID} | ${package.PACKAGE_NAME}</a>`;
+            generatedList += `<a onclick="addPackageID(${package.PACKAGE_ID},'${package.PACKAGE_NAME}')"class="list-group-item list-group-item-action text-capitalize">${package.PACKAGE_ID} | ${package.PACKAGE_NAME}</a>`;
         })
         packagesLists.forEach((packagesList) => {
             packagesList.innerHTML = generatedList;

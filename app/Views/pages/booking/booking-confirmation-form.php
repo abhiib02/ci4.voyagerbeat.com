@@ -255,28 +255,6 @@
 
                                         </div>
                                         <div class="col-12 col-md-3">
-                                            <div class="form-floating">
-                                                <select id="Sharing" class="form-select sharing" required>
-                                                    <?php if (!empty($PackageData->INFO_P1) && !$PackageData->INFO_P1 == 0): ?>
-                                                        <option value="4|<?= esc($PackageData->INFO_P1) ?>"><?= esc($PackageData->INFO_P1) ?></option>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($PackageData->INFO_P2) && !$PackageData->INFO_P2 == 0): ?>
-                                                        <option value="3|<?= esc($PackageData->INFO_P2) ?>"><?= esc($PackageData->INFO_P2) ?></option>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($PackageData->INFO_P3) && !$PackageData->INFO_P3 == 0): ?>
-                                                        <option value="2|<?= esc($PackageData->INFO_P3) ?>"><?= esc($PackageData->INFO_P3) ?></option>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($PackageData->INFO_P4) && !$PackageData->INFO_P4 == 0): ?>
-                                                        <option value="1|<?= esc($PackageData->INFO_P4) ?>"><?= esc($PackageData->INFO_P4) ?></option>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($PackageData->INFO_P5) && !$PackageData->INFO_P5 == 0): ?>
-                                                        <option value="0|<?= esc($PackageData->INFO_P5) ?>"><?= esc($PackageData->INFO_P5) ?></option>
-                                                    <?php endif; ?>
-                                                </select>
-                                                <label class="form-label">Sharing</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-3">
                                             <div class="form-floating mb-3">
                                                 <input type="text" class="form-control boarding_city" id="boardingCity" required>
                                                 <label for="boardingCity">Boarding City</label>

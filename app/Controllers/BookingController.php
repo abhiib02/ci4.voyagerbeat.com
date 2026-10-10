@@ -105,6 +105,7 @@ class BookingController extends BaseController
 
     public function createBookingProcess()
     {
+
         // 1. Validate input FIRST
         $rules = [
             'package_id'    => 'required|integer',
@@ -112,6 +113,8 @@ class BookingController extends BaseController
             'adults' => 'required|integer',
             'contact' => 'required|numeric|min_length[10]|max_length[10]',
             'agent' => 'required|integer',
+            'perPersonCost' => 'required',
+            'perPersonSharing' => 'required',
         ];
 
         if (!$this->validate($rules)) {
@@ -127,15 +130,32 @@ class BookingController extends BaseController
         $generated_order_id = md5(base64_encode($this->request->getPost('contact') . date('Y-m-d H:i:s')));
         $packageData = $this->PackageModel->getPackageByID($this->request->getPost('package_id'));
 
+        $perPersonCostArr = json_encode($this->request->getPost('perPersonCost'));
+        $perPersonSharingArr = json_encode($this->request->getPost('perPersonSharing'));
+        $gst_include = $this->request->getPost('gst_include');
+
+        $total_package_cost_no_gst = array_sum($this->request->getPost('perPersonCost'));
+
+
+        if ($gst_include) {
+            $total_package_cost = $total_package_cost_no_gst + ($total_package_cost_no_gst * GST);
+        } else {
+            $total_package_cost = $total_package_cost_no_gst;
+        }
+
+
         $AgentFilledData = [
             'package_id' => $this->request->getPost('package_id'),
             'package_name' => $packageData->PACKAGE_NAME,
             'amount' => $this->request->getPost('amount'),
-            'total_package_cost' => $this->request->getPost('total_package_cost'),
+            'perPersonCost' => $perPersonCostArr,
+            'perPersonSharing' => $perPersonSharingArr,
             'adults' => $this->request->getPost('adults'),
             'contact' => $this->request->getPost('contact'),
             'agent' => $this->request->getPost('agent'),
             'order_id' => $generated_order_id,
+            'gst_include' => $this->request->getPost('gst_include'),
+            'total_package_cost' => $total_package_cost
         ];
 
         $this->BookingModel->insertBooking($AgentFilledData);
@@ -222,13 +242,21 @@ class BookingController extends BaseController
         }
         $this->BookingModel->skipValidation(true);
 
-
         $orderId = $this->request->getPost('order_id');
-        $packageId = $this->request->getPost('package_id');
-        $travelMode = $this->request->getPost('travelmode');
-        $paxDetails = $this->request->getPost('pax_details');
+        $bookingData = $this->BookingModel->getBookingByOrderId($orderId);
 
-        $updatedPaxDetails = $this->addEachPersonCost($packageId, $travelMode, $paxDetails);
+        if ((int)$this->request->getPost('prefill') == 1) {
+            $packageId = $this->request->getPost('package_id');
+            $travelMode = $this->request->getPost('travelmode');
+            $paxDetails = $this->request->getPost('pax_details');
+            $updatedPaxDetails = $this->addEachPersonCost($packageId, $travelMode, $paxDetails);
+        } else {
+            $paxJSON = $this->request->getPost('pax_details');
+            $costJSON = $bookingData->perPersonCost;
+            $sharingJSON = $bookingData->perPersonSharing;
+            $updatedPaxDetails = $this->addEachPersonCostfromperPersonCost($costJSON, $sharingJSON, $paxJSON);
+        }
+
 
         $customerFilledData = [
             'user_id' => $user_id,
@@ -313,6 +341,22 @@ class BookingController extends BaseController
     }
 
 
+    public function addEachPersonCostfromperPersonCost(string $costJSONString, string $sharingJSONString, string $paxJSONString)
+    {
+
+
+        $paxDetails = json_decode($paxJSONString, true);
+        $costDetails = json_decode($costJSONString, true);
+        $sharingDetails = json_decode($sharingJSONString, true);
+        foreach ($paxDetails as $index => &$pax) {
+            $sharing = $sharingDetails[$index];
+            $cost = $costDetails[$index];
+            $pax['cost'] = $cost ?? 0;
+            $pax['sharing'] = $sharing ?? 0;
+        }
+        $updatedJson = json_encode($paxDetails, JSON_PRETTY_PRINT);
+        return $updatedJson;
+    }
     public function addEachPersonCost(int $package_id, string $travelmode, string $jsonString)
     {
         $PackagePriceDetails = $this->PackageModel->getPackageByID($package_id);

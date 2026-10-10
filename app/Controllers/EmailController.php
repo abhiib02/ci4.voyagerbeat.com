@@ -493,12 +493,8 @@ class EmailController extends BaseController
         //Manupulating Data 
         $Bookingdata->date = explode('|', $Bookingdata->date)[0] ?? $Bookingdata->date;
         $Bookingdata->surcharge = explode('|', $Bookingdata->date)[1] ?? 0;
-        $Bookingdata->sharing = explode('|', $Bookingdata->sharing)[1] ?? $Bookingdata->sharing;
-        $Bookingdata->sharingNumber = explode('|', $Bookingdata->sharing)[0];
-        $Bookingdata->boarding = explode('|', $Bookingdata->travelmode)[0];
-        $Bookingdata->costWithoutGST = ($Bookingdata->total_package_cost / (1 + GST));
-        $Bookingdata->gstCost = ($Bookingdata->gst_include) ? ($Bookingdata->costExGST * GST) : 0;
-        $Bookingdata->perPersonCost = $Bookingdata->costExGST /  $Bookingdata->adults;
+        $Bookingdata->boarding = explode('|', $Bookingdata->travelmode)[1];
+        $Bookingdata->templateSharing = array_count_values(json_decode($Bookingdata->perPersonSharing));
 
 
 
@@ -512,6 +508,7 @@ class EmailController extends BaseController
         }
 
         $message = $this->bookingDetailTemplate($Bookingdata);
+
 
         $email = \Config\Services::email();
 
@@ -538,161 +535,7 @@ class EmailController extends BaseController
     }
     public function bookingDetailTemplate(object $data)
     {
-        $template = '
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-            <meta charset="UTF-8">
-            <title>Booking Confirmation</title>
-            <style>
-                body {
-                font-family: Arial, sans-serif;
-                background-color: #ffffff;
-                margin: 0;
-                padding: 20px;
-                }
-                .container {
-                max-width: 700px;
-                margin: 0 auto;
-                border: 1px solid #ccc;
-                padding: 30px;
-                background-color: #f9f9f9;
-                }
-                h2 {
-                color: #222;
-                border-bottom: 1px solid #ccc;
-                padding-bottom: 10px;
-                }
-                table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 20px;
-                }
-                td {
-                padding: 8px 6px;
-                vertical-align: top;
-                }
-                th {
-                text-align: left;
-                background-color: #f0f0f0;
-                padding: 8px 6px;
-                }
-                .logo {
-                text-align: center;
-                margin-bottom: 20px;
-                }
-                .footer {
-                font-size: 12px;
-                color: #555;
-                text-align: center;
-                margin-top: 30px;
-                }
-                .highlight {
-                font-weight: bold;
-                }
-            </style>
-            </head>
-            <body>
-            <div class="container">
-                <div class="logo">
-                <img src="' . env('app.LogoPath') . '" alt="' . env('app.Name') . '" width="100">
-                <h2>Booking Confirmation Receipt</h2>
-                <p><strong>' . env('app.Name') . '</strong></p>
-                </div>
-
-                <h3>Customer Details</h3>
-                <table>
-                <tr><td><strong>Name</strong></td><td>' . $data->name . '</td></tr>
-                <tr><td><strong>Email</strong></td><td>' . $data->email . '</td></tr>
-                <tr><td><strong>Contact</strong></td><td>' . $data->contact . '</td></tr>
-                </table>
-
-                <h3>Booking Details</h3>
-                <table>
-                <tr><td><strong>Booking ID</strong></td><td>' . $data->ID . '</td></tr>
-                <tr><td><strong>Order ID</strong></td><td>' . $data->order_id . '</td></tr>
-                <tr><td><strong>Booking Date</strong></td><td>' . $data->created_at . '</td></tr>
-                </table>
-
-                <h3>Package Details</h3>
-                <table>
-                <tr><td><strong>Package ID</strong></td><td>' . $data->package_id . '</td></tr>
-                <tr><td><strong>Package Name</strong></td><td>' . $data->package_name . '</td></tr>
-                <tr><td><strong>Package Date of Travel</strong></td><td>' . $data->date . '</td></tr>
-                <tr><td><strong>Adults</strong></td><td>' . $data->adults . '</td></tr>
-                <tr><td><strong>Sharing Basis</strong></td><td>' . $data->sharing . '</td></tr>
-                </table>
-
-                <h3>Payment Details</h3>
-                <table>
-                <tr><td><strong>Total Amount</strong></td><td>₹ ' . number_format($data->total_package_cost, 2) . '</td></tr>
-                <tr><td><strong>Amount Paid</strong></td><td>₹ ' . number_format($data->amount, 2) . '</td></tr>
-                <tr><td><strong>Remaining Payable</strong></td><td>' . $data->remainingAmount . '</td></tr>
-                </table>
-
-                <div>
-
-  <h3>PRICING DETAILS :</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Description</th>
-        <th>Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>' . $data->sharing . '</td>
-        <td>₹ ' . number_format($data->perPersonCost, 2) . '</td>
-      </tr>
-      <tr>
-        <td> X ' . $data->adults . ' Adults</td>
-        <td>₹ ' . number_format($data->costExGST, 2) . '</td>
-      </tr>
-      <tr>
-        <td>GST @ 5% (Zero if inclusive / adjusted)</td>
-        <td>₹ ' . number_format($data->gstCost, 2) . '</td>
-      </tr>
-      <tr>
-        <td>Total payable</td>
-        <td>₹ ' . number_format($data->total_package_cost, 2) . '</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>PAYMENT DETAILS :</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Description</th>
-        <th>Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Payment Made by UPI</td>
-        <td>INR 7,500.00</td>
-      </tr>
-      <tr>
-        <td>BALANCE (<b>To be paid 1 day prior to the trip</b>)</td>
-        <td>INR 17,700.00</td>
-      </tr>
-    </tbody>
-  </table>
-
-</div>
-
-                <a style="font-size: 12px;" href="' . $data->bookingConfirmationURL . '">Click here For All Details</a>
-                <p style="font-size: 12px; color: #666;">* This is a system generated Booking Confirmation Receipt.</p>
-
-                <div class="footer">
-                <p>For any queries, please contact us at <a href="tel:' . env('app.defaultContact') . '">' . env('app.defaultContact') . '</a> or mail us at <a href="mailto:' . env('app.defaultMail') . '">' . env('app.defaultMail') . '</a></p>
-                </div>
-            </div>
-            </body>
-            </html>
-
-        ';
-        return $template;
+        // Pass the data object into the view and render it as a string
+        return view('emails/booking_confirmation_email', ['data' => $data]);
     }
 }
