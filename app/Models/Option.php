@@ -26,7 +26,7 @@ class Option extends Model
     // Validation rules
     protected $validationRules      = [
         'name'  => 'required|max_length[255]',
-        'value' => 'required',
+        'value' => 'permit_empty',
     ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;

@@ -14,7 +14,7 @@
                     <td><?= $option->name ?></td>
                     <td>
                         <form action="/option/<?= $option->name ?>" method="post" class="d-flex">
-                            <input type="text" name="<?= $option->name ?>" value="<?= $option->value ?>" class="form-control" required>
+                            <input type="text" name="<?= $option->name ?>" value="<?= $option->value ?>" class="form-control" >
                             <button class="btn btn-sm btn-success">Save</button>
                         </form>
                     </td>

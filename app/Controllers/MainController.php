@@ -13,9 +13,7 @@ class MainController extends BaseController
     public Package $PackageModel;
     public Option $OptionModel;
     public User $UserModel;
-    // public Destination $DestinationModel;
-    // public Booking $BookingModel;
-    // public Category $CategoryModel;
+    
 
 
     public function __construct() {}
