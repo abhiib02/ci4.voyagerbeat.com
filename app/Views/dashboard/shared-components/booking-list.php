@@ -34,15 +34,11 @@
 
                 <td><?= $booking->contact ?></td>
                 <td>
-                    <?php if (auth('Admin')): ?>
-                        <input type="number" class="form-control form-control-sm" data-field="adults" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->adults ?>">
-                    <?php else: ?>
-                        <?= $booking->adults ?>
-                    <?php endif; ?>
+                    <?= $booking->adults ?>
                 </td>
                 <td>
                     <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
-                        <button id="showTravelerbtn" class="btn btn-sm btn-outline-dark" data-booking-id="<?= $booking->ID ?>" data-travelers="<?= esc($booking->pax_details, 'attr') ?>">Show</button>
+                        <button class="btn btn-sm btn-outline-dark" data-booking-id="<?= $booking->ID ?>" data-travelers="<?= esc($booking->pax_details, 'attr') ?>" onclick="showTravelersModel()">Show</button>
                         <dialog class="border-1 rounded" id="travelers-dialog-<?= $booking->ID; ?>">
                             <div class="card">
                                 <div class="card-header">
@@ -135,9 +131,18 @@
                 <td>
                     <div class="d-flex gap-1">
 
-                        <button type="button" class="waves-effect  btn btn-sm btn-outline-dark" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
+                        <button type="button" class=" btn btn-sm btn-outline-dark" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
+                        <div class="">
+                            <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-dots-vertical-rounded'></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"> <i class='bx bx-plus-circle'></i> Add Points</a></li>
+
+                            </ul>
+                        </div>
                         <?php if (!str_contains($booking->order_id, 'order_') && $booking->customer_access): ?>
-                            <button type="button" id="copyLinkBtn" class="waves-effect  btn btn-sm btn-outline-dark" data-link="<?= base_url() ?>booking-confirmation-form/<?= $booking->order_id; ?>" onclick="copyLink()">Copy Link</button>
+                            <button type="button" id="copyLinkBtn" class=" btn btn-sm btn-outline-dark" data-link="<?= base_url() ?>booking-confirmation-form/<?= $booking->order_id; ?>" onclick="copyLink()">Copy Link</button>
                         <?php endif; ?>
                     </div>
                     <dialog id="BookingTableDetail<?= $booking->ID ?>">
@@ -253,182 +258,217 @@
                                 <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#BookingTableDetail<?= $booking->ID; ?>').close();">Close</button>
                             </div>
                         </div>
+                    </dialog>
+                <?php endforeach; ?>
 
 
-                    <?php endforeach; ?>
+                <script>
+                    async function getPackageDates(packageId, selectElement) {
+                        // Prevent re-fetching if options have already been populated
+                        if (selectElement.dataset.loaded === 'true') return;
 
-
-                    <script>
-                        async function getPackageDates(packageId, selectElement) {
-                            // Prevent re-fetching if options have already been populated
-                            if (selectElement.dataset.loaded === 'true') return;
-
-                            try {
-                                const response = await fetch(`/api/packageDatesJSON/${packageId}`, {
-                                    method: 'GET',
-                                    headers: {
-                                        'X-Requested-With': 'XMLHttpRequest',
-                                        'Content-Type': 'application/json'
-                                    }
-                                });
-
-                                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-                                const data = await response.json();
-
-                                if (!data || !data.DATES) return;
-
-                                // Save the currently selected option value
-                                const currentValue = selectElement.value;
-
-                                // Split data by comma into individual date range entries
-                                const dateEntries = data.DATES.split(',');
-
-                                // Build document fragment to insert options efficiently
-                                const fragment = document.createDocumentFragment();
-
-                                dateEntries.forEach(entry => {
-                                    // Split entry by pipe '|' to isolate date range and cost modifier
-                                    const [dateRange, cost] = entry.split('|');
-
-                                    if (!dateRange) return;
-
-                                    const trimmedDate = dateRange.trim();
-
-                                    // Avoid duplicating the already existing selected option
-                                    if (trimmedDate === currentValue) return;
-
-                                    const option = document.createElement('option');
-                                    option.value = trimmedDate;
-
-                                    // Format option label to highlight extra package cost if non-zero
-                                    const extraCost = parseInt(cost, 10);
-                                    option.textContent = extraCost > 0 ?
-                                        `${trimmedDate} (+₹${extraCost})` :
-                                        trimmedDate;
-
-                                    fragment.appendChild(option);
-                                });
-
-                                selectElement.querySelector('option[disabled]').remove();
-                                // Append newly formatted options to the select dropdown
-                                selectElement.appendChild(fragment);
-
-                                // Mark as loaded so subsequent clicks don't re-trigger fetch
-                                selectElement.dataset.loaded = 'true';
-
-                            } catch (error) {
-                                console.error('Error loading package dates:', error);
-                            }
-                        }
-                    </script>
-                    <script>
-                        async function copyLink() {
-
-                            // Get the current page URL (or replace with any link string)
-                            const button = this.event.target;
-                            const link = this.event.target.dataset.link;
-
-                            try {
-                                // Copy the text to the clipboard
-                                await navigator.clipboard.writeText(link);
-
-                                // Provide temporary visual feedback
-                                button.innerText = "Copied!";
-                                runToast('Link Copied', 'success');
-                                setTimeout(() => {
-                                    button.innerText = "Copy Link";
-                                }, 3500);
-                            } catch (err) {
-                                runToast(`Failed To Copy Link due to ${err}`, 'danger');
-                            }
-                        }
-                    </script>
-
-                    <script>
-                        document.querySelectorAll('[data-booking-id][data-field]').forEach(function(el) {
-                            el.addEventListener('change', function() {
-                                const bookingId = this.dataset.bookingId;
-                                const field = this.dataset.field;
-                                const value = this.value;
-                                const userId = parseInt(this.dataset.userId);
-                                const totalPackageCost = parseInt(this.dataset.tpc);
-
-                                fetch(`/bookings-patch/${bookingId}`, {
-                                        method: 'PATCH',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            '<?= csrf_header() ?>': '<?= csrf_hash() ?>'
-                                        },
-                                        body: JSON.stringify({
-                                            field: field,
-                                            value: value
-                                        })
-                                    })
-                                    .then(async res => {
-                                        const contentType = res.headers.get('content-type');
-                                        if (!contentType || !contentType.includes('application/json')) {
-                                            const text = await res.text();
-                                            console.error('PATCH request returned non-JSON:', text);
-                                            throw new Error(`PATCH server error (${res.status}). Check browser console.`);
-                                        }
-                                        if (!res.ok) throw new Error('PATCH request failed: ' + res.status);
-                                        return res.json();
-                                    })
-                                    .then(data => {
-                                        runToast(`Field saved : ${data.field}`, 'Success');
-
-                                        // Trigger loyalty points GET request after successful update
-                                        if (field === 'status' && value === 'Complete') {
-                                            if (isNaN(userId) || isNaN(totalPackageCost)) {
-                                                throw new Error(`Invalid parameters: userId (${this.dataset.userId}) or tpc (${this.dataset.tpc}) is missing or not a number.`);
-                                            }
-
-                                            return fetch(`/points/${userId}/${totalPackageCost}`)
-                                                .then(async res => {
-                                                    const contentType = res.headers.get('content-type');
-                                                    if (!contentType || !contentType.includes('application/json')) {
-                                                        const text = await res.text();
-                                                        console.error('GET points request returned non-JSON:', text);
-                                                        throw new Error(`Points route error (${res.status}). Check browser console.`);
-                                                    }
-                                                    if (!res.ok) throw new Error('GET points request failed: ' + res.status);
-                                                    return res.json();
-                                                })
-                                                .then(getData => {
-                                                    runToast(`Loyalty Points Added`, 'Success');
-                                                    window.location.reload();
-                                                });
-                                        }
-                                        window.location.reload();
-                                    })
-                                    .catch(err => {
-                                        console.error(err);
-                                        runToast(`Failed: ${err.message || err}`, 'danger');
-                                    });
-                            });
-                        });
-                    </script>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', (event) => {
-                            setInitPaymentStatusClass();
-                        })
-
-                        function setInitPaymentStatusClass() {
-                            let selects = document.querySelectorAll('[data-field="status"]');
-                            selects.forEach((select) => {
-                                select.classList.add('status-' + select.value.toLowerCase());
-                            })
-                        }
-
-                        function setPaymentStatusClass() {
-                            [...this.event.target.classList].forEach(className => {
-                                if (className.includes('status-')) {
-                                    this.event.target.classList.remove(className);
+                        try {
+                            const response = await fetch(`/api/packageDatesJSON/${packageId}`, {
+                                method: 'GET',
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'Content-Type': 'application/json'
                                 }
                             });
 
-                            this.event.target.classList.add('status-' + this.event.target.value.toLowerCase());
+                            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                            const data = await response.json();
+
+                            if (!data || !data.DATES) return;
+
+                            // Save the currently selected option value
+                            const currentValue = selectElement.value;
+
+                            // Split data by comma into individual date range entries
+                            const dateEntries = data.DATES.split(',');
+
+                            // Build document fragment to insert options efficiently
+                            const fragment = document.createDocumentFragment();
+
+                            dateEntries.forEach(entry => {
+                                // Split entry by pipe '|' to isolate date range and cost modifier
+                                const [dateRange, cost] = entry.split('|');
+
+                                if (!dateRange) return;
+
+                                const trimmedDate = dateRange.trim();
+
+                                // Avoid duplicating the already existing selected option
+                                if (trimmedDate === currentValue) return;
+
+                                const option = document.createElement('option');
+                                option.value = trimmedDate;
+
+                                // Format option label to highlight extra package cost if non-zero
+                                const extraCost = parseInt(cost, 10);
+                                option.textContent = extraCost > 0 ?
+                                    `${trimmedDate} (+₹${extraCost})` :
+                                    trimmedDate;
+
+                                fragment.appendChild(option);
+                            });
+
+                            selectElement.querySelector('option[disabled]').remove();
+                            // Append newly formatted options to the select dropdown
+                            selectElement.appendChild(fragment);
+
+                            // Mark as loaded so subsequent clicks don't re-trigger fetch
+                            selectElement.dataset.loaded = 'true';
+
+                        } catch (error) {
+                            console.error('Error loading package dates:', error);
                         }
-                    </script>
+                    }
+                </script>
+                <script>
+                    async function copyLink() {
+
+                        // Get the current page URL (or replace with any link string)
+                        const button = this.event.target;
+                        const link = this.event.target.dataset.link;
+
+                        try {
+                            // Copy the text to the clipboard
+                            await navigator.clipboard.writeText(link);
+
+                            // Provide temporary visual feedback
+                            button.innerText = "Copied!";
+                            runToast('Link Copied', 'success');
+                            setTimeout(() => {
+                                button.innerText = "Copy Link";
+                            }, 3500);
+                        } catch (err) {
+                            runToast(`Failed To Copy Link due to ${err}`, 'danger');
+                        }
+                    }
+                </script>
+
+                <script>
+                    document.querySelectorAll('[data-booking-id][data-field]').forEach(function(el) {
+                        el.addEventListener('change', function() {
+                            const bookingId = this.dataset.bookingId;
+                            const field = this.dataset.field;
+                            const value = this.value;
+                            const userId = parseInt(this.dataset.userId);
+                            const totalPackageCost = parseInt(this.dataset.tpc);
+
+                            fetch(`/bookings-patch/${bookingId}`, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        '<?= csrf_header() ?>': '<?= csrf_hash() ?>'
+                                    },
+                                    body: JSON.stringify({
+                                        field: field,
+                                        value: value
+                                    })
+                                })
+                                .then(async res => {
+                                    const contentType = res.headers.get('content-type');
+                                    if (!contentType || !contentType.includes('application/json')) {
+                                        const text = await res.text();
+                                        console.error('PATCH request returned non-JSON:', text);
+                                        throw new Error(`PATCH server error (${res.status}). Check browser console.`);
+                                    }
+                                    if (!res.ok) throw new Error('PATCH request failed: ' + res.status);
+                                    return res.json();
+                                })
+                                .then(data => {
+                                    runToast(`Field saved : ${data.field}`, 'Success');
+
+                                    // Trigger loyalty points GET request after successful update
+                                    if (field === 'status' && value === 'Complete') {
+                                        if (isNaN(userId) || isNaN(totalPackageCost)) {
+                                            throw new Error(`Invalid parameters: userId (${this.dataset.userId}) or tpc (${this.dataset.tpc}) is missing or not a number.`);
+                                        }
+
+                                        return fetch(`/points/${userId}/${totalPackageCost}`)
+                                            .then(async res => {
+                                                const contentType = res.headers.get('content-type');
+                                                if (!contentType || !contentType.includes('application/json')) {
+                                                    const text = await res.text();
+                                                    console.error('GET points request returned non-JSON:', text);
+                                                    throw new Error(`Points route error (${res.status}). Check browser console.`);
+                                                }
+                                                if (!res.ok) throw new Error('GET points request failed: ' + res.status);
+                                                return res.json();
+                                            })
+                                            .then(getData => {
+                                                runToast(`Loyalty Points Added`, 'Success');
+                                                window.location.reload();
+                                            });
+                                    }
+                                    window.location.reload();
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                    runToast(`Failed: ${err.message || err}`, 'danger');
+                                });
+                        });
+                    });
+                </script>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', (event) => {
+                        setInitPaymentStatusClass();
+                    })
+
+                    function setInitPaymentStatusClass() {
+                        let selects = document.querySelectorAll('[data-field="status"]');
+                        selects.forEach((select) => {
+                            select.classList.add('status-' + select.value.toLowerCase());
+                        })
+                    }
+
+                    function setPaymentStatusClass() {
+                        [...this.event.target.classList].forEach(className => {
+                            if (className.includes('status-')) {
+                                this.event.target.classList.remove(className);
+                            }
+                        });
+
+                        this.event.target.classList.add('status-' + this.event.target.value.toLowerCase());
+                    }
+                </script>
+                <script>
+                    function showTravelersModel() {
+                        showTravelers(this.event.target.dataset.travelers, this.event.target.dataset.bookingId);
+                    }
+
+                    function showTravelers(data, id) {
+                        document.getElementById(`travelers-dialog-${id}`).showModal();
+                        // Group data
+                        const TravelersData = JSON.parse(data);
+                        let result = "";
+                        TravelersData.forEach((traveler) => {
+
+                            result += `
+                  <li class="list-group-item d-flex justify-content-between align-items-start ">
+                     <div class="ms-2 me-auto">
+                        <div class="fw-bold fs-6">${traveler.name || ''}</div>
+                        ${(traveler.gender || '').toLowerCase()} • <a href="tel:${traveler.contact || ''}">${traveler.contact || ''}</a>
+                        <p class="m-0">Sharing Basis : ${traveler.sharing.split('|')[1] || traveler.sharing}</p>
+                        <p class="m-0">Adhaar Number : ${traveler.adhaar}</p>
+                        <p class="m-0">Cost : ${traveler.cost ?? ''}</p>
+                        <button class="btn btn-sm btn-outline-dark" onclick="openModel('Trav-${traveler.contact}_${traveler.adhaar}')">Open Adhaar Card </button>
+                        <dialog class="border-1 rounded" id="Trav-${traveler.contact}_${traveler.adhaar}">
+                        <div class="card">
+                        <img width="auto" height="500px" src="/upload/adhaar/${traveler.adhaarCard_file}">
+                        <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#Trav-${traveler.contact}_${traveler.adhaar}').close();">Close</button>
+                                </div>
+                                </div>
+                        </dialog>
+                     </div>
+                  </li>
+         `;
+                        });
+                        document.getElementById(`output-dialog-${id}`).innerHTML = result;
+                    }
+                </script>

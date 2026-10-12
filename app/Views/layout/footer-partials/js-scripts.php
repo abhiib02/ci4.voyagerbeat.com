@@ -6,6 +6,7 @@
 <script src="/js/autoFocus.js"></script>
 <script src="/js/add_to_favorite.js"></script>
 <script src="/js/downloadPDF.js"></script>
+<script src="/js/dialogScript.js"></script>
 <script src="https://unpkg.com/lenis@1.1.2/dist/lenis.min.js"></script>
 
 <script>

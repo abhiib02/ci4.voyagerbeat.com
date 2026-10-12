@@ -1,3 +1,5 @@
+`<script src="/js/dialogScript.js"></script>
+<script src="/js/eztoast.js"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-3.0.3/datatables.min.js" integrity="sha384-U3G//lYwFPbrDV7w5uhOUSxHgb+hj1XYov+neDtWPWsO+xB38Puvo2sTlUSNw/bj" crossorigin="anonymous"></script>
 
 <script>
@@ -27,47 +29,9 @@
         });
     });
 </script>
-<script>
-    document.addEventListener("click", (e) => {
-        const btn = e.target.closest("#showTravelerbtn");
-        if (!btn) return;
-        const travelers = JSON.parse(btn.dataset.travelers);
-        showTravelers(travelers, btn.dataset.bookingId);
-    });
 
-    function showTravelers(data, id) {
-        document.getElementById(`travelers-dialog-${id}`).showModal();
-        // Group data
-        const TravelersData = data;
-        let result = "";
-        TravelersData.forEach((traveler) => {
 
-            result += `
-                  <li class="list-group-item d-flex justify-content-between align-items-start ">
-                     <div class="ms-2 me-auto">
-                        <div class="fw-bold fs-6">${traveler.name || ''}</div>
-                        ${(traveler.gender || '').toLowerCase()} • <a href="tel:${traveler.contact || ''}">${traveler.contact || ''}</a>
-                        <p class="m-0">Sharing Basis : ${traveler.sharing.split('|')[1] || traveler.sharing}</p>
-                        <p class="m-0">Adhaar Number : ${traveler.adhaar}</p>
-                        <p class="m-0">Cost : ${traveler.cost ?? ''}</p>
-                        <button class="btn btn-sm btn-outline-dark" onclick="openModel('Trav-${traveler.contact}_${traveler.adhaar}')">Open Adhaar Card </button>
-                        <dialog class="border-1 rounded" id="Trav-${traveler.contact}_${traveler.adhaar}">
-                        <div class="card">
-                        <img width="auto" height="500px" src="/upload/adhaar/${traveler.adhaarCard_file}">
-                        <div class="card-footer">
-                                    <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#Trav-${traveler.contact}_${traveler.adhaar}').close();">Close</button>
-                                </div>
-                                </div>
-                        </dialog>
-                     </div>
-                  </li>
-         `;
-        });
-        document.getElementById(`output-dialog-${id}`).innerHTML = result;
-    }
-</script>
 
-<script src="/js/eztoast.js"></script>
 
 <?php if (isset($_SESSION['FlashMessage'])) : ?>
     <script>
