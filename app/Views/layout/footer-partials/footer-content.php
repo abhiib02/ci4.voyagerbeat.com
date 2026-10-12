@@ -32,7 +32,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center fw-bold">
-                <p>&copy; <?php echo date("Y"); ?> <?= env('app.name') ?>. All rights reserved.</p>
+                <p>&copy; <?= date("Y"); ?> <?= env('app.name') ?>. All rights reserved.</p>
             </div>
             <div class="col-md-6 text-center  fw-bold">
                 <p><a href="https://bhardwaj.netlify.app/" class="text-decoration-none text-dark">Designed and Developed By</a> Abhishek</p>
