@@ -249,7 +249,9 @@
                                         <div class="col-6 col-md-3">
 
                                             <div class="form-floating mb-3">
-                                                <input type="number" inputmode="numeric" class="form-control contact" required>
+                                                <input type="number" inputmode="numeric" class="form-control contact" inputmode="numeric"
+                                                    pattern="\d{1,10}"
+                                                    minlength="10" maxlength="10" required>
                                                 <label class="form-label">Mobile No.</label>
                                             </div>
 
