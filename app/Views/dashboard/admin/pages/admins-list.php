@@ -24,13 +24,19 @@
                         <td><?= $admin->USER_CONTACT ?></td>
                         <td><?= $admin->ROLE ?></td>
                         <td>
-                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
-                                <a type="button" class="btn btn-outline-primary" href="/dashboard/all-bookings?employee_id=<?= $admin->USER_ID ?>">See Bookings</a>
-                                <a type="button" class="btn btn-outline-primary" href="/revokeAdminAndEmployeeRole/<?= $admin->USER_ID ?>">Revoke Roles</a>
-                                <a type="button" class="btn btn-outline-primary" href="/toggleStatus/<?= $admin->USER_ID ?>/<?= $admin->STATUS ?>?empList=1">
-                                    <?= $admin->STATUS == 1 ? 'Deactivate' : 'Activate' ?>
-                                </a>
+                            <div class="Actions-Dropdown">
+                                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a type="button" class="dropdown-item" href="/dashboard/all-bookings?employee_id=<?= $admin->USER_ID ?>">See Bookings</a></li>
+                                    <li><a type="button" class="dropdown-item" href="/makeEmployee/<?= $admin->USER_ID ?>">Make Employee</a></li>
+                                    <li><a type="button" class="dropdown-item" href="/toggleStatus/<?= $admin->USER_ID ?>/<?= $admin->STATUS ?>?empList=1">
+                                            <?= $admin->STATUS == 1 ? 'Activate' : 'Deactivate' ?></a></li>
+
+                                </ul>
                             </div>
+
                         </td>
                     </tr>
                 <?php } ?>

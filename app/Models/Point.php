@@ -73,6 +73,16 @@ class Point extends Model
         return $this->where(["user_id" => $user_id])->increment("points_used", $pointsUsed);
     }
 
+    public function AddPoints(int $user_id, int $points)
+    {
+        return $this->where(["user_id" => $user_id])->increment("points_earned", $points);
+    }
+    public function RemovePoints(int $user_id, int $points)
+    {
+        return $this->where(["user_id" => $user_id])->decrement("points_earned", $points);
+    }
+
+
     public function getUserPointsBalance(int $user_id)
     {
         $Points =  $this->select('points_balance')->where('user_id', $user_id)->first();

@@ -47,6 +47,7 @@ $routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
     $routes->get('makeAdmin/(:num)', 'UserController::AdminRoleGrant/$1');
     $routes->get('revokeAdminAndEmployeeRole/(:num)', 'UserController::revokeAdminAndEmployeeRole/$1');
     $routes->get('deleteUser/(:num)', 'UserController::deleteUser/$1');
+    $routes->post('updatePoints', 'PointsController::updatePointsProcess');
 });
 
 // Employee

@@ -34,4 +34,48 @@ class PointsController extends BaseController
             'message' => 'Points updated'
         ]);
     }
+    public function AddPointsToCustomerDirectly(int $user_id, int $points)
+    {
+        $PointsEarned = ($points);
+        $this->PointModel->AddPoints($user_id, (int)$PointsEarned);
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Points updated'
+        ]);
+    }
+    public function RemovePointsToCustomerDirectly(int $user_id, int $points)
+    {
+        $this->PointModel->RemovePoints($user_id, (int)$points);
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Points Removed'
+        ]);
+    }
+    public function updatePointsProcess()
+    {
+        $rules = [
+            'user_id' => 'required|integer',
+            'action' => 'required|in_list[increase,decrease]',
+            'points' => 'required|integer'
+        ];
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Input',
+                'status'  => 'warning'
+            ]);
+            return redirect()->back();
+        }
+        $user_id = (int)$this->request->getPost('user_id');
+        $action = $this->request->getPost('action');
+        $points = (int)$this->request->getPost('points');
+        $Matchedaction = match ($action) {
+            'increase' => $this->PointModel->AddPoints($user_id, $points),
+            'decrease' => $this->PointModel->RemovePoints($user_id, $points),
+            default => 0,
+        };
+        $message = ($action == 'increase') ? $points . ' Points Added' : $points . ' Points Removed';
+        $status = ($action == 'increase') ? 'success' : 'danger';
+        $this->session->setFlashdata('FlashMessage', ['message' => $message, 'status' => $status]);
+        return redirect()->back();
+    }
 }

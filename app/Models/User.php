@@ -76,6 +76,24 @@ class User extends Model
         return $this->where('ROLE', 0)->findAll();
     }
 
+    public function getAllCustomerswithPoints(): array
+    {
+        return $this->select('users.*,user_points.points_balance as POINTS')
+            ->join('user_points', 'user_points.user_id = users.USER_ID')
+            ->where('users.ROLE', 0)
+            ->orderBy('users.USER_ID', 'DESC')
+            ->findAll();
+    }
+    public function getCustomerwithPoints(int $id)
+    {
+        return $this->select('users.*,user_points.points_balance as POINTS')
+            ->join('user_points', 'user_points.user_id = users.USER_ID')
+            ->where('users.USER_ID', $id)
+            ->where('users.ROLE', 0)
+            ->first();
+    }
+
+
     public function getCustomerCount(): int
     {
         return $this->where('ROLE', 0)->countAllResults();

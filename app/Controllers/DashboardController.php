@@ -101,7 +101,13 @@ class DashboardController extends BaseController
                 $this->data['Employees'] = $this->UserModel->getAllEmployee();
                 break;
             case 'customers-list':
-                $this->data['Customers'] = $this->UserModel->getAllCustomers();
+                $customer_id = $this->request->getGet('customerID');
+                if ($customer_id !== null) {
+                    $this->data['Customers'] = $this->UserModel->getCustomerwithPoints($customer_id);
+                } else {
+                    $this->data['Customers'] = $this->UserModel->getAllCustomerswithPoints();
+                }
+
                 break;
             case 'all-bookings':
 

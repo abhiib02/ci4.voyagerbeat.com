@@ -137,7 +137,7 @@
                                 <i class='bx bx-dots-vertical-rounded'></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"> <i class='bx bx-plus-circle'></i> Add Points</a></li>
+                                <li><a class="dropdown-item" onclick="openModel('updatePoints')"> <i class='bx bx-plus-circle'></i> Update Points</a></li>
 
                             </ul>
                         </div>
@@ -256,6 +256,20 @@
                             </div>
                             <div class="card-footer">
                                 <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#BookingTableDetail<?= $booking->ID; ?>').close();">Close</button>
+                            </div>
+                        </div>
+                    </dialog>
+                    <dialog id="updatePoints" class="">
+                        <div class="card">
+                            <div class="card-header">Update Points</div>
+                            <div class="card-body">
+                                <?= view('dashboard/admin/pages/points-partial/updatePointsForm', ['customer' => $booking]) ?>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+
+                                <button class=" btn btn-sm btn-dark white-text" type="button" onclick="closeModal('updatePoints');">Close</button>
+                                <button type="submit" form="pointUpdateForm" class="btn btn-sm btn-success white-text"> Update Points</button>
+
                             </div>
                         </div>
                     </dialog>

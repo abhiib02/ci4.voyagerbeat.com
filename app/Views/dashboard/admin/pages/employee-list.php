@@ -24,13 +24,18 @@
                         <td><?= $employee->USER_CONTACT ?></td>
                         <td><?= $employee->STATUS == 1 ? 'Deactivate' : 'Activate' ?></td>
                         <td>
-                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
-                                <a type="button" class="btn btn-outline-primary" href="/dashboard/all-bookings?employee_id=<?= $employee->USER_ID ?>">See Bookings</a>
-                                <a type="button" class="btn btn-outline-primary" href="/makeAdmin/<?= $employee->USER_ID ?>">Make Admin</a>
-                                <a type="button" class="btn btn-outline-primary" href="/revokeAdminAndEmployeeRole/<?= $employee->USER_ID ?>">Revoke Roles</a>
-                                <a type="button" class="btn btn-outline-primary" href="/toggleStatus/<?= $employee->USER_ID ?>/<?= $employee->STATUS ?>?empList=1">
-                                    <?= $employee->STATUS == 1 ? 'Deactivate' : 'Activate' ?>
-                                </a>
+                            <div class="Actions-Dropdown">
+                                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a type="button" class="dropdown-item" href="/dashboard/all-bookings?employee_id=<?= $employee->USER_ID ?>">See Bookings</a></li>
+                                    <li><a type="button" class="dropdown-item" href="/makeAdmin/<?= $employee->USER_ID ?>">Make Admin</a></li>
+                                    <li><a type="button" class="dropdown-item" href="/revokeAdminAndEmployeeRole/<?= $employee->USER_ID ?>">Revoke Roles</a></li>
+                                    <li><a type="button" class="dropdown-item" href="/toggleStatus/<?= $employee->USER_ID ?>/<?= $employee->STATUS ?>?empList=1">
+                                            <?= $employee->STATUS == 1 ? 'Activate' : 'Deactivate' ?></a></li>
+
+                                </ul>
                             </div>
                         </td>
                     </tr>
