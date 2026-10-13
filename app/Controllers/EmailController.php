@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Config\Services;
 use App\Models\Booking;
 use App\Models\Option;
+use App\Models\Coupon;
 use CodeIgniter\Session\Session;
 
 class EmailController extends BaseController
@@ -14,6 +15,7 @@ class EmailController extends BaseController
     public array $data;
     public Option $optionModel;
     public Booking $BookingModel;
+    public Coupon $CouponModel;
 
     /* =================================== */
     //
@@ -25,6 +27,7 @@ class EmailController extends BaseController
         $this->session = \Config\Services::session();
         $this->optionModel = new Option();
         $this->BookingModel = new Booking();
+        $this->CouponModel = new Coupon();
         $this->data['Contact'] = $this->optionModel->getOptionValue('contact');
         $this->data['mails'] = $this->optionModel->getOptionValue('mails');
     }
@@ -483,10 +486,10 @@ class EmailController extends BaseController
     {
 
         $Bookingdata = $this->BookingModel->getBookingByOrderId($order_id);
-
+        
         //Adding Additional Data & Computed Data 
 
-
+        
         $Bookingdata->bookingConfirmationURL = env('app.baseURL') . 'thanks?order_id=' . $order_id;
         $Bookingdata->remainingAmount  = $Bookingdata->total_package_cost - $Bookingdata->amount;
 
@@ -495,7 +498,7 @@ class EmailController extends BaseController
         $Bookingdata->surcharge = explode('|', $Bookingdata->date)[1] ?? 0;
         $Bookingdata->boarding = explode('|', $Bookingdata->travelmode)[1];
         $Bookingdata->templateSharing = array_count_values(json_decode($Bookingdata->perPersonSharing));
-
+        $Bookingdata->couponworth = $this->CouponModel->getCouponWorth($Bookingdata->coupon_used);
 
 
 
@@ -509,7 +512,7 @@ class EmailController extends BaseController
 
         $message = $this->bookingDetailTemplate($Bookingdata);
 
-
+        
         $email = \Config\Services::email();
 
         $from = env('contact_form_sender_email');
@@ -528,9 +531,9 @@ class EmailController extends BaseController
             return 1;
         } else {
             $data = $email->printDebugger(['headers']);
-            // print_r($data);
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'danger']);
-            return 0;
+             print_r($data);
+            // $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'danger']);
+            // return 0;
         }
     }
     public function bookingDetailTemplate(object $data)

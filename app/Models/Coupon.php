@@ -60,6 +60,11 @@ class Coupon extends Model
     {
         return $this->where('Coupon_Code', $code)->first();
     }
+    public function getCouponWorth(string $code) {
+        
+        $codeDetail = $this->where('Coupon_Code', $code)->first();
+        return $codeDetail->Coupon_Worth;
+    }
 
     public function decrementCodeCount(string $code): bool
     {

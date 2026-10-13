@@ -245,17 +245,10 @@ class BookingController extends BaseController
         $orderId = $this->request->getPost('order_id');
         $bookingData = $this->BookingModel->getBookingByOrderId($orderId);
 
-        if ((int)$this->request->getPost('prefill') == 1) {
-            $packageId = $this->request->getPost('package_id');
-            $travelMode = $this->request->getPost('travelmode');
-            $paxDetails = $this->request->getPost('pax_details');
-            $updatedPaxDetails = $this->addEachPersonCost($packageId, $travelMode, $paxDetails);
-        } else {
-            $paxJSON = $this->request->getPost('pax_details');
-            $costJSON = $bookingData->perPersonCost;
-            $sharingJSON = $bookingData->perPersonSharing;
-            $updatedPaxDetails = $this->addEachPersonCostfromperPersonCost($costJSON, $sharingJSON, $paxJSON);
-        }
+        $paxJSON = $this->request->getPost('pax_details');
+        $costJSON = $bookingData->perPersonCost;
+        $sharingJSON = $bookingData->perPersonSharing;
+        $updatedPaxDetails = $this->addCosttoPaxDetailsfromperPersonCost($costJSON, $sharingJSON, $paxJSON);
 
 
         $customerFilledData = [
@@ -341,7 +334,7 @@ class BookingController extends BaseController
     }
 
 
-    public function addEachPersonCostfromperPersonCost(string $costJSONString, string $sharingJSONString, string $paxJSONString)
+    public function addCosttoPaxDetailsfromperPersonCost(string $costJSONString, string $sharingJSONString, string $paxJSONString)
     {
 
 
@@ -351,6 +344,11 @@ class BookingController extends BaseController
         foreach ($paxDetails as $index => &$pax) {
             $sharing = $sharingDetails[$index];
             $cost = $costDetails[$index];
+            
+            // Compatibility with pre defined sharing for cost
+            $explodeSharing = explode('|', $sharing);
+            $sharing = (count($explodeSharing) > 2) ? $explodeSharing[1] : $explodeSharing[1];
+
             $pax['cost'] = $cost ?? 0;
             $pax['sharing'] = $sharing ?? 0;
         }

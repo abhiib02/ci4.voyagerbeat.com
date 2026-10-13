@@ -72,6 +72,11 @@ $summary = [];
 
 for ($i = 0; $i < count($perPersonSharing); $i++) {
     $type = $perPersonSharing[$i];
+
+    $explodeSharing = explode('|', $type);
+    $sharing = (count($explodeSharing) > 2) ? $explodeSharing[1] : $explodeSharing[1];
+    $type = $sharing;
+    
     $cost = $perPersonCost[$i];
 
     if (!isset($summary[$type])) {
@@ -166,6 +171,18 @@ for ($i = 0; $i < count($perPersonSharing); $i++) {
                     <tr>
                         <td>GST @ 5%</td>
                         <td>+ ₹ <?= number_format($gstCost, 2) ?></td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($data->coupon_used): ?>
+                    <tr>
+                        <td>Coupon Applied (<?= $data->coupon_used ?>)</td>
+                        <td>- ₹ <?= number_format($data->couponworth, 2) ?></td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($data->points_used): ?>
+                    <tr>
+                        <td>Points Used </td>
+                        <td>- ₹ <?= number_format($data->points_used, 2) ?></td>
                     </tr>
                 <?php endif; ?>
                 <tr>

@@ -202,8 +202,8 @@ class RazorpayController extends BaseController
         $BookingData['gender'] = $this->request->getPost('gender');
         $BookingData['contact'] = $this->request->getPost('mobile');
         $BookingData['email'] = $this->request->getPost('email');
-        $BookingData['sharingArr'] = $this->request->getPost('sharing');
-
+        $BookingData['perPersonSharing'] = $this->request->getPost('perPersonSharing');
+        $BookingData['perPersonCost'] = $this->request->getPost('perPersonCost');
         //TravelBuddies Details
         $BookingData['pax_details'] = $this->request->getPost('pax_details');
         $BookingData['adults'] = $this->request->getPost('adults');
@@ -230,7 +230,7 @@ class RazorpayController extends BaseController
         // Calculating Amount Using Sharing for Each Person
         $BookingData['each_person_sharing'] = [];
         $BookingData['personCostSum'] = 0;
-        foreach ($BookingData['sharingArr'] as $customerSharing) {
+        foreach ($BookingData['perPersonSharing'] as $customerSharing) {
             array_push($BookingData['each_person_sharing'], substr($customerSharing, 0, 1));
         }
 
@@ -401,11 +401,7 @@ class RazorpayController extends BaseController
 
     public function saveBookingData(string $order_id, array $BookingData)
     {
-        $paxs = json_decode($BookingData['pax_details'], true);
-        $perPersonSharing = [];
-        foreach ($paxs as $pax) {
-            $perPersonSharing[] = $pax['sharing'];
-        }
+        
 
         $data['user_id'] = (int)session()->get('id');
         $data['order_id'] = $order_id;
@@ -416,8 +412,8 @@ class RazorpayController extends BaseController
         $data['package_name'] = (string)$BookingData['package_name'];
         $data['adults'] = (int)$BookingData['adults'];
         $data['pax_details'] = (string)$BookingData['pax_details'];
-        $data['perPersonCost'] = '[]';
-        $data['perPersonSharing'] = (string)json_encode($perPersonSharing);
+        $data['perPersonCost'] = (string)json_encode($BookingData['perPersonCost']);
+        $data['perPersonSharing'] = (string)json_encode($BookingData['perPersonSharing']);
         $data['gst_include'] = 1;
         $data['pax_details'] = (string)$BookingData['pax_details'];
         $data['sharing'] = $BookingData['sharingArr'][0];
@@ -457,6 +453,8 @@ class RazorpayController extends BaseController
             return $this->Render_Page('static/booking-thanks-unpaid', $this->data);
         }
         $this->data['bookingData'] = $this->BookingModel->getBookingByOrderId($order_ID);
+        $this->data['couponworth'] = $this->CouponModel->getCouponWorth($this->data['bookingData']->coupon_used);
+        
         return $this->Render_Page('static/booking-thanks', $this->data);
     }
 

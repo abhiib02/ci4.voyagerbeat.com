@@ -110,13 +110,15 @@
                                                 <label class="form-label">Boarding City</label>
                                                 <input type="text" class="form-control" v-model.trim="t.boarding_city" required>
                                             </div>
+                                            <input type="hidden" name="perPersonCost[]" :value="travelerCost(t)" required>
                                             <div class="col-12 col-md-6">
                                                 <label class="form-label">Sharing</label>
-                                                <select class="form-select" name="sharing[]" v-model="t.sharing" required>
+                                                <select class="form-select" name="perPersonSharing[]" v-model="t.sharing" required>
                                                     <option value="" disabled selected>Choose Sharing</option>
                                                     <option v-for="opt in sharingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
                                                 </select>
                                             </div>
+
 
                                         </div>
                                     </div>
@@ -622,6 +624,13 @@
                 return (wtPriceArr[sharingIndex] || wt2PriceArr[sharingIndex] || 0) + 2500;
             }
 
+            function travelerCost(t) {
+                const tmode = parseInt(travelMode.value, 10); // "3|Voyagers Beat Transport" -> 3
+                const idx = parseSharingIndex(t.sharing); // "0|Quad" -> 0
+                if (isNaN(tmode) || idx === null) return 0;
+                return sharingPrice(idx, tmode); // 3 -> PRICE_*, 2 -> WT_PRICE_*, 1 -> WT2_PRICE_*
+            }
+
             function parseSharingIndex(val) {
                 if (!val) return null;
                 const idx = parseInt(String(val).split('|')[0], 10);
@@ -910,6 +919,7 @@
                 dateList,
                 calc,
                 paxDetailsJson,
+                travelerCost,
                 addTraveler,
                 removeTraveler,
                 applyCode,

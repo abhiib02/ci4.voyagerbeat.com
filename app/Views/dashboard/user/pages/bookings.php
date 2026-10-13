@@ -43,7 +43,7 @@
                             </td>
                             <td>
                                 <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
-                                    <button id="showTravelerbtn" class="btn btn-sm btn-outline-dark" data-booking-id="<?= esc($booking->ID) ?>" data-travelers="<?= esc($booking->pax_details, 'attr') ?>">Show</button>
+                                    <button class="btn btn-sm btn-outline-dark" data-booking-id="<?= esc($booking->ID) ?>" data-travelers="<?= esc($booking->pax_details, 'attr') ?>" onclick="showTravelersModel()">Show</button>
                                     <dialog class="border-1 rounded" id="travelers-dialog-<?= esc($booking->ID) ?>">
                                         <div class="card">
                                             <div class="card-header">
