@@ -92,7 +92,7 @@ class RegisterController extends BaseController
             $this->session->setFlashdata('FlashMessage', ['message' => 'User Already Exist', 'status' => 'warning']);
             return redirect()->to('/login');
         }
-        $queryData['password'] = password_hash((string) $password, password_DEFAULT);
+        $queryData['password'] = password_hash((string) $password, PASSWORD_DEFAULT);
         $result = $this->UserModel->insertUser($queryData);
 
         if ($result === false) {
@@ -144,7 +144,7 @@ class RegisterController extends BaseController
 
         $queryData['user_name'] = $name;
         $queryData['user_email'] = $email;
-        $queryData['password'] = password_hash((string) $password, password_DEFAULT);
+        $queryData['password'] = password_hash((string) $password, PASSWORD_DEFAULT);
         $queryData['role'] = 0;
         $queryData['status'] = 1;
 

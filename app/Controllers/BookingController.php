@@ -308,7 +308,7 @@ class BookingController extends BaseController
                 'user_name' => $name,
                 'user_email' => $email,
                 'user_contact' => $contact,
-                'password' => password_hash($generatedPassword, password_DEFAULT),
+                'password' => password_hash($generatedPassword, PASSWORD_DEFAULT),
                 'role' => 0, // Assuming 0 is the role for customers
                 'status' => 1, // Assuming 1 is the status for active customers
             ];
