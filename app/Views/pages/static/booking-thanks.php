@@ -103,6 +103,13 @@
                                 <td><b><?= $bookingData->coupon_used ?></b></td>
                             </tr>
                         <?php endif; ?>
+                        <?php if (!empty($bookingData->points_used)): ?>
+                            <tr>
+                                <td>Points Used</td>
+                                <td><b>₹ <?= $bookingData->points_used ?></b></td>
+                            </tr>
+                        <?php endif; ?>
+
                     </table>
 
                 </div>

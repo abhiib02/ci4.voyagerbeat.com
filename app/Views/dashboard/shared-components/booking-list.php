@@ -137,12 +137,12 @@
                                 <i class='bx bx-dots-vertical-rounded'></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="openModel('updatePoints')"> <i class='bx bx-plus-circle'></i> Update Points</a></li>
+                                <li><a class="dropdown-item" onclick="openModel('updatePoints-<?= $booking->user_id ?>')"> <i class='bx bx-plus-circle'></i> Update Points</a></li>
 
                             </ul>
                         </div>
                         <?php if (!str_contains($booking->order_id, 'order_') && $booking->customer_access): ?>
-                            <button type="button" id="copyLinkBtn" class=" btn btn-sm btn-outline-dark" data-link="<?= base_url() ?>booking-confirmation-form/<?= $booking->order_id; ?>" onclick="copyLink()">Copy Link</button>
+                            <button type="button" id="copyLinkBtn" class=" btn btn-sm btn-outline-dark" data-link="<?= base_url() ?>booking-confirmation-form/<?= $booking->order_id; ?>" onclick="copyLink()">Copy_Link</button>
                         <?php endif; ?>
                     </div>
                     <dialog id="BookingTableDetail<?= $booking->ID ?>">
@@ -210,6 +210,10 @@
                                             <td><?= $booking->coupon_used ?></td>
                                         </tr>
                                         <tr>
+                                            <th>Points Used</th>
+                                            <td><?= $booking->points_used ?></td>
+                                        </tr>
+                                        <tr>
                                             <th>Travel Mode / Boarding </th>
                                             <td><?= $booking->travelmode ?></td>
                                         </tr>
@@ -259,7 +263,7 @@
                             </div>
                         </div>
                     </dialog>
-                    <dialog id="updatePoints" class="">
+                    <dialog id="updatePoints-<?= $booking->user_id ?>" class="">
                         <div class="card">
                             <div class="card-header">Update Points</div>
                             <div class="card-body">
@@ -267,7 +271,7 @@
                             </div>
                             <div class="card-footer d-flex justify-content-between">
 
-                                <button class=" btn btn-sm btn-dark white-text" type="button" onclick="closeModal('updatePoints');">Close</button>
+                                <button class=" btn btn-sm btn-dark white-text" type="button" onclick="closeModal('updatePoints-<?= $booking->user_id ?>');">Close</button>
                                 <button type="submit" form="pointUpdateForm" class="btn btn-sm btn-success white-text"> Update Points</button>
 
                             </div>
@@ -355,7 +359,7 @@
                             button.innerText = "Copied!";
                             runToast('Link Copied', 'success');
                             setTimeout(() => {
-                                button.innerText = "Copy Link";
+                                button.innerText = "Copy_Link";
                             }, 3500);
                         } catch (err) {
                             runToast(`Failed To Copy Link due to ${err}`, 'danger');

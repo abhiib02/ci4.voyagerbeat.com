@@ -305,16 +305,16 @@ class BookingController extends BaseController
         if (!$user) {
             $generatedPassword = $this->generateRandomPassword();
             $AccountData = [
-                'USER_NAME' => $name,
-                'USER_EMAIL' => $email,
-                'USER_CONTACT' => $contact,
-                'PASSWORD' => password_hash($generatedPassword, PASSWORD_DEFAULT),
-                'ROLE' => 0, // Assuming 0 is the role for customers
-                'STATUS' => 1, // Assuming 1 is the status for active customers
+                'user_name' => $name,
+                'user_email' => $email,
+                'user_contact' => $contact,
+                'password' => password_hash($generatedPassword, password_DEFAULT),
+                'role' => 0, // Assuming 0 is the role for customers
+                'status' => 1, // Assuming 1 is the status for active customers
             ];
             return $this->UserModel->insertUser($AccountData);
         }
-        return $user->USER_ID; // Return existing user ID if user already exists
+        return $user->user_id; // Return existing user ID if user already exists
     }
 
     public function generateRandomPassword($length = 8)

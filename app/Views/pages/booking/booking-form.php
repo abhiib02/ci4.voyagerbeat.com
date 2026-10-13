@@ -103,7 +103,8 @@
                                             </div>
                                             <div class="col-6 col-md-3">
                                                 <label class="form-label">Contact</label>
-                                                <input type="number" inputmode="numeric" class="form-control" v-model="t.contact" required>
+                                                <input type="tel" inputmode="numeric" pattern="\d{1,10}"
+                                                    minlength="10" maxlength="10" class="form-control" v-model="t.contact" required>
                                             </div>
                                             <div class="col-12 col-md-3">
                                                 <label class="form-label">Boarding City</label>

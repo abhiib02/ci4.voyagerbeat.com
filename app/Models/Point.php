@@ -75,6 +75,14 @@ class Point extends Model
 
     public function AddPoints(int $user_id, int $points)
     {
+        if (!$this->where('user_id', $user_id)->first()) {
+            $data = [
+                'user_id' => $user_id,
+                'points_earned' => $points,
+                'points_used' => 0,
+            ];
+            return $this->insertPoints($data);
+        }
         return $this->where(["user_id" => $user_id])->increment("points_earned", $points);
     }
     public function RemovePoints(int $user_id, int $points)

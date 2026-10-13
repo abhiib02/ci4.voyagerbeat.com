@@ -68,11 +68,18 @@ class PointsController extends BaseController
         $user_id = (int)$this->request->getPost('user_id');
         $action = $this->request->getPost('action');
         $points = (int)$this->request->getPost('points');
-        $Matchedaction = match ($action) {
-            'increase' => $this->PointModel->AddPoints($user_id, $points),
-            'decrease' => $this->PointModel->RemovePoints($user_id, $points),
-            default => 0,
-        };
+        switch ($action) {
+            case 'increase':
+                $this->PointModel->AddPoints($user_id, $points);
+                break;
+            case 'decrease':
+                $this->PointModel->RemovePoints($user_id, $points);
+                break;
+            default:
+
+                break;
+        }
+
         $message = ($action == 'increase') ? $points . ' Points Added' : $points . ' Points Removed';
         $status = ($action == 'increase') ? 'success' : 'danger';
         $this->session->setFlashdata('FlashMessage', ['message' => $message, 'status' => $status]);

@@ -31,7 +31,6 @@ class Booking extends Model
         'points_used',
         'date',
         'trip_type',
-        'boarding_city',
         'address',
         'travelmode',
         'paymode',
@@ -120,7 +119,7 @@ class Booking extends Model
     public function getAllBookingsForAdminDashboard(): array
     {
         return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
             ->orderBy('ID', 'DESC')
             ->find();
         //return $this->select()->orderBy('ID', 'DESC')->findAll();
@@ -128,7 +127,7 @@ class Booking extends Model
     public function getBookingsByEmployeeID(int $employeeID): array
     {
         return $this->select('payments_table.*, users.USER_NAME as agent_name')
-            ->join('users', 'users.USER_ID = payments_table.agent', 'left')
+            ->join('users', 'users.user_id = payments_table.agent', 'left')
             ->where('payments_table.agent', $employeeID)
             ->orderBy('ID', 'DESC')
             ->find();
@@ -136,7 +135,7 @@ class Booking extends Model
     public function getBookingsByCustomerID(int $customerID): array
     {
         return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
             ->where('payments_table.user_id', $customerID)
             ->orderBy('ID', 'DESC')
             ->find();
@@ -145,7 +144,7 @@ class Booking extends Model
     public function getAllBookingsofAgentForDashboard(int $userID): array
     {
         return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
             ->where('payments_table.agent', $userID)
             ->orderBy('ID', 'DESC')
             ->find();
@@ -164,7 +163,7 @@ class Booking extends Model
     public function getUserBookingsByEmail(string $email): array
     {
         return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
             ->where('payments_table.email', $email)
             ->orderBy('ID', 'DESC')
             ->find();
@@ -188,7 +187,7 @@ class Booking extends Model
     public function getUserBookingsByContact(int $contact): array
     {
         return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.USER_ID = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
             ->where('payments_table.contact', $contact)
             ->orderBy('ID', 'DESC')
             ->find();

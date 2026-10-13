@@ -26,6 +26,7 @@
     <input type="hidden" name="razorpay_signature" id="razorpay_signature">
     <input type="hidden" name="payment_status" id="payment_status" value="">
 
+    <?= csrf_field() ?>
     <?php $details = json_encode($data);
     $details = json_decode($details, true);
     ?>

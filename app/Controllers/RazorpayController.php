@@ -141,9 +141,9 @@ class RazorpayController extends BaseController
             // Extract the very first error message as a string
             $firstError = !empty($errors) ? array_values($errors)[0] : '';
 
-            print_r($errors);
 
-            //return $this->RedirectWithtoast("errors : $firstError", 'Danger', '/book/' . $this->request->getPost('id'));
+
+            return $this->RedirectWithtoast("errors : $firstError", 'Danger', '/book/' . $this->request->getPost('id'));
             //return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
@@ -321,8 +321,10 @@ class RazorpayController extends BaseController
         $this->session->set(['razorpay_order_id' => $razorpayOrderId]);
         $this->session->set(['payable_amount' => $BookingData['AmountPayable']]);
 
+
         $data = $this->prepareData($amount, $razorpayOrderId, $BookingData);
         $BookingData = $this->saveBookingData($razorpayOrderId, $BookingData);
+
 
         return view('razorpay', ['data' => $data]);
     }
@@ -399,6 +401,12 @@ class RazorpayController extends BaseController
 
     public function saveBookingData(string $order_id, array $BookingData)
     {
+        $paxs = json_decode($BookingData['pax_details'], true);
+        $perPersonSharing = [];
+        foreach ($paxs as $pax) {
+            $perPersonSharing[] = $pax['sharing'];
+        }
+
         $data['user_id'] = (int)session()->get('id');
         $data['order_id'] = $order_id;
         $data['name'] = (string)$BookingData['name'];
@@ -408,12 +416,15 @@ class RazorpayController extends BaseController
         $data['package_name'] = (string)$BookingData['package_name'];
         $data['adults'] = (int)$BookingData['adults'];
         $data['pax_details'] = (string)$BookingData['pax_details'];
+        $data['perPersonCost'] = '[]';
+        $data['perPersonSharing'] = (string)json_encode($perPersonSharing);
+        $data['gst_include'] = 1;
+        $data['pax_details'] = (string)$BookingData['pax_details'];
         $data['sharing'] = $BookingData['sharingArr'][0];
         $data['coupon_used'] = (string)$BookingData['coupon_code'];
         $data['points_used'] = (int)$BookingData['points_used'];
         $data['date'] = (string)$BookingData['date'];
         $data['trip_type'] = (string)$BookingData['trip_type'];
-        $data['boarding_city'] = (string)$BookingData['boarding_city'];
         $data['address'] = (string)$BookingData['address'];
         $data['travelmode'] = (string)$BookingData['travelmode'];
         $data['paymode'] = (string)$BookingData['paymode'];

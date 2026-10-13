@@ -71,7 +71,7 @@ class LoginController extends BaseController
             $this->session->setFlashdata('FlashMessage', ['message' => 'User Does not Exist', 'status' => 'danger']);
             return redirect()->to('/login');
         }
-        if (!($user->STATUS)) {
+        if (!($user->status)) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'User is Deactivated.', 'status' => 'Danger']);
             return redirect()->to('/login');
         }
@@ -83,13 +83,13 @@ class LoginController extends BaseController
 
 
         $LoggedInData = [
-            'id' => $user->USER_ID,
-            'name' => $user->USER_NAME,
-            'email' => $user->USER_EMAIL,
-            'contact' => $user->USER_CONTACT,
-            'gender' => $user->USER_GENDER,
+            'id' => $user->user_id,
+            'name' => $user->user_name,
+            'email' => $user->user_email,
+            'contact' => $user->user_contact,
+            'gender' => $user->user_gender,
             'logged_in' => true,
-            'role' => (int)$user->ROLE,
+            'role' => (int)$user->role,
         ];
 
         $this->session->set($LoggedInData);
@@ -133,13 +133,13 @@ class LoginController extends BaseController
         }
 
         $LoggedInData = [
-            'id' => $user->USER_ID,
-            'name' => $user->USER_NAME,
-            'email' => $user->USER_EMAIL,
-            'contact' => $user->USER_CONTACT,
-            'gender' => $user->USER_GENDER,
+            'id' => $user->user_id,
+            'name' => $user->user_name,
+            'email' => $user->user_email,
+            'contact' => $user->user_contact,
+            'gender' => $user->user_gender,
             'logged_in' => true,
-            'role' => (int)$user->ROLE,
+            'role' => (int)$user->role,
         ];
 
         $this->session->set($LoggedInData);

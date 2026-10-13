@@ -49,7 +49,7 @@ class RegisterController extends BaseController
             'cpassword' => 'required|min_length[8]',
             'mobile' => [
                 'label'  => 'Mobile Number',
-                'rules'  => 'required|numeric|exact_length[10]|is_unique[users.USER_CONTACT]',
+                'rules'  => 'required|numeric|exact_length[10]|is_unique[users.user_contact]',
                 'errors' => [
                     'required'    => 'We need your mobile number to register your account.',
                     'numeric'     => 'Please provide a valid numeric format for your {field}.',
@@ -71,12 +71,12 @@ class RegisterController extends BaseController
 
 
         $queryData = [
-            "USER_NAME" => $this->request->getPost('name'),
-            "USER_EMAIL" => $this->request->getPost('email'),
-            "USER_CONTACT" => $this->request->getPost('mobile'),
-            "USER_GENDER" => $this->request->getPost('gender'),
-            "ROLE" => 0,
-            "STATUS" => 1,
+            "user_name" => $this->request->getPost('name'),
+            "user_email" => $this->request->getPost('email'),
+            "user_contact" => $this->request->getPost('mobile'),
+            "user_gender" => $this->request->getPost('gender'),
+            "role" => 0,
+            "status" => 1,
         ];
         $password = $this->request->getPost('password');
         $cpassword = $this->request->getPost('cpassword');
@@ -87,12 +87,12 @@ class RegisterController extends BaseController
             return redirect()->to('/signup');
         }
         // check user exist
-        $userExist = $this->UserModel->isUserExist($queryData['USER_EMAIL']);
+        $userExist = $this->UserModel->isUserExist($queryData['user_email']);
         if ($userExist) {
             $this->session->setFlashdata('FlashMessage', ['message' => 'User Already Exist', 'status' => 'warning']);
             return redirect()->to('/login');
         }
-        $queryData['PASSWORD'] = password_hash((string) $password, PASSWORD_DEFAULT);
+        $queryData['password'] = password_hash((string) $password, password_DEFAULT);
         $result = $this->UserModel->insertUser($queryData);
 
         if ($result === false) {
@@ -142,11 +142,11 @@ class RegisterController extends BaseController
             return redirect()->to('/login');
         }
 
-        $queryData['USER_NAME'] = $name;
-        $queryData['USER_EMAIL'] = $email;
-        $queryData['PASSWORD'] = password_hash((string) $password, PASSWORD_DEFAULT);
-        $queryData['ROLE'] = 0;
-        $queryData['STATUS'] = 1;
+        $queryData['user_name'] = $name;
+        $queryData['user_email'] = $email;
+        $queryData['password'] = password_hash((string) $password, password_DEFAULT);
+        $queryData['role'] = 0;
+        $queryData['status'] = 1;
 
         $this->UserModel->insertUser($queryData);
 

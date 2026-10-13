@@ -242,7 +242,7 @@
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" type="file" name="adhaarCard_file[]" id="adhaarCard_file" accept="image/*" capture="environment" required>
+                                                <input class="form-control" type="file" name="adhaarCard_file[]" id="adhaarCard_file" accept="image/*" required>
                                                 <label for="adhaarCard_file" class="form-label">Adhaar Card (Upload):</label>
                                             </div>
                                         </div>

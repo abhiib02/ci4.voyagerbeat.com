@@ -319,7 +319,7 @@ class EmailController extends BaseController
                                                                     <div style="font-family:sans-serif">
                                                                         <div class
                                                                             style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#0068a5;line-height:1.2">
-                                                                            <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px"><span style="font-size:26px;"><strong>FORGOT YOUR PASSWORD</strong></span></p>
+                                                                            <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px"><span style="font-size:26px;"><strong>FORGOT YOUR password</strong></span></p>
                                                                         </div>
                                                                     </div>
                                                                     </td>
