@@ -9,12 +9,12 @@
 </head>
 
 <body>
-
+    <?= view('pages/component/AnnouncementBar') ?>
+    <header class="no-print position-sticky" style="top:0;z-index:1050;">
+        <?php if (isMobileDevice()): ?>
+            <?= view('layout/header-partials/nav-mobile') ?>
+        <?php else: ?>
+            <?= view('layout/header-partials/navbar') ?>
+        <?php endif; ?>
+    </header>
     <main>
-        <header class="no-print">
-            <?php if (isMobileDevice()): ?>
-                <?= view('layout/header-partials/nav-mobile') ?>
-            <?php else: ?>
-                <?= view('layout/header-partials/navbar') ?>
-            <?php endif; ?>
-        </header>

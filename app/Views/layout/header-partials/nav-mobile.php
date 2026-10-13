@@ -1,4 +1,4 @@
-<div class="fixed-top" style="z-index: 1021;">
+<div style="z-index: 1021;">
     <div class="topbar text-center py-2 bgColorTheme px-2 d-flex justify-content-between">
         <button onclick="history.back()" class="btn btn-sm btn-outline-dark"><i class='bx bx-chevron-left'></i></button>
         <a href="/">
