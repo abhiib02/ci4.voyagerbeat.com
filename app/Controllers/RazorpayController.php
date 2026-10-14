@@ -401,7 +401,7 @@ class RazorpayController extends BaseController
 
     public function saveBookingData(string $order_id, array $BookingData)
     {
-        
+
 
         $data['user_id'] = (int)session()->get('id');
         $data['order_id'] = $order_id;
@@ -416,7 +416,7 @@ class RazorpayController extends BaseController
         $data['perPersonSharing'] = (string)json_encode($BookingData['perPersonSharing']);
         $data['gst_include'] = 1;
         $data['pax_details'] = (string)$BookingData['pax_details'];
-        $data['sharing'] = $BookingData['sharingArr'][0];
+        $data['sharing'] = $BookingData['perPersonSharing'][0];
         $data['coupon_used'] = (string)$BookingData['coupon_code'];
         $data['points_used'] = (int)$BookingData['points_used'];
         $data['date'] = (string)$BookingData['date'];
@@ -454,7 +454,7 @@ class RazorpayController extends BaseController
         }
         $this->data['bookingData'] = $this->BookingModel->getBookingByOrderId($order_ID);
         $this->data['couponworth'] = $this->CouponModel->getCouponWorth($this->data['bookingData']->coupon_used);
-        
+
         return $this->Render_Page('static/booking-thanks', $this->data);
     }
 
