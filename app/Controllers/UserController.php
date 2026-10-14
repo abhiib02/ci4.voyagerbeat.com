@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Controllers\EmailController;
+
 use App\Models\User;
 use App\Models\Package;
 use App\Models\Destination;
@@ -18,13 +18,13 @@ class UserController extends BaseController
     public Package $PackageModel;
     public Option $OptionModel;
     public User $UserModel;
-    protected EmailController $EmailController;
+
 
 
     public function __construct()
     {
         $this->UserModel = new User();
-        $this->EmailController = new EmailController();
+
         $this->PackageModel = new Package();
         $this->OptionModel = new Option();
         $this->data['Contact'] = $this->OptionModel->getOptionValue('contact');
@@ -100,10 +100,27 @@ class UserController extends BaseController
         }
         $generatedToken = $this->generateMD5Token($email);
         $this->UserModel->insertPasswordResetTokenToEmail($email, $generatedToken);
-        $this->EmailController->reset_password_mail($email, $generatedToken);
+        $this->sendResetPasswordEmail($email, $generatedToken);
         return $this->RedirectWithtoast('Reset Password Link Sent to Mail', 'info', '/login');
     }
 
+    public function sendResetPasswordEmail(string $email, string $generatedToken)
+    {
+
+        $client = service('curlrequest');
+
+        $response = $client->post(base_url('resetpassword-mail-process'), [
+            'http_errors' => false, // don't throw on 4xx/5xx
+            'timeout'     => 30,
+            'form_params' => [
+                'email'          => $email,
+                'token'          => $generatedToken,
+                // 'order_id'    => $order_id, // If order_id is needed in the body
+            ],
+        ]);
+
+        return $response->getBody();
+    }
     public function resetform()
     {
         $this->data['noindex'] = 1;

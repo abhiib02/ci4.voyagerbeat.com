@@ -120,6 +120,10 @@ body {
 .full-vh {
   min-height: 100vh;
   height: auto;
+  @media (width < 992px) {
+    min-height: calc(100vh - 60px);
+  height: auto;
+  }
 }
 .vh-80 {
   height: 80vh;

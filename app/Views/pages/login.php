@@ -3,7 +3,7 @@
         height: 100vh;
     }
 </style>
-<div class="container-fluid " style="position:fixed;">
+<div class="container-fluid ">
     <div class="row">
         <div class="col-lg-6 hide-on-mobile p-0">
             <div class="swiper login-page-swiper">
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="col-lg-6 full-vh grid-center ">
-            <div class=" dw-50-mw-100">
+            <div class=" w-100">
                 <?= view('pages/component/login-form') ?>
             </div>
         </div>

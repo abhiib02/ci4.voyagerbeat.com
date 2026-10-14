@@ -3,7 +3,7 @@
         height: 100vh;
     }
 </style>
-<div class="container-fluid " style="position:fixed;">
+<div class="container-fluid ">
     <div class="row">
         <div class="col-lg-6 hide-on-mobile p-0">
             <div class="swiper login-page-swiper">
@@ -24,8 +24,8 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
-        <div class="col-lg-6 full-vh grid-center ">
-            <div class="card dw-50-mw-100">
+        <div class="col-lg-6 full-vh grid-center">
+            <div class="card ">
                 <div class="card-body">
                     <div class="text-center">
                         <img src="<?= env('app.LogoPath') ?>" width="100px" alt="voyagersbeat.logo">

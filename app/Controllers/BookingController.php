@@ -325,11 +325,13 @@ class BookingController extends BaseController
     {
         $client = service('curlrequest');
 
-        $response = $client->get(base_url('booking-mail-process/' . $order_id), [
-            'http_errors' => false,   // don't throw on 4xx/5xx
+        $response = $client->post(base_url('booking-mail-process'), [
+            'http_errors' => false, // don't throw on 4xx/5xx
             'timeout'     => 30,
+            'form_params' => [
+                'order_id'          => $order_id,
+            ],
         ]);
-
         return $response->getBody();
     }
 
@@ -344,7 +346,7 @@ class BookingController extends BaseController
         foreach ($paxDetails as $index => &$pax) {
             $sharing = $sharingDetails[$index];
             $cost = $costDetails[$index];
-            
+
             // Compatibility with pre defined sharing for cost
             $explodeSharing = explode('|', $sharing);
             $sharing = (count($explodeSharing) > 2) ? $explodeSharing[1] : $explodeSharing[1];

@@ -1,9 +1,9 @@
 <div class="container-fluid">
-    <div class="row vh100 custom-background" style="--bgUrl:url(/assets/backgrounds/1.jpg);">
+    <div class="row full-vh custom-background" style="--bgUrl:url(/assets/backgrounds/1.jpg);">
 
-        <div class="col-lg-12 justify-content-center vertical-center">
+        <div class="col-lg-12 grid-center">
 
-            <div class="card theme-card p-4 w-25 mx-auto">
+            <div class="card theme-card p-4 dw-50-mw-100  ">
                 <div class="text-center">
                     <img src="<?= env('app.LogoPath') ?>" width="100px" alt="ltt">
                     <h4 class="fw-bold">Set A New Password</h4>

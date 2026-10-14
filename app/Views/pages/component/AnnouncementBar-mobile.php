@@ -9,7 +9,7 @@
         border-radius: var(--theme-border-radius);
     }
 </style>
-<?php if ((!empty($AnnouncementLink) && !empty($AnnouncementText)) || ($AnnouncementLink != '0' && $AnnouncementText != '0')): ?>
+<?php if ((!empty($AnnouncementLink) && !empty($AnnouncementText))): ?>
 
 
     <div class="announcement_bar">
