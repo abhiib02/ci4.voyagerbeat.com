@@ -44,39 +44,45 @@ class DashboardController extends BaseController
     protected function AdminPages(): array
     {
         return [
-            'all-bookings'   => ['title' => 'Bookings',  'permission' => 'bookings.view'],
-            'packages-list'  => ['title' => 'Packages',  'permission' => 'packages.view'],
-            'package-create' => ['title' => 'New Package', 'permission' => 'packages.create'],
-            'admins-list'    => ['title' => 'Admins',    'permission' => 'admins.view'],
-            'employee-list'  => ['title' => 'Employees', 'permission' => 'employees.view'],
-            'customers-list' => ['title' => 'Customers', 'permission' => 'customers.view'],
-            'coupons'        => ['title' => 'Coupons',   'permission' => 'coupons.view'],
-            'option-list'    => ['title' => 'Options',   'permission' => 'options.view'],
+            ['link' => 'all-bookings', 'title' => 'Bookings', 'icon' => 'bx bxs-backpack', 'mobile-visible' => 1],
+            ['link' => 'packages-list', 'title' => 'Packages', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
+            ['link' => 'package-create', 'title' => 'New Package', 'icon' => 'bx bxs-file-plus', 'mobile-visible' => 0],
+            ['link' => 'admins-list', 'title' => 'Admins', 'icon' => 'bx bxs-user', 'mobile-visible' => 1],
+            ['link' => 'employee-list', 'title' => 'Employees', 'icon' => 'bx bxs-user-check', 'mobile-visible' => 1],
+            ['link' => 'customers-list', 'title' => 'Customers', 'icon' => 'bx bx-user-circle', 'mobile-visible' => 1],
+            ['link' => 'coupons', 'title' => 'Coupons', 'icon' => 'bx bxs-coupon', 'mobile-visible' => 1],
+            ['link' => 'option-list', 'title' => 'Options', 'icon' => 'bx bxs-analyse', 'mobile-visible' => 0],
         ];
     }
+
 
     protected function EmployeePages(): array
     {
         return [
-            'booking-list' => ['title' => 'Booking List'], // replace with real pages
+            ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-list-ul', 'mobile-visible' => 1],
         ];
     }
     protected function UserPages(): array
     {
         return [
-            'bookings'    => ['title' => 'My Bookings'],
-            'you-as-travelbuddy' => ['title' => 'You as Travel Buddy'],
+            ['link' => 'bookings', 'title' => 'My Bookings', 'icon' => 'bx bx-list-ul', 'mobile-visible' => 1],
+            ['link' => 'you-as-travelbuddy', 'title' => 'You as Travel Buddy', 'icon' => 'bx bxs-user-detail', 'mobile-visible' => 1],
         ];
     }
+
     // ------------------- Pages -----------------------//
     public function AdminDashboard($pageName = null)
     {
 
         $pages = $this->AdminPages();
-        $this->data['pagenames'] = array_keys($pages);
+        $this->data['pagenames'] = $pages;
 
-        if ($pageName !== null && ! in_array($pageName, $this->data['pagenames'], true)) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        // If a pageName is passed, validate that it exists inside the 'link' column
+        if ($pageName !== null) {
+            $validLinks = array_column($pages, 'link');
+            if (!in_array($pageName, $validLinks, true)) {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            }
         }
 
         $this->data['pagename'] = $pageName;
@@ -136,10 +142,14 @@ class DashboardController extends BaseController
         $userID = (int) $this->data['id'];
         $this->data['User'] = $this->UserModel->getUserByID($userID);
         $pages = $this->EmployeePages();
-        $this->data['pagenames'] = array_keys($pages);
+        $this->data['pagenames'] = $pages;
 
-        if ($pageName !== null && ! isset($pages[$pageName])) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        // If a pageName is passed, validate that it exists inside the 'link' column
+        if ($pageName !== null) {
+            $validLinks = array_column($pages, 'link');
+            if (!in_array($pageName, $validLinks, true)) {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            }
         }
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
@@ -154,11 +164,16 @@ class DashboardController extends BaseController
     {
 
         $this->data['User'] = $this->UserModel->getUserByID((int) $this->data['id']);
-        $pages = $this->UserPages();
-        $this->data['pagenames'] = array_keys($pages);
 
-        if ($pageName !== null && ! isset($pages[$pageName])) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        $pages = $this->UserPages();
+        $this->data['pagenames'] = $pages;
+
+        // If a pageName is passed, validate that it exists inside the 'link' column
+        if ($pageName !== null) {
+            $validLinks = array_column($pages, 'link');
+            if (!in_array($pageName, $validLinks, true)) {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            }
         }
         $this->data['pagename'] = $pageName;
         $this->data['CustomerBookingsCount'] = $this->BookingModel->getUserBookingsCountByContact($this->data['contact']);

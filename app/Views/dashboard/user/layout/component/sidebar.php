@@ -36,9 +36,9 @@
             <!-- Dynamic Page Links Loop -->
             <?php if (!empty($pagenames)): ?>
                 <?php foreach ($pagenames as $page): ?>
-                    <a href="/account/<?= esc($page) ?>" class="nav-link d-flex align-items-center px-3 py-2 rounded-2 text-dark ">
-                        <i class="bx bx-chevron-right me-2 fs-5"></i>
-                        <span class="fw-medium text-capitalize"><?= esc(str_replace(['-', '_'], ' ', $page)) ?></span>
+                    <a href="/account/<?= esc($page['link']) ?>" class="nav-link d-flex align-items-center px-3 py-2 rounded-2 text-dark ">
+                        <i class="<?= esc($page['icon']) ?> me-2 fs-5"></i>
+                        <span class="fw-medium text-capitalize"><?= esc($page['title']) ?></span>
                     </a>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -66,10 +66,10 @@
         <?php if (!empty($pagenames)): ?>
             <?php foreach ($pagenames as $page): ?>
                 <li class="nav-item text-center" role="presentation">
-                    <a href="/account/<?= esc($page) ?>" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
-                        <i class='bx bx-link-alt fs-1'></i>
+                    <a href="/account/<?= esc($page['link']) ?>" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
+                        <i class='<?= esc($page['icon']) ?> fs-1'></i>
                         <br>
-                        <sub class="text-capitalize"><?= esc(str_replace(['-', '_'], ' ', $page)) ?></sub>
+                        <sub class="text-capitalize"><?= esc($page['title']) ?></sub>
                     </a>
                 </li>
             <?php endforeach; ?>

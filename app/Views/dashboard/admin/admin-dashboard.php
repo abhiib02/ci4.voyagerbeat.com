@@ -1,7 +1,9 @@
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 h-100">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pb-5 full-vh">
     <?php
-    // This Condition Checks if page name is not exist in directory then show default not error 404
-    if (isset($pagename) && in_array($pagename, $pagenames ?? [], true)): ?>
+    // Extract the list of valid links to check against
+    $validLinks = !empty($pagenames) ? array_column($pagenames, 'link') : [];
+
+    if (!empty($pagename) && in_array($pagename, $validLinks, true)): ?>
         <?= view('dashboard/admin/pages/' . $pagename) ?>
     <?php else: ?>
         <div class="card my-2">

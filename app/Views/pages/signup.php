@@ -3,7 +3,7 @@
         height: 100vh;
     }
 </style>
-<div class="container-fluid ">
+<div class="container-fluid bg-body-theme">
     <div class="row">
         <div class="col-lg-6 hide-on-mobile p-0">
             <div class="swiper login-page-swiper">

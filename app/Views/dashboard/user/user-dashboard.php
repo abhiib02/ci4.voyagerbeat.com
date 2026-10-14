@@ -1,9 +1,11 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <?php
-    // This Condition Checks if page name is not exist in directory then show default not error 404
-    if (isset($pagename) && in_array($pagename, $pagenames ?? [], true)): ?>
+    // Extract the list of valid links to check against
+    $validLinks = !empty($pagenames) ? array_column($pagenames, 'link') : [];
+
+    if (!empty($pagename) && in_array($pagename, $validLinks, true)): ?>
         <?= view('dashboard/user/pages/' . $pagename) ?>
-    <?php else: ?>
+        <?php else: ?>>
 
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 mt-4 mb-4 border-bottom">

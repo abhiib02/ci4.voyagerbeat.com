@@ -3,7 +3,7 @@
         background-color: color-mix(in srgb, #F6465D, #2EBD85 calc(var(--days)*1%)) !important;
     }
 </style>
-<div id="packages" class="card">
+<div id="packages" class="card ">
     <div class="card-header">
         <div class="fw-bold">Packages</div>
     </div>
@@ -13,33 +13,35 @@
             <a class="btn btn-sm btn-secondary" href="/hidden">Hidden packages</a>
         </div>
         <br>
-        <table id="datatable" class="sortable table" data-order='[[ 5, "desc" ]]'>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>SLUG</th>
-                    <th>NAME</th>
-                    <th>DESTINATION</th>
-                    <th>Dates</th>
-                    <th>Last Updated</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach (($Packages ?? []) as $package) { ?>
+        <div class="overflow-scroll">
+            <table id="datatable" class="sortable table" data-order='[[ 5, "desc" ]]'>
+                <thead>
                     <tr>
-                        <td><a class="btn btn-sm btn-outline-dark" target="__blank" href="/packageid/<?= esc($package->PACKAGE_ID); ?>"><?= esc($package->PACKAGE_ID); ?></a></td>
-                        <td><?= esc($package->SLUG); ?></td>
-                        <td><?= esc($package->PACKAGE_NAME); ?></td>
-                        <td><?= esc($package->LOCATION); ?></td>
-                        <?php $lastDate = explode(',', $package->DATES)[0]; ?>
-                        <td class="condition-bg" style="--days:<?= isCurrentDateNearRange($lastDate, 1) ?>;"><?= isCurrentDateNearRange($lastDate, 1) ?> Days</td>
-                        <td><?= esc($package->updated_at); ?></td>
-                        <td><a class="btn btn-sm btn-outline-dark" href="/package-edit/<?= esc($package->PACKAGE_ID); ?>?Adminlist=1" title="Edit"><i class='bx bxs-edit-alt'></i></a></td>
+                        <th>ID</th>
+                        <th>SLUG</th>
+                        <th>NAME</th>
+                        <th>DESTINATION</th>
+                        <th>Dates</th>
+                        <th>Last Updated</th>
+                        <th>Action</th>
                     </tr>
-                <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach (($Packages ?? []) as $package) { ?>
+                        <tr>
+                            <td><a class="btn btn-sm btn-outline-dark" target="__blank" href="/packageid/<?= esc($package->PACKAGE_ID); ?>"><?= esc($package->PACKAGE_ID); ?></a></td>
+                            <td><?= esc($package->SLUG); ?></td>
+                            <td><?= esc($package->PACKAGE_NAME); ?></td>
+                            <td><?= esc($package->LOCATION); ?></td>
+                            <?php $lastDate = explode(',', $package->DATES)[0]; ?>
+                            <td class="condition-bg" style="--days:<?= isCurrentDateNearRange($lastDate, 1) ?>;"><?= isCurrentDateNearRange($lastDate, 1) ?> Days</td>
+                            <td><?= esc($package->updated_at); ?></td>
+                            <td><a class="btn btn-sm btn-outline-dark" href="/package-edit/<?= esc($package->PACKAGE_ID); ?>?Adminlist=1" title="Edit"><i class='bx bxs-edit-alt'></i></a></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
         <!-- Pagination Links -->
         <?php if (!empty($pager)): ?>
             <div class="pagination">

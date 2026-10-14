@@ -1,4 +1,4 @@
-<div class="sidebar col-md-3 col-lg-2 p-0 bg-white border-end min-vh-100 shadow-sm">
+<div class="sidebar col-md-3 col-lg-2 p-0 bg-white border-end shadow-sm">
 
     <!-- User Profile Header -->
     <div class="p-3 border-bottom bg-light">
@@ -24,7 +24,7 @@
     <div class="sticky-top">
         <br>
         <!-- Navigation Menu -->
-        <div class="p-2">
+        <div class="p-2 hide-on-mobile">
             <div class="text-uppercase text-muted fw-bold px-3 py-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
                 Menu
             </div>
@@ -37,10 +37,12 @@
 
                 <!-- Dynamic Page Links Loop -->
                 <?php if (!empty($pagenames)): ?>
-                    <?php foreach ($pagenames as $page): ?>
-                        <a href="/employee-dashboard/<?= esc($page) ?>" class="nav-link d-flex align-items-center px-3 py-2 rounded-2 text-dark ">
-                            <i class="bx bx-chevron-right me-2 fs-5"></i>
-                            <span class="fw-medium text-capitalize"><?= esc(str_replace(['-', '_'], ' ', $page)) ?></span>
+
+                    <?php foreach ($pagenames as $index => $page): ?>
+
+                        <a href="/employee-dashboard/<?= esc($page['link']) ?>" class="nav-link d-flex align-items-center px-3 py-2 rounded-2 text-dark ">
+                            <i class="<?= esc($page['icon']) ?> me-2 fs-5"></i>
+                            <span class="fw-medium text-capitalize"><?= esc($page['title']) ?></span>
                         </a>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -48,3 +50,29 @@
         </div>
     </div>
 </div>
+<nav class="fixed-bottom p-0 show-on-mobile" style="z-index: 1100;" id="mobile-nav">
+    <ul class="nav nav-pills gap-2 nav-fill  bg-white rounded-3 shadow-sm flex-nowrap border border-top overflow-auto">
+
+        <li class="nav-item text-center" role="presentation">
+            <a href="/" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
+                <i class='bx bx-home fs-5'></i>
+                <br>
+                <sub>Home</sub>
+            </a>
+        </li>
+
+        <?php if (!empty($pagenames)): ?>
+            <?php foreach ($pagenames as $page): ?>
+                <?php if ($page['mobile-visible']): ?>
+                    <li class="nav-item text-center" role="presentation">
+                        <a href="/employee-dashboard/<?= esc($page['link']) ?>" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
+                            <i class='<?= esc($page['icon']) ?> fs-5'></i>
+                            <br>
+                            <sub class="text-capitalize"><?= esc($page['title']) ?></sub>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </ul>
+</nav>
