@@ -11,7 +11,7 @@
 
     </div>
     <div class="card-body">
-        <div class="overflow-scroll">
+        <div class="overflow-auto">
             <?= view('dashboard/shared-components/booking-list') ?>
         </div>
     </div>

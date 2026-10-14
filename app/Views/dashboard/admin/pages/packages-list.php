@@ -13,7 +13,7 @@
             <a class="btn btn-sm btn-secondary" href="/hidden">Hidden packages</a>
         </div>
         <br>
-        <div class="overflow-scroll">
+        <div class="overflow-auto">
             <table id="datatable" class="sortable table" data-order='[[ 5, "desc" ]]'>
                 <thead>
                     <tr>

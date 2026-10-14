@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <p>Multiple Value Must be comma seperated</p>
-        <div class="overflow-scroll">
+        <div class="overflow-auto">
             <table class="table  table-striped">
                 <thead>
                     <th>Option Name</th>

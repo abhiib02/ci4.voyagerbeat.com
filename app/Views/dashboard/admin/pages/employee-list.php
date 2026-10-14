@@ -3,7 +3,7 @@
         <div class="fw-bold">Employees</div>
     </div>
     <div class="card-body">
-        <div class="overflow-scroll">
+        <div class="overflow-auto">
             <table class="table sortable" id="datatable">
                 <thead>
                     <tr>

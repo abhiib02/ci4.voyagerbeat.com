@@ -16,7 +16,7 @@
 
 
         </dialog>
-        <div class="overflow-scroll">
+        <div class="overflow-auto">
             <table class="sortable table" id="datatable" data-order='[[ 4, "desc" ]]'>
                 <thead>
                     <tr>
