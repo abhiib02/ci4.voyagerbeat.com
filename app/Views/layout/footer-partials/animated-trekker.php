@@ -20,7 +20,7 @@
 
     @keyframes walk {
         0% {
-            translate: 0%;
+            translate: calc(-100px);
         }
 
         100% {

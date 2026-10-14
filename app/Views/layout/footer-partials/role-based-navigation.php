@@ -1,12 +1,12 @@
 <?php if (auth('Admin')): ?>
-    <a href="/dashboard">Dashboard</a> |
-    <a href="/logout">Logout</a>
+    <li><a href="/dashboard">Dashboard</a></li>
+    <li><a href="/logout">Logout</a></li>
 <?php elseif (auth('Employee')): ?>
-    <a href="/employee-dashboard">Employee Dashboard</a> |
-    <a href="/logout">Logout</a>
+    <li><a href="/employee-dashboard">Employee Dashboard</a> |
+    <li><a href="/logout">Logout</a></li>
 <?php elseif (auth('User')): ?>
-    <a href="/account">Account</a> |
-    <a href="/logout">Logout</a>
+    <li><a href="/account">Account</a></li>
+    <li><a href="/logout">Logout</a></li>
 <?php else: ?>
-    <a href="/login">Login</a>
+    <li><a href="/login">Login</a></li>
 <?php endif; ?>
