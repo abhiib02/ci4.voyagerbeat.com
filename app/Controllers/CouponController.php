@@ -33,14 +33,12 @@ class CouponController extends BaseController
 
     public function applyCouponAjax(string $code)
     {
-        if (!$this->CouponModel->isCodeExist($code)) {
-            return 0;
+        if (!$this->CouponModel->claimCode($code)) {
+            // same shape your JS already understands
+            return $this->response->setJSON([['Coupon_Count' => 0]]);
         }
-        if (!$this->CouponModel->isCodeCount($code)) {
-            return 0;
-        }
+
         $codeDetails = $this->CouponModel->getCouponJson($code);
-        $this->CouponModel->decrementCodeCount($code);
         return $this->response->setJSON($codeDetails);
     }
 

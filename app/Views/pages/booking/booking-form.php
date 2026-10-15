@@ -9,7 +9,7 @@
 </style>
 
 
-<div id="app" class="scroll-margin">
+<div id="app" class="scroll-margin bg-body-theme">
 
     <!-- Header -->
     <div class="bgSecondaryTheme text-white py-4 mb-4">
@@ -38,338 +38,335 @@
             <div class="row g-2">
 
                 <!-- LEFT COLUMN -->
-                <div class="col-12 col-lg-8">
-
-                    <div class="accordion" id="bookingAccordion">
-
-                        <!-- Traveler Details -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" :class="{collapsed: openIndex !== 0}" type="button" @click="openAccordion(0)">
-                                    Details Section
-                                </button>
-                            </h2>
-                            <div class="accordion-collapse collapse scroll-margin" :class="{show: openIndex === 0}" ref="section0">
-                                <div class="accordion-body">
-
-                                    <h6 class="fw-bold mb-3">Account Holder</h6>
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-12 col-md-3">
-                                            <label class="form-label">Name</label>
-                                            <input type="text" name="name" class="form-control" value="<?= session()->get('name') ?>" readonly>
-                                        </div>
-                                        <div class="col-6 col-md-3">
-                                            <label class="form-label">Gender</label>
-                                            <input type="text" name="gender" class="form-control" value="<?= session()->get('gender') ?>" readonly>
-                                        </div>
-                                        <div class="col-6 col-md-3">
-                                            <label class="form-label">Contact No</label>
-                                            <input type="text" name="mobile" class="form-control" value="<?= session()->get('contact') ?>" readonly>
-                                        </div>
-                                        <div class="col-12 col-md-3">
-                                            <label class="form-label">Email</label>
-                                            <input type="email" name="email" class="form-control" value="<?= session()->get('email') ?>" readonly>
-                                        </div>
+                <div class="col-12 col-lg-12">
+                    <ul class="nav nav-tabs" id="bookingTab">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link " :class="{active: activeTab === 'travelers'}" @click="openTab('travelers')" ref="pane0">Travelers</button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link" :class="{active: activeTab === 'dates'}" @click="openTab('dates')" ref="pane1">Dates</button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link" :class="{active: activeTab === 'pickup'}" @click="openTab('pickup')" ref="pane2">Pickup / Boarding</button>
+                        </li>
+                    </ul>
+                    <!---  Tabs section -->
+                    <div class="tab-content card border rounded p-3">
+                        <!---  Detail Section Tab-->
+                        <div class="tab-pane fade" data-pane="travelers" :class="{'show active': activeTab === 'travelers'}">
+                            <div class="" hidden>
+                                <h6 class="fw-bold mb-3">Account Holder</h6>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" name="name" class="form-control" value="<?= session()->get('name') ?>" readonly>
                                     </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-6 col-md-4">
-                                            <label class="form-label fw-bold">Number of Adults</label>
-                                            <input type="number" name="adults" class="form-control-plaintext fw-bold" :value="adults" readonly>
-                                        </div>
+                                    <div class="col-6 col-md-3">
+                                        <label class="form-label">Gender</label>
+                                        <input type="text" name="gender" class="form-control" value="<?= session()->get('gender') ?>" readonly>
                                     </div>
-                                    <hr>
-
-
-
-                                    <div v-for="(t, i) in travelers" :key="t.id" class="border-top pt-3 mb-3">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span class="fw-bold fs-6">Traveler {{ i + 1 }}</span>
-                                            <button type="button" class="btn btn-sm btn-danger" @click="removeTraveler(i)">Remove</button>
-                                        </div>
-                                        <div class="row g-3">
-                                            <div class="col-12 col-md-3">
-                                                <label class="form-label">Name</label>
-                                                <input type="text" class="form-control" v-model.trim="t.name" required>
-                                            </div>
-                                            <div class="col-6 col-md-3">
-                                                <label class="form-label">Gender</label>
-                                                <select class="form-select" v-model="t.gender" required>
-                                                    <option value="" disabled selected>Choose your option</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-6 col-md-3">
-                                                <label class="form-label">Contact</label>
-                                                <input type="tel" inputmode="numeric" pattern="\d{1,10}"
-                                                    minlength="10" maxlength="10" class="form-control" v-model="t.contact" required>
-                                            </div>
-                                            <div class="col-12 col-md-3">
-                                                <label class="form-label">Boarding City</label>
-                                                <input type="text" class="form-control" v-model.trim="t.boarding_city" required>
-                                            </div>
-                                            <input type="hidden" name="perPersonCost[]" :value="travelerCost(t)" required>
-                                            <div class="col-12 col-md-6">
-                                                <label class="form-label">Sharing</label>
-                                                <select class="form-select" name="perPersonSharing[]" v-model="t.sharing" required>
-                                                    <option value="" disabled selected>Choose Sharing</option>
-                                                    <option v-for="opt in sharingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
-                                                </select>
-                                            </div>
-
-
-                                        </div>
+                                    <div class="col-6 col-md-3">
+                                        <label class="form-label">Contact No</label>
+                                        <input type="text" name="mobile" class="form-control" value="<?= session()->get('contact') ?>" readonly>
                                     </div>
-
-                                    <button type="button" class="btn btn-theme btn-voyager text-white" @click="addTraveler">+ Add Traveler</button>
-
-                                    <div class="d-flex justify-content-end mt-4">
-                                        <button type="button" class="btn btn-theme btn-voyager text-white" @click="openAccordion(1)">Next</button>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" name="email" class="form-control" value="<?= session()->get('email') ?>" readonly>
                                     </div>
                                 </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-6 col-md-4">
+                                        <label class="form-label fw-bold">Number of Adults</label>
+                                        <input type="number" name="adults" class="form-control-plaintext fw-bold" :value="adults" readonly>
+                                    </div>
+                                </div>
+                                <hr>
                             </div>
-                        </div>
 
-                        <!-- Dates Section -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" :class="{collapsed: openIndex !== 1}" type="button" @click="openAccordion(1)">
-                                    Dates Section
-                                </button>
-                            </h2>
-                            <div class="accordion-collapse collapse scroll-margin" :class="{show: openIndex === 1}" ref="section1">
-                                <div class="accordion-body">
+                            <h1 class="display-6" v-if="travelers.length == 0">Add Traveler</h1>
+                            <div v-for="(t, i) in travelers" :key="t.id" class="pt-3 mb-3">
 
-                                    <template v-if="dateList.length === 0">
-                                        <p class="text-danger mb-0">
-                                            No upcoming batch dates are available for this package right now.
-                                            Please contact us to check for new dates.
-                                        </p>
-                                        <br>
-                                        <label class="form-label">Select Date</label>
-                                        <input type="date" name="date" class="form-control" :class="{'is-invalid': errors.date}" v-model="selectedDate" required>
-                                    </template>
-
-                                    <template v-else-if="dateList.length > 0">
-                                        <label class="form-label">Batch Dates</label>
-                                        <select name="date" class="form-select" v-model="selectedDate" required>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-bold fs-6">Traveler {{ i + 1 }}</span>
+                                    <button type="button" class="btn btn-sm btn-danger" @click="removeTraveler(i)"><i class='bx bx-x-circle'></i></button>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" v-model.trim="t.name" required>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-select" v-model="t.gender" required>
                                             <option value="" disabled selected>Choose your option</option>
-                                            <option v-for="(d, i) in dateList" :key="i" :value="d.raw">
-                                                {{ d.label }}<template v-if="d.surcharge"> | Surcharge ₹{{ d.surcharge }}</template>
-                                            </option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
                                         </select>
-                                    </template>
-
-                                    <template v-else-if="pkg.CUSTOM_TRIP === 1">
-                                        <label class="form-label">Select Date</label>
-                                        <input type="date" name="date" class="form-control" v-model="selectedDate" required>
-                                    </template>
-
-                                    <template v-else>
-                                        <label class="form-label">Batch Dates</label>
-                                        <select name="date" class="form-select" v-model="selectedDate" required>
-                                            <option value="" disabled selected>Choose your option</option>
-                                            <option :value="dateList[0].raw">{{ dateList[0].label }}</option>
-                                        </select>
-                                    </template>
-
-                                    <div class="d-flex justify-content-between mt-4">
-                                        <button type="button" class="btn btn-outline-secondary" @click="openAccordion(0)">Back</button>
-                                        <button type="button" class="btn btn-theme btn-voyager text-white" @click="openAccordion(2)">Next</button>
                                     </div>
+                                    <div class="col-6 col-md-3">
+                                        <label class="form-label">Contact</label>
+                                        <input type="tel" inputmode="numeric" pattern="\d{1,10}"
+                                            minlength="10" maxlength="10" class="form-control" v-model="t.contact" required>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label">Boarding City</label>
+                                        <input type="text" class="form-control" v-model.trim="t.boarding_city" required>
+                                    </div>
+                                    <input type="hidden" name="perPersonCost[]" :value="travelerCost(t)" required>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label">Sharing</label>
+                                        <select class="form-select" name="perPersonSharing[]" v-model="t.sharing" required>
+                                            <option value="" disabled selected>Choose Sharing</option>
+                                            <option v-for="opt in sharingOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
+                                        </select>
+                                    </div>
+
+
                                 </div>
                             </div>
+
+
+
+                            <div class="d-flex justify-content-between mt-4" role="tablist">
+
+                                <button type="button" class="btn btn-theme btn-success text-white" @click="addTraveler">+ Add Traveler</button>
+                                <button type="button" class="btn btn-theme btn-voyager text-white" @click="openTab('dates')">Next</button>
+                            </div>
+
                         </div>
+                        <!---  Dates Section Tab-->
+                        <div class="tab-pane fade" data-pane="dates" :class="{'show active': activeTab === 'dates'}">
+                            <template v-if="dateList.length === 0">
+                                <p class="text-danger mb-0">
+                                    No upcoming batch dates are available for this package right now.
+                                    Please contact us to check for new dates.
+                                </p>
+                                <br>
+                                <label class="form-label">Select Date</label>
+                                <input type="date" name="date" class="form-control" :class="{'is-invalid': errors.date}" v-model="selectedDate" required>
+                            </template>
 
-                        <!-- Travel Section -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" :class="{collapsed: openIndex !== 2}" type="button" @click="openAccordion(2)">
-                                    Travel Section
-                                </button>
-                            </h2>
-                            <div class="accordion-collapse collapse scroll-margin" :class="{show: openIndex === 2}" ref="section2">
-                                <div class="accordion-body">
-                                    <label class="form-label">Travel Mode / Pickup Point</label>
-                                    <select name="travelmode" class="form-select" v-model="travelMode" required>
-                                        <option value="" disabled selected>Choose your option</option>
-                                        <option v-for="opt in travelModeOptions" :key="opt.value" :value="opt.value + '|' + opt.label">{{opt.value}}.{{ opt.label }}</option>
-                                    </select>
+                            <template v-else-if="dateList.length > 0">
+                                <label class="form-label">Batch Dates</label>
+                                <select name="date" class="form-select" v-model="selectedDate" required>
+                                    <option value="" disabled selected>Choose your option</option>
+                                    <option v-for="(d, i) in dateList" :key="i" :value="d.raw">
+                                        {{ d.label }}<template v-if="d.surcharge"> | Surcharge ₹{{ d.surcharge }}</template>
+                                    </option>
+                                </select>
+                            </template>
 
-                                    <div class="d-flex justify-content-between mt-4">
-                                        <button type="button" class="btn btn-outline-secondary" @click="openAccordion(1)">Back</button>
-                                        <a href="#details-right" class="btn btn-theme btn-voyager text-white">Next</a>
-                                    </div>
-                                </div>
+                            <template v-else-if="pkg.CUSTOM_TRIP === 1">
+                                <label class="form-label">Select Date</label>
+                                <input type="date" name="date" class="form-control" v-model="selectedDate" required>
+                            </template>
+
+                            <template v-else>
+                                <label class="form-label">Batch Dates</label>
+                                <select name="date" class="form-select" v-model="selectedDate" required>
+                                    <option value="" disabled selected>Choose your option</option>
+                                    <option :value="dateList[0].raw">{{ dateList[0].label }}</option>
+                                </select>
+                            </template>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary" @click="openTab('travelers')">Back</button>
+                                <button type="button" class="btn btn-theme btn-voyager text-white" @click="openTab('pickup')">Next</button>
                             </div>
                         </div>
+                        <!---  Pickup Section Tab-->
+                        <div class="tab-pane fade" data-pane="pickup" :class="{'show active': activeTab === 'pickup'}">
+                            <label class="form-label">Travel Mode / Pickup Point</label>
+                            <select name="travelmode" class="form-select" v-model="travelMode" required>
+                                <option value="" disabled selected>Choose your option</option>
+                                <option v-for="opt in travelModeOptions" :key="opt.value" :value="opt.value + '|' + opt.label">{{opt.value}}.{{ opt.label }}</option>
+                            </select>
 
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary" @click="openTab('dates')">Back</button>
+                                <button type="button" class="btn btn-theme btn-voyager text-white" @click="goToSummary">Next</button>
+                            </div>
+                        </div>
                     </div>
+                    <!---  Tabs section end -->
+
                 </div>
 
                 <!-- RIGHT COLUMN: SUMMARY -->
-                <div class="col-12 col-lg-4">
+
+                <div class="col-12 col-lg-12" data-pane="costing" v-if="activeTab=='costing'">
 
                     <div id="details-right" class="card scroll-margin">
                         <div class="card-header">
                             Costing Structure
                         </div>
                         <div class="card-body">
-                            <table class="table table-borderless mb-0 align-middle">
-                                <tbody>
-                                    <tr>
-                                        <td>Amount</td>
-                                        <td class="text-end">
-                                            <del v-if="calc.ready && calc.amountStruck" class="fw-bold text-muted">₹ {{ calc.amountStruck }}</del>
-                                            <span class="fw-bold">{{ calc.ready ? '₹ ' + calc.amount : '...' }}</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>High Season Surcharge</td>
-                                        <td class="fw-bold text-end">{{ calc.ready ? '₹ ' + calc.dateSurcharge : '...' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>GST 5%</td>
-                                        <td class="fw-bold text-end">{{ calc.ready ? '₹ ' + calc.gst : '...' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Offer Applied on</td>
-                                        <td class="fw-bold text-end">{{ calc.ready ? '₹' + calc.offerAppliedOn : '...' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Special Offer <template v-if="pkg.SPACIAL_OFFER">: {{ pkg.SPACIAL_OFFER }}%</template></td>
-                                        <td class="fw-bold text-end">{{ calc.ready ? '- ₹ ' + calc.specialOfferAmount : '...' }}</td>
-                                    </tr>
-                                    <tr class="border-top">
-                                        <td>Grand Total</td>
-                                        <td class="fw-bold text-end">{{ calc.ready ? '₹ ' + calc.grandTotal : '...' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fs-5">Amount To Pay</td>
-                                        <td class="fw-bold fs-5 text-end">{{ calc.ready ? '₹ ' + calc.amountToPay : '...' }}</td>
-                                    </tr>
-                                    <tr v-show="calc.ready && calc.saved > 0">
-                                        <td>You Save</td>
-                                        <td class="fw-bold text-success text-end">₹ {{ calc.saved }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label class="form-label">Coupon Code</label>
-                                            <div class="input-group">
-                                                <input type="text" name="coupon_code" class="form-control" v-model.trim="couponCode" :readonly="couponApplied">
-                                                <button type="button" class="btn btn-theme btn-voyager text-white" :disabled="couponApplied" @click="applyCode">Apply code</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr v-if="couponApplied">
-                                        <td>Coupon Applied</td>
-                                        <td class="text-end"><b>{{ couponCode }}</b></td>
-                                    </tr>
-                                    <tr v-if="couponApplied">
-                                        <td>Final Amount</td>
-                                        <td class="text-end">
-                                            <b>₹{{ calc.amountToPay }}</b> - <b class="text-success">₹{{ couponDiscount }}</b><br>
-                                            <span class="text-success"><b>₹ {{ finalPayable }}</b></span>
-                                        </td>
-                                    </tr>
-                                    <tr v-if="calc.ready && UsablePoints > 0">
-                                        <td>
-                                            <label for="points">
-                                                <input type="checkbox" id="points" v-model="usePoints">
-                                                <i class='bx bx-star'></i> Use {{ UsablePoints }} Loyalty Points
-                                                <span v-if="usePoints" class="text-success">(−₹{{ pointsDiscount }})</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br>
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-outline-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#couponsDrawer">View Available Coupons</button>
-                            </div>
-                            <br>
-                            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="couponsDrawer" aria-labelledby="offcanvasBottomLabel" style="--bs-offcanvas-height:60vh;">
-                                <div class="offcanvas-header">
-                                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Available Coupons</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body small">
-                                    <div v-if="!couponApplied" class="coupon-container invisible-scrollbar">
-                                        <div class="coupon" v-for="c in availableCoupons" :key="c.code" role="button" @click="selectCoupon(c.Coupon_Code)">
-                                            <article>
-                                                <aside>
-                                                    <svg viewBox="0 0 172 64" preserveAspectRatio="none" aria-hidden="true">
-                                                        <path d="M -6 60 Q 70 -4 180 34" fill="none" stroke="rgba(255,255,255,.3)"
-                                                            stroke-width="1.6" stroke-dasharray="3 6" stroke-linecap="round" />
-                                                        <circle cx="14" cy="47" r="3" fill="rgba(255,255,255,.55)" />
-                                                    </svg>
-                                                    <strong>₹{{ c.Coupon_Worth }}</strong>
-                                                    <span>off</span>
-                                                </aside>
-                                                <section>
-                                                    <h2>Flat ₹{{ c.Coupon_Worth }} off your booking</h2>
-                                                    <p>Applies to bookings of ₹{{ Number(c.Coupon_Worth) + 2500 }} or more.</p>
-                                                    <div>
-                                                        <code>{{ c.Coupon_Code }}</code>
-                                                        <button type="button" @click="selectCoupon(c.Coupon_Code)" data-code="{{ c.Coupon_Code }}">Apply</button>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <table class="table table-borderless mb-0 align-middle">
+                                        <tbody>
+                                            <tr>
+                                                <td>Amount</td>
+                                                <td class="text-end">
+                                                    <del v-if="calc.ready && calc.amountStruck" class="fw-bold text-muted">₹ {{ calc.amountStruck }}</del>
+                                                    <span class="fw-bold">{{ calc.ready ? '₹ ' + calc.amount : '...' }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>High Season Surcharge</td>
+                                                <td class="fw-bold text-end">{{ calc.ready ? '₹ ' + calc.dateSurcharge : '...' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>GST 5%</td>
+                                                <td class="fw-bold text-end">{{ calc.ready ? '₹ ' + calc.gst : '...' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Offer Applied on</td>
+                                                <td class="fw-bold text-end">{{ calc.ready ? '₹' + calc.offerAppliedOn : '...' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Special Offer <template v-if="pkg.SPACIAL_OFFER">: {{ pkg.SPACIAL_OFFER }}%</template></td>
+                                                <td class="fw-bold text-end">{{ calc.ready ? '- ₹ ' + calc.specialOfferAmount : '...' }}</td>
+                                            </tr>
+                                            <tr class="border-top">
+                                                <td>Total</td>
+                                                <td class="fw-bold text-end">{{ calc.ready ? '₹ ' + calc.grandTotal : '...' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fs-5">Amount To Pay</td>
+                                                <td class="fw-bold fs-5 text-end">{{ calc.ready ? '₹ ' + calc.amountToPay : '...' }}</td>
+                                            </tr>
+                                            <tr v-show="calc.ready && calc.saved > 0">
+                                                <td>You Save</td>
+                                                <td class="fw-bold text-success text-end">₹ {{ calc.saved }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <label class="form-label">Coupon Code</label>
+                                                    <div class="input-group">
+                                                        <input type="text" name="coupon_code" class="form-control" v-model.trim="couponCode" :readonly="couponApplied">
+                                                        <button type="button" class="btn btn-theme btn-voyager text-white" :disabled="couponApplied" @click="applyCode">Apply code</button>
                                                     </div>
+                                                </td>
+                                            </tr>
 
-                                                </section>
-                                            </article>
+                                            <tr v-if="couponApplied">
+                                                <td>Coupon Applied</td>
+                                                <td class="text-end"><b>{{ couponCode }}</b></td>
+                                            </tr>
+                                            <tr v-if="couponApplied">
+                                                <td>Final Amount</td>
+                                                <td class="text-end">
+                                                    <b>₹{{ calc.amountToPay }}</b> - <b class="text-success">₹{{ couponDiscount }}</b><br>
+                                                    <span class="text-success"><b>₹ {{ finalPayable }}</b></span>
+                                                </td>
+                                            </tr>
+                                            <tr v-if="calc.ready && UsablePoints > 0">
+                                                <td>
+                                                    <div class="form-check ps-0">
+                                                        <input type="checkbox" id="points" v-model="usePoints">
+                                                        <label class="form-check-label" for="points">
+                                                            &nbsp;&nbsp;
+                                                            <i class='bx bx-star'></i> Use {{ UsablePoints }} Loyalty Points
+                                                            <span v-if="usePoints" class="text-success">(−₹{{ pointsDiscount }})</span>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#couponsDrawer">View Available Coupons</button>
+                                    </div>
+                                    <br>
+                                    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="couponsDrawer" aria-labelledby="offcanvasBottomLabel" style="--bs-offcanvas-height:60vh;">
+                                        <div class="offcanvas-header">
+                                            <h5 class="offcanvas-title" id="offcanvasBottomLabel">Available Coupons</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                         </div>
+                                        <div class="offcanvas-body small">
+                                            <div v-if="!couponApplied" class="coupon-container invisible-scrollbar">
+                                                <div class="coupon" v-for="c in availableCoupons" :key="c.code" role="button" @click="selectCoupon(c.Coupon_Code)">
+                                                    <article>
+                                                        <aside>
+                                                            <svg viewBox="0 0 172 64" preserveAspectRatio="none" aria-hidden="true">
+                                                                <path d="M -6 60 Q 70 -4 180 34" fill="none" stroke="rgba(255,255,255,.3)"
+                                                                    stroke-width="1.6" stroke-dasharray="3 6" stroke-linecap="round" />
+                                                                <circle cx="14" cy="47" r="3" fill="rgba(255,255,255,.55)" />
+                                                            </svg>
+                                                            <strong>₹{{ c.Coupon_Worth }}</strong>
+                                                            <span>off</span>
+                                                        </aside>
+                                                        <section>
+                                                            <h2>Flat ₹{{ c.Coupon_Worth }} off your booking</h2>
+                                                            <p>Applies to bookings of ₹{{ Number(c.Coupon_Worth) + 2500 }} or more.</p>
+                                                            <div>
+                                                                <code>{{ c.Coupon_Code }}</code>
+                                                                <button type="button" @click="selectCoupon(c.Coupon_Code)" data-code="{{ c.Coupon_Code }}">Apply</button>
+                                                            </div>
 
+                                                        </section>
+                                                    </article>
+                                                </div>
+
+                                            </div>
+                                            <div v-if="couponApplied">
+                                                <p class="text-success text-center fs-2">{{couponCode}} Applied of <b class="text-success">₹{{ couponDiscount }}</b></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div v-if="couponApplied">
-                                        <p class="text-success text-center fs-2">{{couponCode}} Applied of <b class="text-success">₹{{ couponDiscount }}</b></p>
-                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <table class="table table-borderless mb-0 align-middle">
+                                        <tbody>
+                                            <tr class="">
+                                                <td class="fs-3 fw-bold">Amount To Pay</td>
+                                                <td class="fw-bold fs-2 text-end">{{ calc.ready ? '₹ ' + payNowAmount : '...' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="small text-muted">{{ perPersonText }}</td>
+                                            </tr>
+                                            <tr v-if="calc.ready && earnedPoints > 0">
+                                                <td colspan="2" class="text-success">
+                                                    <i class='bx bx-star'></i> You'll earn <b>{{ earnedPoints }}</b> loyalty points on this booking
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-primary fw-bold">Booking Amount per person</td>
+                                                <td class="fw-bold text-end">₹{{ pkg.BOOKING_AMOUNT || 3000 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <label class="form-label">How much you want to pay?</label>
+                                                    <select name="paymode" v-model="paymode" class="form-select">
+                                                        <option value="" disabled>Choose your option</option>
+                                                        <option value="full">1. Full Payment</option>
+                                                        <option value="booking">2. Booking Amount</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="d-grid">
+                                                    <input type="submit" value="Pay Now" class="btn btn-theme btn-voyager text-white btn-lg" :disabled="!calc.ready || overLimit">
+                                                </td>
+                                            </tr>
+                                            <tr v-if="errorMessage">
+                                                <td colspan="2" class="text-danger fw-bold small">{{ errorMessage }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
                             <br>
-                            <table class="table table-borderless mb-0 align-middle">
-                                <tbody>
-                                    <tr class="border-top">
-                                        <td colspan="2" class="fw-bold fs-2">{{ calc.ready ? '₹ ' + payNowAmount : '...' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="small text-muted">{{ perPersonText }}</td>
-                                    </tr>
-                                    <tr v-if="calc.ready && earnedPoints > 0">
-                                        <td colspan="2" class="small text-success">
-                                            <i class='bx bx-star'></i> You'll earn <b>{{ earnedPoints }}</b> loyalty points on this booking
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-primary fw-bold">Booking Amount per person</td>
-                                        <td class="fw-bold text-end">₹{{ pkg.BOOKING_AMOUNT || 3000 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label class="form-label">How much you want to pay?</label>
-                                            <select name="paymode" v-model="paymode" class="form-select">
-                                                <option value="" disabled>Choose your option</option>
-                                                <option value="full">1. Full Payment</option>
-                                                <option value="booking">2. Booking Amount</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="d-grid">
-                                            <input type="submit" value="Pay Now" class="btn btn-theme btn-voyager text-white btn-lg" :disabled="!calc.ready || overLimit">
-                                        </td>
-                                    </tr>
-                                    <tr v-if="errorMessage">
-                                        <td colspan="2" class="text-danger fw-bold small">{{ errorMessage }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
 
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </div>
@@ -476,7 +473,12 @@
 
             // Server-injected loyalty points balance for this logged-in user
             const UsablePoints = ref(<?= (int)$UsablePoints ?>);
-
+            const tabOrder = ['travelers', 'dates', 'pickup'];
+            const applying = ref(false);
+            const pane0 = ref(null),
+                pane1 = ref(null),
+                pane2 = ref(null);
+            const paneRefs = [pane0, pane1, pane2];
 
 
             // ---------------- Form state ----------------
@@ -493,6 +495,8 @@
             const couponCode = ref('');
             const couponApplied = ref(false);
             const couponDiscount = ref(0);
+            const activeTab = ref('traveler');
+
 
             const openIndex = ref(0);
             const errors = reactive({
@@ -607,9 +611,57 @@
             function removeTraveler(index) {
                 travelers.splice(index, 1);
             }
+            // ---------------- Tabs management ----------------
 
 
+            function validateOpenTab() {
+                const pane = document.querySelector(`[data-pane="${activeTab.value}"]`);
+                if (!pane) {
+                    console.warn('Pane not found for tab:', activeTab.value);
+                    return false; // fail closed
+                }
 
+                if (activeTab.value === 'travelers' && travelers.length === 0) {
+                    runToast('Please add at least one traveler', 'danger');
+                    return false;
+                }
+
+                for (const input of pane.querySelectorAll('input, select, textarea')) {
+                    if (!input.checkValidity()) {
+                        input.reportValidity();
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function openTab(pane) {
+                const from = tabOrder.indexOf(activeTab.value);
+                const to = tabOrder.indexOf(pane);
+
+                if (to > from && !validateOpenTab()) return; // stay on this tab
+
+                activeTab.value = pane;
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+
+            function goToSummary() {
+
+                if (!validateOpenTab()) {
+                    console.log('validation failed');
+                    return;
+                }
+                activeTab.value = "costing";
+                const el = document.getElementById('details-right');
+                if (el) el.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                else console.warn('#details-right not found');
+            }
             // ---------------- Pricing helpers ----------------
             function sharingPrice(sharingIndex, tmode) {
                 if (tmode === 1) return wt2PriceArr[sharingIndex] || 0;
@@ -781,7 +833,7 @@
             }
 
             restoreFormState();
-
+            activeTab.value = 'travelers';
             // Save on every change to any of these — deep watch covers nested
             // traveler objects and lead fields.
 
@@ -805,7 +857,11 @@
                 if (val) errors.date = false;
             });
             // ---------------- Coupon ----------------
+
+
             async function applyCode() {
+                if (applying.value || couponApplied.value) return;
+
                 if (!calc.value.ready) {
                     runToast('Fill in traveler, date and travel details first', 'danger');
                     return;
@@ -814,24 +870,35 @@
                     runToast('Enter a coupon code', 'danger');
                     return;
                 }
+
+                applying.value = true;
                 try {
-                    const res = await fetch(`${window.location.protocol}//${window.location.hostname}/couponCode/${encodeURIComponent(couponCode.value)}`);
+                    const res = await fetch(`/couponCode/${encodeURIComponent(couponCode.value)}`, {
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
                     const data = await res.json();
+                    const codeData = Array.isArray(data) ? data[0] : null;
 
-                    const codeData = data && data[0];
-
-                    if (!codeData || codeData.Coupon_Count == 0) {
+                    // Server returns [{Coupon_Count: 0}] when claim fails, so check for worth instead
+                    if (!codeData || codeData.Coupon_Worth === undefined) {
                         runToast('Coupon expired or invalid', 'danger');
                         return;
                     }
+
                     const worth = parseFloat(codeData.Coupon_Worth);
                     const type = parseInt(codeData.Coupon_Type, 10); // 0 = flat, 1 = percent
                     const base = calc.value.amountToPay; // always the full amount, not payNowAmount
+
                     couponDiscount.value = type === 1 ? Math.round(base * (worth / 100)) : worth;
                     couponApplied.value = true;
                     runToast('Coupon applied!', 'success');
                 } catch (e) {
+                    console.error('applyCode error:', e);
                     runToast('Invalid coupon code', 'danger');
+                } finally {
+                    applying.value = false;
                 }
             }
 
@@ -854,43 +921,49 @@
             // ---------------- Validation 
 
 
-            function validate() {
-                errors.name = !lead.name;
-                errors.gender = !lead.gender;
-                errors.mobile = !lead.mobile;
-                errors.email = !lead.email;
-                errors.sharing = !lead.sharing;
-                errors.date = !selectedDate.value;
+            // function validate() {
+            //     errors.name = !lead.name;
+            //     errors.gender = !lead.gender;
+            //     errors.mobile = !lead.mobile;
+            //     errors.email = !lead.email;
+            //     errors.sharing = !lead.sharing;
+            //     errors.date = !selectedDate.value;
 
-                const firstError = Object.entries(errors).find(([, v]) => v);
-                if (firstError) {
-                    runToast(`Please fill "${firstError[0]}"`, 'danger');
-                    return false;
-                }
-                if (!selectedDate.value) {
-                    runToast('Please choose a date', 'danger');
-                    return false;
-                }
-                if (!travelMode.value) {
-                    runToast('Please choose a travel mode', 'danger');
-                    return false;
-                }
-                if (travelers.some(t => !t.name || !t.gender || !t.contact || !t.email || !t.sharing)) {
-                    runToast('Please complete all traveler details', 'danger');
-                    return false;
-                }
-                return true;
-            }
+            //     const firstError = Object.entries(errors).find(([, v]) => v);
+            //     if (firstError) {
+            //         runToast(`Please fill "${firstError[0]}"`, 'danger');
+            //         return false;
+            //     }
+            //     if (!selectedDate.value) {
+            //         runToast('Please choose a date', 'danger');
+            //         return false;
+            //     }
+            //     if (!travelMode.value) {
+            //         runToast('Please choose a travel mode', 'danger');
+            //         return false;
+            //     }
+            //     if (travelers.some(t => !t.name || !t.gender || !t.contact || !t.email || !t.sharing)) {
+            //         runToast('Please complete all traveler details', 'danger');
+            //         return false;
+            //     }
+            //     return true;
+            // }
 
 
             function onSubmit(e) {
-                // Only block the browser's normal POST when something is invalid.
-                // If everything checks out, we do NOT call e.preventDefault(), so the
-                // <form action="/payment/pay" method="POST"> submits natively — same
-                // as the original PHP form — carrying every named/hidden field above.
-                if (!validate() || overLimit.value) {
-                    e.preventDefault();
+                for (let i = 0; i < tabOrder.length; i++) {
+                    const bad = (i === 0 && travelers.length === 0) ? true : firstInvalid(i);
+                    if (bad) {
+                        e.preventDefault();
+                        activeTab.value = tabOrder[i];
+                        Vue.nextTick(() => {
+                            if (i === 0 && travelers.length === 0) runToast('Please add at least one traveler', 'danger');
+                            else bad.reportValidity();
+                        });
+                        return;
+                    }
                 }
+                if (overLimit.value) e.preventDefault();
             }
 
             return {
@@ -931,7 +1004,14 @@
                 section2,
                 availableCoupons,
                 selectCoupon,
-                parsedTravelers
+                parsedTravelers,
+                activeTab,
+                openTab,
+                pane0,
+                pane1,
+                pane2,
+                goToSummary,
+                applying
             };
         }
     }).mount('#app');

@@ -60,8 +60,9 @@ class Coupon extends Model
     {
         return $this->where('Coupon_Code', $code)->first();
     }
-    public function getCouponWorth(string $code) {
-        
+    public function getCouponWorth(string $code)
+    {
+
         $codeDetail = $this->where('Coupon_Code', $code)->first();
         return $codeDetail->Coupon_Worth;
     }
@@ -72,6 +73,15 @@ class Coupon extends Model
         $this->set('Coupon_Count', 'Coupon_Count - 1', false)
             ->where('Coupon_Code', $code)
             ->where('Coupon_Count >', 0)
+            ->update();
+
+        return ($this->db->affectedRows() > 0) ? 1 : 0;
+    }
+    public function claimCode(string $code): bool
+    {
+        $this->where('Coupon_Code', $code)
+            ->where('Coupon_Count >', 0)
+            ->set('Coupon_Count', 'Coupon_Count - 1', false)
             ->update();
 
         return $this->db->affectedRows() > 0;

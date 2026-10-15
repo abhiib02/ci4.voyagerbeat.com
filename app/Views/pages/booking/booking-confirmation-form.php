@@ -1,7 +1,7 @@
 <div class="scroll-margin">
 
     <!-- Header -->
-    <div class="bgSecondaryTheme text-white py-4 mb-4">
+    <div class="bgSecondaryTheme text-white py-2 mb-4">
         <div class="container">
             <h1 class="mb-1">Booking Confirmation Form</h1>
             <h5 class="fw-normal fst-italic mb-0"><?= esc($BookingData->package_name) ?></h5>
@@ -412,5 +412,7 @@
         </form>
 
     </div>
+    <br>
+    <br>
 </div>
 <?= view('pages/booking/booking-shared-script'); ?>
