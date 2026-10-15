@@ -14,9 +14,9 @@
     </div>
 <?php endif; ?>
 <div class="seperator"></div>
-<section class="">
+<section class="bg-body-theme">
     <div class="container">
-        <div class=" my-3">
+        <div class="py-3">
             <label>Filter by Month</label>
             <select class="form-select " name="Month" id="month_filter">
                 <option value="All">All</option>
@@ -34,7 +34,7 @@
                 <option value="Dec">December</option>
             </select>
         </div>
-        <div class="flex_wrap_section">
+        <div class="flex_wrap_section ">
             <?php if (count($packages) > 0) : ?>
                 <?php foreach ($packages as $package) : ?>
                     <?= view('pages/component/packageCard', ['package' => $package]) ?>

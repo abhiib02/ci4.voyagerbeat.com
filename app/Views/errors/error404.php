@@ -23,6 +23,7 @@
         .top-layer {
             position: relative;
             z-index: 2;
+            pointer-events: auto;
         }
 
         .layers-container {
@@ -31,13 +32,15 @@
             height: 100vh;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: -1;
+            pointer-events: none;
         }
 
         .layers {
             position: relative;
             width: 100%;
             height: 100vh;
+            pointer-events: none;
         }
 
         .layer {
@@ -46,6 +49,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none;
         }
 
         .custom-bg {
@@ -66,21 +70,19 @@
             }
         }
     </style>
-    <div class="top-layer">
-        <div class="full-vh grid-center custom-bg">
-            <div class="text-center text-shadow">
-                <p class="huge-text text-center">
-                    <span class="firstColor">4</span>
-                    <span class="secondColor">0</span>
-                    <span class="thirdColor">4</span>
-                </p>
-                <h1 class="big-heading text-light">You Found a location where no body stop</h1>
-                <br>
-                <a href="/" class="btn btn-lg btn-voyager">Back to Home</a>
-            </div>
+    <div class="full-vh grid-center">
+        <div class="text-center text-shadow">
+            <p class="huge-text text-center">
+                <span class="firstColor">4</span>
+                <span class="secondColor">0</span>
+                <span class="thirdColor">4</span>
+            </p>
+            <h1 class="big-heading text-light">You Found a location where no body stop</h1>
+            <br>
+            <a href="/" class="btn btn-lg btn-light">Back to Home</a>
         </div>
     </div>
-    <div class="layers-container">
+    <div class="full-vh layers-container">
         <div class="layers">
             <div class="layer custom-bg" style="--url:url('/assets/not-found/lbottom.png'); --mul:0;"></div>
             <div class="layer custom-bg" style="--url:url('/assets/not-found/l7.png'); --mul:0;"></div>
