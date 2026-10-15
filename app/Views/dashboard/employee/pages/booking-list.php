@@ -8,7 +8,7 @@
 
     </div>
     <div class="card-body">
-        <div class="overflow-auto">
+        <div class="">
             <?= view('dashboard/shared-components/booking-list') ?>
         </div>
     </div>

@@ -4,8 +4,23 @@
 
 <script>
     // Initialise a DataTable
+    const isMobile = window.matchMedia("(pointer: coarse)").matches;
+    let scrollYVar;
+    if (isMobile) {
+        scrollYVar = window.innerHeight / 6;
+    } else {
+        scrollYVar = window.innerHeight - (window.innerHeight * 0.35);
+    }
     const table = new DataTable('#datatable', {
         // Options
+        fixedHeader: {
+            header: true,
+            footer: true
+        },
+        paging: false,
+        scrollCollapse: false,
+        scrollX: true,
+        scrollY: scrollYVar
     });
 </script>
 <script src="/js/dialogScript.js"></script>

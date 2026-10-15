@@ -3,7 +3,7 @@
         <div class="fw-bold">Admins</div>
     </div>
     <div class="card-body">
-        <div class="overflow-auto">
+        <div class="">
             <table class="table sortable" id="datatable">
                 <thead>
                     <tr>

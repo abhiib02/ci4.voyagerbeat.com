@@ -16,9 +16,6 @@
                     </small>
                 </div>
             </div>
-            <a href="/logout" class="btn btn-outline-danger btn-sm rounded-circle p-0 flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="Logout">
-                <i class="bx bx-log-out fs-5"></i>
-            </a>
         </div>
     </div>
 
@@ -27,10 +24,10 @@
         <div class="text-uppercase text-muted fw-bold px-3 py-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
             Menu
         </div>
-        <div class="nav flex-column nav-pills gap-1">
+        <div class="nav flex-column nav-pills gap-1 ">
             <!-- Account Root Link -->
             <a href="/dashboard" class="nav-link d-flex align-items-center px-3 py-2 rounded-2 text-dark">
-                <i class="bx bx-chevron-right me-2 fs-5"></i>
+                <i class='bx bxs-dashboard me-2 fs-5'></i>
                 <span class="fw-medium text-capitalize">Dashboard</span>
             </a>
 
@@ -46,6 +43,11 @@
 
                 <?php endforeach; ?>
             <?php endif; ?>
+            <a href="/logout" class="nav-link d-flex align-items-center px-3 py-2 rounded-2 text-danger">
+                <i class="bx bx-log-out me-2 fs-5"></i>
+                <span class="fw-medium text-capitalize">Logout</span>
+            </a>
+
         </div>
     </div>
 

@@ -44,3 +44,9 @@
     font-size: 10px;
   }
 }
+@media (width < 992px) {
+  .card {
+    --bs-card-spacer-y: 0rem !important;
+    --bs-card-spacer-x: 0rem !important;
+  }
+}

@@ -11,7 +11,7 @@
             <th>Pax Details</th>
             <th>Pay Mode</th>
             <th>Amount Paid</th>
-            <th>Total Package Cost</th>
+            <th>Total Cost</th>
             <th>Remaining</th>
             <th>Payment Status</th>
             <th>Note</th>
@@ -454,4 +454,3 @@
                         this.event.target.classList.add('status-' + this.event.target.value.toLowerCase());
                     }
                 </script>
-               
