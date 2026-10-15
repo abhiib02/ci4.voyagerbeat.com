@@ -29,42 +29,58 @@
             <div style="flex:1;" class="p-2 align-content-center">
                 <button type="button" class="btn-close" style="position:absolute;top:10px;right:10px;" onclick="closeModal('popup-form')"></button>
                 <div class="">
-                    <h3 class="text-center fw-bold">Plan Your Trip with Voyagers Beat</h3>
+                    <h6 class="text-center fw-bold">Plan Your Trip with Voyagers Beat</h6>
                     <div class=" p-2">
                         <form id="package-form" method="post" class="d-flex flex-column gap-3">
 
                             <!-- Name -->
-                            <div class="form-floating">
+                            <div class="form-group">
                                 <input type="text" class="form-control rounded-3 border-secondary " name="name" id="name" placeholder="Name" required>
-                                <label for="name" class=" fw-semibold">Name</label>
-                            </div>
-                            <div class="form-floating">
-                                <input type="email" class="form-control rounded-3 border-secondary " name="email" id="email" placeholder="email" required>
-                                <label for="email" class=" fw-semibold">Email</label>
+
                             </div>
 
-                            <!-- Contact No -->
-                            <div class="form-floating">
-                                <input type="number" class="form-control rounded-3 border-secondary " name="contact" id="contact" placeholder="Contact No" required>
-                                <label for="contact" class=" fw-semibold">Contact No</label>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control rounded-3 border-secondary " name="email" id="email" placeholder="email" required>
+
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <!-- Contact No -->
+                                    <div class="form-group">
+                                        <input type="number" class="form-control rounded-3 border-secondary " name="contact" id="contact" placeholder="Contact No" required>
+
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Date of Travel -->
-                            <div class="form-floating">
-                                <input type="date" class="form-control rounded-3 border-secondary " name="dateoftravel" id="travelDate" placeholder="Date of Travel" required>
-                                <label for="travelDate" class=" fw-semibold">Date of Travel</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <!-- Date of Travel -->
+                                        <input type="date" class="form-control rounded-3 border-secondary " name="dateoftravel" id="travelDate" placeholder="Date of Travel" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <!-- Destination -->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control rounded-3 border-secondary " name="destination" id="destination" placeholder="Destination" required>
+
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Destination -->
-                            <div class="form-floating">
-                                <input type="text" class="form-control rounded-3 border-secondary " name="destination" id="destination" placeholder="Destination" required>
-                                <label for="destination" class=" fw-semibold">Destination</label>
-                            </div>
+
+
+
+
 
                             <!-- No of Person -->
-                            <div class="form-floating">
+                            <div class="form-group">
                                 <input type="number" class="form-control rounded-3 border-secondary " name="adults" id="persons" placeholder="No of Person" min="1" required>
-                                <label for="persons" class=" fw-semibold">No of Person</label>
+
                             </div>
                             <input type="hidden" name="human">
 
