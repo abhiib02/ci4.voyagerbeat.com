@@ -62,7 +62,7 @@ class Coupon extends Model
     }
     public function getCouponWorth(string $code)
     {
-
+        if(empty($code)) return 0;
         $codeDetail = $this->where('Coupon_Code', $code)->first();
         return $codeDetail->Coupon_Worth;
     }

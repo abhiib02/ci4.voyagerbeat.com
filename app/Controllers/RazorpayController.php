@@ -454,7 +454,6 @@ class RazorpayController extends BaseController
         }
         $this->data['bookingData'] = $this->BookingModel->getBookingByOrderId($order_ID);
         $this->data['couponworth'] = $this->CouponModel->getCouponWorth($this->data['bookingData']->coupon_used);
-
         return $this->Render_Page('static/booking-thanks', $this->data);
     }
 
