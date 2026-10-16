@@ -139,18 +139,8 @@ class Booking extends Model
             ->where('payments_table.user_id', $customerID)
             ->orderBy('ID', 'DESC')
             ->find();
-        return $this->where('user_id', $customerID)->orderBy('ID', 'DESC')->find();
+        //return $this->where('user_id', $customerID)->orderBy('ID', 'DESC')->find();
     }
-    public function getAllBookingsofAgentForDashboard(int $userID): array
-    {
-        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
-            ->where('payments_table.agent', $userID)
-            ->orderBy('ID', 'DESC')
-            ->find();
-        //return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
-    }
-
 
 
 
@@ -200,5 +190,94 @@ class Booking extends Model
     public function getBookingCountWherePaxContactExist(string $contact): int
     {
         return $this->where('contact!=', $contact)->like('pax_details', $contact, 'both')->countAllResults();
+    }
+
+
+
+
+
+    public function getAllBookingsofAgentForDashboard(int $userID): array
+    {
+        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
+            ->where('payments_table.agent', $userID)
+            ->orderBy('ID', 'DESC')
+            ->find();
+        //return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
+    }
+    public function getAllBookingsCountofAgent(int $agentID, string $month, string $year): int
+    {
+
+
+
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+
+        return (int) $this
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
+            ->where('agent', $agentID)->countAllResults();
+    }
+    public function getAllBookingsofAgentWithStatus(int $agentID, string $status): array
+    {
+        return $this->where('agent', $agentID)->where('status', $status)->orderBy('ID', 'DESC')->findAll();
+    }
+    public function getAllBookingsCountofAgentWithStatus(int $agentID, string $month, string $year, string $status): int
+    {
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        return (int) $this
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
+            ->where('agent', $agentID)->where('status', $status)->countAllResults();
+    }
+
+
+
+
+
+
+
+    //--------------- collection & total person queries -------------------------------//
+
+    public function getSumofColumn_Agent(int $agentID, string $month, string $year, string $status, string $columName): int
+    {
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $statusArray = array_map('trim', explode(',', $status));
+        $result = $this
+            ->selectSum($columName)
+            ->where('agent', $agentID)
+            ->whereIn('status', $statusArray)
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
+            ->first();
+        return (int) $result->$columName;
+    }
+    public function getSumofBookingAmountAgent(int $agentID, string $month, string $year, string $status): int
+    {
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $result = $this
+            ->selectSum('amount')
+            ->where('agent', $agentID)
+            ->where('status', $status)
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
+            ->first();
+        return (int) $result->amount;
+    }
+    public function getSumofPackageCostAgent(int $agentID, string $month, string $year, string $status): int
+    {
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $result = $this
+            ->selectSum('total_package_cost')
+            ->where('agent', $agentID)
+            ->where('status', $status)
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
+            ->first();
+        return (int) $result->total_package_cost;
     }
 }

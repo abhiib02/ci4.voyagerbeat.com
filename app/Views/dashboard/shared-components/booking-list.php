@@ -86,7 +86,7 @@
                     <?php if (auth('Admin')): ?>
                         <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" data-status="<?= esc($booking->status) ?>" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onclick="showStatusWarnings()" onchange="setPaymentStatusClass()">
                             <?php
-                            $statuses = ['Pending', 'Complete', 'Complete_no_points', 'Cancel', 'Postponed', 'Failed / Unknown'];
+                            $statuses = ['Pending', 'Complete', 'Complete_no_points', 'Cancel', 'Postponed', 'Failed'];
                             foreach ($statuses as $status):
                             ?>
                                 <option class="<?= statusToClass($status) ?>" value="<?= esc($status) ?>" <?= $booking->status === $status ? 'selected' : '' ?>>
@@ -98,7 +98,7 @@
                         <?php if ($booking->status != 'Complete'): ?>
                             <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" data-status="<?= esc($booking->status) ?>" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onchange="setPaymentStatusClass()">
                                 <?php
-                                $statuses = ['Pending', 'Complete', 'Complete_no_points', 'Cancel', 'Postponed', 'Failed / Unknown'];
+                                $statuses = ['Pending', 'Complete', 'Complete_no_points', 'Cancel', 'Postponed', 'Failed'];
                                 foreach ($statuses as $status):
                                 ?>
                                     <option class="<?= statusToClass($status) ?>" value="<?= esc($status) ?>" <?= $booking->status === $status ? 'selected' : '' ?>>
