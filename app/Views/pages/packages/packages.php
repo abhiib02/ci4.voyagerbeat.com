@@ -14,7 +14,7 @@
     </div>
 <?php endif; ?>
 <div class="seperator"></div>
-<section class="bg-body-theme">
+<section class="">
     <div class="container">
         <div class="py-3">
             <label>Filter by Month</label>

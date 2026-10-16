@@ -11,11 +11,11 @@
         width: 94px;
         overflow: clip;
         height: 100px;
-        background: url(/assets/anim/trekker.gif);
+        background: url(/assets/anim/trekker-illustration.gif);
         background-size: cover;
-        background-position: -38px 0px;
-        animation: walk 35s infinite linear;
-        filter: brightness(0);
+        background-position: 0px 0px;
+        animation: walk 55s infinite linear;
+        mix-blend-mode: darken;
     }
 
     @keyframes walk {

@@ -9,7 +9,7 @@
 </style>
 
 
-<div id="app" class="scroll-margin bg-body-theme">
+<div id="app" class="scroll-margin">
 
     <!-- Header -->
     <div class="bgSecondaryTheme text-white py-4 mb-4">

@@ -1,4 +1,4 @@
-<div style="position: sticky;bottom: 0;z-index: -1;">
+<div>
     <div class="hide-on-mobile">
         <?= view('layout/footer-partials/animated-trekker'); ?>
     </div>

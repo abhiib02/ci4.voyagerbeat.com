@@ -19,7 +19,7 @@ $TAGS = explode(',', $package->TAGS);
 
 </div>
 
-<div class="bg-body-theme">
+<div class="">
     <section class="package-hero custom-background" style="--bgUrl:url('<?= $package->PACKAGE_IMAGE ?>')">
         <div class="container text-white">
             <div class="row vh-80">
