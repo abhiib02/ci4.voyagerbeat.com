@@ -163,17 +163,15 @@ class DashboardController extends BaseController
                 $this->data['year'] = $this->request->getGet('year') ?? date('Y');
                 // Booking Counts
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountofAgent($agentID, $this->data['month'], $this->data['year']);
-                $this->data['BookingsCount_Complete_Month'] = $this->BookingModel->getAllBookingsCountofAgentWithStatus($agentID, $this->data['month'], $this->data['year'], 'Complete');
-                $this->data['BookingsCount_Complete_no_points_Month'] = $this->BookingModel->getAllBookingsCountofAgentWithStatus($agentID, $this->data['month'], $this->data['year'], 'Complete_no_points');
-                $this->data['BookingsCount_Pending_Month'] = $this->BookingModel->getAllBookingsCountofAgentWithStatus($agentID, $this->data['month'], $this->data['year'], 'Pending');
-                $this->data['BookingsCount_Postponed_Month'] = $this->BookingModel->getAllBookingsCountofAgentWithStatus($agentID, $this->data['month'], $this->data['year'], 'Postponed');
-                $this->data['BookingsCount_Cancelled_Month'] = $this->BookingModel->getAllBookingsCountofAgentWithStatus($agentID, $this->data['month'], $this->data['year'], 'Cancelled');
-                $this->data['BookingsCount_Failed_Month'] = $this->BookingModel->getAllBookingsCountofAgentWithStatus($agentID, $this->data['month'], $this->data['year'], 'Failed');
                 // Booking Collection with total person
                 $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn_Agent($agentID, $this->data['month'], $this->data['year'], 'Complete,Complete_no_points', 'adults');
                 $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Agent($agentID, $this->data['month'], $this->data['year'], 'Complete,Complete_no_points', 'total_package_cost');
-
-
+                // Charts Data 
+                $statuses = ['Complete', 'Complete_no_points'];
+                $this->data['Annual_Revenue'] = $this->BookingModel->getAnnualSalesRevenue($agentID, $this->data['year'], $statuses);
+                $this->data['Annual_Pax'] = $this->BookingModel->getAnnualPax($agentID, $this->data['year'], $statuses);
+                $this->data['Annual_Booking'] = $this->BookingModel->getAnnualBookings($agentID, $this->data['year'], $statuses);
+                $this->data['BookingCountByStatus'] = $this->BookingModel->getBookingsStatusCounts($agentID, $this->data['month'], $this->data['year']);
                 break;
         }
         return $this->Render_Page_Employee_dashboard('employee-dashboard', $this->data);

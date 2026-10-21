@@ -68,31 +68,33 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <div class="fw-bold">Annual Data | <?= $year ?></div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="annual-sales"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <div class="fw-bold">Bookings By Status | <?= get_Month_Full($month) ?> <?= $year ?></div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="booking-status"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?= view('dashboard/shared-dashboard-script', [
+                    'Annual_Revenue' => $Annual_Revenue,
+                    'Annual_Pax' => $Annual_Pax,
+                    'BookingCountByStatus' => $BookingCountByStatus
+                ]) ?>
             <?php endif; ?>
 
-            <div class="alert alert-success p-2 d-flex justify-content-between" role="alert">
-                <div>Complete Booking</div>
-                <div><?= $BookingsCount_Complete_Month ?></div>
-            </div>
-            <div class="alert alert-success p-2 d-flex justify-content-between" role="alert">
-                <div>Complete With no points Booking</div>
-                <div><?= $BookingsCount_Complete_no_points_Month ?></div>
-            </div>
-            <div class="alert alert-warning p-2 d-flex justify-content-between" role="alert">
-                <div>Pending Booking</div>
-                <div><?= $BookingsCount_Pending_Month ?></div>
-            </div>
-            <div class="alert alert-secondary p-2 d-flex justify-content-between" role="alert">
-                <div>Cancelled Booking</div>
-                <div><?= $BookingsCount_Cancelled_Month ?></div>
-            </div>
-            <div class="alert alert-danger p-2 d-flex justify-content-between" role="alert">
-                <div>Failed Booking</div>
-                <div><?= $BookingsCount_Failed_Month ?></div>
-            </div>
-            <div class="alert alert-info p-2 d-flex justify-content-between" role="alert">
-                <div>Postponed Booking</div>
-                <div><?= $BookingsCount_Postponed_Month ?></div>
-            </div>
 </main>
-<?= view('dashboard/shared-dashboard-script') ?>
