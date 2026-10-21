@@ -1,0 +1,44 @@
+.explore-container {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "Weekend Weekend Bike Treks"
+    "Weekend Weekend Party Backpacking"
+    "Family Family Honeymoon Corporate";
+    height: 60vh;
+    gap:1rem;
+    & > *{
+        border-radius: var(--theme-border-radius);
+        background:#00000011;
+        background-blend-mode: overlay;
+background-size: 125%;
+background-position: center;
+        outline: 0px solid red;
+    }
+}
+
+.Weekend { grid-area: Weekend;
+background-image: url('/assets/img/weekend-mascot.jpg');
+background-size: 125%;
+background-position: center;
+}
+
+.Bike { grid-area: Bike; 
+background-image: url('/assets/img/bike-mascot.jpg');
+}
+
+.Treks { grid-area: Treks;
+    background-image: url('/assets/img/trek-mascot.jpg');
+ }
+
+.Party { grid-area: Party; }
+
+.Backpacking { grid-area: Backpacking; }
+
+.Family { grid-area: Family; }
+
+.Honeymoon { grid-area: Honeymoon; }
+
+.Corporate { grid-area: Corporate; }
