@@ -29,8 +29,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="">
-                                    <h1 class="card-title"><?= $BookingsCount_Month ?></h1>
-                                    <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month) ?> <?= $year ?></p>
+                                    <h1 class="card-title"><?= $BookingsCount_Month ?? '' ?></h1>
+                                    <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></p>
                                 </div>
                             </div>
                         </div>
@@ -46,8 +46,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="">
-                                    <h1><?= $TotalPersons_Month ?> Pax </h1>
-                                    <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month) ?> <?= $year ?></p>
+                                    <h1><?= $TotalPersons_Month ?? '' ?> Pax </h1>
+                                    <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></p>
                                 </div>
                             </div>
                         </div>
@@ -61,8 +61,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="">
-                                    <h1>₹ <?= $TotalRevenue_Month ?> </h1>
-                                    <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month) ?> <?= $year ?></p>
+                                    <h1>₹ <?= $TotalRevenue_Month ?? '' ?> </h1>
+                                    <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></p>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                     <div class="col-lg-6">
                         <div class="card mb-2">
                             <div class="card-header">
-                                <div class="fw-bold">Annual Data | <?= $year ?></div>
+                                <div class="fw-bold">Annual Data | <?= $year ?? '' ?></div>
                             </div>
                             <div class="card-body">
                                 <canvas id="annual-sales"></canvas>
@@ -82,7 +82,7 @@
                     <div class="col-lg-6">
                         <div class="card mb-2">
                             <div class="card-header">
-                                <div class="fw-bold">Bookings By Status | <?= get_Month_Full($month) ?> <?= $year ?></div>
+                                <div class="fw-bold">Bookings By Status | <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
                             </div>
                             <div class="card-body">
                                 <canvas id="booking-status"></canvas>
@@ -91,9 +91,9 @@
                     </div>
                 </div>
                 <?= view('dashboard/shared-dashboard-script', [
-                    'Annual_Revenue' => $Annual_Revenue,
-                    'Annual_Pax' => $Annual_Pax,
-                    'BookingCountByStatus' => $BookingCountByStatus
+                    'Annual_Revenue' => $Annual_Revenue ?? [],
+                    'Annual_Pax' => $Annual_Pax ?? [],
+                    'BookingCountByStatus' => $BookingCountByStatus ?? []
                 ]) ?>
             <?php endif; ?>
 
