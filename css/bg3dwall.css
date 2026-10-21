@@ -1,0 +1,51 @@
+:root { --size: 1000px; }
+.perspective {
+  perspective: 1000px;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  contain: layout paint;          /* isolate from the rest of the page */
+}
+.overlayLayer{
+        z-index: -1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #000000a1;
+    
+}
+.img-cylinder {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  translate: 0 -250%;
+  will-change: transform;         /* ONE promoted layer, not 100 */
+  animation: spin 60s linear infinite;
+  z-index: -1;
+}
+
+.image {
+  position: absolute;
+  left: 50%;
+  width: var(--size);
+  height: var(--size);
+  object-fit: cover;
+  border-radius: 10px;
+  backface-visibility: hidden;    /* GPU culls the faces pointing away */
+  /* simplified math: old translateY calc reduces to i * 5.25% */
+  transform:
+    translateX(-50%)
+    rotateY(calc(var(--i) * 18deg))
+    translateY(calc(var(--i) * 5.25%))
+    translateZ(calc(var(--size) * -3.3));
+}
+
+@keyframes spin {
+  to { transform: rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img-cylinder { animation-play-state: paused; }
+}
