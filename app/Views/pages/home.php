@@ -87,4 +87,6 @@
         layers.style.setProperty('--y', y);
     })
 </script>
-<?= view('pages/component/popupQueryForm') ?>
+<?php if ($PopupSwitch ?? 0): ?>
+    <?= view('pages/component/popupQueryForm') ?>
+<?php endif; ?>
