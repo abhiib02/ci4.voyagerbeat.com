@@ -71,7 +71,7 @@ abstract class BaseController extends Controller
             'defaultmails' => fn() => $this->OptionModel->getOptionValue('mails'),
             'AnnouncementText' => fn() => $this->OptionModel->getOptionValue('AnnouncementText'),
             'AnnouncementLink' => fn() => $this->OptionModel->getOptionValue('AnnouncementLink'),
-            'PopupSwitch' => fn() => $this->OptionModel->getOptionValue('popup_switch'),
+            'PopupSwitch' => fn() => $this->OptionModel->getOptionValue('PopupSwitch'),
         ];
 
         foreach ($cacheKeys as $cacheKey => $callback) {
