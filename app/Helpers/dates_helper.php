@@ -24,10 +24,19 @@ if (! function_exists('isCurrentDateNearRange')) {
         }
     }
 }
-if (! function_exists('extract_both_months')) {
+if (! function_exists('get_Month')) {
     function get_Month(int $number)
     {
         $months = array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        if ($number != null && $number > 0) {
+            return $months[$number - 1];
+        }
+    }
+}
+if (! function_exists('get_Month_Full')) {
+    function get_Month_Full(int $number)
+    {
+        $months = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
         if ($number != null && $number > 0) {
             return $months[$number - 1];
         }

@@ -1,4 +1,4 @@
-`<script src="/js/dialogScript.js"></script>
+<script src="/js/dialogScript.js"></script>
 <script src="/js/eztoast.js"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-3.0.3/datatables.min.js" integrity="sha384-U3G//lYwFPbrDV7w5uhOUSxHgb+hj1XYov+neDtWPWsO+xB38Puvo2sTlUSNw/bj" crossorigin="anonymous"></script>
 
