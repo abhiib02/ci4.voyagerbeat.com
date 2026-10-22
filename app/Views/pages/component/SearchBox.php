@@ -14,7 +14,7 @@
                     </form>
                 </h1>
             </div>
-            <div class="modal-body" style="overflow-y: scroll;max-height: 50vh;">
+            <div class="modal-body" style="overflow-y: scroll;max-height: 50vh;" data-lenis-prevent>
                 <div id="packagesListCount">Search For Results</div>
                 <div id="packagesList" class="list-group">
                 </div>
