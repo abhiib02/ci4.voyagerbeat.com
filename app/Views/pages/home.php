@@ -7,7 +7,7 @@
         <div class="img-cylinder" id="img-cylinder-home">
             <?php foreach ($AllPackagesNameAndID ?? [] as $index => $Package): ?>
                 <?php if ($index < 90): ?>
-                    <img class="image" style="--i:<?= $index ?>" src="<?= $Package->PACKAGE_IMAGE ?>" alt="" width="256" height="256" decoding="async" fetchpriority="low" loading="lazy">
+                    <img class="image" style="--i:<?= $index ?>" src="<?= gdriveImage($Package->PACKAGE_IMAGE) ?>" alt="" width="256" height="256" decoding="async" fetchpriority="low" loading="lazy">
                 <?php endif; ?>
             <?php endforeach; ?>
 
@@ -226,7 +226,7 @@
             <div class="slider-wrapper">
 
                 <?php foreach ($domesticDests ?? [] as $index => $row): ?>
-                    <a class="slider-image text-decoration-none text-white style-font" href="/packages/<?= $row->LOCATION; ?>" style="--url:url('<?= str_replace("\n", "", $row->PACKAGE_IMAGE); ?>');">
+                    <a class="slider-image text-decoration-none text-white style-font" href="/packages/<?= $row->LOCATION; ?>" style="--url:url('<?= str_replace("\n", "", gdriveImage($row->PACKAGE_IMAGE)) ?>');">
                         <p class="text-center fs-2"><?= $row->LOCATION; ?></p>
                     </a>
                 <?php endforeach; ?>
@@ -244,16 +244,16 @@
         </div>
         <div>
             <div class="flex-wrapper">
-                <a href="/packages/leh" class="flex-item relative" style="--url:url('/assets/img/couple-bali.png');">
+                <a href="/packages/Bali" class="flex-item relative" style="--url:url('/assets/img/couple-bali.png');">
                     <p class="fw-bolder style-font">Bali</p>
                 </a>
-                <a href="/packages/spiti" class="flex-item relative" style="--url:url('/assets/img/couple-thailand.webp');">
+                <a href="/country/Thailand" class="flex-item relative" style="--url:url('/assets/img/couple-thailand.webp');">
                     <p class="fw-bolder style-font">Thailand</p>
                 </a>
-                <a href="/packages/spiti" class="flex-item relative" style="--url:url('/assets/img/couple-vietnam.webp');">
+                <a href="/country/Vietnam" class="flex-item relative" style="--url:url('/assets/img/couple-vietnam.webp');">
                     <p class="fw-bolder style-font">Vietnam</p>
                 </a>
-                <a href="/packages/spiti" class="flex-item relative" style="--url:url('/assets/img/couple-kerala.png');">
+                <a href="/state/kerala" class="flex-item relative" style="--url:url('/assets/img/couple-kerala.png');">
                     <p class="fw-bolder style-font">Kerala</p>
                 </a>
             </div>

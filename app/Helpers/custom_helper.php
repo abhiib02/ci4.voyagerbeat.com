@@ -65,4 +65,14 @@ if (! function_exists('statusToClass')) {
         return $map[$status] ?? 'status-unknown';
     }
 }
+if(! function_exists('gdriveImage')){
+    function gdriveImage(string $driveLink) : string {
+        if(!str_contains($driveLink, 'drive.google.com')){
+            return $driveLink;
+        }
+        $id = explode('/', $driveLink)[5];
+        return "https://lh3.googleusercontent.com/d/{$id}=w500";
+    }
+}
 ?>
+
