@@ -16,7 +16,7 @@
     text-decoration: none;
     color: var(--text-color);
   }
-  & .image {
+  & .travelCard-image {
     position: relative;
     height: 70%;
     & img {

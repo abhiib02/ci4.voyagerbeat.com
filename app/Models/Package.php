@@ -249,6 +249,10 @@ class Package extends Model
     {
         return $this->like('STAY', $nights)->where('HIDDEN', 0)->findAll();
     }
+    public function getPackagesByNightsWeekend(string $nights): array
+    {
+        return $this->like('STAY', $nights)->where('WEEKEND', 'Yes')->where('HIDDEN', 0)->findAll();
+    }
     public function getPackagesByNightsandLocation(string $nights, string $location): array
     {
         return $this->where('LOCATION', $location)->like('STAY', $nights)->where('HIDDEN', 0)->findAll();
@@ -333,6 +337,10 @@ class Package extends Model
         sort($countries);
 
         return $countries;
+    }
+    public function getAllDomesticDestination()
+    {
+        return $this->select('LOCATION,ANY_VALUE(PACKAGE_IMAGE) as PACKAGE_IMAGE')->groupBy('LOCATION')->where("HIDDEN", 0)->where('STATE !=', 'International')->findAll();
     }
 
 
