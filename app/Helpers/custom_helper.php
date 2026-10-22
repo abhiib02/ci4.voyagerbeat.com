@@ -66,12 +66,12 @@ if (! function_exists('statusToClass')) {
     }
 }
 if(! function_exists('gdriveImage')){
-    function gdriveImage(string $driveLink) : string {
+    function gdriveImage(string $driveLink,int $width = 1024) : string {
         if(!str_contains($driveLink, 'drive.google.com')){
             return $driveLink;
         }
         $id = explode('/', $driveLink)[5];
-        return "https://lh3.googleusercontent.com/d/{$id}=w500";
+        return "https://lh3.googleusercontent.com/d/$id=w$width";
     }
 }
 ?>

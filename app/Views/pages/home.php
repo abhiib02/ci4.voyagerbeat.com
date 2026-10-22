@@ -7,7 +7,7 @@
         <div class="img-cylinder" id="img-cylinder-home">
             <?php foreach ($AllPackagesNameAndID ?? [] as $index => $Package): ?>
                 <?php if ($index < 90): ?>
-                    <img class="image" style="--i:<?= $index ?>" src="<?= gdriveImage($Package->PACKAGE_IMAGE) ?>" alt="" width="256" height="256" decoding="async" fetchpriority="low" loading="lazy">
+                    <img class="image" style="--i:<?= $index ?>" src="<?= gdriveImage($Package->PACKAGE_IMAGE, 256) ?>" alt="" width="256" height="256" decoding="async" fetchpriority="low" loading="lazy">
                 <?php endif; ?>
             <?php endforeach; ?>
 
@@ -226,7 +226,7 @@
             <div class="slider-wrapper">
 
                 <?php foreach ($domesticDests ?? [] as $index => $row): ?>
-                    <a class="slider-image text-decoration-none text-white style-font" href="/packages/<?= $row->LOCATION; ?>" style="--url:url('<?= str_replace("\n", "", gdriveImage($row->PACKAGE_IMAGE)) ?>');">
+                    <a class="slider-image text-decoration-none text-white style-font" href="/packages/<?= $row->LOCATION; ?>" style="--url:url('<?= str_replace("\n", "", gdriveImage($row->PACKAGE_IMAGE,400)) ?>');">
                         <p class="text-center fs-2"><?= $row->LOCATION; ?></p>
                     </a>
                 <?php endforeach; ?>

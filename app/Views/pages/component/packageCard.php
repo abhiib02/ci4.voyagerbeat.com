@@ -4,7 +4,7 @@
     <section class="travelCard-image">
         <a disabledtarget="__blank" class="" href="/package/<?php echo $package->SLUG; ?>" aria-label="<?= strtoupper($package->PACKAGE_NAME); ?>">
             <img
-                src="<?= gdriveImage($package->PACKAGE_IMAGE) ?>"
+                src="<?= gdriveImage($package->PACKAGE_IMAGE, 400) ?>"
                 title="<?= strtoupper($package->PACKAGE_NAME); ?>"
                 alt="<?= $package->PACKAGE_ID; ?>|<?= strtoupper($package->PACKAGE_NAME); ?>"
                 loading="lazy">
