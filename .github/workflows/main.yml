@@ -29,3 +29,4 @@ jobs:
           server: ftpupload.net
           username: if0_43253424
           password: 7BQRkQAH0l
+          server-dir: htdocs/
