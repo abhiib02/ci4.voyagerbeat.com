@@ -225,9 +225,9 @@
         <div class="slider-curves">
             <div class="slider-wrapper">
 
-                <?php foreach ($domesticDests ?? [] as $index => $row): ?>
-                    <a class="slider-image text-decoration-none text-white style-font" href="/packages/<?= $row->LOCATION; ?>" style="--url:url('<?= str_replace("\n", "", gdriveImage($row->PACKAGE_IMAGE,400)) ?>');">
-                        <p class="text-center fs-2"><?= $row->LOCATION; ?></p>
+                <?php foreach ($domesticDests ?? [] as $index => $item): ?>
+                    <a class="slider-image text-decoration-none text-white style-font" href="/packages/<?= $row->LOCATION; ?>" style="--url:url('<?= str_replace("\n", "", gdriveImage($row->PACKAGE_IMAGE, 400)) ?>');">
+                        <p class="text-center fs-2"><?= $item->LOCATION ?? ''; ?></p>
                     </a>
                 <?php endforeach; ?>
 
@@ -342,7 +342,7 @@
         </div>
     </div>
 </section>
-<?php if ($PopupSwitch): ?>
+<?php if ($PopupSwitch ?? false): ?>
     <?= view('pages/component/popupQueryForm') ?>
 <?php endif; ?>
 <!-- Swiper JS -->
