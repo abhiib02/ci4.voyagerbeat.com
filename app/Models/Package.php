@@ -340,7 +340,7 @@ class Package extends Model
     }
     public function getAllDomesticDestination()
     {
-        return $this->select('LOCATION,ANY_VALUE(PACKAGE_IMAGE) as PACKAGE_IMAGE')->groupBy('LOCATION')->where("HIDDEN", 0)->where('STATE !=', 'International')->findAll();
+        return $this->select('LOCATION,MAX(PACKAGE_IMAGE) as PACKAGE_IMAGE')->groupBy('LOCATION')->where("HIDDEN", 0)->where('STATE !=', 'International')->findAll();
     }
 
 
