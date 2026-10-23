@@ -1,4 +1,3 @@
-
 <?php
 if (! function_exists('get_Month')) {
 
@@ -74,5 +73,5 @@ if(! function_exists('gdriveImage')){
         return "https://lh3.googleusercontent.com/d/$id=w$width";
     }
 }
-?>
+
 

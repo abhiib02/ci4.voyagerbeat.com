@@ -1,4 +1,3 @@
-
 <?php
 if (! function_exists('imageLinkType')) {
     function imageLinkType(string $link)
