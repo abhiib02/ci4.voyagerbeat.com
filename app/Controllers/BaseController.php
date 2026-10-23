@@ -49,7 +49,7 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
 
-        $this->session = service('session');
+
 
         // Define a unique cache key
 
@@ -57,7 +57,7 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
         $this->PackageModel = new Package();
         $this->OptionModel = new Option();
-
+        $this->session = service('session');
 
         //Caching Nav Data As it will be used on every page ⬇
         $cacheKeys = [
