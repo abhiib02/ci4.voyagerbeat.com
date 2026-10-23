@@ -8,7 +8,20 @@ $routes->set404Override(function () {
     return view('errors/error404');
 });
 
+
 $routes->get('/', 'MainController::index');
+
+/*
+-----------------------------------------------------------------------
+| Static Pages
+|--------------------------------------------------------------------------|---
+*/
+$routes->get('about', 'MainController::about');
+$routes->get('career', 'MainController::career');
+$routes->get('recognition', 'MainController::recognition');
+$routes->get('privacy-policy', 'MainController::privacypolicy');
+$routes->get('term-conditions', 'MainController::termsnconditions');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -191,9 +204,9 @@ $routes->post('booking-payment', 'RazorpayController::booking_pay');
 $routes->post('verify-payment', 'RazorpayController::verify');
 
 /*
-|--------------------------------------------------------------------------
+-----------------------------------------------------------------------
 | Mail Processes
-|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------|---
 */
 $routes->post('booking-mail-process', 'EmailController::sendBookingConfirmation');
 $routes->post('resetpassword-mail-process', 'EmailController::reset_password_mail');

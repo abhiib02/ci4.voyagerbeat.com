@@ -189,3 +189,11 @@
     opacity: 1;
   }
 }
+@keyframes slide{
+  0%{
+    translate:0% 0%;
+  }
+  100%{
+    translate:calc((100%) * -1) 0%;
+  }
+}

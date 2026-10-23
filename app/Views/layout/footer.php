@@ -1,6 +1,7 @@
 <?= view('layout/footer-partials/footer-content') ?>
 <!-- Global Components -->
 <?= view('pages/component/SearchBox') ?>
+<?= view('pages/component/cancellation-policy') ?>
 <?= view('pages/component/login-popup') ?>
 <?= view('pages/component/loading-overlay') ?>
 <?= view('layout/footer-partials/js-scripts') ?>

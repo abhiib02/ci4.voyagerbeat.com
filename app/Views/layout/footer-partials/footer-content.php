@@ -26,18 +26,18 @@
                     <ul class="list-unstyled">
                         <li><a class="text-light" href="/privacy-policy">Privacy Policy</a> </li>
                         <li><a class="text-light" href="/term-conditions">Terms and Conditions</a></li>
-                        <li><a class="text-light" href="#">Write for Us</a></li>
-                        <li><a class="text-light" href="#">Cancellation Policy</a></li>
-                        <li><a class="text-light" href="#">Sitemap</a></li>
+                        <li><a class="text-light" href="/blogs/write-for-us">Write for Us</a></li>
+                        <li><a class="text-light" data-bs-toggle="modal" data-bs-target="#cancellationModal">Cancellation Policy</a></li>
+                        <li><a class="text-light" href="/sitemap.xml">Sitemap</a></li>
                         <li><a class="text-light" href="/blogs">Blogs</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3">
                     <h4 class="text-theme">Important Links</h4>
                     <ul class="list-unstyled">
-                        <li><a href="/introduction"></a>Introduction</li>
-                        <li><a href="/career"></a>Join the team</li>
-                        <li><a href="/introduction"></a>Who are we?</li>
+                        <li><a class="text-light" href="/about">Introduction</a></li>
+                        <li><a class="text-light" href="/career">Join the team</a></li>
+                        <li><a class="text-light" href="/about">Who are we?</a></li>
                         <?= view('layout/footer-partials/role-based-navigation') ?>
                     </ul>
                 </div>

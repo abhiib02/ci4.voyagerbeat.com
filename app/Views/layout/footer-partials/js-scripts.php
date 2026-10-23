@@ -29,3 +29,7 @@
 
     requestAnimationFrame(raf)
 </script>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
+<script src="/js/swiperInit.js"></script>

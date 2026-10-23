@@ -37,4 +37,25 @@ class MainController extends BaseController
             return $this->Render_Page('home', $this->data);
         }
     }
+
+    public function about(): string
+    {
+        return $this->Render_Page('static/about', $this->data);
+    }
+    public function career(): string
+    {
+        return $this->Render_Page('static/career', $this->data);
+    }
+    public function privacypolicy(): string
+    {
+        return $this->Render_Page('static/privacypolicy', $this->data);
+    }
+    public function termsnconditions(): string
+    {
+        return $this->Render_Page('static/termsnconditions', $this->data);
+    }
+    public function recognition(): string
+    {
+        return $this->Render_Page('static/recognition', $this->data);
+    }
 }

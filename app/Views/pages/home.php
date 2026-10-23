@@ -427,26 +427,3 @@
 <?php if ($PopupSwitch ?? false): ?>
     <?= view('pages/component/popupQueryForm') ?>
 <?php endif; ?>
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
-
-<!-- Initialize Swiper -->
-<script>
-    var swiper = new Swiper('.home-slider2', {
-        slidesPerView: 5,
-        spaceBetween: 30,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
-    var swiper = new Swiper('.insta-sec-slide', {
-        slidesPerView: 3,
-        spaceBetween: 30,
-        autoplay: true,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
-</script>

@@ -387,9 +387,7 @@
       </div>
       <div class="col-6">
         <ul class="list-group">
-          <a class="list-group-item list-group-item-action" href="/contact">
-            Contact Us
-          </a>
+
           <a class="list-group-item list-group-item-action" href="/about">
             introduction
           </a>

@@ -627,3 +627,81 @@ body {
     background: color-mix(in srgb, var(--maincolor) 0%, transparent);
   }
 }
+.text-bg-gif {
+      background: url(/assets/anim/textbg.webp);
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation:textbg-anim 7s linear infinite;
+    filter: hue-rotate(209deg);
+}
+@keyframes textbg-anim{
+    from{
+        background-position:0 bottom;
+    }
+    to{
+        background-position:1000px bottom;
+    }
+}
+.text-bg-insta {
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation:textbg-anim 50s linear infinite;
+}
+
+.insta-story{
+      --bs-btn-padding-x: 0.2rem;
+  --bs-btn-line-height: 1.5;
+  --bs-btn-padding-y: 0.2rem;
+  display: inline-block;
+  padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+  text-align:center;
+  color: white;
+  align-content:center;
+      line-height: var(--bs-btn-line-height);
+  font-size:var(--bs-btn-font-size);
+  transition:all .3s ease;
+  border: 2px solid transparent;
+  background: 
+    linear-gradient(rgb(253, 252, 252) 0 0) padding-box,    
+    radial-gradient(
+      circle farthest-corner at 35% 90%,
+      #fec564,
+      transparent 50%
+    ),
+    radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 0 -25%,
+      #5258cf,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at 20% -50%,
+      #5258cf,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at 100% 0,
+      #893dc2,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at 60% -20%,
+      #893dc2,
+      transparent 50%
+    ),
+    radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent),
+    linear-gradient(
+      #6559ca,
+      #bc318f 30%,
+      #e33f5f 50%,
+      #f77638 70%,
+      #fec66d 100%
+    ) 200% border-box;
+    
+}
+.square{
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
