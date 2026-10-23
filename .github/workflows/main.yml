@@ -17,12 +17,16 @@ jobs:
       - name: ⚙️ Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # Change this to match your server's PHP version (e.g., 8.1, 8.3)
+          php-version: '8.2'
           tools: composer
 
       - name: 📦 Install dependencies with Composer
         run: composer install --no-dev --optimize-autoloader --no-interaction
 
+      - name: 📝 Generate .env file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+     
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
