@@ -44,20 +44,25 @@ abstract class BaseController extends Controller
         // Caution: Do not put the this below the parent::initController() call below.
 
 
-
+        if (headers_sent($f, $l)) {
+            exit("A) Output already sent at: $f : $l");
+        }
         // Caution: Do not edit this line.
         parent::initController($request, $response, $logger);
 
-
-
+        if (headers_sent($f, $l)) {
+            exit("B) Output sent at: $f : $l");
+        }
 
         // Define a unique cache key
-
-
+        if (headers_sent($f, $l)) {
+            exit("C) Output sent at: $f : $l");
+        }
+        $this->session = service('session');
         // Preload any models, libraries, etc, here.
         $this->PackageModel = new Package();
         $this->OptionModel = new Option();
-        $this->session = service('session');
+
 
         //Caching Nav Data As it will be used on every page ⬇
         $cacheKeys = [
