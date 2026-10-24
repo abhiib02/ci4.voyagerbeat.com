@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var object $package
+ */
+?>
 <?php helper('packageImage'); ?>
 <?php
 // Data Formatting

@@ -1,5 +1,11 @@
-<div class="scroll-margin">
+<?php
 
+/**
+ * @var object $BookingData
+ * @var object $PackageData
+ */
+?>
+<div class="scroll-margin">
     <!-- Header -->
     <div class="bgSecondaryTheme text-white py-2 mb-4">
         <div class="container">

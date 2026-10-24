@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var array $data
+ */
+?>
 <style>
     .fullvh {
         height: 100vh;

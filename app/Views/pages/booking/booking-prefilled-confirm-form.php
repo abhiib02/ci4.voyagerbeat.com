@@ -1,3 +1,11 @@
+<?php
+
+/**
+ * @var object $BookingData
+ * @var string $ValidCoupons
+ * @var int $prefill
+ */
+?>
 <?php if ($prefill != 1): ?>
     <ul class="alert alert-danger">
         Dont Try to be Smart Go Back

@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var object $package
+ */
+?>
 <?php $itiArr = json_decode($package->PACK_IT) ?>
 <div class="accordion" id="ItineraryAccordion">
     <?php foreach ($itiArr as $index => $day): ?>

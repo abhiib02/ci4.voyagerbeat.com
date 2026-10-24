@@ -1,4 +1,10 @@
-<a href="/package/<?= $package->SLUG ?>" class="package_image_card " style="--url:url('<?= str_replace("\n", "", gdriveImage($package->PACKAGE_IMAGE,400)); ?>');">
+<?php
+
+/**
+ * @var object $package
+ */
+?>
+<a href="/package/<?= $package->SLUG ?>" class="package_image_card " style="--url:url('<?= str_replace("\n", "", gdriveImage($package->PACKAGE_IMAGE, 400)); ?>');">
     <div class="corner-box">
         <span class="badge rounded-pill text-bg-dark"><?= $package->PACKAGE_DAYS ?></span>
     </div>

@@ -1,3 +1,12 @@
+<?php
+
+/**
+ * @var object $bookingData
+ * @var int $couponworth
+ * @var string $defaultContact
+ * @var string $defaultmails
+ */
+?>
 <div style="background: #19C26F;" class="grid-center  full-vh scroll-margin print-container " id="print-content-wrapper">
     <div class="grid-center container ">
         <br>

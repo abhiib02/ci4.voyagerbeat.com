@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @var int $remainingAmount
+ * @var array $Bookings
+ */
+?>
 <table class="sortable table hover" id="datatable" data-order='[[ 0, "desc" ]]'>
     <thead>
         <tr>

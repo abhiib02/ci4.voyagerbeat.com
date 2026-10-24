@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var array $packages
+ */
+?>
 <section class="container scroll-margin pt-2">
     <div class="">
         <div class="input-group mb-3 bg-white rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#SearchBox">

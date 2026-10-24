@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @var string $defaultContact
+ * @var string $defaultmails
+ */
+?>
 <style>
     .announcement_bar {
         background: linear-gradient(to right, var(--secondaryColor), var(--maincolor));

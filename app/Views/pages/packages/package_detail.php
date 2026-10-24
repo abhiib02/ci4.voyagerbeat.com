@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @var object $package
+ * @var array $similarPackages
+ */
+?>
 <link rel="stylesheet" href="/css/package-detail.css">
 <?php
 // Data Formatting
@@ -20,7 +27,7 @@ $TAGS = explode(',', $package->TAGS);
 </div>
 
 <div class="">
-    <section class="package-hero custom-background" style="--bgUrl:url('<?= gdriveImage($package->PACKAGE_IMAGE,1920) ?>')">
+    <section class="package-hero custom-background" style="--bgUrl:url('<?= gdriveImage($package->PACKAGE_IMAGE, 1920) ?>')">
         <div class="container text-white">
             <div class="row vh-80">
                 <div class="col-lg-12 align-content-end">

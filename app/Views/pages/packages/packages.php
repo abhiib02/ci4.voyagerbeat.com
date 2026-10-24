@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @var int $TotalPackageCount
+ * @var array $packages
+ */
+?>
 <?php if (count($packages) > 0) : ?>
     <div class="container-fluid pt-5 bg-black text-light">
         <div class="container py-5 text-center">

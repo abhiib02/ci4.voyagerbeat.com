@@ -1,3 +1,11 @@
+<?php
+
+/**
+ * @var array $Countries
+ * @var array $UsedTags
+ * @var array $UsedBadges
+ */
+?>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <style>

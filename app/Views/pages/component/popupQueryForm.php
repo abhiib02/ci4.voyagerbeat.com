@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var string $MainFormImage
+ */
+?>
 <style>
     #popup-form {
         position: fixed;

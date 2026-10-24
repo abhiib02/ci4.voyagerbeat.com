@@ -1,3 +1,12 @@
+<?php
+
+/**
+ * @var object $package
+ * @var string $ValidCoupons
+ * @var int $UsablePoints
+ * @var int $defaultContact
+ */
+?>
 <!-- Vue 3 -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 <link rel="stylesheet" href="/css/coupon.css">

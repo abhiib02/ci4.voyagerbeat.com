@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var object $customer
+ */
+?>
 <form action="/updatePoints" method="post"
     style="height:100%;display:flex;flex-direction:column;justify-content:space-between;" id="pointUpdateForm-<?= $customer->user_id ?>">
 

@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @var string $defaultContact
+ * @var string $defaultmails
+ */
+?>
 <div style="background:rgb(211, 42, 42);" class="grid-center  full-vh">
     <div class="grid-center container ">
         <div class="card w-100 p-5">

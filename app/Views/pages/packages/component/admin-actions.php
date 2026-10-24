@@ -1,3 +1,9 @@
+    <?php
+
+    /**
+     * @var object $package
+     */
+    ?>
     <?php if (auth('Admin')): ?>
         <div class="btn-group w-100 mb-1" role="group" aria-label="Basic example">
             <a href="/package-edit/<?= $package->PACKAGE_ID ?>?Adminlist=0" type="button" class="btn btn-sm btn-primary d-flex justify-content-center" title="Edit"><i class='bx bxs-edit fs-4'></i></a>

@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @var int $month
+ * @var int $year
+ */
+?>
 <?php helper('datetime'); ?>
 <form method="get" class="d-flex">
     <select name="month" class="form-select form-select-sm" style="width: fit-content;" onchange="this.form.submit()">

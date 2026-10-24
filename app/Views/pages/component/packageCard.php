@@ -1,5 +1,10 @@
-<?php helper('custom'); ?>
+<?php
 
+/**
+ * @var object $package
+ */
+?>
+<?php helper('custom'); ?>
 <div class="travel_card_new" data-filter="<?= strtolower($package->PACKAGE_TYPE); ?>|<?= strtolower($package->TAGS); ?>|<?= strtolower($package->LOCATION); ?>|<?= strtolower($package->STATE); ?>|<?= strtolower($package->WEEKEND); ?>|<?= ($package->UPCOMING) ? "upcoming" : "" ?>" title="<?= $package->PACKAGE_ID; ?>">
     <section class="travelCard-image">
         <a disabledtarget="__blank" class="" href="/package/<?php echo $package->SLUG; ?>" aria-label="<?= strtoupper($package->PACKAGE_NAME); ?>">

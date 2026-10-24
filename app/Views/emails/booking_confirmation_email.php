@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var object $data
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,7 +82,7 @@ for ($i = 0; $i < count($perPersonSharing); $i++) {
     $explodeSharing = explode('|', $type);
     $sharing = (count($explodeSharing) > 2) ? $explodeSharing[1] : $explodeSharing[1];
     $type = $sharing;
-    
+
     $cost = $perPersonCost[$i];
 
     if (!isset($summary[$type])) {

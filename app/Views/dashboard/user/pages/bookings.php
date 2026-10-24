@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * @var int $remainingAmount
+ * @var array $Bookings
+ */
+?>
 <div id="bookings" class="card">
     <div class="card-header">
         <div class="d-flex justify-content-between">
@@ -29,7 +36,7 @@
                     <?php
 
 
-                    foreach (($Bookings ?? []) as $booking) : ?>
+                    foreach ($Bookings as $booking) : ?>
 
                         <tr>
 
@@ -74,7 +81,7 @@
                                     <?php
                                     $remainingAmount = $booking->total_package_cost - $booking->amount;
                                     if ($remainingAmount >= 0): ?>
-                                        <?= esc($remainingAmount) ?>
+                                        <?= $remainingAmount ?>
                                     <?php endif; ?>
                                 <?php endif; ?>
                             </td>

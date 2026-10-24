@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var array $Options
+ */
+?>
 <div id="coupons" class="card">
     <div class="card-header">
         <div class="fw-bold">Options</div>

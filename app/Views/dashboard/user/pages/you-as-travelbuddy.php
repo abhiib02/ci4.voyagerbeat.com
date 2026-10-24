@@ -1,3 +1,9 @@
+ <?php
+
+    /**
+     * @var array $CustomerAsTravelBuddy
+     */
+    ?>
  <div class="card">
      <div class="card-header">
          <div class="fw-bold">You as TravelBuddy</div>
@@ -20,7 +26,7 @@
                      </tr>
                  </thead>
                  <tbody>
-                     <?php foreach (($CustomerAsTravelBuddy ?? []) as $tbbooking) { ?>
+                     <?php foreach ($CustomerAsTravelBuddy as $tbbooking) { ?>
                          <tr>
                              <td><?= esc($tbbooking->name) ?></td>
 

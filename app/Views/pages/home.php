@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var array $package
+ */
+?>
 <link rel="stylesheet" href="/css/bg3dwall.css">
 <link rel="stylesheet" href="/css/home.css">
 <link rel="stylesheet" href="/css/destination_3d_card.css">

@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var string $AllPackagesNameAndID
+ */
+?>
 <!-- Modal -->
 <div class="modal fade" id="SearchBox" tabindex="-1" aria-labelledby="SearchBoxLabel" aria-hidden="true">
     <div class="modal-dialog">

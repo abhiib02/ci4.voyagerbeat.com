@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var array $Coupons
+ */
+?>
 <div id="coupons" class="card">
     <div class="card-header">
         <div class="fw-bold">Coupons</div>

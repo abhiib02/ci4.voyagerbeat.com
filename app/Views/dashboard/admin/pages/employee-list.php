@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var array $Employees
+ */
+?>
 <div id="customers" class="card">
     <div class="card-header">
         <div class="fw-bold">Employees</div>

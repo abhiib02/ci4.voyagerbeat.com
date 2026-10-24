@@ -1,3 +1,9 @@
+    <?php
+
+    /**
+     * @var object $package
+     */
+    ?>
 <?php if (!$package->REQUEST_PRICE): ?>
 
     <style>

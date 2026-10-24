@@ -1,3 +1,13 @@
+<?php
+
+/**
+ * @var array $Annual_Revenue
+ * @var array $Annual_Pax
+ * @var array $Annual_Booking
+ * @var array $BookingCountByStatus
+ */
+?>
+
 <script src="
 https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
 "></script>
