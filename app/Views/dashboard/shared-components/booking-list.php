@@ -9,7 +9,6 @@
             <th>Contact</th>
             <th>Adults</th>
             <th>Pax Details</th>
-            <th>Pay Mode</th>
             <th>Amount Paid</th>
             <th>Total Cost</th>
             <th>Remaining</th>
@@ -57,7 +56,6 @@
                     <?php endif; ?>
 
                 </td>
-                <td class="text-capitalize"><?= $booking->paymode ?></td>
                 <td>
                     <?php if (auth('Admin')): ?>
                         <input type="number" class="form-control form-control-sm" data-field="amount" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->amount ?>">
