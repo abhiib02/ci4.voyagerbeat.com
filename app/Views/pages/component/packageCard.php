@@ -115,10 +115,45 @@
 
             </ul>
 
-
-
-
-
         </div>
     </section>
+    <?php
+    $price = (int)$package->PRICE_1;
+    $s_price = (int)$package->S_PRICE_1;
+    $diffrence = $s_price - $price;
+    if ($s_price - $price == 2500) {
+        $percent = ($price / (($s_price)) - 1) * 100;
+    } else {
+        $percent = ($price / (($price + 2500)) - 1) * 100;
+    }
+
+    ?>
+    <?php
+
+    if (!$package->REQUEST_PRICE) : ?>
+        <section class="travel-card-bottom-bar">
+            <?php
+            // Deterministic variation based on package ID so it stays consistent per package
+            $variant = ($package->PACKAGE_ID % 3) + 1;
+            switch ($variant):
+                case 1:
+            ?>
+                    <span>You Save <?= number_format(abs($percent)) ?>%</span>
+                <?php
+                    break;
+                case 2:
+                ?>
+                    <span>Save ₹<?= number_format($diffrence) ?> Today</span>
+                <?php
+                    break;
+                case 3:
+                ?>
+                    <span>Special Deal: Save ₹<?= number_format($diffrence) ?></span>
+            <?php
+                default:
+                    break;
+            endswitch;
+            ?>
+        </section>
+    <?php endif; ?>
 </div>

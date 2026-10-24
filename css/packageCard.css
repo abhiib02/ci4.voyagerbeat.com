@@ -7,11 +7,12 @@
   width: 100%;
   max-width: 400px;
   height: 287px;
-  margin: 0px 0px 30px;
+  margin: 0px 0px 40px;
   background: var(--packageCardBG);
   outline: var(--outline) solid 1px;
   transition: 0.3s;
   border-radius: 10px;
+  box-shadow: 0px 2px 2px #00000033;
   & a {
     text-decoration: none;
     color: var(--text-color);
@@ -64,6 +65,8 @@
       text-transform: uppercase;
       overflow: hidden;
       line-height: normal;
+                  white-space: nowrap;
+            text-overflow: ellipsis;
     }
     & .loc-dur {
       padding: 0;
@@ -176,6 +179,17 @@
     font-weight: bold;
     user-select: none;
     pointer-events: none;
+  }
+  & .travel-card-bottom-bar{
+        position: relative;
+    width: 100%;
+    background: var(--maincolor);
+    height: 33px;
+    align-content: end;
+    padding: 0px 10px;
+    border-radius: 0px 0px 10px 10px;
+    z-index: -1;
+    font-weight: 600;
   }
 }
 

@@ -64,14 +64,19 @@ if (! function_exists('statusToClass')) {
         return $map[$status] ?? 'status-unknown';
     }
 }
-if(! function_exists('gdriveImage')){
-    function gdriveImage(string $driveLink,int $width = 1024) : string {
-        if(!str_contains($driveLink, 'drive.google.com')){
+if (! function_exists('gdriveImage')) {
+    function gdriveImage(string $driveLink, int $width = 1024): string
+    {
+        if (!str_contains($driveLink, 'drive.google.com')) {
             return $driveLink;
         }
         $id = explode('/', $driveLink)[5];
         return "https://lh3.googleusercontent.com/d/$id=w$width";
     }
 }
-
-
+if (! function_exists("getRandomNumber")) {
+    function getRandomNumber(int $from, int $to): int
+    {
+        return mt_rand($from, $to);
+    }
+}
