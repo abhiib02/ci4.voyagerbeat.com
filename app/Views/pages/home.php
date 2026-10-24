@@ -268,7 +268,7 @@
                 <p class="fs-1 fw-bold style-font">Follow Along<br> on <span class="text-bg-insta insta-bg">Instagram</span></p>
                 <div class="d-flex gap-2">
                     <div class="square grid-center rounded-circle insta-story">
-                        <img src="<?= env('app.logoPath') ?>" width="64px" alt="">
+                        <img src="<?= env('app.LogoPath') ?>" width="64px" alt="">
                     </div>
                     <div class="align-content-center">
                         <p class="fw-bold  m-0">@voyagersbeat <svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="18" role="img" viewBox="0 0 40 40" width="18">
