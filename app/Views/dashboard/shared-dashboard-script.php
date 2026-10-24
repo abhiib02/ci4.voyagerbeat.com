@@ -87,20 +87,20 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
                 label: 'Bookings Count',
                 data: statusData,
                 backgroundColor: [
+                    'rgba(85, 83, 84, 0.7)',
                     'rgba(49, 206, 1, 0.7)',
                     'rgba(27, 129, 197, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(85, 83, 84, 0.7)',
                     'rgba(185, 14, 14, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
                     'rgba(10, 187, 211, 0.7)'
                 ],
                 borderColor: [
-                    'rgba(49, 206, 1, 1)',
-                    'rgba(27, 129, 197, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(85, 83, 84, 1)',
-                    'rgba(185, 14, 14, 1)',
-                    'rgba(10, 187, 211, 1)'
+                    'rgba(85, 83, 84, 0.7)',
+                    'rgba(49, 206, 1, 0.7)',
+                    'rgba(27, 129, 197, 0.7)',
+                    'rgba(185, 14, 14, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(10, 187, 211, 0.7)'
                 ],
                 borderWidth: 1
             }]
@@ -112,10 +112,10 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
             aspectRatio: 1, // Default is 1 (square). Higher numbers make it wider.
             plugins: {
                 legend: {
-                    position: 'top',
+                    position: 'right',
                 },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Bookings By Status'
                 }
             }

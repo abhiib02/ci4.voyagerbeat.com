@@ -218,6 +218,19 @@ class Booking extends Model
             ->where('created_at <=', $endDate)
             ->where('agent', $agentID)->countAllResults();
     }
+    public function getAllBookingsCountAdmin(string $month, string $year): int
+    {
+
+
+
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+
+        return (int) $this
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
+            ->countAllResults();
+    }
     public function getAllBookingsofAgentWithStatus(int $agentID, string $status): array
     {
         return $this->where('agent', $agentID)->where('status', $status)->orderBy('ID', 'DESC')->findAll();
@@ -254,6 +267,19 @@ class Booking extends Model
             ->first();
         return (int) $result->$columName;
     }
+    public function getSumofColumn_Admin(string $month, string $year, string $status, string $columName): int
+    {
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $statusArray = array_map('trim', explode(',', $status));
+        $result = $this
+            ->selectSum($columName)
+            ->whereIn('status', $statusArray)
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
+            ->first();
+        return (int) $result->$columName;
+    }
     public function getAnnualSalesRevenue(int $agentID, string $year, array $statuses): array
     {
 
@@ -271,6 +297,26 @@ class Booking extends Model
             ORDER BY `months`.m ASC';
 
         $query = $this->db->query($sql, [$year, $agentID, $statuses]);
+
+        // Extracts just the revenue values into a flat array: [0, 0, 10, 235, ...]
+        return array_column($query->getResultArray(), 'revenue');
+    }
+    public function getAnnualSalesRevenueAdmin(string $year, array $statuses): array
+    {
+
+        $sql = 'SELECT COALESCE(SUM(p.`total_package_cost`), 0) AS `revenue` 
+            FROM (
+                SELECT 1 AS m UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 
+                UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
+                UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+            ) AS `months` 
+            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+                AND YEAR(p.`created_at`) = ? 
+                AND p.`status` IN ? 
+            GROUP BY `months`.m 
+            ORDER BY `months`.m ASC';
+
+        $query = $this->db->query($sql, [$year, $statuses]);
 
         // Extracts just the revenue values into a flat array: [0, 0, 10, 235, ...]
         return array_column($query->getResultArray(), 'revenue');
@@ -296,6 +342,26 @@ class Booking extends Model
         // Extracts just the Pax values into a flat array: [0, 0, 10, 235, ...]
         return array_column($query->getResultArray(), 'adults');
     }
+    public function getAnnualPaxAdmin(string $year, array $statuses): array
+    {
+
+        $sql = 'SELECT COALESCE(SUM(p.`adults`), 0) AS `adults` 
+            FROM (
+                SELECT 1 AS m UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 
+                UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
+                UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+            ) AS `months` 
+            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+                AND YEAR(p.`created_at`) = ? 
+                AND p.`status` IN ? 
+            GROUP BY `months`.m 
+            ORDER BY `months`.m ASC';
+
+        $query = $this->db->query($sql, [$year, $statuses]);
+
+        // Extracts just the Pax values into a flat array: [0, 0, 10, 235, ...]
+        return array_column($query->getResultArray(), 'adults');
+    }
     public function getAnnualBookings(int $agentID, string $year, array $statuses): array
     {
         $sql = 'SELECT 
@@ -312,6 +378,25 @@ class Booking extends Model
             GROUP BY `months`.m 
             ORDER BY `months`.m ASC;';
         $query = $this->db->query($sql, [$year, $agentID, $statuses]);
+
+        // Extracts just the Bookings values into a flat array: [0, 0, 10, 235, ...]
+        return array_column($query->getResultArray(), 'bookings_count');
+    }
+    public function getAnnualBookingsAdmin(string $year, array $statuses): array
+    {
+        $sql = 'SELECT 
+            COUNT(p.`id`) AS `bookings_count` 
+            FROM (
+                SELECT 1 AS m UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 
+                UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
+                UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+            ) AS `months` 
+            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+                AND YEAR(p.`created_at`) = ? 
+                AND p.`status` IN ? 
+            GROUP BY `months`.m 
+            ORDER BY `months`.m ASC;';
+        $query = $this->db->query($sql, [$year, $statuses]);
 
         // Extracts just the Bookings values into a flat array: [0, 0, 10, 235, ...]
         return array_column($query->getResultArray(), 'bookings_count');
@@ -333,8 +418,31 @@ class Booking extends Model
                 AND p.`agent` = ? 
                 AND MONTH(p.`created_at`) = ?
                 AND YEAR(p.`created_at` ) = ?
-            GROUP BY s.`status_name`';
+            GROUP BY s.`status_name` ORDER BY s.`status_name` asc';
+
         $query = $this->db->query($sql, [$agentID, $month, $year]);
+
+        return $query->getResultArray();
+    }
+    public function getBookingsStatusCountsAdmin(string $month, string $year): array
+    {
+        $sql = 'SELECT 
+                s.`status_name`,
+                COUNT(p.`id`) AS `bookings_count`
+            FROM (
+                SELECT "Complete" AS `status_name` UNION ALL 
+                SELECT "Complete With no points" UNION ALL 
+                SELECT "Pending" UNION ALL 
+                SELECT "Cancelled" UNION ALL 
+                SELECT "Failed" UNION ALL 
+                SELECT "Postponed"
+            ) AS s
+            LEFT JOIN `payments_table` p ON p.`status` = s.`status_name` 
+                AND MONTH(p.`created_at`) = ?
+                AND YEAR(p.`created_at` ) = ?
+            GROUP BY s.`status_name` ORDER BY s.`status_name` asc';
+
+        $query = $this->db->query($sql, [$month, $year]);
 
         return $query->getResultArray();
     }
