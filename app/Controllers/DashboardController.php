@@ -26,7 +26,7 @@ class DashboardController extends BaseController
 
     public function __construct()
     {
-        $this->session = \Config\Services::session();
+        $this->session = Services::session();
         $this->data['id'] = $this->session->get('id');
         $this->data['name'] = $this->session->get('name');
         $this->data['email'] = $this->session->get('email');

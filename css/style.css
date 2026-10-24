@@ -643,6 +643,7 @@ body {
       background: url(/assets/anim/textbg.webp);
     background-size: cover;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     animation:textbg-anim 7s linear infinite;
     filter: hue-rotate(209deg);
@@ -658,6 +659,7 @@ body {
 .text-bg-insta {
     background-size: cover;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     animation:textbg-anim 50s linear infinite;
 }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * @var array $package
+ * @var array $AllPackagesNameAndID
+ * @var array $domesticDests
  */
 ?>
 <link rel="stylesheet" href="/css/bg3dwall.css">
@@ -11,7 +12,7 @@
 
     <div class="perspective">
         <div class="img-cylinder" id="img-cylinder-home">
-            <?php foreach ($AllPackagesNameAndID ?? [] as $index => $Package): ?>
+            <?php foreach ($AllPackagesNameAndID as $index => $Package): ?>
                 <?php if ($index < 90): ?>
                     <img class="image" style="--i:<?= $index ?>" src="<?= gdriveImage($Package->PACKAGE_IMAGE, 256) ?>" alt="" width="256" height="256" decoding="async" fetchpriority="low" loading="lazy">
                 <?php endif; ?>

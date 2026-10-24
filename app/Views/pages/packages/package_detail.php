@@ -74,7 +74,7 @@ $TAGS = explode(',', $package->TAGS);
                 </div>
                 <!-- Details Section -->
                 <div class="details-tabs mb-2">
-                    <ul class="nav nav-pills nav-fill p-1 small outline-card style-border rounded-3 mb-2" id="DetailsTabNav" role="tablist" style="">
+                    <ul class="nav nav-pills nav-fill p-1 small outline-card style-border rounded-3 mb-2" id="DetailsTabNav" role="tablist">
                         <li class="nav-item col-4 col-lg-2" role="presentation">
                             <button class="nav-link rounded-3" id="home-tab" data-bs-toggle="tab" data-bs-target="#highlight-tab-pane" type="button" role="tab" aria-selected="true">Highlight</button>
                         </li>
