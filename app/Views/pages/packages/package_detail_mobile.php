@@ -36,18 +36,26 @@ $TAGS = explode(',', $package->TAGS);
                     <div class="swiper-slide">
                         <?= imageLinkType($package->PACKAGE_IMAGE); ?>
                     </div>
-                    <div class="swiper-slide">
-                        <?= imageLinkType($package->IMAGE_1); ?>
-                    </div>
-                    <div class="swiper-slide">
-                        <?= imageLinkType($package->IMAGE_2); ?>
-                    </div>
-                    <div class="swiper-slide">
-                        <?= imageLinkType($package->IMAGE_3); ?>
-                    </div>
-                    <div class="swiper-slide">
-                        <?= imageLinkType($package->IMAGE_4); ?>
-                    </div>
+                    <?php if (!empty($package->IMAGE_1)): ?>
+                        <div class="swiper-slide">
+                            <?= imageLinkType($package->IMAGE_1); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($package->IMAGE_2)): ?>
+                        <div class="swiper-slide">
+                            <?= imageLinkType($package->IMAGE_2); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($package->IMAGE_3)): ?>
+                        <div class="swiper-slide">
+                            <?= imageLinkType($package->IMAGE_3); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($package->IMAGE_4)): ?>
+                        <div class="swiper-slide">
+                            <?= imageLinkType($package->IMAGE_4); ?>
+                        </div>
+                    <?php endif; ?>
 
                 </div>
                 <div class="swiper-pagination"></div>
@@ -121,26 +129,53 @@ $TAGS = explode(',', $package->TAGS);
         <section class="container mb-3" id="Inclusion">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="alert alert-success">
-                        <h5 class="">Trip Inclusion</h5>
-                        <hr>
-                        <div class="wysiwyg">
-                            <?= $package->INCLUSION ?>
+
+                    <div class="accordion accordion-flush" id="Inclusion-Accordion">
+                        <!-- Gadgets -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingGadgets">
+                                <button class="accordion-button collapsed text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInclusion-Accordion" aria-expanded="false" aria-controls="collapseGadgets">
+                                    Trip Inclusion
+                                </button>
+                            </h2>
+                            <div id="collapseInclusion-Accordion" class="accordion-collapse collapse" aria-labelledby="headingGadgets" data-bs-parent="#Inclusion-Accordion">
+                                <div class="accordion-body">
+                                    <div class="alert alert-success">
+                                        <div class="wysiwyg">
+                                            <?= $package->INCLUSION ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
         <section class="container mb-3" id="Exclusion">
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="alert alert-danger">
-                        <h5 class="">Trip Exclusion</h5>
-                        <hr>
-                        <div class="wysiwyg">
-                            <?= $package->EXCLUSION ?>
+                    <div class="accordion accordion-flush" id="Exclusion-Accordion">
+                        <!-- Gadgets -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingGadgets">
+                                <button class="accordion-button collapsed text-bg-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExclusion-Accordion" aria-expanded="false" aria-controls="collapseGadgets">
+                                    Trip Exclusion
+                                </button>
+                            </h2>
+                            <div id="collapseExclusion-Accordion" class="accordion-collapse collapse" aria-labelledby="headingGadgets" data-bs-parent="#Exclusion-Accordion">
+                                <div class="accordion-body">
+                                    <div class="alert alert-danger">
+                                        <div class="wysiwyg">
+                                            <?= $package->EXCLUSION ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>

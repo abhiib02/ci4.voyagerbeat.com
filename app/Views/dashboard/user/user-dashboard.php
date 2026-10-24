@@ -5,7 +5,7 @@
 
     if (!empty($pagename) && in_array($pagename, $validLinks, true)): ?>
         <?= view('dashboard/user/pages/' . $pagename) ?>
-        <?php else: ?>>
+    <?php else: ?>
 
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 mt-4 mb-4 border-bottom">
