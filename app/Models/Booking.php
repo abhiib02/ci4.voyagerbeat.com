@@ -218,7 +218,7 @@ class Booking extends Model
             ->where('created_at <=', $endDate)
             ->where('agent', $agentID)->countAllResults();
     }
-    public function getAllBookingsCountAdmin(string $month, string $year): int
+    public function getAllBookingsCountAdmin(string $month, string $year, array $statusArray): int
     {
 
 
@@ -227,6 +227,7 @@ class Booking extends Model
         $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
 
         return (int) $this
+            ->whereIn('status', $statusArray)
             ->where('created_at >=', $startDate)
             ->where('created_at <=', $endDate)
             ->countAllResults();
@@ -445,5 +446,36 @@ class Booking extends Model
         $query = $this->db->query($sql, [$month, $year]);
 
         return $query->getResultArray();
+    }
+
+    public function getEmployeesBookingsCountMonthAdmin(string $month, string $year, array $statuses): array
+    {
+        // $sql = 'SELECT 
+        //     COUNT(p.`id`) AS `bookings_count` 
+        //     FROM (
+        //         SELECT 1 AS m UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 
+        //         UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
+        //         UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+        //     ) AS `months` 
+        //     LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+        //         AND YEAR(p.`created_at`) = ? 
+        //         AND p.`status` IN ? 
+        //     GROUP BY `months`.m 
+        //     ORDER BY `months`.m ASC;';
+        // $query = $this->db->query($sql, [$year, $statuses]);
+
+        // // Extracts just the Bookings values into a flat array: [0, 0, 10, 235, ...]
+        // return array_column($query->getResultArray(), 'bookings_count');
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+
+        return $this->select('users.USER_NAME as agent_name, COUNT(payments_table.id) as total_bookings')
+            ->join('users', 'users.user_id = payments_table.agent', 'left')
+            ->groupBy('payments_table.agent, users.USER_NAME')
+            ->whereIn('payments_table.status', $statuses)
+            ->where('payments_table.created_at >=', $startDate)
+            ->where('payments_table.created_at <=', $endDate)
+            ->orderBy('payments_table.agent', 'DESC')
+            ->findAll();
     }
 }

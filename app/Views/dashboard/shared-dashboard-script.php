@@ -5,12 +5,54 @@
  * @var array $Annual_Pax
  * @var array $Annual_Booking
  * @var array $BookingCountByStatus
+ * @var array $EmployeeBooking_Month
  */
 ?>
-
 <script src="
 https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
 "></script>
+<script>
+    function getRandomRgbaColor(opacity = 0.5) {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+</script>
+<script>
+    let employeeBooking_month_data = <?= json_encode($EmployeeBooking_Month) ?>;
+
+    const employeeBookingLabels = employeeBooking_month_data.map(item => item.agent_name);
+    const employeeBookingColors = employeeBooking_month_data.map(item => getRandomRgbaColor());
+    const employeeBookingData = employeeBooking_month_data.map(item => parseInt(item.total_bookings));
+
+    var EmployeesBookingsCtx = document.getElementById("Employees-Bookings").getContext("2d");
+    const EmployeesBookingsChart = new Chart(EmployeesBookingsCtx, {
+        type: 'bar',
+        data: {
+            labels: employeeBookingLabels,
+            datasets: [{
+                data: employeeBookingData,
+                backgroundColor: employeeBookingColors,
+                borderColor: employeeBookingColors,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    });
+    EmployeesBookingsChart.update();
+</script>
 <script>
     let month_revenue_data = <?= json_encode($Annual_Revenue) ?>;
     let month_pax_data = <?= json_encode($Annual_Pax) ?>;
@@ -59,7 +101,8 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
         options: {
             plugins: {
                 legend: {
-                    display: true // Enabled legend so users can distinguish the 3 datasets
+                    display: true, // Enabled legend so users can distinguish the 3 datasets
+                    position: 'top',
                 }
             },
             scales: {
@@ -84,6 +127,7 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
 
 <script>
     let BookingCountbyStatus = <?= json_encode($BookingCountByStatus) ?>;
+
     // Extract labels and numbers dynamically from your array
     const statusLabels = BookingCountbyStatus.map(item => item.status_name);
     const statusData = BookingCountbyStatus.map(item => parseInt(item.bookings_count));
@@ -119,10 +163,10 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
             responsive: true,
             maintainAspectRatio: false, // Allows you to set custom height via CSS wrapper
             // OR if you want to keep the aspect ratio but make it wider/narrower:
-            aspectRatio: 1, // Default is 1 (square). Higher numbers make it wider.
+            aspectRatio: 3.7, // Default is 1 (square). Higher numbers make it wider.
             plugins: {
                 legend: {
-                    position: 'right',
+                    position: 'left',
                 },
                 title: {
                     display: false,

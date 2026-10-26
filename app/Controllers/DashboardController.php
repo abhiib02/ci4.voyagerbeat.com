@@ -135,13 +135,16 @@ class DashboardController extends BaseController
             default:
                 $this->data['month'] = $this->request->getGet('month') ?? date('m');
                 $this->data['year'] = $this->request->getGet('year') ?? date('Y');
+                $statuses = ['Complete', 'Complete_no_points'];
                 // Booking Counts
-                $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year']);
+                $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year'], $statuses);
                 // Booking Collection with total person
                 $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Complete,Complete_no_points', 'adults');
                 $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Complete,Complete_no_points', 'total_package_cost');
                 // Charts Data 
-                $statuses = ['Complete', 'Complete_no_points'];
+
+
+                $this->data['EmployeeBooking_Month'] = $this->BookingModel->getEmployeesBookingsCountMonthAdmin($this->data['month'], $this->data['year'], $statuses);
                 $this->data['Annual_Revenue'] = $this->BookingModel->getAnnualSalesRevenueAdmin($this->data['year'], $statuses);
                 $this->data['Annual_Pax'] = $this->BookingModel->getAnnualPaxAdmin($this->data['year'], $statuses);
                 $this->data['Annual_Booking'] = $this->BookingModel->getAnnualBookingsAdmin($this->data['year'], $statuses);

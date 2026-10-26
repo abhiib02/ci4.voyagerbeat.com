@@ -16,14 +16,11 @@
             <div class="card-body">
                 <p class="display-3">Welcome, <?= esc($name ?? 'Employee') ?></p>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Booking of</div>
-                                    <div>
-
-                                    </div>
+                                    <div class="fw-bold">Total Completed Booking of <span title="Showing Booking With Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -35,7 +32,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
@@ -51,11 +48,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Revenue</div>
+                                    <div class="fw-bold">Total Revenue <span title="Counted Only With Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -63,18 +60,6 @@
                                     <h1>₹ <?= $TotalRevenue_Month ?? '' ?> </h1>
                                     <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card mb-2">
-                            <div class="card-header">
-                                <div class="fw-bold">Annual Data | <?= $year ?? '' ?></div>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="annual-sales"></canvas>
                             </div>
                         </div>
                     </div>
@@ -89,7 +74,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <div class="fw-bold">Employees Bookings | <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?> <span title="Showing Booking With Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="Employees-Bookings"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <div class="fw-bold">Annual Data | <?= $year ?? '' ?></div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="annual-sales"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <?= view('dashboard/shared-dashboard-script', [
+                    'EmployeeBooking_Month' => $EmployeeBooking_Month ?? [],
                     'Annual_Revenue' => $Annual_Revenue ?? [],
                     'Annual_Pax' => $Annual_Pax ?? [],
                     'BookingCountByStatus' => $BookingCountByStatus ?? []

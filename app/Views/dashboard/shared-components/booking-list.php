@@ -138,13 +138,15 @@
 
                         <button type="button" class=" btn btn-sm btn-outline-dark" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
                         <div class="">
-                            <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class='bx bx-dots-vertical-rounded'></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="openModel('updatePoints-<?= $booking->user_id ?>')"> <i class='bx bx-plus-circle'></i> Update Points</a></li>
+                            <?php if (auth('Admin')): ?>
+                                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                </button>
 
-                            </ul>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" onclick="openModel('updatePoints-<?= $booking->user_id ?>')"> <i class='bx bx-plus-circle'></i> Update Points</a></li>
+                                </ul>
+                            <?php endif; ?>
                         </div>
                         <?php if (!str_contains($booking->order_id, 'order_') && $booking->customer_access): ?>
                             <button type="button" id="copyLinkBtn" class=" btn btn-sm btn-outline-dark" data-link="<?= base_url() ?>booking-confirmation-form/<?= $booking->order_id; ?>" onclick="copyLink()">Copy_Link</button>
