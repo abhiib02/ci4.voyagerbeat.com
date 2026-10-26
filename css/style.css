@@ -595,7 +595,6 @@ body {
     display: block;
   }
 }
-
 @media (width < 786px ) and (width > 1024px) {
   #ipad-safari-nav{
     display: none;
