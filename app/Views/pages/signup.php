@@ -96,8 +96,9 @@
                         </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
-                    <button type="submit" id="submit" class="btn btn-success btn-sm">Sign up</button>
+
                     <a href="/login" class="btn  btn-sm btn-outline-dark">Already Have Account ?</a>
+                    <button type="submit" id="submit" class="btn btn-success btn-sm">Sign up</button>
                 </div>
                 </form>
             </div>

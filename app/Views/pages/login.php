@@ -5,7 +5,7 @@
 </style>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 hide-on-mobile p-0">
+        <div class="col-lg-8 hide-on-mobile p-0">
             <div class="swiper login-page-swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -24,7 +24,7 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
-        <div class="col-lg-6 full-vh grid-center ">
+        <div class="col-lg-4 full-vh grid-center ">
             <div class=" w-100">
                 <?= view('pages/component/login-form') ?>
             </div>

@@ -41,13 +41,20 @@
                     </div>
                 </div> -->
     </div>
-    <div class="card-footer d-flex justify-content-between">
-        <div>
-            <button type="submit" class="btn btn-success btn-sm" form="login-form">Sign In</button>
-            <a href="/forgot_password_form" class="btn btn-outline-dark  btn-sm">Forgot Password ?</a>
+    <div class="card-footer">
+        <div class=" d-flex justify-content-between">
+            <div>
+                <!-- <a href="/signup" class="btn btn-dark  btn-sm">Sign Up</a>
+            <a href="/forgot_password_form" class="btn btn-outline-dark  btn-sm">Forgot Password ?</a> -->
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success btn-sm" form="login-form">Sign In</button>
+
+            </div>
         </div>
-        <div>
-            <a href="/signup" class="btn btn-dark  btn-sm">Sign Up</a>
+        <div class="text-center mt-3">
+            <p class="m-0">Dont have an account ? <a class="text-decoration-none" href="/signup">Signup</a></p>
+            <p><a href="/forgot_password_form" class="text-decoration-none">Forgot your Password ? </a></p>
         </div>
     </div>
 
