@@ -1,3 +1,11 @@
+<?php
+
+/**
+ * @var array $navDataLadakh
+ * @var array $navDataSpiti
+ * @var array $navDataHoneymoon
+ */
+?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow" id="desktop-nav" style="z-index:9999;">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">

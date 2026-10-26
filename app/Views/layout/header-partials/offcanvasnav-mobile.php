@@ -1,3 +1,11 @@
+<?php
+
+/**
+ * @var array $navDataLadakh
+ * @var array $navDataSpiti
+ * @var array $navDataHoneymoon
+ */
+?>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="navmobilemenu" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header bgColorTheme">
         <div>

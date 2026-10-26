@@ -6,9 +6,9 @@
  */
 ?>
 <?php if (count($packages) > 0) : ?>
-    <div class="container-fluid pt-5 bg-black text-light">
+    <div class="container-fluid bg-black text-light">
         <div class="container py-5 text-center">
-            <h1 class="huge-heading text-capitalize "><?= isset($name) ? $name : 'All '; ?> Packages</h1>
+            <h1 class="huge-heading text-capitalize style-font"><?= isset($name) ? esc($name) : 'All Packages'; ?></h1>
             <?php if (isset($meta_desc)): ?><p><?= $meta_desc; ?></p><?php endif; ?>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-sm btn-outline-light" disabled><?= $TotalPackageCount ?> Packages</button>

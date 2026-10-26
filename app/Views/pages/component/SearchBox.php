@@ -11,7 +11,7 @@
             <div class="modal-header sticky-top bg-white">
                 <h1 class="modal-title fs-5 w-100" id="SearchBoxLabel">
                     <form action="/search" method="get">
-                        <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+                        <!-- <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" /> -->
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon1"><i class='bx bx-search'></i></span>
                             <input type="text" class="form-control searchBoxInput" placeholder="Search" aria-label="Search" name="q" aria-describedby="Search" autofocus autocomplete="off">

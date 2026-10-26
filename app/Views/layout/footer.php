@@ -11,6 +11,7 @@
     </script>
 <?php endif; ?>
 </main>
+<!-- <= view('layout/footer-partials/chatbot') ?> -->
 </body>
 
 </html>
