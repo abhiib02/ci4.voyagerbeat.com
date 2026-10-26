@@ -270,7 +270,7 @@
 <section id="instagram-section" class="pt-5">
     <div class="container pt-5">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-6">
                 <p class="text-uppercase">Only a Backpack Away</p>
                 <p class="fs-1 fw-bold style-font">Follow Along<br> on <span class="text-bg-insta insta-bg">Instagram</span></p>
                 <div class="d-flex gap-2">
@@ -307,7 +307,7 @@
                     <a href="https://www.instagram.com/voyagersbeat/" class="btn btn-lg insta-bg rounded-pill text-white" style="background-size: 130%;background-repeat: no-repeat;background-position: center;">Follow @voyagersbeat</a>
                 </div>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-9 col-6">
                 <?php $instaSecVideos = [
                     '/assets/videos/1.mp4',
                     '/assets/videos/2.mp4',
@@ -341,7 +341,7 @@
             <p>Committed to helping its clients reach their goals, to personalizing their event experiences & to providing an innovative environment & comfortable Trip.</p>
         </div>
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-4">
                 <div class="card grid-center square radial-bg border-0" style="--radial-bg-color:#ff595e;">
                     <div class="text-center">
                         <p class="fs-5 style-font m-0">
@@ -353,7 +353,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-4">
                 <div class="card grid-center square radial-bg border-0" style="--radial-bg-color:#ffca3a;">
                     <div class="text-center">
                         <p class="fs-5 style-font m-0">
@@ -365,7 +365,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-4">
                 <div class="card grid-center square radial-bg border-0" style="--radial-bg-color:#8ac926;">
                     <div class="text-center">
                         <p class="fs-5 style-font m-0">
@@ -377,7 +377,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-4">
                 <div class="card grid-center square radial-bg border-0" style="--radial-bg-color:#1982c4;">
                     <div class="text-center">
                         <p class="fs-5 style-font m-0">
@@ -389,7 +389,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-4">
                 <div class="card grid-center square radial-bg border-0" style="--radial-bg-color:#6a4c93;">
                     <div class="text-center">
                         <p class="fs-5 style-font m-0">
@@ -401,7 +401,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-4">
                 <div class="card grid-center square radial-bg border-0" style="--radial-bg-color:#ffca3a;">
                     <div class="text-center">
                         <p class="fs-5 style-font m-0">
