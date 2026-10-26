@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/ezToast.css">
 <link rel="stylesheet" href="/css/bootstrap-overrides.css">
 <link rel="stylesheet" href="/css/megamenu.css">
-<link rel="stylesheet" href="/css/style.css?v=100">
+<link rel="stylesheet" href="/css/style.css?v=101">
 <link rel="stylesheet" href="/css/packageCard.css">
 <link rel="stylesheet" href="/css/lenis.css" rel="preload">
 <link rel="stylesheet" href="/css/packageCardSimple.css" rel="preload">

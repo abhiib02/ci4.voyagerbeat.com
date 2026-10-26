@@ -585,9 +585,17 @@ body {
 .linkedin-bg {
   background: #0a66c2;
 }
-@media (width < 1020px) {
+@media (width < 1024px) {
   #desktop-nav {
     display: none;
+  }
+}
+#ipad-safari-nav{
+    display: none;
+  }
+@media (786px < width < 1024px) {
+  #ipad-safari-nav{
+    display: block;
   }
 }
 .hide,

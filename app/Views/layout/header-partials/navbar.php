@@ -405,3 +405,26 @@
     </div>
   </div>
 </div>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow" id="ipad-safari-nav" style="z-index:1000;">
+  <div class="container-fluid">
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item ">
+        <button class="nav-link" data-bs-toggle="modal" data-bs-target="#SearchBox">
+          <i class='fs-4 bx bx-search'></i>
+        </button>
+      </li>
+    </ul>
+    <a class="navbar-brand" href="/">
+      <img src="<?= env('app.LogoPath') ?>" alt="Bootstrap" width="50px" height="auto">
+    </a>
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <li class="nav-item ">
+        <button class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#navmobilemenu">
+          <i class='bx bx-menu-alt-right fs-4'></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+<?= view('layout/header-partials/offcanvasnav-mobile') ?>

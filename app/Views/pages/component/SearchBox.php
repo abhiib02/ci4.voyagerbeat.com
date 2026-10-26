@@ -25,10 +25,13 @@
                 <div id="packagesList" class="list-group">
                 </div>
             </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button> -->
-                <kbd>Esc</kbd> to Close <kbd>Tab</kbd> Select & Down
+            <div class="modal-footer d-flex justify-content-between">
+                <div>
+                    <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal"><i class='bx bx-x'></i> Close</button>
+                </div>
+                <div>
+                    <kbd>Esc</kbd> to Close <kbd>Tab</kbd> Select & Down
+                </div>
             </div>
         </div>
     </div>
