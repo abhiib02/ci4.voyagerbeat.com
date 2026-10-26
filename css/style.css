@@ -590,12 +590,15 @@ body {
     display: none;
   }
 }
-#ipad-safari-nav{
-    display: none;
-  }
-@media (786px < width < 1024px) {
+@media (786px <= width <= 1024px) {
   #ipad-safari-nav{
     display: block;
+  }
+}
+
+@media (width < 786px ) and (width > 1024px) {
+  #ipad-safari-nav{
+    display: none;
   }
 }
 .hide,
