@@ -10,6 +10,7 @@ $routes->set404Override(function () {
 
 
 $routes->get('/', 'MainController::index');
+$routes->get('sitemap.xml', 'MainController::sitemapGenerate');
 
 /*
 -----------------------------------------------------------------------
@@ -57,6 +58,7 @@ $routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
     // --------Employee Management----------------
     $routes->get('toggleStatus/(:num)/(:num)', 'UserController::ToogleStatus/$1/$2');
     $routes->get('makeEmployee/(:num)', 'UserController::EmployeeRoleGrant/$1');
+    $routes->post('makeEmployee', 'UserController::EmployeeRoleGrant');
     $routes->get('makeAdmin/(:num)', 'UserController::AdminRoleGrant/$1');
     $routes->get('revokeAdminAndEmployeeRole/(:num)', 'UserController::revokeAdminAndEmployeeRole/$1');
     $routes->get('deleteUser/(:num)', 'UserController::deleteUser/$1');

@@ -40,13 +40,33 @@
                                     <ul class="dropdown-menu">
                                         <li><a type="button" class="dropdown-item" href="/dashboard/all-bookings?customer_id=<?= $customer->user_id ?>">See Bookings</a></li>
                                         <li><a type="button" class="dropdown-item" onclick="openModel('updatePoints-<?= $customer->user_id ?>')">Update Points</a></li>
-                                        <li><a type="button" class="dropdown-item" href="/makeEmployee/<?= $customer->user_id ?>">Make Employee</a></li>
+                                        <li><a type="button" class="dropdown-item" onclick="openModel('makeEmployeedialog-<?= $customer->user_id ?>')">Make Employee</a></li>
                                         <li><a type="button" class="dropdown-item" href="/toggleStatus/<?= $customer->user_id ?>/<?= $customer->status ?>?empList=1">
                                                 <?= $customer->status == 1 ? 'Activate' : 'Deactivate' ?></a></li>
                                         <li><a type="button" class="dropdown-item text-bg-danger" onclick="deleteCustomer()" data-href="/deleteUser/<?= $customer->user_id ?>">Delete User</a></li>
 
                                     </ul>
                                 </div>
+                                <dialog id="makeEmployeedialog-<?= $customer->user_id ?>" class="">
+                                    <div class="card">
+                                        <div class="card-header">Make Employee</div>
+                                        <div class="card-body">
+                                            <form action="/makeEmployee" id="makeEmployeeform-<?= $customer->user_id ?>" method="post">
+                                                <input type="hidden" name="id" value="<?= $customer->user_id ?>" required>
+                                                <div class="mb-3">
+                                                    <label for="confirmation-text" class="form-label">To Confirm, Type "<?= $customer->user_name ?>" in the box Below</label>
+                                                    <input type="text" class="form-control" name="name" id="confirmation-text">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-between">
+
+                                            <button class=" btn btn-sm btn-dark white-text" type="button" onclick="closeModal('makeEmployeedialog-<?= $customer->user_id ?>');">Close</button>
+                                            <button type="submit" form="makeEmployeeform-<?= $customer->user_id ?>" class="btn btn-sm btn-success white-text"> Make Employee</button>
+
+                                        </div>
+                                    </div>
+                                </dialog>
                                 <dialog id="updatePoints-<?= $customer->user_id ?>" class="">
                                     <div class="card">
                                         <div class="card-header">Update Points</div>

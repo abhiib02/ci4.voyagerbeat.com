@@ -40,8 +40,29 @@ class UserController extends BaseController
         $this->UserModel->MakeAdmin($id);
         return $this->RedirectWithtoast('UserID:' . $id . ' Admin Granted', 'info', '/dashboard/admins-list');
     }
-    public function EmployeeRoleGrant(int $id)
+    public function EmployeeRoleGrant()
     {
+        $rules = [
+            'id'    => 'required|integer',
+            'name' => 'required',
+        ];
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Data',
+                'status'  => 'warning'
+            ]);
+            return redirect()->back();
+        }
+        $id = $this->request->getPost('id');
+        $name = $this->request->getPost('name');
+        $user = $this->UserModel->getUserByID($id);
+        if ($user->user_name != $name) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Wrong Confirmation Text',
+                'status'  => 'warning'
+            ]);
+            return redirect()->back();
+        }
         $this->UserModel->MakeEmployee($id);
         return $this->RedirectWithtoast('UserID:' . $id . ' Employee Granted', 'info', '/dashboard/employee-list');
     }

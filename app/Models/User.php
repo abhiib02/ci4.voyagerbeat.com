@@ -87,7 +87,7 @@ class User extends Model
     public function getCustomerwithPoints(int $id)
     {
         return $this->select('users.*,user_points.points_balance as POINTS')
-            ->join('user_points', 'user_points.user_id = users.user_id','left')
+            ->join('user_points', 'user_points.user_id = users.user_id', 'left')
             ->where('users.user_id', $id)
             ->where('users.role', 0)
             ->findAll();
@@ -113,7 +113,7 @@ class User extends Model
             ->first();
     }
 
-    public function getUserByID($id)
+    public function getUserByID(int $id)
     {
         return $this->find($id);
     }

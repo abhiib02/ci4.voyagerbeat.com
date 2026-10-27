@@ -12,7 +12,8 @@
     "require": {
         "php": "^8.2",
         "codeigniter4/framework": "^4.7",
-        "razorpay/razorpay": "2.*"
+        "razorpay/razorpay": "2.*",
+        "rumenx/php-sitemap": "^1.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
