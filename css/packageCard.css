@@ -7,7 +7,7 @@
   width: 100%;
   max-width: 328px;
   height: 287px;
-  margin: 0px 0px 40px;
+  margin: 40px auto;
   background: var(--packageCardBG);
   outline: var(--outline) solid 1px;
   transition: 0.3s;
