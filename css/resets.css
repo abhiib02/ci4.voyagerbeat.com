@@ -4,7 +4,7 @@ dialog {
 }
 select {
   width: auto; /* Allows select to grow dynamically based on content */
-  min-width: max-content; /* Sets a sufficient base width for longer values */
+  min-width: fit-content; /* Sets a sufficient base width for longer values */
   padding-right: 30px; /* Ensures space for dropdown arrow icon without clipping text */
   text-overflow: clip; /* Disables ellipsis truncation */
   white-space: nowrap; /* Prevents line breaks */

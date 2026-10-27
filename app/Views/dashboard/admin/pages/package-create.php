@@ -1076,6 +1076,6 @@
 <script src="/js/slug_script.js"></script>
 <script src="/js/selling_price_script.js"></script>
 <script src="/js/faq_script.js"></script>
+<script src="/js/json_util_script.js"></script>
 <script src="/js/itinerary_script.js"></script>
 <script src="/js/tags_badges_script.js"></script>
-<script src="/js/json_util__script.js"></script>
