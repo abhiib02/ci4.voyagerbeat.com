@@ -28,6 +28,7 @@
     var(--maincoloroutline);
 }
 
+
 .nav-pills .nav-link {
   color: var(--text-color);
 }
@@ -43,6 +44,9 @@
     content: "🔒";
     font-size: 10px;
   }
+}
+.nav-link:hover{
+ outline:1px solid var(--maincolor);
 }
 /* @media (width < 992px) {
   .card {
