@@ -1,27 +1,64 @@
+<?php
+$OGtitle = isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let us do the rest.';
+$OGmetadesc = isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.';
+$OGimage = isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png';
+$robotState = (isset($noindex) && $noindex == 1) ? 1 : 0;
+$OGurl = base_url();
+$OGtype = 'Travel and Tourism';
+$canonical = (isset($canonical)) ? $canonical : '';
+?>
 <!-------Meta Tags----------->
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <meta name="view-transition" content="same-origin" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta http-equiv="Cache-Control" content="public" />
 
 <meta name="p:domain_verify" content="4d8b4adf78ab58b1c006fbcc8a1c6e6e" />
 <meta name="facebook-domain-verification" content="xmc5nhcysb61ozaj9kez66sv9cmgl4" />
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta http-equiv="Cache-Control" content="public" />
-<meta property="og:title" content="<?= isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let us do the rest.'; ?>">
-<meta name="twitter:title" content="<?= isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let us do the rest.'; ?>">
-<meta name="description" content="<?= isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
-<meta property="og:description" content="<?= isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
-<meta name="twitter:description" content="<?= isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.'; ?>">
-<meta property="og:image" content="<?= isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png'; ?>">
-<meta name="twitter:image" content="<?= isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png'; ?>">
-<?php if (isset($noindex) && $noindex == 1): ?>
+<meta name="description" content="<?= $OGmetadesc ?>">
+
+<!-- HTML Meta Tags -->
+<title><?= $OGtitle ?></title>
+
+<meta name="description" content="<?= $OGmetadesc ?>">
+
+<!-- Facebook Meta Tags (1173x759px, 298.3 KB) -->
+<meta property="og:url" content="<?= $OGurl ?>">
+<meta property="og:type" content="<?= $OGtype ?>">
+<meta property="og:title" content="<?= $OGtitle ?>">
+<meta property="og:description" content="<?= $OGmetadesc ?>">
+<meta property="og:image" content="<?= $OGimage ?>">
+
+<!-- Twitter Meta Tags (1173x759px, 298.3 KB) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="<?= $OGurl ?>">
+<meta property="twitter:url" content="<?= $OGurl ?>">
+<meta name="twitter:title" content="<?= $OGtitle ?>">
+<meta name="twitter:description" content="<?= $OGmetadesc ?>">
+<meta name="twitter:image" content="<?= $OGimage ?>">
+
+<!-- Meta Tags Generated via OpenGraph Preview Extension -->
+
+
+<meta property="og:url" content="<?= $OGurl ?>" />
+<meta property="og:type" content="<?= $OGtype ?>" />
+<meta property="og:title" content="<?= $OGtitle ?>" />
+<meta property="og:description" content="<?= $OGmetadesc ?>" />
+<meta property="og:image" content="<?= $OGimage ?>" />
+<meta property="og:logo" content="<?= $OGimage ?>" />
+
+
+<meta name="twitter:title" content="<?= $OGtitle ?>">
+<meta name="twitter:description" content="<?= $OGmetadesc ?>">
+<meta name="twitter:image" content="<?= $OGimage ?>">
+<meta name="twitter:card" content="<?= $OGurl ?>">
+<link rel="canonical" href="https://voyagersbeat.com/<?= $canonical ?>  ?>" />
+<?php if ($robotState): ?>
   <meta name="robots" content="noindex" />
 <?php endif; ?>
-<meta name="robots" content="noindex" />
-<meta property="og:url" content="http://voyagersbeat.com">
-<meta name="twitter:card" content="http://voyagersbeat.com">
-<meta property="og:type" content="Travel and Tourism" />
+
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icon-192x192.png">
 <meta name="color-scheme" content="light">
