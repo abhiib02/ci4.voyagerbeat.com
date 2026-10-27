@@ -54,7 +54,7 @@ $canonical = (isset($canonical)) ? $canonical : '';
 <meta name="twitter:description" content="<?= $OGmetadesc ?>">
 <meta name="twitter:image" content="<?= $OGimage ?>">
 <meta name="twitter:card" content="<?= $OGurl ?>">
-<link rel="canonical" href="https://voyagersbeat.com/<?= $canonical ?>  ?>" />
+<link rel="canonical" href="https://voyagersbeat.com/<?= $canonical ?>" />
 <?php if ($robotState): ?>
   <meta name="robots" content="noindex" />
 <?php endif; ?>
