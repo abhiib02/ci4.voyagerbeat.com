@@ -251,7 +251,7 @@
         </div>
         <div>
             <div class="flex-wrapper">
-                <a href="/packages/Bali" class="flex-item relative" style="--url:url('/assets/img/couple-bali.png');">
+                <a href="/packages/Bali" class="flex-item relative" style="--url:url('/assets/img/couple-bali.webp');">
                     <p class="fw-bolder style-font">Bali</p>
                 </a>
                 <a href="/country/Thailand" class="flex-item relative" style="--url:url('/assets/img/couple-thailand.webp');">
@@ -260,7 +260,7 @@
                 <a href="/country/Vietnam" class="flex-item relative" style="--url:url('/assets/img/couple-vietnam.webp');">
                     <p class="fw-bolder style-font">Vietnam</p>
                 </a>
-                <a href="/state/kerala" class="flex-item relative" style="--url:url('/assets/img/couple-kerala.png');">
+                <a href="/state/kerala" class="flex-item relative" style="--url:url('/assets/img/couple-kerala.webp');">
                     <p class="fw-bolder style-font">Kerala</p>
                 </a>
             </div>
