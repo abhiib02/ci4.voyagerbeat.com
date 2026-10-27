@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Booking extends Model
 {
 
-    protected $table            = 'payments_table';
+    protected $table            = 'bookings_table';
     protected $primaryKey       = 'ID';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
@@ -118,25 +118,25 @@ class Booking extends Model
     }
     public function getAllBookingsForAdminDashboard(): array
     {
-        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
+        return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
             ->orderBy('ID', 'DESC')
             ->find();
         //return $this->select()->orderBy('ID', 'DESC')->findAll();
     }
     public function getBookingsByEmployeeID(int $employeeID): array
     {
-        return $this->select('payments_table.*, users.USER_NAME as agent_name')
-            ->join('users', 'users.user_id = payments_table.agent', 'left')
-            ->where('payments_table.agent', $employeeID)
+        return $this->select('bookings_table.*, users.USER_NAME as agent_name')
+            ->join('users', 'users.user_id = bookings_table.agent', 'left')
+            ->where('bookings_table.agent', $employeeID)
             ->orderBy('ID', 'DESC')
             ->find();
     }
     public function getBookingsByCustomerID(int $customerID): array
     {
-        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
-            ->where('payments_table.user_id', $customerID)
+        return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
+            ->where('bookings_table.user_id', $customerID)
             ->orderBy('ID', 'DESC')
             ->find();
         //return $this->where('user_id', $customerID)->orderBy('ID', 'DESC')->find();
@@ -152,9 +152,9 @@ class Booking extends Model
     }
     public function getUserBookingsByEmail(string $email): array
     {
-        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
-            ->where('payments_table.email', $email)
+        return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
+            ->where('bookings_table.email', $email)
             ->orderBy('ID', 'DESC')
             ->find();
     }
@@ -176,9 +176,9 @@ class Booking extends Model
     }
     public function getUserBookingsByContact(int $contact): array
     {
-        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
-            ->where('payments_table.contact', $contact)
+        return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
+            ->where('bookings_table.contact', $contact)
             ->orderBy('ID', 'DESC')
             ->find();
     }
@@ -198,9 +198,9 @@ class Booking extends Model
 
     public function getAllBookingsofAgentForDashboard(int $userID): array
     {
-        return $this->select('payments_table.*, users.USER_NAME as agent_name') // Selects agent_name
-            ->join('users', 'users.user_id = payments_table.agent', 'left') // Adjust table name/fields if different
-            ->where('payments_table.agent', $userID)
+        return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
+            ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
+            ->where('bookings_table.agent', $userID)
             ->orderBy('ID', 'DESC')
             ->find();
         //return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
@@ -290,7 +290,7 @@ class Booking extends Model
                 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
                 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
             ) AS `months` 
-            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+            LEFT JOIN `bookings_table` p ON MONTH(p.`created_at`) = `months`.m 
                 AND YEAR(p.`created_at`) = ? 
                 AND p.`agent` = ? 
                 AND p.`status` IN ? 
@@ -311,7 +311,7 @@ class Booking extends Model
                 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
                 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
             ) AS `months` 
-            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+            LEFT JOIN `bookings_table` p ON MONTH(p.`created_at`) = `months`.m 
                 AND YEAR(p.`created_at`) = ? 
                 AND p.`status` IN ? 
             GROUP BY `months`.m 
@@ -331,7 +331,7 @@ class Booking extends Model
                 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
                 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
             ) AS `months` 
-            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+            LEFT JOIN `bookings_table` p ON MONTH(p.`created_at`) = `months`.m 
                 AND YEAR(p.`created_at`) = ? 
                 AND p.`agent` = ? 
                 AND p.`status` IN ? 
@@ -352,7 +352,7 @@ class Booking extends Model
                 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
                 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
             ) AS `months` 
-            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+            LEFT JOIN `bookings_table` p ON MONTH(p.`created_at`) = `months`.m 
                 AND YEAR(p.`created_at`) = ? 
                 AND p.`status` IN ? 
             GROUP BY `months`.m 
@@ -372,7 +372,7 @@ class Booking extends Model
                 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
                 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
             ) AS `months` 
-            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+            LEFT JOIN `bookings_table` p ON MONTH(p.`created_at`) = `months`.m 
                 AND YEAR(p.`created_at`) = ? 
                 AND p.`agent` = ? 
                 AND p.`status` IN ? 
@@ -392,7 +392,7 @@ class Booking extends Model
                 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
                 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
             ) AS `months` 
-            LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+            LEFT JOIN `bookings_table` p ON MONTH(p.`created_at`) = `months`.m 
                 AND YEAR(p.`created_at`) = ? 
                 AND p.`status` IN ? 
             GROUP BY `months`.m 
@@ -415,7 +415,7 @@ class Booking extends Model
                 SELECT "Failed" UNION ALL 
                 SELECT "Postponed"
             ) AS s
-            LEFT JOIN `payments_table` p ON p.`status` = s.`status_name` 
+            LEFT JOIN `bookings_table` p ON p.`status` = s.`status_name` 
                 AND p.`agent` = ? 
                 AND MONTH(p.`created_at`) = ?
                 AND YEAR(p.`created_at` ) = ?
@@ -438,7 +438,7 @@ class Booking extends Model
                 SELECT "Failed" UNION ALL 
                 SELECT "Postponed"
             ) AS s
-            LEFT JOIN `payments_table` p ON p.`status` = s.`status_name` 
+            LEFT JOIN `bookings_table` p ON p.`status` = s.`status_name` 
                 AND MONTH(p.`created_at`) = ?
                 AND YEAR(p.`created_at` ) = ?
             GROUP BY s.`status_name` ORDER BY s.`status_name` asc';
@@ -457,7 +457,7 @@ class Booking extends Model
         //         UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
         //         UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
         //     ) AS `months` 
-        //     LEFT JOIN `payments_table` p ON MONTH(p.`created_at`) = `months`.m 
+        //     LEFT JOIN `bookings_table` p ON MONTH(p.`created_at`) = `months`.m 
         //         AND YEAR(p.`created_at`) = ? 
         //         AND p.`status` IN ? 
         //     GROUP BY `months`.m 
@@ -469,13 +469,13 @@ class Booking extends Model
         $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
         $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
 
-        return $this->select('users.USER_NAME as agent_name, COUNT(payments_table.id) as total_bookings')
-            ->join('users', 'users.user_id = payments_table.agent', 'left')
-            ->groupBy('payments_table.agent, users.USER_NAME')
-            ->whereIn('payments_table.status', $statuses)
-            ->where('payments_table.created_at >=', $startDate)
-            ->where('payments_table.created_at <=', $endDate)
-            ->orderBy('payments_table.agent', 'DESC')
+        return $this->select('users.USER_NAME as agent_name, COUNT(bookings_table.id) as total_bookings')
+            ->join('users', 'users.user_id = bookings_table.agent', 'left')
+            ->groupBy('bookings_table.agent, users.USER_NAME')
+            ->whereIn('bookings_table.status', $statuses)
+            ->where('bookings_table.created_at >=', $startDate)
+            ->where('bookings_table.created_at <=', $endDate)
+            ->orderBy('bookings_table.agent', 'DESC')
             ->findAll();
     }
 }
