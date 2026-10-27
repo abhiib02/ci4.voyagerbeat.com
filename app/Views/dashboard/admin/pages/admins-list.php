@@ -37,7 +37,12 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a type="button" class="dropdown-item" href="/dashboard/all-bookings?employee_id=<?= $admin->user_id ?>">See Bookings</a></li>
-                                        <li><a type="button" class="dropdown-item" href="/makeEmployee/<?= $admin->user_id ?>">Make Employee</a></li>
+                                        <form action="/makeEmployee" method="post" id="makeEmployeeForm-<?= $admin->user_id ?>">
+                                            <input type="hidden" name="id" value="<?= $admin->user_id ?>" required>
+                                            <input type="hidden" name="name" value="<?= $admin->user_name ?>" required>
+                                        </form>
+                                        <li><button type="submit" class="dropdown-item" form="makeEmployeeForm-<?= $admin->user_id ?>">Make Employee</button></li>
+
                                         <li><a type="button" class="dropdown-item" href="/toggleStatus/<?= $admin->user_id ?>/<?= $admin->status ?>?empList=1">
                                                 <?= $admin->status == 1 ? 'Activate' : 'Deactivate' ?></a></li>
 
