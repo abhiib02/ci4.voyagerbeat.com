@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @var array $Packages
+ */
+?>
 <style>
     .condition-bg {
         background-color: color-mix(in srgb, #F6465D, #2EBD85 calc(var(--days)*1%)) !important;
@@ -33,7 +39,11 @@
                             <td><?= esc($package->SLUG); ?></td>
                             <td><?= esc($package->PACKAGE_NAME); ?></td>
                             <td><?= esc($package->LOCATION); ?></td>
-                            <?php $lastDate = explode(',', $package->DATES)[0]; ?>
+                            <?php
+                            $datesArr = explode(',', $package->DATES);
+                            $lastkey = array_key_last($datesArr);
+                            $lastDate = $datesArr[$lastkey] ?? null;
+                            ?>
                             <td class="condition-bg" style="--days:<?= isCurrentDateNearRange($lastDate, 1) ?>;"><?= isCurrentDateNearRange($lastDate, 1) ?> Days</td>
                             <td><?= esc($package->updated_at); ?></td>
                             <td><a class="btn btn-sm btn-outline-dark" href="/package-edit/<?= esc($package->PACKAGE_ID); ?>?Adminlist=1" title="Edit"><i class='bx bxs-edit-alt'></i></a></td>
