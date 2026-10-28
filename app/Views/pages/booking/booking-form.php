@@ -123,6 +123,10 @@
                                         <label class="form-label">Boarding City</label>
                                         <input type="text" class="form-control" v-model.trim="t.boarding_city" required>
                                     </div>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label">Drop Point</label>
+                                        <input type="text" class="form-control" v-model.trim="t.drop_point" required>
+                                    </div>
                                     <input type="hidden" name="perPersonCost[]" :value="travelerCost(t)" required>
                                     <div class="col-12 col-md-6">
                                         <label class="form-label">Sharing</label>
@@ -613,7 +617,8 @@
                     gender: '',
                     contact: '',
                     sharing: '',
-                    boarding_city: ''
+                    boarding_city: '',
+                    drop_point: ''
                 });
             }
 
@@ -791,6 +796,7 @@
                         gender: t.gender,
                         contact: t.contact,
                         boarding_city: t.boarding_city,
+                        drop_point: t.drop_point,
                         sharing: (t.sharing || '').toLowerCase(),
                     }))
                 );

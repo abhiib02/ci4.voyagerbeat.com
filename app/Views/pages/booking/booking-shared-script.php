@@ -33,6 +33,7 @@
                 gender: t.querySelector(".gender")?.value || "",
                 contact: t.querySelector(".contact")?.value || "",
                 boarding_city: t.querySelector(".boarding_city")?.value || "",
+                drop_point: t.querySelector(".drop_point")?.value || "",
                 adhaar: t.querySelector(".adhaar_number")?.value || "",
                 adhaarCard_file: (t.querySelector(".adhaar_number")?.value || "") + "_file",
                 sharing: (t.querySelector(".sharing")?.value || "").toLowerCase()

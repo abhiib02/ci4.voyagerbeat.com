@@ -1,5 +1,5 @@
 <div class=" style-border outline-card p-2">
-    <form id="package-form" method="post" class="d-flex flex-column gap-3">
+    <form id="package-form" action="/submit" method="post" class="d-flex flex-column gap-3">
 
         <!-- Name -->
         <div class="form-floating">
@@ -9,14 +9,20 @@
 
         <!-- Contact No -->
         <div class="form-floating">
-            <input type="number" class="form-control rounded-3 border-secondary " name="contact" id="contact" placeholder="Contact No" required>
-            <label for="contact" class=" fw-semibold">Contact No</label>
+            <input type="number" class="form-control rounded-3 border-secondary " name="phone" id="contact" placeholder="Contact No" required>
+            <label for="contact" class=" fw-semibold">Phone No</label>
         </div>
 
         <!-- Date of Travel -->
         <div class="form-floating">
-            <input type="date" class="form-control rounded-3 border-secondary " name="dateoftravel" id="travelDate" placeholder="Date of Travel" required>
-            <label for="travelDate" class=" fw-semibold">Date of Travel</label>
+            <input type="date" class="form-control rounded-3 border-secondary " name="checkin" id="travelDate" placeholder="Date of Travel" required>
+            <label for="travelDate" class=" fw-semibold">Date of Travel (Check In)</label>
+        </div>
+
+        <!-- Date of Travel -->
+        <div class="form-floating">
+            <input type="date" class="form-control rounded-3 border-secondary " name="checkout" id="travelDate" placeholder="Date of Travel" required>
+            <label for="travelDate" class=" fw-semibold">Check Out</label>
         </div>
 
         <!-- Destination -->
@@ -27,7 +33,7 @@
 
         <!-- No of Person -->
         <div class="form-floating">
-            <input type="number" class="form-control rounded-3 border-secondary " name="adults" id="persons" placeholder="No of Person" min="1" required>
+            <input type="number" class="form-control rounded-3 border-secondary " name="totalpax" id="persons" placeholder="No of Person" min="1" required>
             <label for="persons" class=" fw-semibold">No of Person</label>
         </div>
         <input type="hidden" name="human">
@@ -47,4 +53,4 @@
     </form>
 </div>
 
-<script src="/js/querySavetoGoogleSheet.js"></script>
+<!-- <script src="/js/querySavetoGoogleSheet.js"></script> -->

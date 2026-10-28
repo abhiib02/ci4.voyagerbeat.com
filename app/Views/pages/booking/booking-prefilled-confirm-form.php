@@ -244,6 +244,12 @@
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-floating mb-3">
+                                                <input type="text" class="form-control-plaintext drop_point" required value="<?= $pax->drop_point ?>" readonly>
+                                                <label for="place">Drop Point</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <div class="form-floating mb-3">
                                                 <input type="text" class="form-control adhaar_number" minlength="12" maxlength="12" id="" required>
                                                 <label for="place">Adhaar Card Number</label>
                                             </div>

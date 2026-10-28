@@ -11,6 +11,7 @@ $routes->set404Override(function () {
 
 $routes->get('/', 'MainController::index');
 $routes->get('sitemap.xml', 'MainController::sitemapGenerate');
+$routes->post('submit', 'QueryController::submitQuery');
 
 /*
 -----------------------------------------------------------------------

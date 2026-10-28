@@ -270,6 +270,12 @@
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-floating mb-3">
+                                                <input type="text" class="form-control drop_point" id="dropPoint" required>
+                                                <label for="dropPoint">Drop Point</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <div class="form-floating mb-3">
                                                 <input type="text" class="form-control adhaar_number" id="adhaarNumber" minlength="12" maxlength="12" required>
                                                 <label for="adhaarNumber">Adhaar Card Number</label>
                                             </div>
