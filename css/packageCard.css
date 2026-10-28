@@ -211,7 +211,11 @@
     }
   }
 }
-
+@media (width <= 480px){
+  .travel_card_new{
+    max-width: 100%;
+  }
+}
 /*
 @media (width <= 480px) {
 

@@ -83,28 +83,15 @@ input[type="radio"] {
   --border-rad-out: 20px;
   --border-rad: 10px;
 }
-/* Default (Dark) Styles */
-/* :root {
-  --font-family: "Roboto Condensed", sans-serif;
-  --theme-border-radius: 8px;
-  --maincolor: #ffd600;
-  --maincoloroutline: #ffd60033;
-  --maincolor-lite2: #ffd60044;
-  --maincolor-lite: #ffd60088;
-  --invertcolor: #fff;
-  --inverttextcolor: #000;
-  --darkcolor: #000e;
-  --secondcolor: #333;
-  --secondcolor-lite: #3338;
-  --swiper-theme-color: var(--maincolor);
-  --bg-color: #0b0e1a;
-  --bg-color-2: #1c1f2a;
-  --text-color: #ffffff;
-  --primary-color: #ffd600;
-  --themebtnbg: #ffd600;
-  --themebtncolor: #000;
-} */
 
+@media (width < 992px) {
+  :root {
+    --font-size: 12px;
+  }
+  .btn {
+    --bs-btn-font-size: var(--font-size);
+  }
+}
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -188,10 +175,10 @@ body {
 }
 .btn-outline-voyagers {
   --bs-btn-color: var(--text-color);
-  --bs-btn-border-color: var(--secondaryColor);
+  --bs-btn-border-color: var(--maincolor);
   --bs-btn-hover-color: var(--text-color);
   --bs-btn-hover-bg: color-mix(in srgb, var(--bs-btn-border-color) 20%, white);
-  --bs-btn-hover-border-color: var(--secondaryColor);
+  --bs-btn-hover-border-color: var(--maincolor);
   --bs-btn-focus-shadow-rgb: 33, 37, 41;
   --bs-btn-active-color: var(--text-color);
   --bs-btn-active-bg: var(--bs-btn-hover-bg);
@@ -611,25 +598,7 @@ body {
   display: none;
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (min--moz-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-device-pixel-ratio: 2) {
-  .hide-on-mobile {
-    display: none !important;
-  }
-  .show-on-mobile {
-    display: block;
-  }
-}
-@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2) {
-  .hide-on-mobile {
-    display: none !important;
-  }
-  .show-on-mobile {
-    display: block;
-  }
-}
+
 @media (width < 992px) {
   .hide-on-mobile {
     display: none !important;

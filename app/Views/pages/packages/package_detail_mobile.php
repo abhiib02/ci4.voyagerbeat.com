@@ -68,67 +68,59 @@ $TAGS = explode(',', $package->TAGS);
             </div>
         </section>
 
-        <section class="container" id="package_name">
-            <h5 class="mt-2 fw-bold "><?= $package->PACKAGE_NAME; ?></h5>
-
+        <section class="container py-2" id="package_name">
+            <p class="heading fw-bold my-1 text-capitalize"><?= $package->PACKAGE_NAME; ?></p>
             <p><?= $package->META_DESC ?></p>
-            <div class="my-2" hidden>
-                <a href="/type/<?= urlencode($package->PACKAGE_TYPE) ?>"><span class=" badge rounded-pill text-bg-dark"><?= $package->PACKAGE_TYPE ?></span></a>
-                <a href="/badge/<?= urlencode($package->BADGE) ?>" class="text-decoration-none"><span class="badge rounded-pill text-bg-warning"><?= $package->BADGE ?></span></a>
-                <?php foreach ($TAGS as $tag): ?>
-                    <a href="/tag/<?= $tag ?>" class="text-decoration-none text-theme-secondary"><span class="badge rounded-pill text-theme-secondary">#<?= $tag ?></span></a>
-                <?php endforeach; ?>
-            </div>
-            <span class="text-theme-secondary mx-2"><i class='bx bxs-location-plus'></i></span><span class="mx-1"><?= $package->LOCATION; ?></span>•<span class="mx-1"><?= $package->COUNTRY; ?></span>•<span class="mx-1 fw-bold">Package ID : <?= $package->PACKAGE_ID ?> </span>
+            <span class="text-theme-secondary me-1"><i class='bx bxs-location-plus'></i></span><span class=""><?= $package->LOCATION; ?></span> • <span class=""><?= $package->COUNTRY; ?></span>
         </section>
 
         <section class="container" id="quick-info">
-            <div class="d-flex justify-content-between flex-wrap gap-1">
-                <div class="border rounded-3 my-2 flex-fill card">
-                    <div class="card-body p-2 grid-center">
-                        <div class="text-center">
-                            <p class="text-muted small fw-semibold text-uppercase m-0">Duration</p>
-                            <i class="bx bx-time-five fs-3"></i>
-                            <h6 class="mb-0 fw-bold text-dark"><?= ($package->STAY) ?? '' ?></h6>
-                        </div>
+            <div class="d-flex justify-content-between flex-wrap gap-1 pb-2">
+                <div class="small-icon-card">
+                    <div class="icon">
+                        <i class="bx bx-time-five"></i>
+                    </div>
+                    <div class="detail">
+                        <p class="text-uppercase m-0">Duration</p>
+                        <p class="fw-semibold text-uppercase m-0"><?= ($package->STAY) ?? '' ?></p>
                     </div>
                 </div>
-                <div class="border rounded-3 my-2 flex-fill card">
-                    <div class="card-body p-2 grid-center">
-                        <div class="text-center">
-                            <p class="text-muted small fw-semibold text-uppercase m-0">Pick n Drop</p>
-                            <i class='bx bx-map-pin fs-3'></i>
-                            <h6 class="mb-0 fw-bold text-dark"><?= ($package->PICKNDROP) ?? 'Delhi to Delhi' ?></h6>
-                        </div>
+                <div class="small-icon-card">
+                    <div class="icon">
+                        <i class="bx bx-map-pin"></i>
+                    </div>
+                    <div class="detail">
+                        <p class="text-uppercase m-0">Pick n Drop</p>
+                        <p class="fw-semibold text-uppercase m-0"><?= ($package->PICKNDROP) ?? 'Delhi to Delhi' ?></p>
                     </div>
                 </div>
-                <div class="border rounded-3 my-2 flex-fill card">
-                    <div class="card-body p-2 grid-center">
-                        <div class="text-center">
-                            <p class="text-muted small fw-semibold text-uppercase m-0">Starting Price</p>
-                            <i class='bx bx-rupee fs-3'></i>
-                            <h6 class="mb-0 fw-bold text-dark">
-                                <?php if ($package->REQUEST_PRICE) : ?>
-                                    Price on Request
-                                <?php else: ?>
-                                    ₹ <?= $package->PRICE_1; ?>
-                                <?php endif; ?>
-                            </h6>
-                        </div>
+                <div class="small-icon-card">
+                    <div class="icon">
+                        <i class="bx bx-rupee"></i>
                     </div>
-
+                    <div class="detail">
+                        <p class="text-uppercase m-0">Starting Price</p>
+                        <p class="fw-semibold text-uppercase m-0">
+                            <?php if ($package->REQUEST_PRICE) : ?>
+                                Price on Request
+                            <?php else: ?>
+                                ₹ <?= $package->PRICE_1; ?>
+                            <?php endif; ?>
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
         <section class="container mb-3" id="costing">
+            <p class="heading fw-bold my-1 text-capitalize">Costing</p>
             <?= view('pages/packages/component/cost-section-sidebar', ['package' => $package]) ?>
         </section>
         <section class="container mb-3" id="dates">
-            <h3 class="text-theme-secondary">Dates</h3>
+            <p class="heading fw-bold my-1 text-capitalize">Dates</p>
             <?= view('pages/packages/component/dates-section', ['package' => $package]) ?>
         </section>
         <section class="container mb-3" id="itinerary">
-            <h3 class="text-theme-secondary">Day to Day Itinerary</h3>
+            <p class="heading fw-bold my-1 text-capitalize">Day wise itinerary</p>
             <?= view('pages/packages/component/itinerarySection', ['package' => $package]) ?>
         </section>
         <br>
@@ -186,8 +178,7 @@ $TAGS = explode(',', $package->TAGS);
             </div>
         </section>
         <section class="container mb-3" id="Highlight">
-            <h3 class="text-theme-secondary">Highlight</h3>
-
+            <p class="heading fw-bold my-1 text-capitalize">Highlight</p>
             <div class="accordion accordion-flush" id="HighlightAccordion">
 
                 <!-- Gadgets -->
@@ -209,15 +200,30 @@ $TAGS = explode(',', $package->TAGS);
         </section>
         <?php if (!empty($package->PACKAGE_MISC)): ?>
             <section class="container mb-3" id="Miscellaneous">
-                <h3 class="text-theme-secondary">Miscellaneous</h3>
-                <div class="wysiwyg">
-                    <?= $package->PACKAGE_MISC ?>
-                </div>
+                <p class="heading fw-bold my-1 text-capitalize">Miscellaneous</p>
+                <div class="accordion accordion-flush" id="MiscellaneousAccordion">
+
+                    <!-- Gadgets -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingGadgets">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsemisc" aria-expanded="false" aria-controls="collapseGadgets">
+                                Miscellaneous
+                            </button>
+                        </h2>
+                        <div id="collapsemisc" class="accordion-collapse collapse" aria-labelledby="headingGadgets" data-bs-parent="#MiscellaneousAccordion">
+                            <div class="accordion-body">
+                                <div class="wysiwyg">
+                                    <?= $package->PACKAGE_MISC ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
             </section>
         <?php endif; ?>
         <section class="container mb-3" id="thingstocarry">
-
-            <h3 class="text-theme-secondary">Things To Carry</h3>
+            <p class="heading fw-bold my-1 text-capitalize">Things To Carry</p>
 
             <div class="accordion accordion-flush" id="thingsToCarryAccordion">
 
@@ -346,7 +352,7 @@ $TAGS = explode(',', $package->TAGS);
             </div>
         </section>
         <section class="container mb-3" id="advisory">
-            <h3 class="text-theme-secondary">Advisory</h3>
+            <p class="heading fw-bold my-1 text-capitalize">Advisory</p>
             <div class="accordion accordion-flush" id="advisoryAccordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingAdvisory">
@@ -378,7 +384,7 @@ $TAGS = explode(',', $package->TAGS);
         </section>
         <?php if (!empty($package->PACKAGE_TNC)): ?>
             <section class="container mb-3" id="tnc">
-                <h3 class="text-theme-secondary">Terms & Condition</h3>
+                <p class="heading fw-bold my-1 text-capitalize">Terms & Condition</p>
                 <div class="accordion accordion-flush" id="tncAccordion">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTnc">
@@ -400,7 +406,7 @@ $TAGS = explode(',', $package->TAGS);
         <?php $faqs = !empty($package->PACKAGE_FAQ) ? json_decode($package->PACKAGE_FAQ, true) : []; ?>
         <?php if (!empty($faqs)): ?>
             <section class="container mb-5 pb-5" id="tnc">
-                <h3 class="text-theme-secondary">Frequently Asked Questions</h3>
+                <p class="heading fw-bold my-1 text-capitalize">Frequently Asked Questions</p>
                 <?= view('pages/packages/component/faq-section', ['FAQS' => $package->PACKAGE_FAQ]) ?>
             </section>
 

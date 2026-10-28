@@ -1,18 +1,49 @@
 .swiper {
   width: 100%;
-  /*aspect-ratio: 16 / 9;*/
+  aspect-ratio: 3 / 2;
 }
 .swiper-slide img {
   width: 100%;
   object-fit: cover;
+  aspect-ratio: 3 / 2;
 }
 .swiper-slide iframe {
   width: 100%;
   object-fit: cover;
+  aspect-ratio: 3 / 2;
 }
 .pdf-download {
   position: absolute;
   top: 60px;
   right: 10px;
   z-index: 1020;
+}
+.heading{
+  font-size: 1.4em;
+}
+.small-icon-card{
+  display: flex;
+  flex: 1 1 auto;
+  border:1px solid var(--maincolor);
+  border-radius: calc(var(--theme-border-radius) * 0.5);
+  width: fit-content;
+  padding: 0rem 0.5rem;
+  background: var(--bg-color-2);
+  & > .icon{
+    height: auto;
+    width: fit-content;
+    font-size: 1.4rem;
+    color:var(--maincolor);
+    padding-inline-end:0.25rem;
+  }
+  & > .detail{
+    width: fit-content;
+    align-content: center;
+  }
+}
+
+.accordion-button{
+  font-size: var(--font-size) !important;
+  --bs-accordion-btn-padding-x: 0.8rem !important;
+    --bs-accordion-btn-padding-y: 0.8rem !important;
 }

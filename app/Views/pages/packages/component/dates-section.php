@@ -4,8 +4,6 @@
      * @var object $package
      */
     ?>
-    <h5>Trip Dates</h5>
-    <hr>
     <?php if ($package->CUSTOM_TRIP) : ?>
         <h6 class=" ">Customised Trip Available As Per Your Choice & Comfort</h6>
     <?php else: ?>
