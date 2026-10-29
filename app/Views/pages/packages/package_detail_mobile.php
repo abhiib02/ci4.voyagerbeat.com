@@ -417,17 +417,7 @@ $TAGS = explode(',', $package->TAGS);
 <div id="trigger-nav-menu-animation" class="mb-5"></div>
 
 <!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
 
-<!-- Initialize Swiper -->
-<script>
-    var swiper = new Swiper('.package_images', {
-        pagination: {
-            el: '.swiper-pagination',
-            dynamicBullets: true,
-        },
-    });
-</script>
 <script src="/js/button_trigger_package.js"></script>
 <script>
     const shareButton = document.querySelector('.share-button');

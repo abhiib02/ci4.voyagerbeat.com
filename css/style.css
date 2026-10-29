@@ -65,7 +65,7 @@ input[type="radio"] {
   --darkcolor: #000e;
   --secondcolor: #030303;
   --secondcolor-lite: #888888;
-  --swiper-theme-color: var(--maincolor);
+  --swiper-theme-color: var(--maincolor) !important;
   --bg-color: #f5f5f5;
   --bg-color-2: #fff;
   --text-color: #000000;
@@ -78,7 +78,6 @@ input[type="radio"] {
   --success-color: #28a745;
   --warning-color: #ffc107;
   --info-color: #17a2b8;
-
   --timingfunc: cubic-bezier(.86, .2, .03, .97);
   --border-rad-out: 20px;
   --border-rad: 10px;

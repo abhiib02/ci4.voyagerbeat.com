@@ -62,3 +62,9 @@ var swiper = new Swiper('.home-slider2', {
             clickable: true
         },
     });
+    var swiper = new Swiper('.package_images', {
+        pagination: {
+            el: '.swiper-pagination',
+            dynamicBullets: true,
+        },
+    });

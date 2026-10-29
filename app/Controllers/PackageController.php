@@ -128,20 +128,20 @@ class PackageController extends BaseController
             return $this->Render_Page('packages/package_detail', $this->data);
         }
     }
-    public function packagesByDestination(string $slug)
-    {
-        if (!$this->DestinationModel->isSlugExist($slug)) {
-            return redirect()->to('/destinations');
-        }
+    // public function packagesByDestination(string $slug)
+    // {
+    //     if (!$this->DestinationModel->isSlugExist($slug)) {
+    //         return redirect()->to('/destinations');
+    //     }
 
-        $this->data['packages'] = $this->PackageModel->getPackagesByDestination($slug);
-        $this->data["name"] = $slug . " Packages";
-        $this->data["title"] = $slug . " Packages | Voyagers Beat | Live to Travel";
-        $this->data["meta_desc"] = $slug . " Packages | Voyagers Beat | " . $slug . " is the best location to travel with Voyagers beat";
-        $this->data["canonical"] = "upcoming";
+    //     $this->data['packages'] = $this->PackageModel->getPackagesByDestination($slug);
+    //     $this->data["name"] = $slug . " Packages";
+    //     $this->data["title"] = $slug . " Packages | Voyagers Beat | Live to Travel";
+    //     $this->data["meta_desc"] = $slug . " Packages | Voyagers Beat | " . $slug . " is the best location to travel with Voyagers beat";
+    //     $this->data["canonical"] = "upcoming";
 
-        return $this->Render_Page('packages/packages', $this->data);
-    }
+    //     return $this->Render_Page('packages/packages', $this->data);
+    // }
     public function packagesByName()
     {
         $searchString = htmlspecialchars(strip_tags($this->request->getVar('keyword')));
