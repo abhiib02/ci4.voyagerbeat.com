@@ -75,6 +75,12 @@
             <div id="priceOptions" class="options pt-2"></div>
             <!-- Final Output Section -->
             <div id="output"></div>
+            <?php if (!auth('Admin', 'Employee', 'User')): ?>
+                <div class="alert alert-secondary text-center">
+                    <span class="fw-bold">Login to Book this Package</span>
+                </div>
+
+            <?php endif; ?>
         </div>
 
         <script src="/js/util-script.js"></script>
