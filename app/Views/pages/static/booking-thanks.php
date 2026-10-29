@@ -104,24 +104,31 @@
 
                             $summary = [];
 
-                            for ($i = 0; $i < count($perPersonSharing); $i++) {
-                                $type = $perPersonSharing[$i];
 
-                                $explodeSharing = explode('|', $type);
-                                $sharing = (count($explodeSharing) > 2) ? $explodeSharing[1] : $explodeSharing[1];
-                                $type = $sharing;
+                            $total = count($perPersonSharing);
 
-                                $cost = $perPersonCost[$i];
+                            for ($i = 0; $i < $total; $i++) {
+                                $explodeSharing = explode('|', (string) $perPersonSharing[$i]);
+
+                                // Use index 1 if it exists, otherwise fall back to index 0
+                                $type = $explodeSharing[1] ?? $explodeSharing[0];
+
+                                // Skip empty entries
+                                if (trim($type) === '') {
+                                    continue;
+                                }
+
+                                $cost = $perPersonCost[$i] ?? 0;
 
                                 if (!isset($summary[$type])) {
                                     $summary[$type] = [
-                                        'count' => 0,
-                                        'total_cost' => 0
+                                        'count'      => 0,
+                                        'total_cost' => 0,
                                     ];
                                 }
 
                                 $summary[$type]['count']++;
-                                $summary[$type]['total_cost'] += $cost;
+                                $summary[$type]['total_cost'] += (float) $cost;
                             }
                             ?>
                             <?php foreach ($summary as $type => $itemData): ?>
