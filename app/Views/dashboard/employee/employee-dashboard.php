@@ -91,6 +91,7 @@
                     </div>
                 </div>
                 <?= view('dashboard/shared-dashboard-script', [
+                    'EmployeeBooking_Month' => $EmployeeBooking_Month ?? [],
                     'Annual_Revenue' => $Annual_Revenue ?? [],
                     'Annual_Pax' => $Annual_Pax ?? [],
                     'BookingCountByStatus' => $BookingCountByStatus ?? []

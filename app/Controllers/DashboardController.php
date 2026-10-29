@@ -186,6 +186,7 @@ class DashboardController extends BaseController
                 $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Agent($agentID, $this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'total_package_cost');
                 // Charts Data 
                 $statuses = ['Pending', 'Complete', 'Complete_no_points'];
+
                 $this->data['Annual_Revenue'] = $this->BookingModel->getAnnualSalesRevenue($agentID, $this->data['year'], $statuses);
                 $this->data['Annual_Pax'] = $this->BookingModel->getAnnualPax($agentID, $this->data['year'], $statuses);
                 $this->data['Annual_Booking'] = $this->BookingModel->getAnnualBookings($agentID, $this->data['year'], $statuses);
