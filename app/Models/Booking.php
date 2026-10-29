@@ -116,27 +116,42 @@ class Booking extends Model
     {
         return $this->table($this->table)->get()->getResult();
     }
-    public function getAllBookingsForAdminDashboard(): array
+    public function getAllBookingsForAdminDashboard(string $month, string $year): array
     {
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
         return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
             ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
-            ->orderBy('ID', 'DESC')
+            ->where('bookings_table.created_at >=', $startDate)
+            ->where('bookings_table.created_at <=', $endDate)
+            ->orderBy('bookings_table.ID', 'DESC')
             ->find();
         //return $this->select()->orderBy('ID', 'DESC')->findAll();
     }
-    public function getBookingsByEmployeeID(int $employeeID): array
+    public function getBookingsByEmployeeID(int $employeeID, string $month, string $year): array
     {
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
         return $this->select('bookings_table.*, users.USER_NAME as agent_name')
             ->join('users', 'users.user_id = bookings_table.agent', 'left')
             ->where('bookings_table.agent', $employeeID)
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
             ->orderBy('ID', 'DESC')
             ->find();
     }
-    public function getBookingsByCustomerID(int $customerID): array
+    public function getBookingsByCustomerID(int $customerID, string $month, string $year): array
     {
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
         return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
             ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
             ->where('bookings_table.user_id', $customerID)
+            ->where('created_at >=', $startDate)
+            ->where('created_at <=', $endDate)
             ->orderBy('ID', 'DESC')
             ->find();
         //return $this->where('user_id', $customerID)->orderBy('ID', 'DESC')->find();
@@ -196,12 +211,17 @@ class Booking extends Model
 
 
 
-    public function getAllBookingsofAgentForDashboard(int $userID): array
+    public function getAllBookingsofAgentForDashboard(int $userID, string $month, string $year): array
     {
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
         return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
             ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
             ->where('bookings_table.agent', $userID)
-            ->orderBy('ID', 'DESC')
+            ->where('bookings_table.created_at >=', $startDate)
+            ->where('bookings_table.created_at <=', $endDate)
+            ->orderBy('bookings_table.ID', 'DESC')
             ->find();
         //return $this->select()->where('agent', $userID)->orderBy('ID', 'DESC')->findAll();
     }
@@ -210,8 +230,9 @@ class Booking extends Model
 
 
 
-        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
-        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
 
         return (int) $this
             ->where('created_at >=', $startDate)
@@ -223,8 +244,9 @@ class Booking extends Model
 
 
 
-        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
-        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
 
         return (int) $this
             ->whereIn('status', $statusArray)
@@ -238,8 +260,9 @@ class Booking extends Model
     }
     public function getAllBookingsCountofAgentWithStatus(int $agentID, string $month, string $year, string $status): int
     {
-        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
-        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
         return (int) $this
             ->where('created_at >=', $startDate)
             ->where('created_at <=', $endDate)
@@ -256,8 +279,9 @@ class Booking extends Model
 
     public function getSumofColumn_Agent(int $agentID, string $month, string $year, string $status, string $columName): int
     {
-        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
-        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
         $statusArray = array_map('trim', explode(',', $status));
         $result = $this
             ->selectSum($columName)
@@ -270,8 +294,9 @@ class Booking extends Model
     }
     public function getSumofColumn_Admin(string $month, string $year, string $status, string $columName): int
     {
-        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
-        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
         $statusArray = array_map('trim', explode(',', $status));
         $result = $this
             ->selectSum($columName)
@@ -450,25 +475,10 @@ class Booking extends Model
 
     public function getEmployeesBookingsCountMonthAdmin(string $month, string $year, array $statuses): array
     {
-        // $sql = 'SELECT 
-        //     COUNT(p.`id`) AS `bookings_count` 
-        //     FROM (
-        //         SELECT 1 AS m UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 
-        //         UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 
-        //         UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
-        //     ) AS `months` 
-        //     LEFT JOIN `bookings_table` p ON MONTH(p.`created_at`) = `months`.m 
-        //         AND YEAR(p.`created_at`) = ? 
-        //         AND p.`status` IN ? 
-        //     GROUP BY `months`.m 
-        //     ORDER BY `months`.m ASC;';
-        // $query = $this->db->query($sql, [$year, $statuses]);
-
-        // // Extracts just the Bookings values into a flat array: [0, 0, 10, 235, ...]
-        // return array_column($query->getResultArray(), 'bookings_count');
-        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
-        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
-
+       
+        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
+        $startDate = $MonthDuration['startDate'];
+        $endDate = $MonthDuration['endDate'];
         return $this->select('users.USER_NAME as agent_name, COUNT(bookings_table.id) as total_bookings')
             ->join('users', 'users.user_id = bookings_table.agent', 'left')
             ->groupBy('bookings_table.agent, users.USER_NAME')
@@ -477,5 +487,12 @@ class Booking extends Model
             ->where('bookings_table.created_at <=', $endDate)
             ->orderBy('bookings_table.agent', 'DESC')
             ->findAll();
+    }
+
+    // Helper Function
+    protected function getMonthStartToEndTimeStamp(string $month,string $year){
+        $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
+        $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
+        return ['startDate'=>$startDate, 'endDate' =>$endDate];
     }
 }

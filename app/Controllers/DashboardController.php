@@ -9,7 +9,6 @@ use App\Models\Package;
 use App\Models\Point;
 use App\Models\Option;
 use App\Models\Booking;
-use App\Models\Category;
 use App\Models\Coupon;
 use Config\Services;
 
@@ -84,7 +83,8 @@ class DashboardController extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
-
+        $this->data['month'] = $this->request->getGet('month') ?? date('m');
+        $this->data['year'] = $this->request->getGet('year') ?? date('Y');
         $this->data['pagename'] = $pageName;
 
         switch ($pageName) {
@@ -119,22 +119,20 @@ class DashboardController extends BaseController
 
                 $employeeID = $this->request->getGet('employee_id');
                 $customer_id = $this->request->getGet('customer_id');
-
+                
                 if ($employeeID !== null) {
-                    $this->data['Bookings'] = $this->BookingModel->getBookingsByEmployeeID($employeeID);
+                    $this->data['Bookings'] = $this->BookingModel->getBookingsByEmployeeID($employeeID, $this->data['month'], $this->data['year']);
                 } else if ($customer_id !== null) {
-                    $this->data['Bookings'] = $this->BookingModel->getBookingsByCustomerID($customer_id);
+                    $this->data['Bookings'] = $this->BookingModel->getBookingsByCustomerID($customer_id, $this->data['month'], $this->data['year']);
                 } else {
-                    $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard();
+                    $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['month'], $this->data['year']);
                 }
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             case 'coupons':
                 $this->data['Coupons'] = $this->CouponModel->getAllCoupons();
                 break;
-            default:
-                $this->data['month'] = $this->request->getGet('month') ?? date('m');
-                $this->data['year'] = $this->request->getGet('year') ?? date('Y');
+            default:      
                 $statuses = ['Pending', 'Complete', 'Complete_no_points'];
                 // Booking Counts
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year'], $statuses);
@@ -169,16 +167,16 @@ class DashboardController extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
+        $this->data['month'] = $this->request->getGet('month') ?? date('m');
+        $this->data['year'] = $this->request->getGet('year') ?? date('Y');
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
             case 'booking-list':
-                $this->data['Bookings'] = $this->BookingModel->getAllBookingsofAgentForDashboard($userID);
+                $this->data['Bookings'] = $this->BookingModel->getAllBookingsofAgentForDashboard($userID, $this->data['month'], $this->data['year']);
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             default:
-                $agentID = $userID;
-                $this->data['month'] = $this->request->getGet('month') ?? date('m');
-                $this->data['year'] = $this->request->getGet('year') ?? date('Y');
+                $agentID = $userID;    
                 // Booking Counts
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountofAgent($agentID, $this->data['month'], $this->data['year']);
                 // Booking Collection with total person

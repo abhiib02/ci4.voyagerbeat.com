@@ -5,6 +5,11 @@
  * @var array $Bookings
  */
 ?>
+<div class="d-flex justify-content-end">
+    <div>
+        <?= view('dashboard/shared-components/month-year-selector') ?>
+    </div>
+</div>
 <table class="sortable table hover" id="datatable" data-order='[[ 0, "desc" ]]'>
     <thead>
         <tr>
