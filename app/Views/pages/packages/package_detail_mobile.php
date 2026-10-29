@@ -9,7 +9,7 @@
 // Data Formatting
 $TAGS = explode(',', $package->TAGS);
 ?>
-<link rel="stylesheet" href="/css/package-detail-mobile.css?v=2.1">
+<link rel="stylesheet" href="/css/package-detail-mobile.css?v=2.2">
 <div>
 
     <div itemscope itemtype="<?= base_url(); ?>">
@@ -420,7 +420,7 @@ $TAGS = explode(',', $package->TAGS);
     </div>
 </div>
 <div class="corner-anchor" in-view="is-inview">
-    <a class="small-icon-card text-decoration-none cornerPos" id="cornerCard" href="#quick-info">
+    <a class="small-icon-card text-decoration-none cornerPos" id="cornerCard" style="--smallIconCardbg:var(--maincolor);--smallIconColor:var(--text-color);" href="#quick-info">
         <?php $PriceIconCard($package->REQUEST_PRICE, $package->PRICE_1); ?>
     </a>
 </div>

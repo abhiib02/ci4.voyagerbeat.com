@@ -28,14 +28,15 @@
   border-radius: calc(var(--theme-border-radius) * 0.5);
   width: fit-content;
   padding: 0rem 0.5rem;
-  background: var(--bg-color-2);
+  background: var(--smallIconCardbg,var(--bg-color-2));
   color:inherit;
   & > .icon{
     height: auto;
     width: fit-content;
     font-size: 1.4rem;
-    color:var(--maincolor);
+    color:var(--smallIconColor,var(--maincolor));
     padding-inline-end:0.25rem;
+    
   }
   & > .detail{
     width: fit-content;

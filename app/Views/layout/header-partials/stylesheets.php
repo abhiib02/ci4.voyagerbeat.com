@@ -4,7 +4,7 @@
  * @var integer $version
  */
 ?>
-<?php $version = 2.1; ?>
+<?php $version = 2.2; ?>
 <link rel="manifest" href="../../manifest.webmanifest" fetchpriority="high" decoding="async">
 <link rel="apple-touch-icon" href="../../assets/logo.png" fetchpriority="high" decoding="async">
 <link rel="shortcut icon" type="image/png" href="../../assets/logo-comp.png" fetchpriority="high" decoding="async" />
