@@ -94,7 +94,7 @@
                                     <label class="form-check-label" for="gst_include">
                                         <input class="form-check-input" type="hidden" name="gst_include" value="0" id="gst_include">
                                         <input class="form-check-input" type="checkbox" name="gst_include" value="1" id="gst_include">
-                                        Include 5% GST
+                                        Add 5% GST
 
                                     </label>
                                 </div>
