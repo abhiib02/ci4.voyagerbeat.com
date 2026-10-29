@@ -29,7 +29,7 @@
                 <div>
                     <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal"><i class='bx bx-x'></i> Close</button>
                 </div>
-                <div>
+                <div class="hide-in-mobile">
                     <kbd>Esc</kbd> to Close <kbd>Tab</kbd> Select & Down
                 </div>
             </div>

@@ -46,7 +46,6 @@
             <?php if (!empty($package->HOTEL_IMG_LINK)): ?>
                 <a type="button" class="btn btn-sm btn-outline-dark mb-1">Hotel Images</a>
             <?php endif; ?>
-            <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="text-secondary mb-1"><sub>Check Offer</sub></a>
         </div>
 
     </div>
