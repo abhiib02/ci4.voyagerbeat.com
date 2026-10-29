@@ -9,7 +9,7 @@
 // Data Formatting
 $TAGS = explode(',', $package->TAGS);
 ?>
-<link rel="stylesheet" href="/css/package-detail-mobile.css?v=<?= $version ?>">
+<link rel="stylesheet" href="/css/package-detail-mobile.css?v=2.1">
 <div>
 
     <div itemscope itemtype="<?= base_url(); ?>">
