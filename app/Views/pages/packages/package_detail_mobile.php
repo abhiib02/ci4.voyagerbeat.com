@@ -94,20 +94,27 @@ $TAGS = explode(',', $package->TAGS);
                         <p class="fw-semibold text-uppercase m-0"><?= ($package->PICKNDROP) ?? 'Delhi to Delhi' ?></p>
                     </div>
                 </div>
-                <a class="small-icon-card text-decoration-none" href="#costing">
+                <?php $PriceIconCard = function ($REQUEST_PRICE, $PRICE_1) { ?>
+
                     <div class="icon">
                         <i class="bx bx-rupee"></i>
                     </div>
                     <div class="detail">
                         <p class="text-uppercase m-0">Starting Price</p>
                         <p class="fw-semibold text-uppercase m-0">
-                            <?php if ($package->REQUEST_PRICE) : ?>
+                            <?php if ($REQUEST_PRICE) : ?>
                                 Price on Request
                             <?php else: ?>
-                                ₹ <?= $package->PRICE_1; ?>
+                                ₹ <?= $PRICE_1; ?>
                             <?php endif; ?>
                         </p>
                     </div>
+
+                <?php
+                };
+                ?>
+                <a class="small-icon-card text-decoration-none" id="upperCard" href="#costing">
+                    <?php $PriceIconCard($package->REQUEST_PRICE, $package->PRICE_1); ?>
                 </a>
             </div>
         </section>
@@ -412,7 +419,11 @@ $TAGS = explode(',', $package->TAGS);
         <?php endif; ?>
     </div>
 </div>
-
+<div class="corner-anchor" in-view="is-inview">
+    <a class="small-icon-card text-decoration-none cornerPos" id="cornerCard" href="#quick-info">
+        <?php $PriceIconCard($package->REQUEST_PRICE, $package->PRICE_1); ?>
+    </a>
+</div>
 <div id="trigger-nav-menu-animation" class="mb-5 pt-1"></div>
 
 <!-- Swiper JS -->
@@ -457,3 +468,17 @@ $TAGS = explode(',', $package->TAGS);
     const PackageDates = '<?= $package->DATES ?>';
 </script>
 <script src="/js/package-dates.js"></script>
+<script>
+    const upperCard = document.getElementById('upperCard');
+    const cornerCard = document.getElementById('cornerCard');
+
+    if (upperCard && cornerCard) {
+        const observer = new IntersectionObserver(([entry]) => {
+            cornerCard.classList.toggle('is-hidden', entry.isIntersecting);
+        }, {
+            threshold: 0
+        });
+
+        observer.observe(upperCard);
+    }
+</script>

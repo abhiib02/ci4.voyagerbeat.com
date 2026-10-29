@@ -48,3 +48,18 @@
   --bs-accordion-btn-padding-x: 0.8rem !important;
     --bs-accordion-btn-padding-y: 0.8rem !important;
 }
+.cornerPos {
+  position: fixed;
+  bottom: 10%;
+  right: 0;
+  z-index: 100;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+/* hidden state, applied when the upper card is in view */
+.cornerPos.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(100%);
+}
