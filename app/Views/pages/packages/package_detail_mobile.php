@@ -71,7 +71,7 @@ $TAGS = explode(',', $package->TAGS);
         <section class="container py-2" id="package_name">
             <p class="heading fw-bold my-1 text-capitalize"><?= $package->PACKAGE_NAME; ?></p>
             <p><?= $package->META_DESC ?></p>
-            <span class="text-theme-secondary me-1"><i class='bx bxs-location-plus'></i></span><span class=""><?= $package->LOCATION; ?></span> • <span class=""><?= $package->COUNTRY; ?></span>
+            <span class="text-theme-secondary me-1 "><i class='bx bxs-location-plus'></i></span><span class="fw-bold text-capitalize"><?= $package->LOCATION; ?></span> • <span class="fw-bold"><?= $package->COUNTRY; ?></span>
         </section>
 
         <section class="container" id="quick-info">
@@ -94,7 +94,7 @@ $TAGS = explode(',', $package->TAGS);
                         <p class="fw-semibold text-uppercase m-0"><?= ($package->PICKNDROP) ?? 'Delhi to Delhi' ?></p>
                     </div>
                 </div>
-                <div class="small-icon-card">
+                <a class="small-icon-card text-decoration-none" href="#costing">
                     <div class="icon">
                         <i class="bx bx-rupee"></i>
                     </div>
@@ -108,19 +108,19 @@ $TAGS = explode(',', $package->TAGS);
                             <?php endif; ?>
                         </p>
                     </div>
-                </div>
+                </a>
             </div>
         </section>
         <section class="container mb-3" id="costing">
-            <p class="heading fw-bold my-1 text-capitalize">Costing</p>
+            <p class=" fw-bold my-1 text-capitalize">Costing</p>
             <?= view('pages/packages/component/cost-section-sidebar', ['package' => $package]) ?>
         </section>
         <section class="container mb-3" id="dates">
-            <p class="heading fw-bold my-1 text-capitalize">Dates</p>
+            <p class=" fw-bold my-1 text-capitalize">Dates</p>
             <?= view('pages/packages/component/dates-section', ['package' => $package]) ?>
         </section>
         <section class="container mb-3" id="itinerary">
-            <p class="heading fw-bold my-1 text-capitalize">Day wise itinerary</p>
+            <p class="fw-bold my-1 text-capitalize">Day wise itinerary</p>
             <?= view('pages/packages/component/itinerarySection', ['package' => $package]) ?>
         </section>
         <br>
@@ -132,11 +132,11 @@ $TAGS = explode(',', $package->TAGS);
                         <!-- Gadgets -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingGadgets">
-                                <button class="accordion-button collapsed text-bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInclusion-Accordion" aria-expanded="false" aria-controls="collapseGadgets">
+                                <button class="accordion-button collapsed text-bg-success fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInclusion-Accordion" aria-expanded="false" aria-controls="collapseGadgets">
                                     Trip Inclusion
                                 </button>
                             </h2>
-                            <div id="collapseInclusion-Accordion" class="accordion-collapse collapse" aria-labelledby="headingGadgets" data-bs-parent="#Inclusion-Accordion">
+                            <div id="collapseInclusion-Accordion" class="accordion-collapse collapse " aria-labelledby="headingGadgets" data-bs-parent="#Inclusion-Accordion">
                                 <div class="accordion-body">
                                     <div class="alert alert-success">
                                         <div class="wysiwyg">
@@ -158,7 +158,7 @@ $TAGS = explode(',', $package->TAGS);
                         <!-- Gadgets -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingGadgets">
-                                <button class="accordion-button collapsed text-bg-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExclusion-Accordion" aria-expanded="false" aria-controls="collapseGadgets">
+                                <button class="accordion-button collapsed text-bg-danger fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExclusion-Accordion" aria-expanded="false" aria-controls="collapseGadgets">
                                     Trip Exclusion
                                 </button>
                             </h2>
@@ -178,13 +178,13 @@ $TAGS = explode(',', $package->TAGS);
             </div>
         </section>
         <section class="container mb-3" id="Highlight">
-            <p class="heading fw-bold my-1 text-capitalize">Highlight</p>
+
             <div class="accordion accordion-flush" id="HighlightAccordion">
 
                 <!-- Gadgets -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="Highlight">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Highlight" aria-expanded="false" aria-controls="collapseGadgets">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Highlight" aria-expanded="false" aria-controls="collapseGadgets">
                             Highlight
                         </button>
                     </h2>
@@ -200,13 +200,12 @@ $TAGS = explode(',', $package->TAGS);
         </section>
         <?php if (!empty($package->PACKAGE_MISC)): ?>
             <section class="container mb-3" id="Miscellaneous">
-                <p class="heading fw-bold my-1 text-capitalize">Miscellaneous</p>
                 <div class="accordion accordion-flush" id="MiscellaneousAccordion">
 
                     <!-- Gadgets -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingGadgets">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsemisc" aria-expanded="false" aria-controls="collapseGadgets">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapsemisc" aria-expanded="false" aria-controls="collapseGadgets">
                                 Miscellaneous
                             </button>
                         </h2>
@@ -230,7 +229,7 @@ $TAGS = explode(',', $package->TAGS);
                 <!-- Gadgets -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingGadgets">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGadgets" aria-expanded="false" aria-controls="collapseGadgets">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGadgets" aria-expanded="false" aria-controls="collapseGadgets">
                             Gadgets
                         </button>
                     </h2>
@@ -248,7 +247,7 @@ $TAGS = explode(',', $package->TAGS);
                 <!-- Gears -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingGears">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGears" aria-expanded="false" aria-controls="collapseGears">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGears" aria-expanded="false" aria-controls="collapseGears">
                             Gears
                         </button>
                     </h2>
@@ -265,7 +264,7 @@ $TAGS = explode(',', $package->TAGS);
                 <!-- Clothes -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingClothes">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClothes" aria-expanded="false" aria-controls="collapseClothes">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClothes" aria-expanded="false" aria-controls="collapseClothes">
                             Clothes
                         </button>
                     </h2>
@@ -290,7 +289,7 @@ $TAGS = explode(',', $package->TAGS);
                 <!-- Footwear -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingFootwear">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFootwear" aria-expanded="false" aria-controls="collapseFootwear">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFootwear" aria-expanded="false" aria-controls="collapseFootwear">
                             Footwear
                         </button>
                     </h2>
@@ -307,7 +306,7 @@ $TAGS = explode(',', $package->TAGS);
                 <!-- Medication -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingMedication">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMedication" aria-expanded="false" aria-controls="collapseMedication">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMedication" aria-expanded="false" aria-controls="collapseMedication">
                             Medication
                         </button>
                     </h2>
@@ -330,7 +329,7 @@ $TAGS = explode(',', $package->TAGS);
                 <!-- Personal Accessories -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingAccessories">
-                        <button class="accordion-button collapsed" type="button" data-bs-type="button" data-bs-toggle="collapse" data-bs-target="#collapseAccessories" aria-expanded="false" aria-controls="collapseAccessories">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-type="button" data-bs-toggle="collapse" data-bs-target="#collapseAccessories" aria-expanded="false" aria-controls="collapseAccessories">
                             Personal Accessories
                         </button>
                     </h2>
@@ -352,11 +351,11 @@ $TAGS = explode(',', $package->TAGS);
             </div>
         </section>
         <section class="container mb-3" id="advisory">
-            <p class="heading fw-bold my-1 text-capitalize">Advisory</p>
+
             <div class="accordion accordion-flush" id="advisoryAccordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingAdvisory">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdvisory" aria-expanded="false" aria-controls="collapseAdvisory">
+                        <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdvisory" aria-expanded="false" aria-controls="collapseAdvisory">
                             Advisory
                         </button>
                     </h2>
@@ -384,11 +383,11 @@ $TAGS = explode(',', $package->TAGS);
         </section>
         <?php if (!empty($package->PACKAGE_TNC)): ?>
             <section class="container mb-3" id="tnc">
-                <p class="heading fw-bold my-1 text-capitalize">Terms & Condition</p>
+
                 <div class="accordion accordion-flush" id="tncAccordion">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTnc">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTnc" aria-expanded="false" aria-controls="collapseTnc">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTnc" aria-expanded="false" aria-controls="collapseTnc">
                                 Terms & Conditions
                             </button>
                         </h2>
@@ -414,7 +413,7 @@ $TAGS = explode(',', $package->TAGS);
     </div>
 </div>
 
-<div id="trigger-nav-menu-animation" class="mb-5"></div>
+<div id="trigger-nav-menu-animation" class="mb-5 pt-1"></div>
 
 <!-- Swiper JS -->
 

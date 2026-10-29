@@ -10,7 +10,11 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-<?= $index ?>" aria-expanded="false" aria-controls="collapseOne">
-                    <?= $day->dayTitle ?>
+                    <div class="d-flex">
+                        <div class="fw-bold">Day <?= $index ?> : </div>
+                        <div> <?= explode(':', $day->dayTitle)[1] ?></div>
+                    </div>
+
                 </button>
             </h2>
             <div id="day-<?= $index ?>" class="accordion-collapse collapse">

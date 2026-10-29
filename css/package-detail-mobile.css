@@ -29,6 +29,7 @@
   width: fit-content;
   padding: 0rem 0.5rem;
   background: var(--bg-color-2);
+  color:inherit;
   & > .icon{
     height: auto;
     width: fit-content;

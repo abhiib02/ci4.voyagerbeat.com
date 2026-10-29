@@ -5,7 +5,7 @@
      */
     ?>
     <?php if ($package->CUSTOM_TRIP) : ?>
-        <h6 class=" ">Customised Trip Available As Per Your Choice & Comfort</h6>
+        <p class=" ">Customised Trip Available As Per Your Choice & Comfort</p>
     <?php else: ?>
         <div class="btn-group me-2 mb-2 w-100 gap-1" role="group" aria-label="First group">
             <button type="button" class="btn btn-sm btn-outline-voyagers2" data-index="0" hidden>All</button>

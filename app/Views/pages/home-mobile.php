@@ -34,7 +34,8 @@
             </div>
             <div class="border-sq-button flex-fill p-2 text-center" style="--circle-color:var(--maincolor);">
                 4.6 ⭐<br>
-                Google
+                700+ Google
+                Reviews
             </div>
             <div class="border-sq-button flex-fill p-2 text-center" style="--circle-color:var(--maincolor);">
                 300+<br>
