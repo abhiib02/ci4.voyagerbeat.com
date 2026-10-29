@@ -14,7 +14,7 @@
             <div class="swiper-wrapper ">
                 <?php foreach ($packages as $index => $package) : ?>
                     <?php if ($index < 5): ?>
-                        <div class="swiper-slide position-relative">
+                        <div class="swiper-slide">
                             <p class="position-absolute w-100 text-center pt-3 fs-6 text-white " style="z-index: 1;background: linear-gradient(180deg,rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 100%);"><?= $package->PACKAGE_NAME ?></p>
                             <img src="<?= gdriveImage($package->PACKAGE_IMAGE, 512) ?>" alt="<?= $package->PACKAGE_NAME ?>" style="aspect-ratio: 3/2; width:100%; object-fit:cover;filter:brightness(.8);">
                         </div>
