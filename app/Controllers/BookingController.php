@@ -348,8 +348,9 @@ class BookingController extends BaseController
             $cost = $costDetails[$index];
 
             // Compatibility with pre defined sharing for cost
-            $explodeSharing = explode('|', $sharing);
-            $sharing = (count($explodeSharing) > 2) ? $explodeSharing[1] : $explodeSharing[1];
+            // Pre-defined sharing comes as "something|value|..."; plain values have no pipe
+            $parts   = explode('|', (string) $sharing);
+            $sharing = $parts[1] ?? $parts[0];
 
             $pax['cost'] = $cost ?? 0;
             $pax['sharing'] = $sharing ?? 0;

@@ -76,8 +76,8 @@
             <!-- Final Output Section -->
             <div id="output"></div>
             <?php if (!auth('Admin', 'Employee', 'User')): ?>
-                <div class="alert alert-secondary text-center">
-                    <span class="fw-bold">Login to Book this Package</span>
+                <div class="alert alert-secondary text-center py-2 border border-warning">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#LoginPopup"><span class="fw-bold">Login to Book this Package</span></a>
                 </div>
 
             <?php endif; ?>
