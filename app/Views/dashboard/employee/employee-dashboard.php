@@ -21,7 +21,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Booking of</div>
+                                    <div class="fw-bold">Total Booking of <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
                                     <div>
 
                                     </div>
@@ -40,7 +40,7 @@
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Persons Sent to Trip </div>
+                                    <div class="fw-bold">Total Persons Sent to Trip in <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
 
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Revenue</div>
+                                    <div class="fw-bold">Total Revenue of <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
                                 </div>
                             </div>
                             <div class="card-body">

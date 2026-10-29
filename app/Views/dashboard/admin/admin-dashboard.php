@@ -20,7 +20,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Completed Booking of <span title="Showing Booking With Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
+                                    <div class="fw-bold">Total Booking of <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?><span title="Showing Booking With Pending,Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -36,7 +36,7 @@
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Persons Sent to Trip </div>
+                                    <div class="fw-bold">Total Persons Sent to Trip in <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
 
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Revenue <span title="Counted Only With Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
+                                    <div class="fw-bold">Total Revenue of <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?><span title="Counted Only With Pending,Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -78,7 +78,7 @@
                     <div class="col-lg-6">
                         <div class="card mb-2">
                             <div class="card-header">
-                                <div class="fw-bold">Employees Bookings | <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?> <span title="Showing Booking With Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
+                                <div class="fw-bold">Employees Bookings | <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?> <span title="Showing Booking With Pending,Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
                             </div>
                             <div class="card-body">
                                 <canvas id="Employees-Bookings"></canvas>
