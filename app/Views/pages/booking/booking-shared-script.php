@@ -60,7 +60,7 @@
                 steps[currentStep].classList.remove('active');
                 currentStep++;
                 steps[currentStep].classList.add('active');
-                progress.value += value;
+                //progress.value += value;
             }
         });
     });
@@ -70,7 +70,7 @@
             steps[currentStep].classList.remove('active');
             currentStep--;
             steps[currentStep].classList.add('active');
-            progress.value -= value;
+            //progress.value -= value;
         });
     });
 
@@ -98,4 +98,35 @@
 
     // Set the min attribute to today
     document.getElementById('date').setAttribute('min', today);
+</script>
+<script>
+    // Select all file inputs by their class
+    const fileInputs = document.querySelectorAll('.adhaarCard_file');
+    const errorDisplay = document.getElementById('errorMessage');
+
+    // Define your allowed extensions
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
+
+    // Loop through each input and attach the validation listener
+    fileInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const file = this.files[0]; // Get the selected file for this input
+
+            // Clear previous error message
+            errorDisplay.textContent = "";
+
+            if (file) {
+                // Extract the extension from the file name
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+
+                // Validate the extension
+                if (!allowedExtensions.includes(fileExtension)) {
+                    errorDisplay.textContent = `Invalid file type: "${file.name}". Only .jpg, .jpeg, .png, and .pdf are allowed.`;
+
+                    // Clear the value of this specific input field
+                    this.value = '';
+                }
+            }
+        });
+    });
 </script>

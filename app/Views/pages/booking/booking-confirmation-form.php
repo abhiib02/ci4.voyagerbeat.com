@@ -283,8 +283,9 @@
                                         <div class="col-12 col-md-3">
                                             <div class="form-floating mb-3">
 
-                                                <input class="form-control" type="file" name="adhaarCard_file[]" id="adhaarCard_file" accept="image/*" required>
-                                                <label for="adhaarCard_file" class="form-label">Adhaar Card (Upload):</label>
+                                                <input class="form-control adhaarCard_file" type="file" name="adhaarCard_file[]" id="adhaarCard_file" accept=".jpg, .jpeg, .png, .webp" required>
+                                                <label for="adhaarCard_file" class="form-label">Upload Adhaar Card Image (Max 4MB | .jpg, .jpeg, .png, .webp) :</label>
+                                                <p id="errorMessage" style="color: red; font-weight: bold;"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -312,8 +313,8 @@
                     <div class="card-body">
                         <div class="form-floating mb-3">
 
-                            <input class="form-control" type="file" name="payment_screenshot_file" accept="image/*" id="payment_screenshot_file">
-                            <label for="payment_screenshot_file" class="form-label">Payment Screenshot (Upload):</label>
+                            <input class="form-control" type="file" name="payment_screenshot_file" accept=".jpg, .jpeg, .png, .webp" id="payment_screenshot_file">
+                            <label for="payment_screenshot_file" class="form-label">Upload Payment Screenshot (Max 4MB | .jpg, .jpeg, .png, .webp):</label>
                         </div>
 
 

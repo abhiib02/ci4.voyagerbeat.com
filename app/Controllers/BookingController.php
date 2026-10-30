@@ -215,10 +215,17 @@ class BookingController extends BaseController
             'adhaarCard_file' => [
                 'uploaded[adhaarCard_file]',
                 'is_image[adhaarCard_file]',
-                'mime_in[adhaarCard_file,image/jpg,image/jpeg,image/png,image/webp]',
+                'mime_in[adhaarCard_file,image/jpg,image/jpeg,image/png,image/webp,image/heif,image/heic]',
+                'ext_in[adhaarCard_file,jpg,jpeg,jfif,png,webp,heif,heic]',
                 'max_size[adhaarCard_file,4096]', // 4MB limit
             ],
-            'payment_screenshot_file' => 'uploaded[payment_screenshot_file]|is_image[payment_screenshot_file]',
+            'payment_screenshot_file' => [
+                'uploaded[payment_screenshot_file]',
+                'is_image[payment_screenshot_file]',
+                'mime_in[payment_screenshot_file,image/jpg,image/jpeg,image/png,image/webp,image/heif,image/heic]',
+                'ext_in[adhaarCard_file,jpg,jpeg,jfif,png,webp,heif,heic]',
+                'max_size[adhaarCard_file,4096]',
+            ],
         ];
         if (! $this->validate($rules)) {
             $this->session->setFlashdata('FlashMessage', [
