@@ -373,7 +373,7 @@ class BookingController extends BaseController
         $data['drop_city'] = $drop_city;
         $data['agent'] = $agentData->user_name;
 
-        $url = 'https://script.google.com/macros/s/AKfycby2biOJqsfqsQDWh3Sr65fl0Hg8VQKNDkqtDnw6N8Lg83Ig76Kb0W7M_jqdJGRh-DiC9g/exec';
+        $url = 'https://script.google.com/macros/s/AKfycbwZ2QO4NOfpsUYixha2Q8VsJsYinTvnFS1vQaOKHtb7zLlMzmUEsKKaBpmjLG_icJ8lwQ/exec';
 
 
         $ch = curl_init($url);
