@@ -174,6 +174,9 @@ class BookingController extends BaseController
     public function BookingConfirmationForm(string $order_id)
     {
         $this->data['order_id'] = $order_id;
+        $this->data['title'] = 'Booking Confirmation Form';
+        $this->data['meta_desc'] = 'After completing the payment, please fill out the required form and share a screenshot of the submitted form for confirmation. Your booking will be processed once the form has been successfully completed.';
+
         $this->data['BookingData'] = $this->BookingModel->getBookingByOrderId($order_id);
         if (!$this->data['BookingData']) {
             $this->session->setFlashdata('FlashMessage', [
