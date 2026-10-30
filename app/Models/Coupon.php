@@ -17,6 +17,7 @@ class Coupon extends Model
         'Coupon_Code',
         'Coupon_Type',
         'Coupon_Worth',
+        'Coupon_Personal',
         'Coupon_Count'
     ];
 
@@ -62,7 +63,7 @@ class Coupon extends Model
     }
     public function getCouponWorth(string $code)
     {
-        if(empty($code)) return 0;
+        if (empty($code)) return 0;
         $codeDetail = $this->where('Coupon_Code', $code)->first();
         return $codeDetail->Coupon_Worth;
     }
@@ -99,6 +100,6 @@ class Coupon extends Model
     }
     public function getAllValidCoupons(): array
     {
-        return $this->where('Coupon_Count >', 0)->findAll();
+        return $this->where('Coupon_Count >', 0)->where('Coupon_Personal', 0)->findAll();
     }
 }

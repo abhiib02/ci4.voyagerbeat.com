@@ -14,6 +14,13 @@
             </select>
         </div>
         <div>
+            <label>Personal Coupon</label>
+            <select name="personal" id="personal" class="form-select" required>
+                <option value="0" selected>No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div>
             <label>Coupon Worth (if type is 1 then mention percentage )</label>
             <input name="worth" class="form-control" type="number" id="worth" required />
         </div>

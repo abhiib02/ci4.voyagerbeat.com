@@ -27,6 +27,15 @@ $coupon = $coupon ?? (object) [
                 <option value="1">Percentage</option>
             </select>
         </div>
+        <div>
+            <label>Personal Coupon</label>
+            <select name="personal" id="personal" class="form-select" required>
+                <option value="<?= $coupon->Coupon_Personal; ?>" selected>
+                    <?= ($coupon->Coupon_Personal) ? 'Yes' : 'No'; ?></option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
         <div class="">
             <label>Coupon Worth (if type is 1 then mention percentage )</label>
             <input name="worth" class="form-control" id="worth" type="number" oninput='checkType()'

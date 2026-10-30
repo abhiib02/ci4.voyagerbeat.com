@@ -50,6 +50,7 @@ class CouponController extends BaseController
             'Coupon_Type'  => $this->request->getPost('type'),
             'Coupon_Worth' => $this->request->getPost('worth'),
             'Coupon_Count' => $this->request->getPost('count'),
+            'Coupon_Personal' => $this->request->getPost('personal'),
         ];
 
         $this->CouponModel->addCoupon($data);
@@ -68,6 +69,7 @@ class CouponController extends BaseController
             'Coupon_Type'  => $this->request->getPost('type'),
             'Coupon_Worth' => $this->request->getPost('worth'),
             'Coupon_Count' => $this->request->getPost('count'),
+            'Coupon_Personal' => $this->request->getPost('personal'),
         ];
 
         $this->CouponModel->updateCoupon($couponID, $data);
