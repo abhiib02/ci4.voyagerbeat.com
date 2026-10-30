@@ -291,6 +291,10 @@ class BookingController extends BaseController
 
         $this->BookingModel->updateConfirmedBooking($orderId, $customerFilledData);
 
+        $bookingData = $this->BookingModel->getBookingByOrderId($orderId);
+
+        $this->sendDatatoGoogleSheet((array) $bookingData);
+
         if (!$this->sendEmail($orderId)) {
             return $this->RedirectWithtoast('Booking Confirmed but Some Error Occured During Sending Mail', 'Success', '/thanks?order_id=' . $orderId);
         };
@@ -340,6 +344,57 @@ class BookingController extends BaseController
             ],
         ]);
         return $response->getBody();
+    }
+    function sendDatatoGoogleSheet(array $data)
+    {
+
+        $agentData = $this->UserModel->getUserByID($data['agent']);
+        $pax = json_decode($data['pax_details'], true) ?? [];
+
+        // 1st: sharing type without the word "Sharing"
+        $sharing = implode(',', array_map(
+            fn($s) => trim(preg_replace('/\s*sharing\s*/i', '', $s)),
+            array_column($pax, 'sharing')
+        ));                                                    // Quad,Triple
+
+        // 2nd: boarding city
+        $boarding_city = implode(',', array_column($pax, 'boarding_city'));   // asdsad,asdsad
+
+        // 3rd: drop city
+        $drop_city = implode(',', array_column($pax, 'drop_point'));
+
+        // 4th: adhaar
+        $adhaar = implode('|', array_column($pax, 'adhaar'));
+
+
+        $data['sharing'] = $sharing;
+        $data['boarding_city'] = $boarding_city;
+        $data['adhaar'] = $adhaar;
+        $data['drop_city'] = $drop_city;
+        $data['agent'] = $agentData->user_name;
+
+        $url = 'https://script.google.com/macros/s/AKfycby2biOJqsfqsQDWh3Sr65fl0Hg8VQKNDkqtDnw6N8Lg83Ig76Kb0W7M_jqdJGRh-DiC9g/exec';
+
+
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => json_encode($data),
+            CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,   // required for Apps Script
+            CURLOPT_TIMEOUT        => 30,
+        ]);
+
+        $result = curl_exec($ch);
+
+        if ($result === false) {
+            log_message('error', 'cURL error: ' . curl_error($ch));
+        }
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return $result;
     }
 
 
