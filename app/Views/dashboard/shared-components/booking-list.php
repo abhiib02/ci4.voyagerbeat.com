@@ -43,7 +43,13 @@
                 <td><?= $booking->agent_name ?></td>
                 <td><?= $booking->name ?></td>
 
-                <td><?= $booking->contact ?></td>
+                <td><?php if (auth('Admin', 'Manager')): ?>
+                        <input type="number" class="form-control form-control-sm" data-field="contact" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->contact ?>">
+                    <?php else: ?>
+                        <?= $booking->contact ?>
+                    <?php endif; ?>
+
+                </td>
                 <td>
                     <?= $booking->adults ?>
                 </td>
@@ -76,7 +82,7 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if (auth('Admin')): ?>
+                    <?php if (auth('Admin', 'Manager')): ?>
                         <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>" <?= ($booking->status != 'Pending') ? 'readonly' : ''; ?>>
                     <?php else: ?>
                         <?= $booking->total_package_cost ?>
@@ -93,7 +99,7 @@
                 </td>
                 <td>
 
-                    <?php if (auth('Admin')): ?>
+                    <?php if (auth('Admin', 'Manager')): ?>
                         <select data-tpc="<?= esc($booking->total_package_cost) ?>" data-user-id="<?= esc($booking->user_id) ?>" data-field="status" data-status="<?= esc($booking->status) ?>" class="form-select form-select-sm" data-booking-id="<?= esc($booking->ID) ?>" onclick="showStatusWarnings()" onchange="setPaymentStatusClass()">
                             <?php
                             $statuses = ['Pending', 'Complete', 'Complete_no_points', 'Cancel', 'Postponed', 'Failed'];

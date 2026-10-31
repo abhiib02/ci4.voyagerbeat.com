@@ -8,11 +8,16 @@ use App\Models\Coupon;
 use App\Models\User;
 use App\Models\Point;
 
+use Config\Logger as LoggerConfig;
+use CodeIgniter\Log\Logger;
+
 
 
 class BookingController extends BaseController
 {
     public array $data;
+
+
     public Booking $BookingModel;
     public Package $PackageModel;
     public Coupon $CouponModel;
@@ -21,6 +26,7 @@ class BookingController extends BaseController
 
     public function __construct()
     {
+
         $this->UserModel = new User();
         $this->BookingModel = new Booking();
         $this->CouponModel = new Coupon();
@@ -30,7 +36,7 @@ class BookingController extends BaseController
 
     public function Book(int $packageID)
     {
-        if (!auth('User') && !auth('Admin') && !auth('Employee')) {
+        if (!auth('User') && !auth('Admin') && !auth('Employee') && !auth('Manager')) {
             return $this->RedirectWithtoast('Please Login to Book', 'info', '/login');
         }
         $this->data['UsablePoints'] = $this->PointModel->getUserOneTimePointsBalance((int)session()->get('id')) ?? 0;
@@ -67,16 +73,18 @@ class BookingController extends BaseController
         }
 
         // Whitelist — only fields explicitly listed here can be patched via this endpoint
-        $allowedFields = ['date', 'note', 'status', 'amount', 'total_package_cost', 'customer_access', 'adults']; // extend as needed
+        $allowedFields = ['contact', 'date', 'note', 'status', 'amount', 'total_package_cost', 'customer_access', 'adults']; // extend as needed
 
         if (! in_array($field, $allowedFields, true)) {
             return $this->response->setStatusCode(422)->setJSON(['error' => 'Field not editable']);
         }
-
+        $oldvalue = $this->BookingModel->select($field)->find($bookingId)->$field;
         $value = $this->sanitizeFieldValue($field, $value);
 
-        $updated = $this->BookingModel->update($bookingId, [$field => $value]);
+        //Logging Changes Activity
+        $this->BookingPatchChangesActivityLog($field, $oldvalue, $value);
 
+        $updated = $this->BookingModel->update($bookingId, [$field => $value]);
 
         if (! $updated) {
             return $this->response->setStatusCode(500)->setJSON(['error' => 'Failed to update field']);
@@ -102,7 +110,17 @@ class BookingController extends BaseController
                 return $value;
         }
     }
-
+    protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value)
+    {
+        $loggerConfig = new LoggerConfig();
+        $customPath = WRITEPATH . 'logs/BookingChanges/'; // Make sure this folder exists or is writable
+        $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class]['path'] = $customPath;
+        $customLogger = new Logger($loggerConfig);
+        $userID = loggedInUser();
+        $userName = loggedInUsername();
+        $customLogger->log('info', "$field Changed from $oldvalue to $value By $userID | $userName");
+        return 1;
+    }
     public function createBookingProcess()
     {
 
@@ -333,6 +351,7 @@ class BookingController extends BaseController
     {
         return $this->Render_Page('static/max-amount', $this->data);
     }
+
 
 
     public function sendEmail(string $order_id)

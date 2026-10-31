@@ -51,6 +51,8 @@ class DashboardController extends BaseController
             ['link' => 'customers-list', 'title' => 'Customers', 'icon' => 'bx bx-user-circle', 'mobile-visible' => 1],
             ['link' => 'coupons', 'title' => 'Coupons', 'icon' => 'bx bxs-coupon', 'mobile-visible' => 1],
             ['link' => 'option-list', 'title' => 'Options', 'icon' => 'bx bxs-analyse', 'mobile-visible' => 0],
+            ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
+            ['link' => 'error-log', 'title' => 'Error Log', 'icon' => 'bx bx-error-circle', 'mobile-visible' => 1],
         ];
     }
 
@@ -59,6 +61,13 @@ class DashboardController extends BaseController
     {
         return [
             ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-list-ul', 'mobile-visible' => 1],
+        ];
+    }
+    protected function ManagerPages(): array
+    {
+        return [
+            ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-list-ul', 'mobile-visible' => 1],
+            ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
         ];
     }
     protected function UserPages(): array
@@ -119,7 +128,7 @@ class DashboardController extends BaseController
 
                 $employeeID = $this->request->getGet('employee_id');
                 $customer_id = $this->request->getGet('customer_id');
-                
+
                 if ($employeeID !== null) {
                     $this->data['Bookings'] = $this->BookingModel->getBookingsByEmployeeID($employeeID, $this->data['month'], $this->data['year']);
                 } else if ($customer_id !== null) {
@@ -132,7 +141,7 @@ class DashboardController extends BaseController
             case 'coupons':
                 $this->data['Coupons'] = $this->CouponModel->getAllCoupons();
                 break;
-            default:      
+            default:
                 $statuses = ['Pending', 'Complete', 'Complete_no_points'];
                 // Booking Counts
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year'], $statuses);
@@ -150,7 +159,7 @@ class DashboardController extends BaseController
                 break;
         }
 
-        return $this->Render_Page_Admin_dashboard('/admin-dashboard', $this->data);
+        return $this->Render_Page_dashboard('/admin-dashboard', $this->data, 'admin');
     }
 
     public function EmployeeDashboard($pageName = null)
@@ -176,7 +185,7 @@ class DashboardController extends BaseController
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             default:
-                $agentID = $userID;    
+                $agentID = $userID;
                 // Booking Counts
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountofAgent($agentID, $this->data['month'], $this->data['year']);
                 // Booking Collection with total person
@@ -191,7 +200,48 @@ class DashboardController extends BaseController
                 $this->data['BookingCountByStatus'] = $this->BookingModel->getBookingsStatusCounts($agentID, $this->data['month'], $this->data['year']);
                 break;
         }
-        return $this->Render_Page_Employee_dashboard('employee-dashboard', $this->data);
+        return $this->Render_Page_dashboard('employee-dashboard', $this->data, 'employee');
+    }
+    public function ManagerDashboard($pageName = null)
+    {
+        $userID = (int) $this->data['id'];
+        $this->data['User'] = $this->UserModel->getUserByID($userID);
+        $pages = $this->ManagerPages();
+        $this->data['pagenames'] = $pages;
+
+        // If a pageName is passed, validate that it exists inside the 'link' column
+        if ($pageName !== null) {
+            $validLinks = array_column($pages, 'link');
+            if (!in_array($pageName, $validLinks, true)) {
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            }
+        }
+        $this->data['month'] = $this->request->getGet('month') ?? date('m');
+        $this->data['year'] = $this->request->getGet('year') ?? date('Y');
+        $this->data['pagename'] = $pageName;
+        switch ($pageName) {
+            case 'booking-list':
+                $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['month'], $this->data['year']);
+                $this->data['pager'] = $this->BookingModel->pager;
+                break;
+            default:
+                $statuses = ['Pending', 'Complete', 'Complete_no_points'];
+                // Booking Counts
+                $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year'], $statuses);
+                // Booking Collection with total person
+                $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'adults');
+                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete_no_points', 'total_package_cost');
+                // Charts Data 
+
+
+                $this->data['EmployeeBooking_Month'] = $this->BookingModel->getEmployeesBookingsCountMonthAdmin($this->data['month'], $this->data['year'], $statuses);
+                $this->data['Annual_Revenue'] = $this->BookingModel->getAnnualSalesRevenueAdmin($this->data['year'], $statuses);
+                $this->data['Annual_Pax'] = $this->BookingModel->getAnnualPaxAdmin($this->data['year'], $statuses);
+                $this->data['Annual_Booking'] = $this->BookingModel->getAnnualBookingsAdmin($this->data['year'], $statuses);
+                $this->data['BookingCountByStatus'] = $this->BookingModel->getBookingsStatusCountsAdmin($this->data['month'], $this->data['year']);
+                break;
+        }
+        return $this->Render_Page_dashboard('manager-dashboard', $this->data, 'manager');
     }
     public function UserDashboard($pageName = null)
     {
@@ -222,7 +272,7 @@ class DashboardController extends BaseController
                 $this->data['CustomerAsTravelBuddy'] = $this->BookingModel->getBookingWherePaxContactExist($this->data['contact']);
                 break;
         }
-        return $this->Render_Page_dashboard('user-dashboard', $this->data);
+        return $this->Render_Page_dashboard('user-dashboard', $this->data, 'user');
     }
 
 

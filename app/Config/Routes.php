@@ -53,9 +53,11 @@ $routes->post('reset', 'UserController::reset');
 */
 
 // Admin
-$routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
+$routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
+
     $routes->get('dashboard', 'DashboardController::AdminDashboard', ['as' => 'Admin.Dashboard']);
     $routes->get('dashboard/(:any)', 'DashboardController::AdminDashboard/$1');
+
     // --------Employee Management----------------
     $routes->get('toggleStatus/(:num)/(:num)', 'UserController::ToogleStatus/$1/$2');
     $routes->get('makeEmployee/(:num)', 'UserController::EmployeeRoleGrant/$1');
@@ -67,12 +69,17 @@ $routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
 });
 
 // Employee
-$routes->group('', ['filter' => 'EmployeeAuthGuard'], static function ($routes) {
+$routes->group('', ['filter' => 'Role:EMPLOYEE'], static function ($routes) {
     $routes->get('employee-dashboard', 'DashboardController::EmployeeDashboard', ['as' => 'Employee.Dashboard']);
     $routes->get('employee-dashboard/(:any)', 'DashboardController::EmployeeDashboard/$1');
 });
+// Manager
+$routes->group('', ['filter' => 'Role:MANAGER'], static function ($routes) {
+    $routes->get('manager-dashboard', 'DashboardController::ManagerDashboard', ['as' => 'Manager.Dashboard']);
+    $routes->get('manager-dashboard/(:any)', 'DashboardController::ManagerDashboard/$1');
+});
 //Admin and Employee Both
-$routes->group('', ['filter' => ['AdminOrEmployeeAuthGuard']], function ($routes) {
+$routes->group('', ['filter' => 'Role:ADMIN,EMPLOYEE,MANAGER'], function ($routes) {
     $routes->patch('bookings-patch/(:num)', 'BookingController::updateField/$1');
     $routes->post('create-booking', 'BookingController::createBookingProcess');
     $routes->get('points/(:num)/(:num)', 'PointsController::AddPointsToCustomer/$1/$2');
@@ -80,7 +87,7 @@ $routes->group('', ['filter' => ['AdminOrEmployeeAuthGuard']], function ($routes
 
 
 // Customer
-$routes->group('', ['filter' => 'AuthGuard'], static function ($routes) {
+$routes->group('', ['filter' => 'Role:USER'], static function ($routes) {
     $routes->get('account', 'DashboardController::UserDashboard', ['as' => 'Customer.Dashboard']);
     $routes->get('account/(:any)', 'DashboardController::UserDashboard/$1');
 });
@@ -92,16 +99,13 @@ $routes->group('', ['filter' => 'AuthGuard'], static function ($routes) {
 | Everything here requires AdminAuthGuard, so it's wrapped in a single
 | group instead of repeating the filter on every line.
 */
-$routes->group('', ['filter' => 'AdminAuthGuard'], static function ($routes) {
+$routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
 
     // User management
     $routes->post('change-password', 'UserController::changePassword');
     $routes->post('delete-user', 'UserController::deleteUser');
     $routes->post('makeAdmin', 'UserController::makeAdmin');
     $routes->post('removeAdmin', 'UserController::removeAdmin');
-
-    //Points Management 
-
 
     // Coupon management
     $routes->post('createCoupon', 'CouponController::createCoupon');

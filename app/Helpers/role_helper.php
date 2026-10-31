@@ -8,9 +8,10 @@ if (! function_exists('auth')) {
     function auth(string ...$roles): bool
     {
         $definedRoles = [
+            'User'     => 0,
             'Admin'    => 1,
             'Employee' => 2,
-            'User'     => 0,
+            'Manager'  => 3,
         ];
 
         $session = session();
@@ -33,5 +34,17 @@ if (! function_exists('auth')) {
         // Cast to int: session values are often stored as strings ("1"),
         // which would fail a strict comparison against int 1
         return in_array((int) $session->get('role'), $allowed, true);
+    }
+}
+if (! function_exists('loggedInUser')) {
+    function loggedInUser()
+    {
+        return session()->get('id');
+    }
+}
+if (! function_exists('loggedInUsername')) {
+    function loggedInUsername()
+    {
+        return session()->get('name');
     }
 }

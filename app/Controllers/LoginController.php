@@ -29,6 +29,9 @@ class LoginController extends BaseController
         if (auth('Employee')) {
             return redirect()->route('Employee.Dashboard');
         }
+        if (auth('Manager')) {
+            return redirect()->route('Manager.Dashboard');
+        }
         if (auth('User')) {
             return redirect()->route('Customer.Dashboard');
         }
@@ -40,6 +43,7 @@ class LoginController extends BaseController
         $routeName = match ($session['role']) {
             1 => 'Admin.Dashboard',
             2 => 'Employee.Dashboard',
+            3 => 'Manager.Dashboard',
             default => 'Customer.Dashboard',
         };
         return redirect()->route($routeName);

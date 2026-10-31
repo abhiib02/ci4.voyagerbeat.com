@@ -34,6 +34,9 @@ class RegisterController extends BaseController
         if (auth('Employee')) {
             return redirect()->route('Employee.Dashboard');
         }
+        if (auth('Manager')) {
+            return redirect()->route('Manager.Dashboard');
+        }
         if (auth('User')) {
             return redirect()->route('Customer.Dashboard');
         }

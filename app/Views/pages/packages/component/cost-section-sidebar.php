@@ -75,7 +75,7 @@
             <div id="priceOptions" class="options pt-2"></div>
             <!-- Final Output Section -->
             <div id="output"></div>
-            <?php if (!auth('Admin', 'Employee', 'User')): ?>
+            <?php if (!auth('Admin', 'Employee', 'User', 'Manager')): ?>
                 <div class="alert alert-secondary text-center py-2 border border-warning">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#LoginPopup"><span class="fw-bold">Login to Book this Package</span></a>
                 </div>

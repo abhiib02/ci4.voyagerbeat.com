@@ -12,6 +12,13 @@
     <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
         Logout
     </a>
+<?php elseif (auth('Manager')): ?>
+    <a class="list-group-item list-group-item-action" href="/manager-dashboard">
+        Manager Dashboard
+    </a>
+    <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
+        Logout
+    </a>
 <?php elseif (auth('User')): ?>
     <a class="list-group-item list-group-item-action" href="/account">
         Your Profile

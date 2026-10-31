@@ -24,7 +24,7 @@
 
             <li class="list-group-item">
 
-                <?php if (auth('User', 'Admin', 'Employee')): ?>
+                <?php if (auth('User', 'Admin', 'Employee', 'Manager')): ?>
                     <a class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" href="/account">
                         <span class="fs-5"><i class='bx bx-user-circle'></i> Hello, <?= session()->get('name') ?? 'Login' ?></span>
                     </a>
@@ -315,6 +315,13 @@
                         <?php elseif (auth('Employee')): ?>
                             <a class="list-group-item list-group-item-action" href="/employee-dashboard">
                                 Employee Dashboard
+                            </a>
+                            <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
+                                Logout
+                            </a>
+                        <?php elseif (auth('Manager')): ?>
+                            <a class="list-group-item list-group-item-action" href="/manager-dashboard">
+                                Manager Dashboard
                             </a>
                             <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
                                 Logout

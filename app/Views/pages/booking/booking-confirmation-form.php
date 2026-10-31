@@ -157,7 +157,7 @@
                         <div class="form-floating hide mb-3" id="batch-date">
 
                             <?php if ($PackageData->CUSTOM_TRIP) : ?>
-                                <div class="alert alert-danger">No Batch Dates Available For This Package</div>
+                                <div class="alert alert-danger">No Batch Dates Available For This Package | Customize Date Available</div>
                                 <div class="form-floating " id="custom-date">
                                     <input type="date" class="form-control" name="date" min="<?= date("Y-m-d"); ?>" required>
                                     <label for="Batch">Date</label>

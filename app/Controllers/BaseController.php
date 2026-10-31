@@ -84,7 +84,6 @@ abstract class BaseController extends Controller
 
 
     }
-
     protected function Render_Page(string $view, array $data)
     {
         return
@@ -92,31 +91,14 @@ abstract class BaseController extends Controller
             view('pages/' . $view, $data) .
             view('layout/footer', $data);
     }
-    protected function Render_Page_Admin_dashboard(string $view, array $data)
+    protected function Render_Page_dashboard(string $view, array $data, string $role)
     {
         $mergedData = array_merge($this->data, $data);
         return
-            view('dashboard/admin/layout/dashboard-header', $mergedData) .
-            view('dashboard/admin/' . $view, $mergedData) .
-            view('dashboard/admin/layout/dashboard-footer', $mergedData);
+            view("dashboard/$role/layout/dashboard-header", $mergedData) .
+            view("dashboard/$role/" . $view, $mergedData) .
+            view("dashboard/$role/layout/dashboard-footer", $mergedData);
     }
-    protected function Render_Page_Employee_dashboard(string $view, array $data)
-    {
-        $mergedData = array_merge($this->data, $data);
-        return
-            view('dashboard/employee/layout/dashboard-header', $mergedData) .
-            view('dashboard/employee/' . $view, $mergedData) .
-            view('dashboard/employee/layout/dashboard-footer', $mergedData);
-    }
-    protected function Render_Page_dashboard(string $view, array $data)
-    {
-        $mergedData = array_merge($this->data, $data);
-        return
-            view('dashboard/user/layout/dashboard-header', $mergedData) .
-            view('dashboard/user/' . $view, $mergedData) .
-            view('dashboard/user/layout/dashboard-footer', $mergedData);
-    }
-
     protected function RedirectWithtoast(string $message, string $status, string $redirect)
     {
         // $redirect contains . then it is a named route
