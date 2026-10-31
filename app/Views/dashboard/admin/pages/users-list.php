@@ -59,7 +59,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
                                                 <li><a type="button" class="dropdown-item" onclick="openModel('updatePoints-<?= $customer->user_id ?>')">Update Points</a></li>
 
                                                 <li><a type="button" class="dropdown-item" href="/toggleStatus/<?= $customer->user_id ?>/<?= $customer->status ?>?empList=1">
-                                                        <?= $customer->status == 1 ? 'Activate' : 'Deactivate' ?></a></li>
+                                                        <?= $customer->status == 1 ? 'Deactivate' : 'Activate' ?></a></li>
                                                 <li><a type="button" class="dropdown-item text-bg-danger" onclick="deleteCustomer()" data-href="/deleteUser/<?= $customer->user_id ?>">Delete User</a></li>
 
                                             </ul>
@@ -137,7 +137,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
                                     <td><?= $employee->user_name ?></td>
                                     <td><?= $employee->user_email ?></td>
                                     <td><?= $employee->user_contact ?></td>
-                                    <td><?= $employee->status == 1 ? 'Deactivate' : 'Activate' ?></td>
+                                    <td><?= $employee->status == 1 ? 'Activate' : 'Deactivate' ?></td>
                                     <td>
                                         <div class="Actions-Dropdown">
                                             <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
@@ -148,7 +148,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
                                                 <li><a type="button" class="dropdown-item" href="/revokeAdminAndEmployeeRole/<?= $employee->user_id ?>">Revoke Roles</a></li>
                                                 <li><a type="button" class="dropdown-item" onclick="openchangePasswordDialog(<?= $employee->user_id ?>)">Change password</a></li>
                                                 <li><a type="button" class="dropdown-item" href="/toggleStatus/<?= $employee->user_id ?>/<?= $employee->status ?>?empList=1">
-                                                        <?= $employee->status == 1 ? 'Activate' : 'Deactivate' ?></a></li>
+                                                        <?= $employee->status == 1 ? 'Deactivate' : 'Activate' ?></a></li>
 
                                             </ul>
                                         </div>
@@ -180,7 +180,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
                                     <td><?= $manager->user_name ?></td>
                                     <td><?= $manager->user_email ?></td>
                                     <td><?= $manager->user_contact ?></td>
-                                    <td><?= $manager->status == 1 ? 'Deactivate' : 'Activate' ?></td>
+                                    <td><?= $manager->status == 1 ? 'Activate' : 'Deactivate' ?></td>
                                     <td>
                                         <div class="Actions-Dropdown">
                                             <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
@@ -191,7 +191,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
                                                 <li><a type="button" class="dropdown-item" href="/revokeAdminAndEmployeeRole/<?= $manager->user_id ?>">Revoke Roles</a></li>
                                                 <li><a type="button" class="dropdown-item" onclick="openchangePasswordDialog(<?= $manager->user_id ?>)">Change password</a></li>
                                                 <li><a type="button" class="dropdown-item" href="/toggleStatus/<?= $manager->user_id ?>/<?= $manager->status ?>?empList=1">
-                                                        <?= $manager->status == 1 ? 'Activate' : 'Deactivate' ?></a></li>
+                                                        <?= $manager->status == 1 ? 'Deactivate' : 'Activate' ?></a></li>
 
                                             </ul>
                                         </div>
@@ -238,7 +238,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
                                                 <li><a type="button" class="dropdown-item" onclick="openchangePasswordDialog(<?= $admin->user_id ?>)">Change password</a></li>
 
                                                 <li><a type="button" class="dropdown-item" href="/toggleStatus/<?= $admin->user_id ?>/<?= $admin->status ?>?empList=1">
-                                                        <?= $admin->status == 1 ? 'Activate' : 'Deactivate' ?></a></li>
+                                                        <?= $admin->status == 1 ? 'Deactivate' : 'Activate' ?></a></li>
 
                                             </ul>
                                         </div>
