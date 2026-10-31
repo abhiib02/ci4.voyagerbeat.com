@@ -118,5 +118,5 @@
 
         </script>
     <?php else: ?>
-        <p>Pricing will be provided upon request, based on your selected destinations, duration, accommodations, and customization preferences.</p>
+        <!-- <p>Pricing will be provided upon request, based on your selected destinations, duration, accommodations, and customization preferences.</p> -->
     <?php endif; ?>
