@@ -62,7 +62,7 @@
                                     <div class="fw-bold"><?= $booking->name ?>'s Travel Buddies</div>
                                 </div>
                                 <div class="card-body">
-                                    <ol class="row" style="width: 80vw;" id="output-dialog-<?= $booking->ID; ?>"></ol>
+                                    <ol class="row" style="width: 80vw;list-style-type: none;" id="output-dialog-<?= $booking->ID; ?>"></ol>
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#travelers-dialog-<?= $booking->ID ?>').close();">Close</button>
