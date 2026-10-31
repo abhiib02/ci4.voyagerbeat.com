@@ -102,10 +102,10 @@ $routes->group('', ['filter' => 'Role:USER'], static function ($routes) {
 $routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
 
     // User management
-    $routes->post('change-password', 'UserController::changePassword');
+    $routes->post('change-password', 'UserController::changePasswordProcess');
     $routes->post('delete-user', 'UserController::deleteUser');
-    $routes->post('makeAdmin', 'UserController::makeAdmin');
-    $routes->post('removeAdmin', 'UserController::removeAdmin');
+    $routes->post('roleChange', 'UserController::RoleChangerProcess');
+
 
     // Coupon management
     $routes->post('createCoupon', 'CouponController::createCoupon');

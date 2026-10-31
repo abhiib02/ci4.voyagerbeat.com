@@ -137,8 +137,8 @@ class Booking extends Model
         return $this->select('bookings_table.*, users.USER_NAME as agent_name')
             ->join('users', 'users.user_id = bookings_table.agent', 'left')
             ->where('bookings_table.agent', $employeeID)
-            ->where('created_at >=', $startDate)
-            ->where('created_at <=', $endDate)
+            ->where('bookings_table.created_at >=', $startDate)
+            ->where('bookings_table.created_at <=', $endDate)
             ->orderBy('ID', 'DESC')
             ->find();
     }
@@ -150,8 +150,8 @@ class Booking extends Model
         return $this->select('bookings_table.*, users.USER_NAME as agent_name') // Selects agent_name
             ->join('users', 'users.user_id = bookings_table.agent', 'left') // Adjust table name/fields if different
             ->where('bookings_table.user_id', $customerID)
-            ->where('created_at >=', $startDate)
-            ->where('created_at <=', $endDate)
+            ->where('bookings_table.created_at >=', $startDate)
+            ->where('bookings_table.created_at <=', $endDate)
             ->orderBy('ID', 'DESC')
             ->find();
         //return $this->where('user_id', $customerID)->orderBy('ID', 'DESC')->find();
@@ -475,7 +475,7 @@ class Booking extends Model
 
     public function getEmployeesBookingsCountMonthAdmin(string $month, string $year, array $statuses): array
     {
-       
+
         $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
         $startDate = $MonthDuration['startDate'];
         $endDate = $MonthDuration['endDate'];
@@ -490,9 +490,10 @@ class Booking extends Model
     }
 
     // Helper Function
-    protected function getMonthStartToEndTimeStamp(string $month,string $year){
+    protected function getMonthStartToEndTimeStamp(string $month, string $year)
+    {
         $startDate = "$year-" . str_pad($month, 2, '0', STR_PAD_LEFT) . "-01 00:00:00";
         $endDate = date("Y-m-t 23:59:59", strtotime($startDate));
-        return ['startDate'=>$startDate, 'endDate' =>$endDate];
+        return ['startDate' => $startDate, 'endDate' => $endDate];
     }
 }

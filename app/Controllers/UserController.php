@@ -35,16 +35,12 @@ class UserController extends BaseController
         return redirect()->to('/login');
     }
 
-    public function AdminRoleGrant(int $id)
-    {
-        $this->UserModel->MakeAdmin($id);
-        return $this->RedirectWithtoast('UserID:' . $id . ' Admin Granted', 'info', '/dashboard/admins-list');
-    }
-    public function EmployeeRoleGrant()
+
+    public function RoleChangerProcess()
     {
         $rules = [
-            'id'    => 'required|integer',
-            'name' => 'required',
+            'user_id'    => 'required|integer',
+            'role' => 'required|integer',
         ];
         if (!$this->validate($rules)) {
             $this->session->setFlashdata('FlashMessage', [
@@ -53,33 +49,26 @@ class UserController extends BaseController
             ]);
             return redirect()->back();
         }
-        $id = $this->request->getPost('id');
-        $name = $this->request->getPost('name');
-        $user = $this->UserModel->getUserByID($id);
-        if ($user->user_name != $name) {
-            $this->session->setFlashdata('FlashMessage', [
-                'message' => 'Wrong Confirmation Text',
-                'status'  => 'warning'
-            ]);
-            return redirect()->back();
-        }
-        $this->UserModel->MakeEmployee($id);
-        return $this->RedirectWithtoast('UserID:' . $id . ' Employee Granted', 'info', '/dashboard/employee-list');
+        $user_id = (int) $this->request->getPost('user_id');
+        $role = (int) $this->request->getPost('role');
+        $this->UserModel->RoleChange($user_id, $role);
+        return $this->RedirectWithtoast('UserID:' . $user_id . ' Role Changed to ' . $role, 'info', '/dashboard');
     }
+
 
     public function revokeAdminAndEmployeeRole(int $id)
     {
         if (in_array($id, $this->data['permanentAdmins'])) {
-            return $this->RedirectWithtoast('Cant Revoke Admin of this user', 'danger', '/dashboard/admins-list');
+            return $this->RedirectWithtoast('Cant Revoke Admin of this user', 'danger', '/dashboard/users-list');
         }
         $modelMsg = $this->UserModel->RemoveAdminAndEmployee($id);
-        return $this->RedirectWithtoast('UserID:' . $id . ' ' . 'Role Revoked', 'Warning', '/dashboard/customers-list');
+        return $this->RedirectWithtoast('UserID:' . $id . ' ' . 'Role Revoked', 'Warning', '/dashboard/users-list');
     }
     public function ToogleStatus(int $id, int $status)
     {
         $empList = $this->request->getGet('empList');
         $redirect = match ($empList) {
-            '1' => '/dashboard/employee-list',
+            '1' => '/dashboard/users-list',
             default => '/dashboard/users-list',
         };
         ($this->UserModel->ToogleStatus($id, $status));
@@ -88,18 +77,29 @@ class UserController extends BaseController
     public function deleteUser(int $id)
     {
         if (in_array($id, $this->data['permanentAdmins'])) {
-            return $this->RedirectWithtoast('Cannot Delete This User', 'danger', '/dashboard/admins-list');
+            return $this->RedirectWithtoast('Cannot Delete This User', 'danger', '/dashboard/users-list');
         }
         $modelMsg = $this->UserModel->delUser($id);
-        return $this->RedirectWithtoast('User Deleted', 'danger', '/dashboard/customers-list');
+        return $this->RedirectWithtoast('User Deleted', 'danger', '/dashboard/users-list');
     }
 
-    public function changePassword()
+    public function changePasswordProcess()
     {
-        $id = $this->request->getPost('id');
+        $rules = [
+            'user_id'    => 'required|integer',
+            'password' => 'required',
+        ];
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Data',
+                'status'  => 'warning'
+            ]);
+            return redirect()->back();
+        }
+        $user_id = (int) $this->request->getPost('user_id');
         $password = $this->request->getPost('password');
-        $this->UserModel->changePasswordByAdmin($id, $password);
-        return $this->RedirectWithtoast('UserID:' . $id . ' Password Changed', 'Success', '/dashboard/users-list');
+        $this->UserModel->changePasswordByAdmin($user_id, $password);
+        return $this->RedirectWithtoast('UserID:' . $user_id . ' Password Changed', 'Success', '/dashboard/users-list');
     }
 
     public function forgotpass()

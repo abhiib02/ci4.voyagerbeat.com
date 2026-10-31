@@ -46,9 +46,8 @@ class DashboardController extends BaseController
             ['link' => 'all-bookings', 'title' => 'Bookings', 'icon' => 'bx bxs-backpack', 'mobile-visible' => 1],
             ['link' => 'packages-list', 'title' => 'Packages', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
             ['link' => 'package-create', 'title' => 'New Package', 'icon' => 'bx bxs-file-plus', 'mobile-visible' => 0],
-            ['link' => 'admins-list', 'title' => 'Admins', 'icon' => 'bx bxs-user', 'mobile-visible' => 1],
-            ['link' => 'employee-list', 'title' => 'Employees', 'icon' => 'bx bxs-user-check', 'mobile-visible' => 1],
-            ['link' => 'customers-list', 'title' => 'Customers', 'icon' => 'bx bx-user-circle', 'mobile-visible' => 1],
+            ['link' => 'users-list', 'title' => 'Users', 'icon' => 'bx bxs-user', 'mobile-visible' => 1],
+            ['link' => 'role-changer', 'title' => 'Role Changer', 'icon' => 'bx bx-label', 'mobile-visible' => 0],
             ['link' => 'coupons', 'title' => 'Coupons', 'icon' => 'bx bxs-coupon', 'mobile-visible' => 1],
             ['link' => 'option-list', 'title' => 'Options', 'icon' => 'bx bxs-analyse', 'mobile-visible' => 0],
             ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
@@ -109,20 +108,16 @@ class DashboardController extends BaseController
                 $this->data['UsedBadges'] = $this->PackageModel->getAllDistinctBadges();
                 $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
                 break;
-            case 'admins-list':
-                $this->data['Admins'] = $this->UserModel->getAllAdmins();
-                break;
-            case 'employee-list':
-                $this->data['Employees'] = $this->UserModel->getAllEmployee();
-                break;
-            case 'customers-list':
+            case 'users-list':
+                $this->data['Admins'] = $this->UserModel->getAllUserByRole(1);
+                $this->data['Employees'] = $this->UserModel->getAllUserByRole(2);
+                $this->data['Managers'] = $this->UserModel->getAllUserByRole(3);
                 $customer_id = $this->request->getGet('customerID');
                 if ($customer_id !== null) {
                     $this->data['Customers'] = $this->UserModel->getCustomerwithPoints($customer_id);
                 } else {
                     $this->data['Customers'] = $this->UserModel->getAllCustomerswithPoints();
                 }
-
                 break;
             case 'all-bookings':
 

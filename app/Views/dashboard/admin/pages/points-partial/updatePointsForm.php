@@ -15,7 +15,7 @@
             </div>
             <div class="col-6">
                 <label>Points Balance</label>
-                <a href="/dashboard/customers-list?customerID=<?= $customer->user_id ?>" class="form-control-plaintext" type="text" value=""><?= $customer->points ?? 'See on Customer List' ?></a>
+                <a href="/dashboard/users-list?customerID=<?= $customer->user_id ?>" class="form-control-plaintext" type="text" value=""><?= $customer->points ?? 'See on Customer List' ?></a>
 
             </div>
         </div>

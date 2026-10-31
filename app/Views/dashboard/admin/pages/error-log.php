@@ -56,8 +56,8 @@
 
             <style>
                 .log-viewer {
-                    background: #1e1e1e;
-                    color: #d4d4d4;
+                    /* background: #1e1e1e;
+                    color: #d4d4d4; */
                     padding: 12px;
                     overflow: auto;
                     max-height: 70vh;
@@ -65,7 +65,7 @@
                 }
 
                 .log-line {
-                    display: block;
+                    display: inline;
                     white-space: pre-wrap;
                     padding: 1px 6px;
                 }
@@ -87,7 +87,21 @@
                 }
             </style>
 
-            <pre class="log-viewer"><?= $html !== '' ? $html : esc('No log entries found for date: ' . $date) ?></pre>
+            <pre class="log-viewer">
+                <?= $html !== '' ? $html : esc('No log entries found for date: ' . $date) ?>
+                <div id="bottom"></div>
+            </pre>
         </div>
     </div>
 </div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const bottomMarker = document.getElementById('bottom');
+
+        // Instantly snaps to the bottom of the section
+        bottomMarker.scrollIntoView({
+            block: 'end',
+            behavior: 'instant'
+        });
+    });
+</script>

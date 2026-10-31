@@ -35,7 +35,21 @@
             }
             ?>
 
-            <pre><?= esc($logData) ?></pre>
+            <pre>
+                <?= esc($logData) ?>
+                <div id="bottom"></div>
+        </pre>
         </div>
     </div>
 </div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const bottomMarker = document.getElementById('bottom');
+
+        // Instantly snaps to the bottom of the section
+        bottomMarker.scrollIntoView({
+            block: 'end',
+            behavior: 'instant'
+        });
+    });
+</script>

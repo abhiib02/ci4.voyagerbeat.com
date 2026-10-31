@@ -61,19 +61,9 @@ class User extends Model
         return $this->where('role', 1)->countAllResults();
     }
 
-    public function getAllAdmins(): array
+    public function getAllUserByRole(int $role): array
     {
-        return $this->where('role', 1)->findAll();
-    }
-
-    public function getAllEmployee(): array
-    {
-        return $this->where('role', 2)->findAll();
-    }
-
-    public function getAllCustomers(): array
-    {
-        return $this->where('role', 0)->findAll();
+        return $this->where('role', $role)->findAll();
     }
 
     public function getAllCustomerswithPoints(): array
@@ -172,7 +162,10 @@ class User extends Model
     }
 
 
-
+    public function RoleChange(int $id, int $role): bool
+    {
+        return $this->update($id, ['role' => $role]);
+    }
     public function MakeAdmin(int $id): bool
     {
         return $this->update($id, ['role' => 1]);
@@ -235,7 +228,7 @@ class User extends Model
         return password_verify($password, $passHash);
     }
 
-    public function changePasswordByAdmin($id, string $password): bool
+    public function changePasswordByAdmin(int $id, string $password): bool
     {
         $hashedPass = password_hash($password, PASSWORD_DEFAULT);
 
