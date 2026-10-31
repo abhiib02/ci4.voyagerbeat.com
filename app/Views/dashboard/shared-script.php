@@ -57,7 +57,7 @@
         TravelersData.forEach((traveler) => {
 
             result += `
-                  <li class="list-group-item d-flex justify-content-between align-items-start ">
+                  <li class="col-3 border rounded-3">
                      <div class="ms-2 me-auto">
                         <div class="fw-bold fs-6">${traveler.name || ''}</div>
                         ${(traveler.gender || '').toLowerCase()} • <a href="tel:${traveler.contact || ''}">${traveler.contact || ''}</a>
