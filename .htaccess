@@ -43,7 +43,14 @@ Options -Indexes
 	# can be sent to index.php, and everything works as normal.
 	ErrorDocument 404 index.php
 </IfModule>
-
+<FilesMatch "\.(pdf|txt|zip)$">
+    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+</FilesMatch>
+<FilesMatch "^\.(?!well-known)">
+    Require all denied
+</FilesMatch>
 # Disable server signature start
 ServerSignature Off
 # Disable server signature end
