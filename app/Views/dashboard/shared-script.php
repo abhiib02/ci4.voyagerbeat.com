@@ -59,12 +59,42 @@
             result += `
                   <li class="col-3 border rounded-3">
                      <div class="ms-2 me-auto">
-                        <div class="fw-bold fs-6">${traveler.name || ''}</div>
-                        ${(traveler.gender || '').toLowerCase()} • <a href="tel:${traveler.contact || ''}">${traveler.contact || ''}</a>
-                        <p class="m-0">Sharing Basis : ${traveler.sharing.split('|')[1] || traveler.sharing}</p>
-                        <p class="m-0">Adhaar Number : ${traveler.adhaar}</p>
-                        <p class="m-0">Cost : ${traveler.cost ?? ''}</p>
-                        <button class="btn btn-sm btn-outline-dark" onclick="openModel('Trav-${traveler.contact}_${traveler.adhaar}')">Open Adhaar Card </button>
+                      <table class="table table-sm table-borderless">
+                      <tr>
+                        <td>Name</td>
+                        <td class="fw-bold">${traveler.name}</td>
+                    </tr>
+                        <tr>
+                            <td>Contact</td>
+                            <td class="fw-bold"><a href="tel:${traveler.contact}">${traveler.contact}</a></td>
+                        </tr>   
+                        <tr>
+                            <td>Sharing</td>
+                            <td class="fw-bold">${traveler.sharing.split('|')[1] || traveler.sharing}</td>
+                        </tr>
+                        <tr>
+                            <td>Pickup / Drop </td>
+                            <td class="fw-bold"><b>${traveler.boarding_city}</b> / <b>${traveler.drop_point}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Cost </td>
+                            <td class="fw-bold">${traveler.cost ?? ''}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td class="fw-bold">${(traveler.gender || '').toLowerCase()}</td>
+                        </tr>
+                        <tr>
+                            <td>Adhaar Card</td>
+                            <td class="fw-bold">${traveler.adhaar}</td>
+                        </tr>
+                        <tr>
+                            <td>Adhaar Card File</td>
+                            <td><button class="btn btn-sm btn-outline-dark" onclick="openModel('Trav-${traveler.contact}_${traveler.adhaar}')">Open Adhaar Card </button></td>
+                        </tr>
+                      </table>
+                       
+                        
                         <dialog class="border-1 rounded" id="Trav-${traveler.contact}_${traveler.adhaar}">
                         <div class="card">
                         <img width="auto" height="500px" src="/upload/adhaar/${traveler.adhaarCard_file}">
