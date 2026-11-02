@@ -76,20 +76,22 @@ $Balance = $data->total_package_cost - $data->amount;
 
 $summary = [];
 
-for ($i = 0; $i < count($perPersonSharing); $i++) {
-    $type = $perPersonSharing[$i];
+foreach ($perPersonSharing as $i => $raw) {
+    $parts = explode('|', (string)$raw);
 
-    $explodeSharing = explode('|', $type);
-    $sharing = (count($explodeSharing) > 2) ? $explodeSharing[1] : $explodeSharing[1];
-    $type = $sharing;
+    // Use the 2nd part if it exists, otherwise fall back to the whole value
+    $type = trim($parts[1] ?? $parts[0]);
+    if ($type === '') {
+        $type = 'Unknown';
+    }
 
-    $cost = $perPersonCost[$i];
+    // Safe numeric cost (strips commas, defaults to 0)
+    $cost = isset($perPersonCost[$i])
+        ? (float) str_replace(',', '', $perPersonCost[$i])
+        : 0;
 
     if (!isset($summary[$type])) {
-        $summary[$type] = [
-            'count' => 0,
-            'total_cost' => 0
-        ];
+        $summary[$type] = ['count' => 0, 'total_cost' => 0];
     }
 
     $summary[$type]['count']++;
