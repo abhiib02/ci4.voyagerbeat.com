@@ -22,10 +22,11 @@ class OptionsController extends BaseController
         $rules = [
             'name'    => 'required',
             'value' => 'required',
+            'datatype' => 'required|in_list[TEXT,JSON,NUMBER]',
         ];
         if (!$this->validate($rules)) {
             $this->session->setFlashdata('FlashMessage', [
-                'message' => 'Invalid option name or value.',
+                'message' => 'Invalid option name or value or datatype.',
                 'status'  => 'warning'
             ]);
             return redirect()->to('/dashboard/option-list')->withInput();
@@ -33,8 +34,9 @@ class OptionsController extends BaseController
 
         $name = $this->request->getPost('name');
         $value = $this->request->getPost('value');
+        $datatype = $this->request->getPost('datatype');
 
-        $this->OptionModel->insertOption(['name' => $name, 'value' => $value]);
+        $this->OptionModel->insertOption(['name' => $name, 'value' => $value, 'datatype' => $datatype]);
 
         return $this->RedirectWithToast('Option Created', 'Success', '/dashboard/option-list');
     }

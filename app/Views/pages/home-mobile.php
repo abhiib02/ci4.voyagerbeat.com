@@ -2,6 +2,7 @@
 
 /**
  * @var array $packages
+ * @var string $banners
  */
 ?>
 <div class="container scroll-margin pt-2">
@@ -12,18 +13,15 @@
         <!-- Swiper -->
         <div class="swiper package_images rounded-3 mt-2 mb-3">
             <div class="swiper-wrapper ">
-                <?php foreach ($packages as $index => $package) : ?>
-                    <?php if ($index < 5): ?>
+                <?php if (!empty($banners) && json_validate($banners)) : ?>
+                    <?php foreach (json_decode($banners) as $index => $banner) : ?>
                         <div class="swiper-slide">
-                            <p class="position-absolute w-100 text-center pt-3 fs-6 text-white " style="z-index: 1;background: linear-gradient(180deg,rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 100%);"><?= $package->PACKAGE_NAME ?></p>
-                            <a class="position-absolute btn btn-sm btn-light" style="bottom:10px;right:10px;z-index: 1;" href="/package/<?= $package->SLUG ?>">Open <i class='bx bx-right-arrow-alt'></i></a>
-                            <img src="<?= gdriveImage($package->PACKAGE_IMAGE, 512) ?>" alt="<?= $package->PACKAGE_NAME ?>" style="aspect-ratio: 3/2; width:100%; object-fit:cover;filter:brightness(.8);">
+                            <a href="<?= $banner->BannerLink ?>" target="_blank">
+                                <img src="<?= $banner->BannerImageLink ?>" alt="<?= $banner->BannerImageLink ?>" style="aspect-ratio: 3/2; width:100%; object-fit:cover;">
+                            </a>
                         </div>
-                    <?php else: ?>
-
-                    <?php endif; ?>
-                <?php endforeach; ?>
-
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <div class="swiper-pagination"></div>
         </div>

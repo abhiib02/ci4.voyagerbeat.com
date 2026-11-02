@@ -17,6 +17,7 @@ class Option extends Model
     // Allowed fields for insert/update operations
     protected $allowedFields    = [
         'name',
+        'datatype',
         'value',
     ];
 
@@ -26,6 +27,7 @@ class Option extends Model
     // Validation rules
     protected $validationRules      = [
         'name'  => 'required|max_length[255]',
+        'datatype' => 'required|in_list[TEXT,JSON,NUMBER]',
         'value' => 'permit_empty',
     ];
     protected $validationMessages   = [];
@@ -45,6 +47,12 @@ class Option extends Model
         $result = $this->where('name', $name)->first();
 
         return $result ? $result->value : null;
+    }
+    public function getOption(string $name): ?object
+    {
+        $result = $this->where('name', $name)->first();
+
+        return $result ? $result : null;
     }
     public function saveOption(string $name, string $value): bool
     {

@@ -26,6 +26,7 @@ class MainController extends BaseController
     {
         helper('useragentstring');
         if (isMobileDevice()) {
+            $this->data['banners'] = $this->OptionModel->getOptionValue('HomeBanner');
             $this->data['packages'] = $this->PackageModel->getAllPackagesInMobile();
             $this->data['pager'] = $this->PackageModel->pager;
             return $this->Render_Page('home-mobile', $this->data);
