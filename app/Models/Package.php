@@ -31,6 +31,7 @@ class Package extends Model
         'TAGS',
         'BADGE',
         'FAVORITE_COUNT',
+        'VISIT_COUNT',
         'PACKAGE_PDF',
         'WEEKEND',
         'UPCOMING',
