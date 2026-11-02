@@ -133,11 +133,11 @@ class Package extends Model
 
     public function getAllPackages(string $direction = 'DESC', int $perPage = 15, string $group = 'default'): array
     {
-        return $this->where('HIDDEN', 0)->orderBy('VISIT_COUNT', $direction)->paginate($perPage, $group);
+        return $this->where('HIDDEN', 0)->orderBy('VISIT_COUNT', $direction)->orderBy('updated_at', $direction)->paginate($perPage, $group);
     }
     public function getAllPackagesInMobile(string $direction = 'DESC'): array
     {
-        return $this->where('HIDDEN', 0)->orderBy('VISIT_COUNT', $direction)->find();
+        return $this->where('HIDDEN', 0)->orderBy('VISIT_COUNT', $direction)->orderBy('updated_at', $direction)->find();
     }
 
     public function getAllPackagesForAdminDashboard(int $perPage = 15, string $group = 'default'): array
