@@ -130,6 +130,7 @@ class BookingController extends BaseController
 
         if (! is_dir($path)) {
             mkdir($path, 0775, true);
+            log_message('info', 'Booking changes log directory created.');
         }
 
         $config            = new LoggerConfig();
@@ -146,9 +147,9 @@ class BookingController extends BaseController
         $logger   = new Logger($config);
         $userID   = loggedInUser();
         $userName = loggedInUsername();
-
+        log_message('info', 'Value was here');
         $logger->log('info', "{$field} changed from {$oldvalue} to {$value} by {$userID} | {$userName}");
-
+        log_message('info', 'Value should be logged here');
         return 1;
     }
     public function createBookingProcess()
