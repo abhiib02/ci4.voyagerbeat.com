@@ -51,9 +51,12 @@ $routes->post('reset', 'UserController::reset');
 |--------------------------------------------------------------------------
 | Grouped by role, each protected by its own auth filter.
 */
-
+$routes->group('', ['filter' => 'Role:ADMIN,EMPLOYEE,MANAGER,USER'], static function ($routes) {
+    $routes->get('userdashboard', 'DashboardController::AutoDashboardRedirect');
+});
 // Admin
 $routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
+
 
     $routes->get('dashboard', 'DashboardController::AdminDashboard', ['as' => 'Admin.Dashboard']);
     $routes->get('dashboard/(:any)', 'DashboardController::AdminDashboard/$1');

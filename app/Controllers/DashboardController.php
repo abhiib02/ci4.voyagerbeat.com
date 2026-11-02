@@ -39,6 +39,24 @@ class DashboardController extends BaseController
         $this->CouponModel = new Coupon();
     }
 
+
+    public function AutoDashboardRedirect()
+    {
+        $role = session()->get('role');
+        switch ($role) {
+            case '0':
+                return redirect()->to('/account');
+            case '1':
+                return redirect()->to('/dashboard');
+            case '2':
+                return redirect()->to('/employee-dashboard');
+            case '3':
+                return redirect()->to('/manager-dashboard');
+            default:
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+    }
+
     // ------------------- Pages -----------------------//
     protected function AdminPages(): array
     {
@@ -54,8 +72,6 @@ class DashboardController extends BaseController
             ['link' => 'error-log', 'title' => 'Error Log', 'icon' => 'bx bx-error-circle', 'mobile-visible' => 1],
         ];
     }
-
-
     protected function EmployeePages(): array
     {
         return [

@@ -25,11 +25,16 @@
             <li class="list-group-item">
 
                 <?php if (auth('User', 'Admin', 'Employee', 'Manager')): ?>
-                    <a class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" href="/account">
-                        <span class="fs-5"><i class='bx bx-user-circle'></i> Hello, <?= session()->get('name') ?? 'Login' ?></span>
-                    </a>
+                    <div class="d-flex justify-content-between">
+                        <a class="nav-link icon-link collapsed  w-100" type="button" href="/userdashboard">
+                            <span class="fs-5"><i class='bx bx-user-circle'></i> Hello, <?= session()->get('name') ?? 'Login' ?></span>
+                        </a>
+                        <a href="/logout" class="btn btn-sm btn-outline-danger">
+                            <span class=""><i class='bx bx-log-out me-2'></i> Logout</span>
+                        </a>
+                    </div>
                 <?php else: ?>
-                    <a class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" href="/login">
+                    <a class="nav-link icon-link collapsed d-flex justify-content-between w-100" type="button" href="/dashboard">
                         <span class="fs-5"><i class='bx bx-user-circle'></i> Login</span>
                     </a>
                 <?php endif; ?>
