@@ -16,6 +16,28 @@ class OptionsController extends BaseController
         $this->OptionModel = new Option();
     }
 
+    public function createOption()
+    {
+        // 1. Validate input FIRST
+        $rules = [
+            'name'    => 'required',
+            'value' => 'required',
+        ];
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid option name or value.',
+                'status'  => 'warning'
+            ]);
+            return redirect()->to('/dashboard/option-list')->withInput();
+        }
+
+        $name = $this->request->getPost('name');
+        $value = $this->request->getPost('value');
+
+        $this->OptionModel->insertOption(['name' => $name, 'value' => $value]);
+
+        return $this->RedirectWithToast('Option Created', 'Success', '/dashboard/option-list');
+    }
     public function save(string $name)
     {
         $value = $this->request->getPost($name);

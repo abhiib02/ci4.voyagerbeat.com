@@ -390,6 +390,7 @@ class BookingController extends BaseController
 
 
         $data['sharing'] = $sharing;
+        $data['date'] = explode("|", $data['date'])[0];
         $data['boarding_city'] = $boarding_city;
         $data['adhaar'] = $adhaar;
         $data['drop_city'] = $drop_city;

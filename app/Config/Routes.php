@@ -130,7 +130,9 @@ $routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
     $routes->get('options-list', 'DashboardController::optionsList');
     $routes->get('all-bookings', 'DashboardController::BookingsList');
     $routes->get('import', 'DashboardController::import_package_form');
+
     $routes->post('/option/(:alpha)', 'OptionsController::save/$1');
+    $routes->post('/option-create', 'OptionsController::createOption');
 });
 
 

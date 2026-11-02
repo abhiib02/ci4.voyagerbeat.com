@@ -32,6 +32,10 @@ class Option extends Model
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
+    public function insertOption(array $data): bool
+    {
+        return $this->insert($data);
+    }
     public function getAllOptions(): array
     {
         return $this->findAll();
