@@ -113,7 +113,7 @@ class BookingController extends BaseController
     protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value)
     {
         $loggerConfig = new LoggerConfig();
-        $customPath = WRITEPATH . 'logs/BookingChanges/'; // Make sure this folder exists or is writable
+        $customPath = WRITEPATH . 'logs/bookingchanges/'; // Make sure this folder exists or is writable
         $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class]['path'] = $customPath;
         $customLogger = new Logger($loggerConfig);
         $userID = loggedInUser();
