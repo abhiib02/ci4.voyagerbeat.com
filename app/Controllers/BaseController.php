@@ -68,6 +68,7 @@ abstract class BaseController extends Controller
             'AnnouncementText' => fn() => $this->OptionModel->getOptionValue('AnnouncementText'),
             'AnnouncementLink' => fn() => $this->OptionModel->getOptionValue('AnnouncementLink'),
             'PopupSwitch' => fn() => $this->OptionModel->getOptionValue('PopupSwitch'),
+            'cssversion' => fn() => $this->OptionModel->getOptionValue('cssversion'),
         ];
 
         foreach ($cacheKeys as $cacheKey => $callback) {

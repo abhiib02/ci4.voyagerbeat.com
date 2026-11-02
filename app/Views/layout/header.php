@@ -1,10 +1,16 @@
+<?php
+
+/**
+ * @var string $cssversion
+ */
+?>
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 
 <head>
     <?= view('layout/header-partials/header-function') ?>
     <?= view('layout/header-partials/meta-tags') ?>
-    <?= view('layout/header-partials/stylesheets') ?>
+    <?= view('layout/header-partials/stylesheets', ['cssversion' => $cssversion]) ?>
     <?= view('layout/header-partials/js-scripts') ?>
 </head>
 
