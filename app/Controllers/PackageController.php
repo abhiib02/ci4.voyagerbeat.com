@@ -660,126 +660,126 @@ class PackageController extends BaseController
         $this->session->setFlashdata('FlashMessage', ['message' => 'Package ID:' . $id . ' Deleted', 'status' => 'Danger']);
         return redirect()->to('/dashboard/packages-list');
     }
-    public function import_package_process()
-    {
-        helper(['dateFormat', 'itinerary']);
-        $Imported_json = $this->request->getFile('imported_json');
+    // public function import_package_process()
+    // {
+    //     helper(['dateFormat', 'itinerary']);
+    //     $Imported_json = $this->request->getFile('imported_json');
 
-        $inputJSON = $this->validate([
-            'imported_json' => [
-                'uploaded[imported_json]',
-                'mime_in[imported_json,application/json]',
-            ]
-        ]);
+    //     $inputJSON = $this->validate([
+    //         'imported_json' => [
+    //             'uploaded[imported_json]',
+    //             'mime_in[imported_json,application/json]',
+    //         ]
+    //     ]);
 
-        if (!$inputJSON) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'File is Invalid.', 'status' => 'Danger']);
-            return redirect()->to('/packages-list');
-        };
+    //     if (!$inputJSON) {
+    //         $this->session->setFlashdata('FlashMessage', ['message' => 'File is Invalid.', 'status' => 'Danger']);
+    //         return redirect()->to('/packages-list');
+    //     };
 
-        $json = file_get_contents($Imported_json);
+    //     $json = file_get_contents($Imported_json);
 
-        $obj  = json_decode($json);
+    //     $obj  = json_decode($json);
 
-        if ($obj[0]->PACKAGE_PDF != "") {
-            $PDF = 'https://voyagersbeat.com/pdf/' . $obj[0]->PACKAGE_PDF;
-        } else {
-            $PDF = "";
-        }
+    //     if ($obj[0]->PACKAGE_PDF != "") {
+    //         $PDF = 'https://voyagersbeat.com/pdf/' . $obj[0]->PACKAGE_PDF;
+    //     } else {
+    //         $PDF = "";
+    //     }
 
-        $slug = strtolower(str_replace(" ", "-", $obj[0]->PACKAGE_NAME));
-        if ($this->PackageModel->isSlugExist($slug)) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'Package Already Exist.', 'status' => 'Danger']);
-            return redirect()->to('/packages-list');
-        }
+    //     $slug = strtolower(str_replace(" ", "-", $obj[0]->PACKAGE_NAME));
+    //     if ($this->PackageModel->isSlugExist($slug)) {
+    //         $this->session->setFlashdata('FlashMessage', ['message' => 'Package Already Exist.', 'status' => 'Danger']);
+    //         return redirect()->to('/packages-list');
+    //     }
 
-        $nights = substr($obj[0]->PACKAGE_DAYS, 0, 1);
-
-
-
-        $stay = $nights . "N/" . ($nights + 1) . "D";
+    //     $nights = substr($obj[0]->PACKAGE_DAYS, 0, 1);
 
 
 
-        $OBJIMGARR = [
-            $obj[0]->IMAGE_1,
-            $obj[0]->IMAGE_2,
-            $obj[0]->IMAGE_3,
-            $obj[0]->IMAGE_4
-        ];
-
-        $ImagesArr = [];
-
-        foreach ($OBJIMGARR as $Image) {
-            if ($Image != '') {
-                array_push($ImagesArr, $Image);
-            }
-        }
-
-        $OBJPrice = [
-            ["sharing" => $obj[0]->INFO_P1, "price" => $obj[0]->PRICE_1],
-            ["sharing" => $obj[0]->INFO_P2, "price" => $obj[0]->PRICE_2],
-            ["sharing" => $obj[0]->INFO_P3, "price" => $obj[0]->PRICE_3],
-            ["sharing" => $obj[0]->INFO_P4, "price" => $obj[0]->PRICE_4],
-            ["sharing" => $obj[0]->INFO_P5, "price" => $obj[0]->PRICE_5],
-        ];
-
-        $Price = [];
-
-        foreach ($OBJPrice as $row) {
-            if (($row['price'] != "") && ($row['price'] != "0")) {
-                array_push($Price, $row);
-            }
-        }
-
-        $vb_datesArr = explode(',', $obj[0]->DATES);
-        $Dates = [];
-        foreach ($vb_datesArr as $date) {
-            array_push($Dates, ["date" => formatDateRange($date)]);
-        }
-        $raw = $obj[0]->PACK_IT;
-        $itinerary = mergeTitleandDesc($raw);
+    //     $stay = $nights . "N/" . ($nights + 1) . "D";
 
 
 
+    //     $OBJIMGARR = [
+    //         $obj[0]->IMAGE_1,
+    //         $obj[0]->IMAGE_2,
+    //         $obj[0]->IMAGE_3,
+    //         $obj[0]->IMAGE_4
+    //     ];
 
-        $DataArr = [
-            'NAME' => $obj[0]->PACKAGE_NAME,
-            'SLUG' => $slug,
-            'CATEGORY' => '',
-            'TAGS' =>  strtolower($obj[0]->TAGS),
-            'IS_INTERNATIONAL' => 0,
-            'DESTINATION' => $obj[0]->LOCATION,
-            'STATE' => $obj[0]->STATE,
-            'COUNTRY' => '',
-            'DESCRIPTION' => $obj[0]->META_DESC,
-            'PRICE' => json_encode($Price),
-            'STAY' => $stay,
-            'BADGE' => '',
-            'BOOKING_AMOUNT' => 3000,
-            'CONTACT' => '',
-            'CUSTOM_DATES' => NULL,
-            'CUSTOM_PRICE' => NULL,
-            'FEATURED_IMAGE' => $obj[0]->PACKAGE_IMAGE,
-            'PDF' =>  $PDF,
-            'HIGHLIGHTS' => $obj[0]->TRIP_HIGHLIGHT,
-            'INCLUSION' => $obj[0]->INCLUSION,
-            'EXCLUSION' => $obj[0]->EXCLUSION,
-            'ITINERARY' => $itinerary,
-            'DATES' => json_encode($Dates),
-            'DURATION' => $obj[0]->DURATION,
-            'IMAGES' => json_encode($ImagesArr),
-            'VIDEOS' => '',
-            'MISC' => $obj[0]->PACKAGE_MISC,
-        ];
+    //     $ImagesArr = [];
+
+    //     foreach ($OBJIMGARR as $Image) {
+    //         if ($Image != '') {
+    //             array_push($ImagesArr, $Image);
+    //         }
+    //     }
+
+    //     $OBJPrice = [
+    //         ["sharing" => $obj[0]->INFO_P1, "price" => $obj[0]->PRICE_1],
+    //         ["sharing" => $obj[0]->INFO_P2, "price" => $obj[0]->PRICE_2],
+    //         ["sharing" => $obj[0]->INFO_P3, "price" => $obj[0]->PRICE_3],
+    //         ["sharing" => $obj[0]->INFO_P4, "price" => $obj[0]->PRICE_4],
+    //         ["sharing" => $obj[0]->INFO_P5, "price" => $obj[0]->PRICE_5],
+    //     ];
+
+    //     $Price = [];
+
+    //     foreach ($OBJPrice as $row) {
+    //         if (($row['price'] != "") && ($row['price'] != "0")) {
+    //             array_push($Price, $row);
+    //         }
+    //     }
+
+    //     $vb_datesArr = explode(',', $obj[0]->DATES);
+    //     $Dates = [];
+    //     foreach ($vb_datesArr as $date) {
+    //         array_push($Dates, ["date" => formatDateRange($date)]);
+    //     }
+    //     $raw = $obj[0]->PACK_IT;
+    //     $itinerary = mergeTitleandDesc($raw);
 
 
-        $this->PackageModel->insertPackage($DataArr);
-        $ID = $this->PackageModel->getIDfromSlug($DataArr['SLUG'])[0]->ID;
 
-        $this->session->setFlashdata('FlashMessage', ['message' => 'Package Imported Sucessfully.', 'status' => 'success']);
-        return redirect()->to("/update-package/$ID");
-    }
+
+    //     $DataArr = [
+    //         'NAME' => $obj[0]->PACKAGE_NAME,
+    //         'SLUG' => $slug,
+    //         'CATEGORY' => '',
+    //         'TAGS' =>  strtolower($obj[0]->TAGS),
+    //         'IS_INTERNATIONAL' => 0,
+    //         'DESTINATION' => $obj[0]->LOCATION,
+    //         'STATE' => $obj[0]->STATE,
+    //         'COUNTRY' => '',
+    //         'DESCRIPTION' => $obj[0]->META_DESC,
+    //         'PRICE' => json_encode($Price),
+    //         'STAY' => $stay,
+    //         'BADGE' => '',
+    //         'BOOKING_AMOUNT' => BOOKING_AMOUNT,
+    //         'CONTACT' => '',
+    //         'CUSTOM_DATES' => NULL,
+    //         'CUSTOM_PRICE' => NULL,
+    //         'FEATURED_IMAGE' => $obj[0]->PACKAGE_IMAGE,
+    //         'PDF' =>  $PDF,
+    //         'HIGHLIGHTS' => $obj[0]->TRIP_HIGHLIGHT,
+    //         'INCLUSION' => $obj[0]->INCLUSION,
+    //         'EXCLUSION' => $obj[0]->EXCLUSION,
+    //         'ITINERARY' => $itinerary,
+    //         'DATES' => json_encode($Dates),
+    //         'DURATION' => $obj[0]->DURATION,
+    //         'IMAGES' => json_encode($ImagesArr),
+    //         'VIDEOS' => '',
+    //         'MISC' => $obj[0]->PACKAGE_MISC,
+    //     ];
+
+
+    //     $this->PackageModel->insertPackage($DataArr);
+    //     $ID = $this->PackageModel->getIDfromSlug($DataArr['SLUG'])[0]->ID;
+
+    //     $this->session->setFlashdata('FlashMessage', ['message' => 'Package Imported Sucessfully.', 'status' => 'success']);
+    //     return redirect()->to("/update-package/$ID");
+    // }
 
     public function packageDatesJSON(int $id)
     {

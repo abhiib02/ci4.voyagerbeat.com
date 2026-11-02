@@ -348,7 +348,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-primary fw-bold">Booking Amount per person</td>
-                                                <td class="fw-bold text-end">₹{{ pkg.BOOKING_AMOUNT || 3000 }}</td>
+                                                <td class="fw-bold text-end">₹{{ pkg.BOOKING_AMOUNT }}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">
@@ -430,7 +430,7 @@
             const pkg = reactive({
                 PACKAGE_ID: <?= $package->PACKAGE_ID ?>,
                 PACKAGE_NAME: '<?= $package->PACKAGE_NAME ?>',
-                BOOKING_AMOUNT: <?= $package->BOOKING_AMOUNT ?: 3000 ?>,
+                BOOKING_AMOUNT: <?= $package->BOOKING_AMOUNT ?: BOOKING_AMOUNT ?>,
                 SPACIAL_OFFER: <?= $package->SPACIAL_OFFER ?>,
                 CUSTOM_TRIP: <?= $package->CUSTOM_TRIP ?>,
                 DATES: '<?= $package->DATES ?>',
