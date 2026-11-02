@@ -491,7 +491,7 @@
 
                                     name="BOOKING_AMOUNT" />
 
-                                <label for="BookingAmount">Booking Amount</label>
+                                <label for="BookingAmount">Booking Amount (Default <?= BOOKING_AMOUNT ?>)</label>
 
                             </div>
 

@@ -270,7 +270,7 @@
                             <div class="form-floating mb-3">
                                 <input class="form-control" type="number" id="BookingAmount" value="<?= $package->BOOKING_AMOUNT ?>" placeholder="BookingAmount"
                                     name="BOOKING_AMOUNT" />
-                                <label for="BookingAmount">Booking Amount (Default 2500)</label>
+                                <label for="BookingAmount">Booking Amount (Default <?= BOOKING_AMOUNT ?>)</label>
                             </div>
                         </div>
                         <div class="col-lg-6">
