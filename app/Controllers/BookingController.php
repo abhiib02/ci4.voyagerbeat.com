@@ -83,9 +83,9 @@ class BookingController extends BaseController
         $value = $this->sanitizeFieldValue($field, $value);
 
         //Logging Changes Activity
-        log_message('info', 'Booking chNAGES FUNC LOGGING');
+
         $this->BookingPatchChangesActivityLog($field, $oldvalue, $value);
-        log_message('info', 'Booking chNAGES FUNC LOGGING');
+
 
         $updated = $this->BookingModel->update($bookingId, [$field => $value]);
 
@@ -113,46 +113,20 @@ class BookingController extends BaseController
                 return $value;
         }
     }
-    // protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value)
-    // {
-    //     $loggerConfig = new LoggerConfig();
-    //     $customPath = WRITEPATH . 'logs/bookingchanges/'; // Make sure this folder exists or is writable
-    //     $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class]['path'] = $customPath;
-    //     $customLogger = new Logger($loggerConfig);
-    //     $userID = loggedInUser();
-    //     $userName = loggedInUsername();
-    //     $customLogger->log('info', "$field Changed from $oldvalue to $value By $userID | $userName");
-    //     return 1;
-    // }
-
-
-    protected function BookingPatchChangesActivityLog(string $field, ?string $oldvalue, ?string $value): int
+    protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value): bool
     {
-        $path = WRITEPATH . 'logs/bookingchanges/';
-
-        if (! is_dir($path)) {
-            mkdir($path, 0775, true);
-            log_message('info', 'Booking changes log directory created.');
-        }
-
-        $config            = new LoggerConfig();
-        $config->threshold = 9; // log all levels, regardless of environment
-        $config->handlers  = [
-            FileHandler::class => [
-                'handles'         => ['info'],
-                'fileExtension'   => 'log',
-                'filePermissions' => 0664,
-                'path'            => $path,
-            ],
-        ];
-
-        $logger   = new Logger($config);
-        $userID   = loggedInUser();
-        $userName = loggedInUsername();
-        log_message('info', 'Value was here');
-        $logger->log('info', "{$field} changed from {$oldvalue} to {$value} by {$userID} | {$userName}");
-        log_message('info', 'Value should be logged here');
-        return 1;
+        $file = WRITEPATH . 'logs/bookingchanges/log-' . date('Y-m-d') . '.log';
+        $line = sprintf(
+            "%s | %s changed from %s to %s by %s | %s%s",
+            date('Y-m-d H:i:s'),
+            $field,
+            (string) $oldvalue,
+            (string) $value,
+            loggedInUser(),
+            loggedInUsername(),
+            PHP_EOL
+        );
+        return file_put_contents($file, $line, FILE_APPEND | LOCK_EX) !== false;
     }
     public function createBookingProcess()
     {
