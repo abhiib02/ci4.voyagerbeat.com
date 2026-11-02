@@ -8,8 +8,9 @@ use App\Models\Coupon;
 use App\Models\User;
 use App\Models\Point;
 
-use Config\Logger as LoggerConfig;
+use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\Log\Logger;
+use Config\Logger as LoggerConfig;
 
 
 
@@ -112,13 +113,43 @@ class BookingController extends BaseController
     }
     protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value)
     {
-        $loggerConfig = new LoggerConfig();
-        $customPath = WRITEPATH . 'logs/bookingchanges/'; // Make sure this folder exists or is writable
-        $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class]['path'] = $customPath;
-        $customLogger = new Logger($loggerConfig);
-        $userID = loggedInUser();
-        $userName = loggedInUsername();
-        $customLogger->log('info', "$field Changed from $oldvalue to $value By $userID | $userName");
+        $path = WRITEPATH . 'logs/bookingchanges/';
+
+        try {
+            // FileHandler never creates folders and fails silently, so check first
+            if (! is_dir($path) && ! mkdir($path, 0775, true) && ! is_dir($path)) {
+                throw new \RuntimeException("Cannot create folder: {$path}");
+            }
+            if (! is_writable($path)) {
+                throw new \RuntimeException("Folder not writable: {$path}");
+            }
+
+            $config            = new LoggerConfig();
+            $config->threshold = 9;
+            $config->handlers  = [
+                FileHandler::class => [
+                    'handles'         => ['info'],
+                    'fileExtension'   => 'log',
+                    'filePermissions' => 0664,
+                    'path'            => $path,
+                ],
+            ];
+
+            $logger = new Logger($config);
+
+            $logger->log('info', '{field} changed from {old} to {new} by {user_id} | {user_name}', [
+                'field'     => $field,
+                'old'       => $oldvalue,
+                'new'       => $value,
+                'user_id'   => loggedInUser(),
+                'user_name' => loggedInUsername(),
+            ]);
+        } catch (\Throwable $e) {
+            // Fall back to the working default logger so the change is never lost
+            log_message('error', 'BookingChange logger failed: ' . $e->getMessage());
+            log_message('info', "BOOKING CHANGE | {$field}: {$oldvalue} -> {$value}");
+        }
+
         return 1;
     }
 
