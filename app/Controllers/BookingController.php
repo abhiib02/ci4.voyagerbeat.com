@@ -8,9 +8,8 @@ use App\Models\Coupon;
 use App\Models\User;
 use App\Models\Point;
 
-use CodeIgniter\Log\Handlers\FileHandler;
-use CodeIgniter\Log\Logger;
 use Config\Logger as LoggerConfig;
+use CodeIgniter\Log\Logger;
 
 
 
@@ -83,9 +82,7 @@ class BookingController extends BaseController
         $value = $this->sanitizeFieldValue($field, $value);
 
         //Logging Changes Activity
-
         $this->BookingPatchChangesActivityLog($field, $oldvalue, $value);
-
 
         $updated = $this->BookingModel->update($bookingId, [$field => $value]);
 
@@ -113,21 +110,18 @@ class BookingController extends BaseController
                 return $value;
         }
     }
-    protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value): bool
+    protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value)
     {
-        $file = WRITEPATH . 'logs/bookingchanges/log-' . date('Y-m-d') . '.log';
-        $line = sprintf(
-            "%s | %s changed from %s to %s by %s | %s%s",
-            date('Y-m-d H:i:s'),
-            $field,
-            (string) $oldvalue,
-            (string) $value,
-            loggedInUser(),
-            loggedInUsername(),
-            PHP_EOL
-        );
-        return file_put_contents($file, $line, FILE_APPEND | LOCK_EX) !== false;
+        $loggerConfig = new LoggerConfig();
+        $customPath = WRITEPATH . 'logs/bookingchanges/'; // Make sure this folder exists or is writable
+        $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class]['path'] = $customPath;
+        $customLogger = new Logger($loggerConfig);
+        $userID = loggedInUser();
+        $userName = loggedInUsername();
+        $customLogger->log('info', "$field Changed from $oldvalue to $value By $userID | $userName");
+        return 1;
     }
+
     public function createBookingProcess()
     {
 
