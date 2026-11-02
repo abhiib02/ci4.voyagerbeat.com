@@ -8,8 +8,9 @@ use App\Models\Coupon;
 use App\Models\User;
 use App\Models\Point;
 
-use Config\Logger as LoggerConfig;
+use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\Log\Logger;
+use Config\Logger as LoggerConfig;
 
 
 
@@ -110,15 +111,44 @@ class BookingController extends BaseController
                 return $value;
         }
     }
-    protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value)
+    // protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value)
+    // {
+    //     $loggerConfig = new LoggerConfig();
+    //     $customPath = WRITEPATH . 'logs/bookingchanges/'; // Make sure this folder exists or is writable
+    //     $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class]['path'] = $customPath;
+    //     $customLogger = new Logger($loggerConfig);
+    //     $userID = loggedInUser();
+    //     $userName = loggedInUsername();
+    //     $customLogger->log('info', "$field Changed from $oldvalue to $value By $userID | $userName");
+    //     return 1;
+    // }
+
+
+    protected function BookingPatchChangesActivityLog(string $field, ?string $oldvalue, ?string $value): int
     {
-        $loggerConfig = new LoggerConfig();
-        $customPath = WRITEPATH . 'logs/bookingchanges/'; // Make sure this folder exists or is writable
-        $loggerConfig->handlers[\CodeIgniter\Log\Handlers\FileHandler::class]['path'] = $customPath;
-        $customLogger = new Logger($loggerConfig);
-        $userID = loggedInUser();
+        $path = WRITEPATH . 'logs/bookingchanges/';
+
+        if (! is_dir($path)) {
+            mkdir($path, 0775, true);
+        }
+
+        $config            = new LoggerConfig();
+        $config->threshold = 9; // log all levels, regardless of environment
+        $config->handlers  = [
+            FileHandler::class => [
+                'handles'         => ['info'],
+                'fileExtension'   => 'log',
+                'filePermissions' => 0664,
+                'path'            => $path,
+            ],
+        ];
+
+        $logger   = new Logger($config);
+        $userID   = loggedInUser();
         $userName = loggedInUsername();
-        $customLogger->log('info', "$field Changed from $oldvalue to $value By $userID | $userName");
+
+        $logger->log('info', "{$field} changed from {$oldvalue} to {$value} by {$userID} | {$userName}");
+
         return 1;
     }
     public function createBookingProcess()
