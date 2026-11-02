@@ -83,7 +83,9 @@ class BookingController extends BaseController
         $value = $this->sanitizeFieldValue($field, $value);
 
         //Logging Changes Activity
+        log_message('info', 'Booking chNAGES FUNC LOGGING');
         $this->BookingPatchChangesActivityLog($field, $oldvalue, $value);
+        log_message('info', 'Booking chNAGES FUNC LOGGING');
 
         $updated = $this->BookingModel->update($bookingId, [$field => $value]);
 
