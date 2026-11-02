@@ -482,3 +482,8 @@ $TAGS = explode(',', $package->TAGS);
         observer.observe(upperCard);
     }
 </script>
+
+<script>
+    var PACKAGE_ID = <?= $package->PACKAGE_ID ?>;
+</script>
+<script src="/js/incVisitCount.js"></script>
