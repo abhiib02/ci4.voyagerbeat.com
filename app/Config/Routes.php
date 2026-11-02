@@ -83,6 +83,7 @@ $routes->group('', ['filter' => 'Role:MANAGER'], static function ($routes) {
 });
 //Admin and Employee Both
 $routes->group('', ['filter' => 'Role:ADMIN,EMPLOYEE,MANAGER'], function ($routes) {
+    $routes->post('deleteBooking', 'BookingController::deleteBooking');
     $routes->patch('bookings-patch/(:num)', 'BookingController::updateField/$1');
     $routes->post('create-booking', 'BookingController::createBookingProcess');
     $routes->get('points/(:num)/(:num)', 'PointsController::AddPointsToCustomer/$1/$2');

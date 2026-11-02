@@ -149,15 +149,26 @@
 
                         <button type="button" class=" btn btn-sm btn-outline-dark" onclick="openModel('BookingTableDetail<?= $booking->ID; ?>')"><i class='bx bxs-folder-open'></i></button>
                         <div class="">
-                            <?php if (auth('Admin')): ?>
-                                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class='bx bx-dots-vertical-rounded'></i>
-                                </button>
 
-                                <ul class="dropdown-menu">
+                            <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-dots-vertical-rounded'></i>
+                            </button>
+
+                            <ul class="dropdown-menu">
+                                <?php if (auth('Admin')): ?>
                                     <li><a class="dropdown-item" onclick="openModel('updatePoints-<?= $booking->user_id ?>')"> <i class='bx bx-plus-circle'></i> Update Points</a></li>
-                                </ul>
-                            <?php endif; ?>
+                                <?php endif; ?>
+                                <?php if (auth('Admin', 'Manager', 'Employee')): ?>
+                                    <?php if ($booking->customer_access): ?>
+                                        <li><button form="deleteBookingform<?= $booking->ID ?>" type="submit" class="dropdown-item text-danger"><i class='bx bx-trash'></i> Delete Booking</button>
+                                            <form id="deleteBookingform<?= $booking->ID ?>" action="/deleteBooking" method="post" onsubmit="return confirm('Are you sure you want to delete this booking?');">
+                                                <input type="hidden" name="booking_id" value="<?= $booking->ID ?>">
+                                            </form>
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </ul>
+
                         </div>
                         <?php if (!str_contains($booking->order_id, 'order_') && $booking->customer_access): ?>
                             <button type="button" id="copyLinkBtn" class=" btn btn-sm btn-outline-dark" data-link="<?= base_url() ?>booking-confirmation-form/<?= $booking->order_id; ?>" onclick="copyLink()">Copy_Link</button>

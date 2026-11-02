@@ -24,7 +24,7 @@ class EmailController extends BaseController
     /* =================================== */
     public function __construct()
     {
-        $this->session = \Config\Services::session();
+        $this->session = Services::session();
         $this->optionModel = new Option();
         $this->BookingModel = new Booking();
         $this->CouponModel = new Coupon();
@@ -32,7 +32,7 @@ class EmailController extends BaseController
         $this->data['mails'] = $this->optionModel->getOptionValue('mails');
     }
 
-    public function LeadSubmission()
+    /*public function LeadSubmission()
     {
         helper(['form']);
         $rules = [
@@ -175,7 +175,7 @@ class EmailController extends BaseController
 
         $message = $this->booking_mail_template($dataArr);
 
-        $email = \Config\Services::email();
+        $email = Services::email();
         $email->setTo($to);
         $email->setFrom($from, env('app.name'));
 
@@ -190,7 +190,7 @@ class EmailController extends BaseController
             $this->session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'danger']);
             return redirect()->to('/package' . '/' . $dataArr['slug']);
         }
-    }
+    }*/
     public function reset_password_mail()
     {
 
@@ -206,6 +206,7 @@ class EmailController extends BaseController
 
         $email = Services::email();
         $email->setTo($to);
+
         $email->setFrom($from, env('app.name'));
 
         $email->setSubject($subject);
@@ -249,13 +250,13 @@ class EmailController extends BaseController
         } elseif ($Bookingdata->remainingAmount == 0) {
             $Bookingdata->remainingAmount = 'Full Payment Done';
         } else {
-            $Bookingdata->remainingAmount = $Bookingdata->remainingAmount;
         }
 
         $message = $this->bookingConfirmationTemplate($Bookingdata);
 
 
-        $email = \Config\Services::email();
+        $email = Services::email();
+        $cc = env('cc_email');
 
         $from = env('contact_form_sender_email');
         $subject = 'Booking Confirmation of Package ID ' . $Bookingdata->package_id . ' for ' . $Bookingdata->name;
@@ -263,8 +264,8 @@ class EmailController extends BaseController
             $Bookingdata->email,
         ];
         $email->setTo($emailList);
+        $email->setCC($cc);
         $email->setFrom($from, env('app.name'));
-        $email->setCC(env('contact_form_receiver_email'));
         $email->setSubject($subject);
         $email->setMessage($message);
 

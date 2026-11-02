@@ -570,4 +570,32 @@ class BookingController extends BaseController
         $this->PointModel->UpdatePointsUsed($user_id, (int)$PointsUsed);
         return $PointsUsed;
     }
+    public function deleteBooking()
+    {
+        $rules = [
+            'booking_id'    => 'required|integer',
+        ];
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Booking ID',
+                'status'  => 'Warning'
+            ]);
+            return redirect()->back()->withInput();
+        }
+
+        $ID = $this->request->getPost('booking_id');
+        if ($this->BookingModel->deleteBookingByID($ID)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Booking deleted successfully.',
+                'status'  => 'Danger'
+            ]);
+            return redirect()->back()->withInput();
+        }
+
+        $this->session->setFlashdata('FlashMessage', [
+            'message' => 'Failed to delete booking.',
+            'status'  => 'Danger'
+        ]);
+        return redirect()->back()->withInput();
+    }
 }

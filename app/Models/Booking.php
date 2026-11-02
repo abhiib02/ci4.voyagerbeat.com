@@ -96,6 +96,13 @@ class Booking extends Model
     {
         return $this->insert($data);
     }
+    public function deleteBookingByID(int $ID): bool
+    {
+        if ($this->find($ID) !== null && !$this->isBookingConfirmedbyID($ID)) {
+            return (bool) $this->delete($ID);
+        }
+        return false;
+    }
     public function updateConfirmedBooking(string $orderId, array $data): bool
     {
         return $this->where('order_id', $orderId)->update(null, $data);
@@ -107,6 +114,14 @@ class Booking extends Model
     public function isBookingExistByOrderId(string $orderId): bool
     {
         return $this->where('order_id', $orderId)->countAllResults() > 0;
+    }
+    public function isBookingConfirmedbyorderID(string $orderId): bool
+    {
+        return $this->where('order_id', $orderId)->where('customer_access', 0)->countAllResults() > 0;
+    }
+    public function isBookingConfirmedbyID(int $ID): bool
+    {
+        return $this->where('ID', $ID)->where('customer_access', 0)->countAllResults() > 0;
     }
     public function updateStatus(string $orderId, string $status): bool
     {
