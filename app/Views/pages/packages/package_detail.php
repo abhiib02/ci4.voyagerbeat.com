@@ -289,3 +289,7 @@ $TAGS = explode(',', $package->TAGS);
 </script>
 <script src="/js/package-dates.js"></script>
 <script src="/js/similar-package.js"></script>
+<script>
+    var PACKAGE_ID = <?= $package->PACKAGE_ID ?>;
+</script>
+<script src="/js/incVisitCount.js"></script>

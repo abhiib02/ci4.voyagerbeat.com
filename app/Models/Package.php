@@ -343,7 +343,10 @@ class Package extends Model
         return $this->select('LOCATION,MAX(PACKAGE_IMAGE) as PACKAGE_IMAGE')->groupBy('LOCATION')->where("HIDDEN", 0)->where('STATE !=', 'International')->findAll();
     }
 
-
+    public function increaseVisitCount(int $ID): bool
+    {
+        return (bool) $this->where('PACKAGE_ID', $ID)->set('VISIT_COUNT', 'VISIT_COUNT + 1', false)->update();
+    }
     public function getFavoritecount(int $ID): int
     {
         $package = $this->select('FAVORITE_COUNT')->find($ID);

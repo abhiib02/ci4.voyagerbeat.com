@@ -349,7 +349,7 @@ class BookingController extends BaseController
         $this->sendDatatoGoogleSheet((array) $bookingData);
 
         if (!$this->sendEmail($orderId)) {
-            return $this->RedirectWithtoast('Booking Confirmed but Some Error Occured During Sending Mail', 'Success', '/thanks?order_id=' . $orderId);
+            return $this->RedirectWithtoast('Booking Confirmed', 'Success', '/thanks?order_id=' . $orderId);
         };
 
         return $this->RedirectWithtoast('Booking Confirmed', 'Success', '/thanks?order_id=' . $orderId);

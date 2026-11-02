@@ -184,6 +184,7 @@ $routes->group('api', static function ($routes) {
     $routes->get('getFavorite/(:num)', 'PackageController::GetFavoriteCount/$1');
     $routes->get('IncFavorite/(:num)', 'PackageController::IncreaseFavoriteCount/$1');
     $routes->get('DecFavorite/(:num)', 'PackageController::DecreaseFavoriteCount/$1');
+    $routes->post('increasePackageVisitCount', 'PackageController::increasePackageVisitCount');
 });
 
 /*
