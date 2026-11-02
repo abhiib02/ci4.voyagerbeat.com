@@ -121,7 +121,7 @@ class Package extends Model
         return $this->insert($data);
     }
 
-    public function UpdatePackage($id, $data)
+    public function UpdatePackage(int $id, array $data)
     {
         return (bool) $this->builder()->where(["PACKAGE_ID" => $id])->set($data)->update();
     }
