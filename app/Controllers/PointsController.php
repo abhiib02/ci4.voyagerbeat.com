@@ -85,4 +85,33 @@ class PointsController extends BaseController
         $this->session->setFlashdata('FlashMessage', ['message' => $message, 'status' => $status]);
         return redirect()->back();
     }
+    public function giveawayPointsProcess()
+    {
+        $rules = [
+            'points' => 'required|integer|less_than[1000]',
+            'customer_ids' => 'required'
+        ];
+
+        if (!$this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Input or Points exceed the limit of 1000.',
+                'status'  => 'warning'
+            ]);
+            return redirect()->back();
+        }
+
+        $points = (int)$this->request->getPost('points');
+        $customer_ids = $this->request->getPost('customer_ids');
+
+        foreach ($customer_ids as $user_id) {
+            $this->PointModel->AddPoints((int)$user_id, $points);
+        }
+
+        $this->session->setFlashdata('FlashMessage', [
+            'message' => "Successfully Giveaway {$points} points to selected customers.",
+            'status'  => 'success'
+        ]);
+
+        return redirect()->back();
+    }
 }

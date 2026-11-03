@@ -69,6 +69,7 @@ $routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
     $routes->get('revokeAdminAndEmployeeRole/(:num)', 'UserController::revokeAdminAndEmployeeRole/$1');
     $routes->get('deleteUser/(:num)', 'UserController::deleteUser/$1');
     $routes->post('updatePoints', 'PointsController::updatePointsProcess');
+    $routes->post('giveaway-points-process', 'PointsController::giveawayPointsProcess');
 });
 
 // Employee
@@ -115,6 +116,8 @@ $routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
     $routes->post('createCoupon', 'CouponController::createCoupon');
     $routes->post('UpdateCoupon', 'CouponController::updateCoupon');
     $routes->post('deleteCoupon', 'CouponController::removeCoupon');
+
+
 
     // Package management
     $routes->post('createPackageProcess', 'PackageController::add_package_process');

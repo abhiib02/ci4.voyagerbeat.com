@@ -66,6 +66,7 @@ class DashboardController extends BaseController
             ['link' => 'package-create', 'title' => 'New Package', 'icon' => 'bx bxs-file-plus', 'mobile-visible' => 0],
             ['link' => 'users-list', 'title' => 'Users', 'icon' => 'bx bxs-user', 'mobile-visible' => 1],
             ['link' => 'role-changer', 'title' => 'Role Changer', 'icon' => 'bx bx-label', 'mobile-visible' => 0],
+            ['link' => 'points-giveaway', 'title' => 'Points Giveaway', 'icon' => 'bx bxs-gift', 'mobile-visible' => 0],
             ['link' => 'coupons', 'title' => 'Coupons', 'icon' => 'bx bxs-coupon', 'mobile-visible' => 1],
             ['link' => 'option-list', 'title' => 'Options', 'icon' => 'bx bxs-analyse', 'mobile-visible' => 0],
             ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
@@ -150,6 +151,13 @@ class DashboardController extends BaseController
                     $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['startdate'], $this->data['enddate']);
                 }
                 $this->data['pager'] = $this->BookingModel->pager;
+                break;
+            case 'points-giveaway':
+                $packageFilter = urldecode($this->request->getGet('package'));
+                $dateFilter = urldecode($this->request->getGet('date'));
+
+                $this->data['Packages'] = $this->PackageModel->getAllPackagesForAdminDashboard();
+                $this->data['Customers'] = $this->UserModel->getAllCustomerswith_Points_lastbooking_package($packageFilter, $dateFilter);
                 break;
             case 'coupons':
                 $this->data['Coupons'] = $this->CouponModel->getAllCoupons();

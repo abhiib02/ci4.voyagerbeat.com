@@ -299,6 +299,9 @@ class RazorpayController extends BaseController
         }
 
         //Checks For Exceptions
+        if ($BookingData['AmountPayable'] < 1) {
+            return redirect()->to("book/" . $BookingData['package_id'] . "?paymentError=1");
+        }
 
         if ($BookingData['AmountPayable'] >= 500000) {
             return redirect()->to("book/" . $BookingData['package_id'] . "?paymentError=1");

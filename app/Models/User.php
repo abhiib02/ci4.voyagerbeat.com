@@ -74,6 +74,45 @@ class User extends Model
             ->orderBy('users.user_id', 'DESC')
             ->findAll();
     }
+    public function getAllCustomerswith_Points_lastbooking_package(string $package = '', string $date = ''): array
+    {
+        // Subquery to get the latest booking ID for each customer
+        $subquery = $this->db->table('bookings_table')
+            ->select('user_id, MAX(id) as max_booking_id')
+            ->groupBy('user_id');
+
+        $builder = $this->select('users.*, user_points.points_balance as POINTS, latest_booking.package_name, latest_booking.date as last_travel_date')
+            ->join('user_points', 'user_points.user_id = users.user_id', 'left')
+            ->join('(' . $subquery->getCompiledSelect() . ') as lb', 'lb.user_id = users.user_id', 'left')
+            ->join('bookings_table as latest_booking', 'latest_booking.id = lb.max_booking_id', 'left')
+            ->where('users.role', 0)
+            ->where('users.status', 1)
+            ->where('users.deleted_at IS NULL');
+
+        // Apply package filter only if a package value is provided
+        if (!empty($package)) {
+            $builder->like('latest_booking.package_name', $package);
+        }
+
+        // Apply date filter only if a date value is provided
+        if (!empty($date)) {
+            $dateString = \DateTime::createFromFormat('Y-m-d', $date);
+            if ($dateString) {
+                $formattedDate = $dateString->format('d/m/Y');
+                $builder->like('latest_booking.date', $formattedDate);
+            }
+        }
+
+        $customers = $builder->orderBy('users.user_id', 'DESC')->findAll();
+
+        // Strip out sensitive fields from every row for security
+        return array_map(function ($customer) {
+            unset($customer->password, $customer->PASSWORD);
+            unset($customer->password_reset_token);
+            unset($customer->status);
+            return $customer;
+        }, $customers);
+    }
     public function getCustomerwithPoints(int $id)
     {
         return $this->select('users.*,user_points.points_balance as POINTS')
