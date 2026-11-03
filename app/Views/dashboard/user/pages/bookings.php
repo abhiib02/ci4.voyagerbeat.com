@@ -50,17 +50,17 @@
                             </td>
                             <td>
                                 <?php if ($booking->pax_details && $booking->pax_details != "{}"): ?>
-                                    <button class="btn btn-sm btn-outline-dark" data-booking-id="<?= esc($booking->ID) ?>" data-travelers="<?= esc($booking->pax_details, 'attr') ?>" onclick="showTravelersModel()">Show</button>
-                                    <dialog class="border-1 rounded" id="travelers-dialog-<?= esc($booking->ID) ?>">
+                                    <button class="btn btn-sm btn-outline-dark" data-booking-id="<?= $booking->ID ?>" data-travelers="<?= esc($booking->pax_details, 'attr') ?>" onclick="showTravelersModel()">Show</button>
+                                    <dialog class="border-1 rounded" id="travelers-dialog-<?= $booking->ID; ?>">
                                         <div class="card">
                                             <div class="card-header">
-                                                <div class="fw-bold"><?= esc($booking->name) ?>'s Travel Buddies</div>
+                                                <div class="fw-bold"><?= $booking->name ?>'s Travel Buddies</div>
                                             </div>
                                             <div class="card-body">
-                                                <ol class="list-group list-group-numbered" id="output-dialog-<?= esc($booking->ID) ?>"></ol>
+                                                <ol class="row" style="width: 80vw;list-style-type: none;" id="output-dialog-<?= $booking->ID; ?>"></ol>
                                             </div>
                                             <div class="card-footer">
-                                                <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#travelers-dialog-<?= esc($booking->ID) ?>').close();">Close</button>
+                                                <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#travelers-dialog-<?= $booking->ID ?>').close();">Close</button>
                                             </div>
                                         </div>
                                     </dialog>

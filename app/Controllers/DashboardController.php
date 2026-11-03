@@ -107,6 +107,8 @@ class DashboardController extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
+        $this->data['startdate'] = $this->request->getGet('start') ?? date('Y-m-01'); // Default to 1st of month if not provided
+        $this->data['enddate'] = $this->request->getGet('end') ?? date('Y-m-t'); // Default to end of current month if not provided
         $this->data['month'] = $this->request->getGet('month') ?? date('m');
         $this->data['year'] = $this->request->getGet('year') ?? date('Y');
         $this->data['pagename'] = $pageName;
@@ -141,11 +143,11 @@ class DashboardController extends BaseController
                 $customer_id = $this->request->getGet('customer_id');
 
                 if ($employeeID !== null) {
-                    $this->data['Bookings'] = $this->BookingModel->getBookingsByEmployeeID($employeeID, $this->data['month'], $this->data['year']);
+                    $this->data['Bookings'] = $this->BookingModel->getBookingsByEmployeeID($employeeID, $this->data['startdate'], $this->data['enddate']);
                 } else if ($customer_id !== null) {
-                    $this->data['Bookings'] = $this->BookingModel->getBookingsByCustomerID($customer_id, $this->data['month'], $this->data['year']);
+                    $this->data['Bookings'] = $this->BookingModel->getBookingsByCustomerID($customer_id, $this->data['startdate'], $this->data['enddate']);
                 } else {
-                    $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['month'], $this->data['year']);
+                    $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['startdate'], $this->data['enddate']);
                 }
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
@@ -187,12 +189,14 @@ class DashboardController extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
+        $this->data['startdate'] = $this->request->getGet('start') ?? date('Y-m-01'); // Default to 1st of month if not provided
+        $this->data['enddate'] = $this->request->getGet('end') ?? date('Y-m-t'); // Default to end of current month if not provided
         $this->data['month'] = $this->request->getGet('month') ?? date('m');
         $this->data['year'] = $this->request->getGet('year') ?? date('Y');
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
             case 'booking-list':
-                $this->data['Bookings'] = $this->BookingModel->getAllBookingsofAgentForDashboard($userID, $this->data['month'], $this->data['year']);
+                $this->data['Bookings'] = $this->BookingModel->getAllBookingsofAgentForDashboard($userID, $this->data['startdate'], $this->data['enddate']);
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             default:
@@ -227,12 +231,14 @@ class DashboardController extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
+        $this->data['startdate'] = $this->request->getGet('start') ?? date('Y-m-01'); // Default to 1st of month if not provided
+        $this->data['enddate'] = $this->request->getGet('end') ?? date('Y-m-t'); // Default to end of current month if not provided
         $this->data['month'] = $this->request->getGet('month') ?? date('m');
         $this->data['year'] = $this->request->getGet('year') ?? date('Y');
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
             case 'booking-list':
-                $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['month'], $this->data['year']);
+                $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['startdate'], $this->data['enddate']);
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             default:
