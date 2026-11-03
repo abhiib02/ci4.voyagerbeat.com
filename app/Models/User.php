@@ -87,7 +87,9 @@ class User extends Model
             ->join('bookings_table as latest_booking', 'latest_booking.id = lb.max_booking_id', 'left')
             ->where('users.role', 0)
             ->where('users.status', 1)
-            ->where('users.deleted_at IS NULL');
+            ->where('users.deleted_at IS NULL')
+            ->where('latest_booking.package_name IS NOT NULL', null, false)
+            ->where('latest_booking.package_name !=', '');
 
         // Apply package filter only if a package value is provided
         if (!empty($package)) {
