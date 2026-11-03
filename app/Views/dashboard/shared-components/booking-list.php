@@ -82,7 +82,7 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if (auth('Admin', 'Manager')): ?>
+                    <?php if (auth('Admin')): ?>
                         <input type="number" class="form-control form-control-sm" data-field="total_package_cost" data-booking-id="<?= $booking->ID; ?>" value="<?= $booking->total_package_cost ?>" <?= ($booking->status != 'Pending') ? 'readonly' : ''; ?>>
                     <?php else: ?>
                         <?= $booking->total_package_cost ?>
