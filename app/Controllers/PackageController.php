@@ -393,17 +393,8 @@ class PackageController extends BaseController
             "message" => "Removed From Favorites",
         ]);
     }
-    public function increasePackageVisitCount()
+    public function increasePackageVisitCount(int $PACKAGE_ID)
     {
-        $rules = [
-            'id'    => 'required|interger|greater_than[0]',
-        ];
-        if (!$this->validate($rules)) {
-            return $this->response->setJSON([
-                "message" => "invalid package id",
-            ]);
-        }
-        $PACKAGE_ID = (int) $this->request->getPost('id');
         $this->PackageModel->increaseVisitCount($PACKAGE_ID);
         return $this->response->setJSON([
             "package_id" => $PACKAGE_ID,
