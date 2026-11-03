@@ -153,8 +153,8 @@ class DashboardController extends BaseController
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             case 'points-giveaway':
-                $packageFilter = urldecode($this->request->getGet('package'));
-                $dateFilter = urldecode($this->request->getGet('date'));
+                $packageFilter = urldecode($this->request->getGet('package') ?? '');
+                $dateFilter = urldecode($this->request->getGet('date') ?? '');
 
                 $this->data['Packages'] = $this->PackageModel->getAllPackagesForAdminDashboard();
                 $this->data['Customers'] = $this->UserModel->getAllCustomerswith_Points_lastbooking_package($packageFilter, $dateFilter);
