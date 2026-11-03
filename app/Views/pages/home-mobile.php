@@ -5,6 +5,7 @@
  * @var string $banners
  */
 ?>
+<?php helper('custom'); ?>
 <div class="container scroll-margin pt-2">
 
     <section id="mobile-hero" class="mb-3">
