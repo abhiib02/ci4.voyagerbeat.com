@@ -76,5 +76,12 @@
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php endif; ?>
+        <li class="nav-item text-center" role="presentation">
+            <a href="/logout" class="nav-link rounded-3 lh-1  text-danger" id="home-tab2" aria-selected="true">
+                <i class='bx bx-log-out fs-5'></i>
+                <br>
+                <sub class="text-capitalize">Logout</sub>
+            </a>
+        </li>
     </ul>
 </nav>
