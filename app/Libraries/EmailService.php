@@ -23,7 +23,7 @@ class EmailService
         $email->setTo($data['user_email']);
         $email->setMessage($messageHtml);
         if ($email->send()) {
-
+            log_message('error', 'Email sent successfully: ' . $email->printDebugger(['headers']));
             return 1;
         } else {
             log_message('error', 'Email sending failed: ' . $email->printDebugger(['headers']));
