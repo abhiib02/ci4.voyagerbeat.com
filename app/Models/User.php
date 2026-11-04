@@ -74,7 +74,7 @@ class User extends Model
             ->orderBy('users.user_id', 'DESC')
             ->findAll();
     }
-    public function getAllCustomerswith_Points_lastbooking_package(string $package = '', string $date = ''): array
+    public function getAllCustomerswith_Points_lastbooking_package(string $package = '', string $date = '', string $notrips = ''): array
     {
         // Subquery to get the latest booking ID for each customer
         $subquery = $this->db->table('bookings_table')
@@ -87,11 +87,13 @@ class User extends Model
             ->join('bookings_table as latest_booking', 'latest_booking.id = lb.max_booking_id', 'left')
             ->where('users.role', 0)
             ->where('users.status', 1)
-            ->where('users.deleted_at IS NULL')
-            ->where('latest_booking.package_name IS NOT NULL', null, false)
-            ->where('latest_booking.package_name !=', '');
+            ->where('users.deleted_at IS NULL');
 
         // Apply package filter only if a package value is provided
+        if ($notrips === '1') {
+        } else {
+            $builder->where('latest_booking.package_name IS NOT NULL', null, false)->where('latest_booking.package_name !=', '');
+        }
         if (!empty($package)) {
             $builder->like('latest_booking.package_name', $package);
         }
@@ -155,6 +157,11 @@ class User extends Model
 
         return $user ? $user->user_name : null;
     }
+    public function getUserEmailById(int $id): ?string
+    {
+        $user = $this->select('user_email')->where('user_id', $id)->first();
+        return $user ? $user->user_email : null;
+    }
 
     public function getUserRole(string $email): ?int
     {
@@ -168,7 +175,7 @@ class User extends Model
         return $this->where('user_email', $email)->countAllResults() > 0;
     }
 
-    public function isUserExistByID($id): bool
+    public function isUserExistByID(int $id): bool
     {
         return $this->where('user_id', $id)->countAllResults() > 0;
     }

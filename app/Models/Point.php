@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\User;
 
 class Point extends Model
 {
@@ -46,7 +47,7 @@ class Point extends Model
     protected $beforeInsert   = [];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
+    protected $afterUpdate    = ['sendLoyalityUpdateNotification'];
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
@@ -56,7 +57,7 @@ class Point extends Model
     {
         return $this->insert($data);
     }
-    public function UpdatePointsEarned(int $user_id, int $pointsEarned)
+    public function UpdatePointsEarned(int $user_id, int $pointsEarned, string $type = '')
     {
         if (!$this->where('user_id', $user_id)->first()) {
             $data = [
@@ -66,14 +67,24 @@ class Point extends Model
             ];
             return $this->insertPoints($data);
         }
-        return $this->where(["user_id" => $user_id])->increment("points_earned", $pointsEarned);
+        $result = $this->where(["user_id" => $user_id])->increment("points_earned", $pointsEarned);
+
+        if ($result) {
+            $this->sendLoyalityUpdateNotification([
+                'user_id'       => $user_id,
+                'points_earned' => $pointsEarned,
+                'points_used'   => 0,
+                'type'           => $type,
+            ]);
+        }
+        return $result;
     }
     public function UpdatePointsUsed(int $user_id, int $pointsUsed)
     {
         return $this->where(["user_id" => $user_id])->increment("points_used", $pointsUsed);
     }
 
-    public function AddPoints(int $user_id, int $points)
+    public function AddPoints(int $user_id, int $points, string $type = '')
     {
         if (!$this->where('user_id', $user_id)->first()) {
             $data = [
@@ -83,7 +94,16 @@ class Point extends Model
             ];
             return $this->insertPoints($data);
         }
-        return $this->where(["user_id" => $user_id])->increment("points_earned", $points);
+        $result = $this->where(["user_id" => $user_id])->increment("points_earned", $points);
+        if ($result) {
+            $this->sendLoyalityUpdateNotification([
+                'user_id'       => $user_id,
+                'points_earned' => $points,
+                'points_used'   => 0,
+                'type'           => $type,
+            ]);
+        }
+        return $result;
     }
     public function RemovePoints(int $user_id, int $points)
     {
@@ -111,5 +131,23 @@ class Point extends Model
         if ($Points) {
             return ($Points->points_balance / 2) ?? 0;
         }
+    }
+
+
+
+    // Callback function to send notification after points update
+    protected function sendLoyalityUpdateNotification(array $data)
+    {
+        $userModel = new User();
+        $user_data = $userModel->getUserByID($data['user_id']);
+
+        // Adjust property names to match your database columns (e.g., user_email / user_name)
+        $data['user_email'] = $user_data->user_email ?? null;
+        $data['user_name']  = $user_data->user_name ?? 'Valued Customer';
+        $data['points_earned'] = $data['points_earned'] ?? 0;
+
+        // Instantiate and use the library directly inside the model
+        $emailService = new \App\Libraries\EmailService();
+        $emailService->sendPointsEmail($data);
     }
 }

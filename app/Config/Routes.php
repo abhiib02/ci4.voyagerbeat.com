@@ -70,6 +70,7 @@ $routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
     $routes->get('deleteUser/(:num)', 'UserController::deleteUser/$1');
     $routes->post('updatePoints', 'PointsController::updatePointsProcess');
     $routes->post('giveaway-points-process', 'PointsController::giveawayPointsProcess');
+    $routes->post('gift', 'EmailController::sendGiftPointsEmail');
 });
 
 // Employee
@@ -89,7 +90,6 @@ $routes->group('', ['filter' => 'Role:ADMIN,EMPLOYEE,MANAGER'], function ($route
     $routes->post('create-booking', 'BookingController::createBookingProcess');
     $routes->get('points/(:num)/(:num)', 'PointsController::AddPointsToCustomer/$1/$2');
 });
-
 
 // Customer
 $routes->group('', ['filter' => 'Role:USER'], static function ($routes) {

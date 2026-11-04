@@ -155,9 +155,9 @@ class DashboardController extends BaseController
             case 'points-giveaway':
                 $packageFilter = urldecode($this->request->getGet('package') ?? '');
                 $dateFilter = urldecode($this->request->getGet('date') ?? '');
-
+                $notripsFilter = urldecode($this->request->getGet('notrips') ?? '');
                 $this->data['Packages'] = $this->PackageModel->getAllPackagesForAdminDashboard();
-                $this->data['Customers'] = $this->UserModel->getAllCustomerswith_Points_lastbooking_package($packageFilter, $dateFilter);
+                $this->data['Customers'] = $this->UserModel->getAllCustomerswith_Points_lastbooking_package($packageFilter, $dateFilter, $notripsFilter);
                 break;
             case 'coupons':
                 $this->data['Coupons'] = $this->CouponModel->getAllCoupons();

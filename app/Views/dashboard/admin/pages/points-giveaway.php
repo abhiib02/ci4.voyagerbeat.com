@@ -21,9 +21,14 @@
             <div class="mx-2">
                 <input type="date" class="form-control form-control-sm" name="date" value="<?= isset($_GET['date']) ? esc($_GET['date']) : '' ?>" onchange="this.form.submit()">
             </div>
+            <a class="btn btn-sm btn-secondary" href="?notrips=1">Show Customers without Trips</a>
         </form>
+        <hr>
 
-        <form action="<?= base_url('giveaway-points-process') ?>" method="post" id="point-giveaway-form">
+        <form action="<?= base_url('giveaway-points-process') ?>" method="post" id="point-giveaway-form"
+            data-loader
+            data-loader-title="Giving Away Points..."
+            data-loader-steps="Validating...|Processing...|Complete">
             <?= csrf_field() ?>
             <div class="modal-body">
                 <!-- Points Input -->
@@ -81,7 +86,9 @@
     </div>
     <div class="card-footer d-flex justify-content-end gap-2">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" form="point-giveaway-form" class="btn btn-success">Giveaway Points</button>
+        <button type="submit" form="point-giveaway-form" class="btn btn-success">
+            Giveaway Points
+        </button>
     </div>
 </div>
 <script>
@@ -97,4 +104,7 @@
             });
         }
     });
+</script>
+<script>
+    handleShowLoad('hidden', 'remove', true);
 </script>

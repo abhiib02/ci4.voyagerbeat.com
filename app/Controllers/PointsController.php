@@ -28,7 +28,7 @@ class PointsController extends BaseController
     public function AddPointsToCustomer(int $user_id, int $total_package_cost)
     {
         $PointsEarned = ($total_package_cost * POINTS_EARNING_RATE);
-        $this->PointModel->UpdatePointsEarned($user_id, (int)$PointsEarned);
+        $this->PointModel->UpdatePointsEarned($user_id, (int)$PointsEarned, '');
         return $this->response->setJSON([
             'status' => 'success',
             'message' => 'Points updated'
@@ -37,7 +37,7 @@ class PointsController extends BaseController
     public function AddPointsToCustomerDirectly(int $user_id, int $points)
     {
         $PointsEarned = ($points);
-        $this->PointModel->AddPoints($user_id, (int)$PointsEarned);
+        $this->PointModel->AddPoints($user_id, (int)$PointsEarned, '');
         return $this->response->setJSON([
             'status' => 'success',
             'message' => 'Points updated'
@@ -70,7 +70,7 @@ class PointsController extends BaseController
         $points = (int)$this->request->getPost('points');
         switch ($action) {
             case 'increase':
-                $this->PointModel->AddPoints($user_id, $points);
+                $this->PointModel->AddPoints($user_id, $points, '');
                 break;
             case 'decrease':
                 $this->PointModel->RemovePoints($user_id, $points);
@@ -104,7 +104,7 @@ class PointsController extends BaseController
         $customer_ids = $this->request->getPost('customer_ids');
 
         foreach ($customer_ids as $user_id) {
-            $this->PointModel->AddPoints((int)$user_id, $points);
+            $this->PointModel->AddPoints((int)$user_id, $points, 'gift');
         }
 
         $this->session->setFlashdata('FlashMessage', [

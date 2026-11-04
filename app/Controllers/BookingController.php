@@ -34,7 +34,6 @@ class BookingController extends BaseController
         $this->PackageModel = new Package();
         $this->PointModel = new Point();
     }
-
     public function Book(int $packageID)
     {
         if (!auth('User') && !auth('Admin') && !auth('Employee') && !auth('Manager')) {
@@ -45,8 +44,6 @@ class BookingController extends BaseController
         $this->data['package'] = $this->PackageModel->getPackageByID($packageID);
         return $this->Render_Page('booking/booking-form', $this->data);
     }
-
-
     public function updateField($bookingId = null)
     {
         if (! $this->request->is('patch')) {
@@ -97,7 +94,6 @@ class BookingController extends BaseController
             'value'   => $value,
         ]);
     }
-
     protected function sanitizeFieldValue(string $field, string $value)
     {
         switch ($field) {
@@ -152,7 +148,6 @@ class BookingController extends BaseController
 
         return 1;
     }
-
     public function createBookingProcess()
     {
 
@@ -220,7 +215,6 @@ class BookingController extends BaseController
         };
         return redirect()->to($redirectTo);
     }
-
     public function BookingConfirmationForm(string $order_id)
     {
         $this->data['order_id'] = $order_id;
@@ -354,8 +348,6 @@ class BookingController extends BaseController
 
         return $this->RedirectWithtoast('Booking Confirmed', 'Success', '/thanks?order_id=' . $orderId);
     }
-
-
     public function createUserAccountifNotExist(string $email, string $name, string $contact)
     {
         $user = $this->UserModel->getUser($email);
@@ -373,19 +365,14 @@ class BookingController extends BaseController
         }
         return $user->user_id; // Return existing user ID if user already exists
     }
-
     public function generateRandomPassword($length = 8)
     {
         return substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, $length);
     }
-
     public function MaximumAmount()
     {
         return $this->Render_Page('static/max-amount', $this->data);
     }
-
-
-
     public function sendEmail(string $order_id): int
     {
         try {
@@ -462,8 +449,6 @@ class BookingController extends BaseController
         curl_close($ch);
         return $result;
     }
-
-
     public function addCosttoPaxDetailsfromperPersonCost(string $costJSONString, string $sharingJSONString, string $paxJSONString)
     {
 
@@ -535,7 +520,6 @@ class BookingController extends BaseController
         $updatedJson = json_encode($paxDetails, JSON_PRETTY_PRINT);
         return $updatedJson;
     }
-
     public function PaymentScreenshotUpload() {}
     public function AdhaarImagesUpload(string $paxDetails)
     {
@@ -566,12 +550,11 @@ class BookingController extends BaseController
             return json_encode($pax_details);
         }
     }
-
     public function AddingLoyalityPoints(int $user_id, string $order_id)
     {
         $bookingData = $this->BookingModel->getBookingByOrderId($order_id);
         $PointsEarned = ($bookingData->total_package_cost * POINTS_EARNING_RATE);
-        $this->PointModel->UpdatePointsEarned($user_id, (int)$PointsEarned);
+        $this->PointModel->UpdatePointsEarned($user_id, (int)$PointsEarned, '');
         return $PointsEarned;
     }
     public function UsingLoyalityPoints(int $user_id, string $order_id)
