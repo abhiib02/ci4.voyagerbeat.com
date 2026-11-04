@@ -27,7 +27,8 @@
                         <li><a class="text-light" href="/privacy-policy">Privacy Policy</a> </li>
                         <li><a class="text-light" href="/term-conditions">Terms and Conditions</a></li>
                         <li><a class="text-light" href="/blogs/write-for-us">Write for Us</a></li>
-                        <li><a class="text-light" data-bs-toggle="modal" data-bs-target="#cancellationModal">Cancellation Policy</a></li>
+                        <!-- <li><a class="text-light" data-bs-toggle="modal" data-bs-target="#cancellationModal">Cancellation Policy</a></li> -->
+                        <li><a class="text-light" href="/cancellation-policy">Cancellation Policy</a></li>
                         <li><a class="text-light" href="/sitemap.xml">Sitemap</a></li>
                         <li><a class="text-light" href="/blogs">Blogs</a></li>
                     </ul>

@@ -57,6 +57,10 @@ class MainController extends BaseController
     {
         return $this->Render_Page('static/termsnconditions', $this->data);
     }
+    public function cancellationPolicy(): string
+    {
+        return $this->Render_Page('static/cancellation-policy', $this->data);
+    }
     public function recognition(): string
     {
         return $this->Render_Page('static/recognition', $this->data);

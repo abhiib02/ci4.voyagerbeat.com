@@ -23,6 +23,8 @@ $routes->get('career', 'MainController::career');
 $routes->get('recognition', 'MainController::recognition');
 $routes->get('privacy-policy', 'MainController::privacypolicy');
 $routes->get('term-conditions', 'MainController::termsnconditions');
+$routes->get('cancellation-policy', 'MainController::cancellationPolicy');
+
 
 
 /*
