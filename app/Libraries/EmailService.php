@@ -22,7 +22,12 @@ class EmailService
         $email->setFrom(env('contact_form_sender_email'), env('app.name'));
         $email->setTo($data['user_email']);
         $email->setMessage($messageHtml);
+        if ($email->send()) {
 
-        return $email->send();
+            return 1;
+        } else {
+            log_message('error', 'Email sending failed: ' . $email->printDebugger(['headers']));
+            return 0;
+        }
     }
 }
