@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
+use App\Libraries\EmailService;
 
 /**
  * Services Configuration file.
@@ -29,4 +30,12 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+    public static function emailService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('emailService');
+        }
+
+        return new EmailService();
+    }
 }

@@ -226,7 +226,7 @@ foreach ($perPersonSharing as $i => $raw) {
         <p style="font-size: 12px; color: #666;">* This is a system generated Booking Confirmation Receipt.</p>
 
         <div class="footer">
-            <p>For any queries, please contact us at <a href="tel:<?= getenv('app.defaultContact') ?>"><?= getenv('app.defaultContact') ?></a> or mail us at <a href="mailto:<?= getenv('app.defaultMail') ?>"><?= getenv('app.defaultMail') ?></a></p>
+            <p>For any queries, please contact us at <a href="tel:<?= env('app.defaultContact') ?>"><?= env('app.defaultContact') ?></a> or mail us at <a href="mailto:<?= env('app.defaultMail') ?>"><?= env('app.defaultMail') ?></a></p>
         </div>
     </div>
 </body>

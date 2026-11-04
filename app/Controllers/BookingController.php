@@ -375,27 +375,8 @@ class BookingController extends BaseController
     }
     public function sendEmail(string $order_id): int
     {
-        try {
-            $client = service('curlrequest');
-
-            $response = $client->post(base_url('booking-mail-process'), [
-                'http_errors' => false,
-                'timeout'     => 30,
-                'form_params' => ['order_id' => $order_id],
-            ]);
-
-            if ($response->getStatusCode() === 200) {
-                $result = json_decode($response->getBody(), true);
-                return (!empty($result['success'])) ? 1 : 0;
-            }
-
-            log_message('error', 'booking-mail-process returned ' . $response->getStatusCode() . ' for order ' . $order_id);
-            return 0;
-        } catch (\Throwable $e) {
-            // Timeouts, DNS or connection failures still throw even with http_errors => false
-            log_message('error', 'sendEmail failed for order ' . $order_id . ': ' . $e->getMessage());
-            return 0;
-        }
+        $emailService = service('emailService');
+        return $emailService->sendBookingConfirmationEmail($order_id);
     }
     function sendDatatoGoogleSheet(array $data)
     {

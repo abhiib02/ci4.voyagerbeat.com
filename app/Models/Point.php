@@ -132,22 +132,16 @@ class Point extends Model
             return ($Points->points_balance / 2) ?? 0;
         }
     }
-
-
-
-    // Callback function to send notification after points update
     protected function sendLoyalityUpdateNotification(array $data)
     {
         $userModel = new User();
         $user_data = $userModel->getUserByID($data['user_id']);
 
-        // Adjust property names to match your database columns (e.g., user_email / user_name)
         $data['user_email'] = $user_data->user_email ?? null;
         $data['user_name']  = $user_data->user_name ?? 'Valued Customer';
         $data['points_earned'] = $data['points_earned'] ?? 0;
 
-        // Instantiate and use the library directly inside the model
-        $emailService = new \App\Libraries\EmailService();
+        $emailService = service('emailService');
         $emailService->sendPointsEmail($data);
     }
 }
