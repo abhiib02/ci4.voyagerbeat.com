@@ -1,4 +1,4 @@
-<div id="error-log" class="card">
+<div id="error-log" class="card m-auto" style="width:100%;">
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <div class="fw-bold">Error Log</div>
@@ -8,11 +8,6 @@
                 <input type="date" class="form-control" name="date" onchange="this.form.submit()">
             </form>
             <!-- <button class="btn btn-success" type="submit" form="bookinglogDate">Show</button> -->
-            <script>
-                function submitForm() {
-
-                }
-            </script>
         </div>
     </div>
     <div class="card-body">
