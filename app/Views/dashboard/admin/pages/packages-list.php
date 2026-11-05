@@ -19,9 +19,9 @@
             <a class="btn btn-sm btn-secondary" href="/hidden">Hidden packages</a>
         </div>
         <br>
-        <div class="">
-            <table id="datatable" class="sortable table" data-order='[[ 5, "desc" ]]'>
-                <thead>
+        <div class="table-responsive border rounded">
+            <table id="datatable" class="sortable table table-hover" data-order='[[ 5, "desc" ]]'>
+                <thead class="table-light">
                     <tr>
                         <th>ID</th>
                         <th>SLUG</th>

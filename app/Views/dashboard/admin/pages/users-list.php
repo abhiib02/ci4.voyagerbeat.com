@@ -27,8 +27,8 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="Customers-tab-pane" role="tabpanel" tabindex="0">
                 <section id="Customer-list">
-                    <table class="table sortable" id="datatable">
-                        <thead>
+                    <table class="table sortable table-hover" id="datatable">
+                        <thead class="table-light">
                             <tr>
                                 <th>User ID</th>
                                 <th>Customer Name</th>
@@ -119,7 +119,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
             <div class="tab-pane fade" id="Employees-tab-pane" role="tabpanel" tabindex="0">
                 <section id="Employee-list">
                     <table class="table sortable" id="datatable">
-                        <thead>
+                        <thead class="table-light">
                             <tr>
                                 <th>User ID</th>
                                 <th>Employee Name</th>
@@ -162,7 +162,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
             <div class="tab-pane fade" id="Managers-tab-pane" role="tabpanel" tabindex="0">
                 <section id="Managers-list">
                     <table class="table sortable" id="datatable">
-                        <thead>
+                        <thead class="table-light">
                             <tr>
                                 <th>User ID</th>
                                 <th>Manager Name</th>
@@ -205,7 +205,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
             <div class="tab-pane fade" id="Admins-tab-pane" role="tabpanel" tabindex="0">
                 <section id="Admins-list">
                     <table class="table sortable" id="datatable">
-                        <thead>
+                        <thead class="table-light">
                             <tr>
                                 <th>User ID</th>
                                 <th>Admin Name</th>
