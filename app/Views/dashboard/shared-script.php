@@ -1,3 +1,9 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script>
+    // Initialize all tooltips on a page
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+</script>
 <script src="/js/dialogScript.js"></script>
 <script src="/js/eztoast.js"></script>
 <script src="/js/formSubmittingLoader.js"></script>

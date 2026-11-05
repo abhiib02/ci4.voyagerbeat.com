@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?= view('dashboard/manager/layout/component/top-nav') ?>
-    <div class="container-fluid ">
-        <div class="row">
+
+    <div class="">
+        <div class="d-flex">
             <?= view('dashboard/manager/layout/component/sidebar', ['data' => $this->data]) ?>

@@ -1,4 +1,5 @@
-<main class="col-md-11 ms-sm-auto col-lg-10 px-md-4 pb-5 full-vh">
+<main class="w-100">
+    <?= view('dashboard/admin/layout/component/top-nav') ?>
     <?php
     // Extract the list of valid links to check against
     $validLinks = !empty($pagenames) ? array_column($pagenames, 'link') : [];
@@ -13,7 +14,7 @@
                     <?= view('dashboard/shared-components/month-year-selector') ?>
                 </div>
             </div>
-            <div class="card-body">
+            <main class="card-body">
                 <p class="display-3">Welcome, <?= esc($name ?? 'Employee') ?></p>
                 <div class="row">
                     <div class="col-lg-2">
@@ -105,4 +106,4 @@
                 ]) ?>
             <?php endif; ?>
 
-</main>
+            </main>

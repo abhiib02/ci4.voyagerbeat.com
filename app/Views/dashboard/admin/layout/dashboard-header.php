@@ -9,7 +9,7 @@
 
 <body>
     <?= view('pages/component/loading-overlay') ?>
-    <?= view('dashboard/admin/layout/component/top-nav') ?>
-    <div class="container-fluid ">
-        <div class="row">
+
+    <div class="">
+        <div class="d-flex">
             <?= view('dashboard/admin/layout/component/sidebar', ['data' => $this->data]) ?>

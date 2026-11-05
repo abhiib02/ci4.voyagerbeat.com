@@ -61,36 +61,36 @@ class DashboardController extends BaseController
     protected function AdminPages(): array
     {
         return [
-            ['link' => 'all-bookings', 'title' => 'Bookings', 'icon' => 'bx bxs-backpack', 'mobile-visible' => 1],
-            ['link' => 'packages-list', 'title' => 'Packages', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
-            ['link' => 'package-create', 'title' => 'New Package', 'icon' => 'bx bxs-file-plus', 'mobile-visible' => 0],
-            ['link' => 'users-list', 'title' => 'Users', 'icon' => 'bx bxs-user', 'mobile-visible' => 1],
-            ['link' => 'role-changer', 'title' => 'Role Changer', 'icon' => 'bx bx-label', 'mobile-visible' => 0],
-            ['link' => 'points-giveaway', 'title' => 'Points Giveaway', 'icon' => 'bx bxs-gift', 'mobile-visible' => 0],
-            ['link' => 'coupons', 'title' => 'Coupons', 'icon' => 'bx bxs-coupon', 'mobile-visible' => 1],
-            ['link' => 'option-list', 'title' => 'Options', 'icon' => 'bx bxs-analyse', 'mobile-visible' => 0],
-            ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
+            ['link' => 'all-bookings', 'title' => 'Bookings', 'icon' => 'bx bx-calendar-check', 'mobile-visible' => 1],
+            ['link' => 'packages-list', 'title' => 'Packages', 'icon' => 'bx bx-collection', 'mobile-visible' => 1],
+            ['link' => 'package-create', 'title' => 'New Package', 'icon' => 'bx bx-plus', 'mobile-visible' => 0],
+            ['link' => 'users-list', 'title' => 'Users', 'icon' => 'bx bx-group', 'mobile-visible' => 1],
+            ['link' => 'role-changer', 'title' => 'Role Changer', 'icon' => 'bx bx-user-pin', 'mobile-visible' => 0],
+            ['link' => 'points-giveaway', 'title' => 'Points Giveaway', 'icon' => 'bx bx-gift', 'mobile-visible' => 0],
+            ['link' => 'coupons', 'title' => 'Coupons', 'icon' => 'bx bx-purchase-tag', 'mobile-visible' => 1],
+            ['link' => 'option-list', 'title' => 'Options', 'icon' => 'bx  bx-slider-alt', 'mobile-visible' => 0],
+            ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-history', 'mobile-visible' => 1],
             ['link' => 'error-log', 'title' => 'Error Log', 'icon' => 'bx bx-error-circle', 'mobile-visible' => 1],
         ];
     }
     protected function EmployeePages(): array
     {
         return [
-            ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-list-ul', 'mobile-visible' => 1],
+            ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-calendar-check', 'mobile-visible' => 1],
         ];
     }
     protected function ManagerPages(): array
     {
         return [
-            ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-list-ul', 'mobile-visible' => 1],
-            ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-list-ol', 'mobile-visible' => 1],
+            ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-calendar-check', 'mobile-visible' => 1],
+            ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-history', 'mobile-visible' => 1],
         ];
     }
     protected function UserPages(): array
     {
         return [
-            ['link' => 'bookings', 'title' => 'My Bookings', 'icon' => 'bx bx-list-ul', 'mobile-visible' => 1],
-            ['link' => 'you-as-travelbuddy', 'title' => 'You as Travel Buddy', 'icon' => 'bx bxs-user-detail', 'mobile-visible' => 1],
+            ['link' => 'bookings', 'title' => 'My Bookings', 'icon' => 'bx bx-calendar-check', 'mobile-visible' => 1],
+            ['link' => 'you-as-travelbuddy', 'title' => 'You as Travel Buddy', 'icon' => 'bx bx-group', 'mobile-visible' => 1],
         ];
     }
 

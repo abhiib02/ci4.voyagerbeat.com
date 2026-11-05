@@ -1,4 +1,5 @@
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 h-100">
+<main class="w-100">
+    <?= view('dashboard/manager/layout/component/top-nav') ?>
 
     <?php
     // Extract the list of valid links to check against

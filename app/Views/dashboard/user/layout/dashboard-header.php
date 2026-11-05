@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <?= view('dashboard/user/layout/component/top-nav') ?>
-    <div class="container-fluid">
-        <div class="row">
+
+    <div class="">
+        <div class="d-flex">
             <?= view('dashboard/user/layout/component/sidebar', ['data' => $this->data]) ?>
