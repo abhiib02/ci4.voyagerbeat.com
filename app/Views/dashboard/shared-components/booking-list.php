@@ -156,7 +156,7 @@
                                     <?php if (auth('Admin')): ?>
                                         <li><a class="dropdown-item" onclick="openModel('updatePoints-<?= $booking->user_id ?>')"> <i class='bx bx-plus-circle'></i> Update Points</a></li>
                                     <?php endif; ?>
-                                    <?php if (auth('Admin', 'Manager', 'Employee')): ?>
+                                    <?php if (auth('Admin', 'Employee')): ?>
                                         <?php if ($booking->customer_access): ?>
                                             <li><button form="deleteBookingform<?= $booking->ID ?>" type="submit" class="dropdown-item text-danger"><i class='bx bx-trash'></i> Delete Booking</button>
                                                 <form id="deleteBookingform<?= $booking->ID ?>" action="/deleteBooking" method="post" onsubmit="return confirm('Are you sure you want to delete this booking?');">
