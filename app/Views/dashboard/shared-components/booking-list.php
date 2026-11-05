@@ -32,10 +32,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php
-
-
-            foreach (($Bookings ?? []) as $booking) : ?>
+            <?php foreach (($Bookings ?? []) as $booking) : ?>
 
                 <tr>
                     <!-- <td><?= $booking->ID ?></td> -->
@@ -279,44 +276,43 @@
                                             </tr>
 
                                         </table>
-                                        <?php if (!empty($booking->pay_screenshot)): ?>
-                                            <div>
-                                                <label for=""><b>Payment Screenshot</b></label>
-                                                <img style="width:300px;height:fit-content;" src="/upload/bookings/payment_screenshot/<?= esc($booking->pay_screenshot) ?>" alt="">
-                                            </div>
-                                        <?php endif; ?>
                                     </div>
+                                    <?php if (!empty($booking->pay_screenshot)): ?>
+                                        <div>
+                                            <label for=""><b>Payment Screenshot</b></label>
+                                            <img style="width:300px;height:fit-content;" src="/upload/bookings/payment_screenshot/<?= esc($booking->pay_screenshot) ?>" alt="">
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#BookingTableDetail<?= $booking->ID; ?>').close();">Close</button>
                                 </div>
                             </div>
-                        </dialog>
 
+                        </dialog>
+                        <dialog id="updatePoints-<?= $booking->user_id ?>" class="">
+                            <div class="card">
+                                <div class="card-header">Update Points</div>
+                                <div class="card-body">
+                                    <?= view('dashboard/admin/pages/points-partial/updatePointsForm', ['customer' => $booking]) ?>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+
+                                    <button class=" btn btn-sm btn-dark white-text" type="button" onclick="closeModal('updatePoints-<?= $booking->user_id ?>');">Close</button>
+                                    <button type="submit" form="pointUpdateForm" class="btn btn-sm btn-success white-text"> Update Points</button>
+
+                                </div>
+                            </div>
+                        </dialog>
                     </td>
                 </tr>
+
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
 
-</div>
-</div>
 
-<dialog id="updatePoints-<?= $booking->user_id ?>" class="">
-    <div class="card">
-        <div class="card-header">Update Points</div>
-        <div class="card-body">
-            <?= view('dashboard/admin/pages/points-partial/updatePointsForm', ['customer' => $booking]) ?>
-        </div>
-        <div class="card-footer d-flex justify-content-between">
-
-            <button class=" btn btn-sm btn-dark white-text" type="button" onclick="closeModal('updatePoints-<?= $booking->user_id ?>');">Close</button>
-            <button type="submit" form="pointUpdateForm" class="btn btn-sm btn-success white-text"> Update Points</button>
-
-        </div>
-    </div>
-</dialog>
-<?php endforeach; ?>
 
 
 <script>
