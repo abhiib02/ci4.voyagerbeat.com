@@ -25,6 +25,8 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
     const employeeBookingLabels = employeeBooking_month_data.map(item => item.agent_name);
     const employeeBookingColors = employeeBooking_month_data.map(item => getRandomRgbaColor());
     const employeeBookingData = employeeBooking_month_data.map(item => parseInt(item.total_bookings));
+    const employeeBookedPaxData = employeeBooking_month_data.map(item => parseInt(item.total_pax));
+
 
     var EmployeesBookingsCtx = document.getElementById("Employees-Bookings").getContext("2d");
     const EmployeesBookingsChart = new Chart(EmployeesBookingsCtx, {
@@ -32,11 +34,19 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
         data: {
             labels: employeeBookingLabels,
             datasets: [{
+                label: 'Total Bookings',
                 data: employeeBookingData,
                 backgroundColor: employeeBookingColors,
                 borderColor: employeeBookingColors,
                 borderWidth: 1,
-            }]
+            }, {
+                label: 'Total Pax',
+                data: employeeBookedPaxData,
+                backgroundColor: employeeBookingColors,
+                borderColor: employeeBookingColors,
+                borderWidth: 1,
+            }],
+
         },
         options: {
             plugins: {

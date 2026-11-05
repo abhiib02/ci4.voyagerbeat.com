@@ -172,7 +172,7 @@ class DashboardController extends BaseController
                 // Charts Data 
 
 
-                $this->data['EmployeeBooking_Month'] = $this->BookingModel->getEmployeesBookingsCountMonthAdmin($this->data['month'], $this->data['year'], $statuses);
+                $this->data['EmployeeBooking_Month'] = $this->BookingModel->getEmployeesBookingsCountwithPaxMonthAdmin($this->data['month'], $this->data['year'], $statuses);
                 $this->data['Annual_Revenue'] = $this->BookingModel->getAnnualSalesRevenueAdmin($this->data['year'], $statuses);
                 $this->data['Annual_Pax'] = $this->BookingModel->getAnnualPaxAdmin($this->data['year'], $statuses);
                 $this->data['Annual_Booking'] = $this->BookingModel->getAnnualBookingsAdmin($this->data['year'], $statuses);

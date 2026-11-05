@@ -482,13 +482,13 @@ class Booking extends Model
         return $query->getResultArray();
     }
 
-    public function getEmployeesBookingsCountMonthAdmin(string $month, string $year, array $statuses): array
+    public function getEmployeesBookingsCountwithPaxMonthAdmin(string $month, string $year, array $statuses): array
     {
 
         $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
         $startDate = $MonthDuration['startDate'];
         $endDate = $MonthDuration['endDate'];
-        return $this->select('users.USER_NAME as agent_name, COUNT(bookings_table.id) as total_bookings')
+        return $this->select('users.USER_NAME as agent_name, COUNT(bookings_table.id) as total_bookings, SUM(bookings_table.adults) as total_pax')
             ->join('users', 'users.user_id = bookings_table.agent', 'left')
             ->groupBy('bookings_table.agent, users.USER_NAME')
             ->whereIn('bookings_table.status', $statuses)
