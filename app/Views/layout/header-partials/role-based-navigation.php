@@ -1,5 +1,26 @@
-<?php if (auth('User', 'Admin', 'Employee', 'Manager')): ?>
-    <a class="list-group-item list-group-item-action" href="/userdashboard">
+<?php if (auth('Admin')): ?>
+    <a class="list-group-item list-group-item-action" href="/dashboard">
+        Dashboard
+    </a>
+    <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
+        Logout
+    </a>
+<?php elseif (auth('Manager')): ?>
+    <a class="list-group-item list-group-item-action" href="/manager-dashboard">
+        Dashboard
+    </a>
+    <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
+        Logout
+    </a>
+<?php elseif (auth('Employee')): ?>
+    <a class="list-group-item list-group-item-action" href="/employee-dashboard">
+        Dashboard
+    </a>
+    <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
+        Logout
+    </a>
+<?php elseif (auth('User')): ?>
+    <a class="list-group-item list-group-item-action" href="/account">
         Dashboard
     </a>
     <a class="list-group-item list-group-item-action text-bg-danger" href="/logout">
