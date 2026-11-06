@@ -55,33 +55,49 @@ abstract class BaseController extends Controller
         $this->OptionModel = new Option();
         $this->session = service('session');
 
-        //Caching Nav Data As it will be used on every page ⬇
-        $cacheKeys = [
-            'navDataLadakh' => fn() => $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'leh'),
-            'navDataSpiti' => fn() => $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'spiti'),
-            'navDataInternational' => fn() => $this->PackageModel->getAllDistinctCountry(),
-            'navDataPackageType' => fn() => $this->PackageModel->getAllDistinctType(),
-            'navDataHoneymoon' => fn() => $this->PackageModel->getPackagesByTagForNav('honeymoon'),
-            'AllPackagesNameAndID' => fn() => $this->PackageModel->getAllPackagesNameAndID(),
-            'defaultContact' => fn() => $this->OptionModel->getOptionValue('contact'),
-            'defaultmails' => fn() => $this->OptionModel->getOptionValue('mails'),
-            'AnnouncementText' => fn() => $this->OptionModel->getOptionValue('AnnouncementText'),
-            'AnnouncementLink' => fn() => $this->OptionModel->getOptionValue('AnnouncementLink'),
-            'PopupSwitch' => fn() => $this->OptionModel->getOptionValue('PopupSwitch'),
-            'cssversion' => fn() => $this->OptionModel->getOptionValue('cssversion'),
-        ];
 
-        foreach ($cacheKeys as $cacheKey => $callback) {
-            $cachedData = cache($cacheKey);
 
-            if ($cachedData === null) {
-                $cachedData = $callback();
-                cache()->save($cacheKey, $cachedData, 300);
-            }
+        $this->data['navDataLadakh'] = $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'leh');
+        $this->data['navDataSpiti'] = $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'spiti');
+        $this->data['navDataInternational'] = $this->PackageModel->getAllDistinctCountry();
+        $this->data['navDataPackageType'] = $this->PackageModel->getAllDistinctType();
+        $this->data['navDataHoneymoon'] = $this->PackageModel->getPackagesByTagForNav('honeymoon');
+        $this->data['AllPackagesNameAndID'] = $this->PackageModel->getAllPackagesNameAndID();
+        $this->data['defaultContact'] = $this->OptionModel->getOptionValue('contact');
+        $this->data['defaultmails'] = $this->OptionModel->getOptionValue('mails');
+        $this->data['AnnouncementText'] = $this->OptionModel->getOptionValue('AnnouncementText');
+        $this->data['AnnouncementLink'] = $this->OptionModel->getOptionValue('AnnouncementLink');
+        $this->data['PopupSwitch'] = $this->OptionModel->getOptionValue('PopupSwitch');
+        $this->data['cssversion'] = $this->OptionModel->getOptionValue('cssversion');
 
-            $this->data[$cacheKey] = $cachedData;
-        }
-        //Caching Nav Data As it will be used on every page ⬆
+
+        // //Caching Nav Data As it will be used on every page ⬇
+        // $cacheKeys = [
+        //     'navDataLadakh' => fn() => $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'leh'),
+        //     'navDataSpiti' => fn() => $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_DAYS,BADGE', 'LOCATION', 'spiti'),
+        //     'navDataInternational' => fn() => $this->PackageModel->getAllDistinctCountry(),
+        //     'navDataPackageType' => fn() => $this->PackageModel->getAllDistinctType(),
+        //     'navDataHoneymoon' => fn() => $this->PackageModel->getPackagesByTagForNav('honeymoon'),
+        //     'AllPackagesNameAndID' => fn() => $this->PackageModel->getAllPackagesNameAndID(),
+        //     'defaultContact' => fn() => $this->OptionModel->getOptionValue('contact'),
+        //     'defaultmails' => fn() => $this->OptionModel->getOptionValue('mails'),
+        //     'AnnouncementText' => fn() => $this->OptionModel->getOptionValue('AnnouncementText'),
+        //     'AnnouncementLink' => fn() => $this->OptionModel->getOptionValue('AnnouncementLink'),
+        //     'PopupSwitch' => fn() => $this->OptionModel->getOptionValue('PopupSwitch'),
+        //     'cssversion' => fn() => $this->OptionModel->getOptionValue('cssversion'),
+        // ];
+
+        // foreach ($cacheKeys as $cacheKey => $callback) {
+        //     $cachedData = cache($cacheKey);
+
+        //     if ($cachedData === null) {
+        //         $cachedData = $callback();
+        //         cache()->save($cacheKey, $cachedData, 300);
+        //     }
+
+        //     $this->data[$cacheKey] = $cachedData;
+        // }
+        // //Caching Nav Data As it will be used on every page ⬆
 
 
     }
