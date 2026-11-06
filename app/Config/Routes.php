@@ -151,7 +151,7 @@ $routes->get('packages', 'PackageController::index');
 $routes->get('packages/(:any)', 'PackageController::index/$1');
 $routes->get('package/(:any)', 'PackageController::packageBySlug/$1');
 $routes->get('packageid/(:num)', 'PackageController::packageByID/$1');
-$routes->get('api/packageDatesJSON/(:num)', 'PackageController::packageDatesJSON/$1');
+
 
 
 // Filter "index" pages (render the same base view with different filters applied client-side)
@@ -190,6 +190,10 @@ $routes->group('api', static function ($routes) {
     $routes->get('IncFavorite/(:num)', 'PackageController::IncreaseFavoriteCount/$1');
     $routes->get('DecFavorite/(:num)', 'PackageController::DecreaseFavoriteCount/$1');
     $routes->get('increasePackageVisitCount/(:num)/visit', 'PackageController::increasePackageVisitCount/$1');
+
+
+    $routes->get('packageDatesJSON/(:num)', 'PackageController::packageDatesJSON/$1');
+    $routes->get('packagesByLocationJSON/(:segment)', 'PackageController::packagesByLocationJSON/$1');
 });
 
 /*

@@ -788,6 +788,17 @@ class PackageController extends BaseController
     //     return redirect()->to("/update-package/$ID");
     // }
 
+    public function packagesByLocationJSON(string $location)
+    {
+        $this->data['packages'] = $this->PackageModel->getPackagesByField('PACKAGE_NAME,SLUG,PACKAGE_IMAGE', 'LOCATION', $location);
+        if (!$this->data['packages']) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                "message" => "No Package Found",
+            ]);
+        }
+        return $this->response->setJSON($this->data['packages']);
+    }
     public function packageDatesJSON(int $id)
     {
         $this->data['packageDates'] = $this->PackageModel->getPackageDatesByID($id);
