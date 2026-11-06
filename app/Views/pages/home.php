@@ -12,11 +12,11 @@
 
     <div class="perspective">
         <div class="img-cylinder" id="img-cylinder-home">
-            <?php //foreach ($AllPackagesNameAndID as $index => $Package): ?>
-                <?php //if ($index < 90): ?>
-                    <!-- <img class="image" style="--i:<?= //$index ?>" src="<?= //gdriveImage($Package->PACKAGE_IMAGE, 256) ?>" alt="" width="256" height="256" decoding="async" fetchpriority="low" loading="lazy"> -->
-                <?php //endif; ?>
-            <?php //endforeach; ?>
+            <?php foreach ($AllPackagesNameAndID as $index => $Package): ?>
+                <?php if ($index < 90): ?>
+
+                <?php endif; ?>
+            <?php endforeach; ?>
 
         </div>
         <div class="overlayLayer"></div>
