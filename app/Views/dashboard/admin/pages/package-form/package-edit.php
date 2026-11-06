@@ -425,44 +425,44 @@
 
                             <select name="INFO_P1" class="form-select" required>
                                 <option value="<?= $package->INFO_P1 ?>" selected><?= $package->INFO_P1 ?></option>
-                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
-                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
-                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
-                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
-                                <option value="Group Sharing">Group Sharing</option>
+                                <option value="Quad Sharing (4 Persons in 1 Room)">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing (3 Persons in 1 Room)">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing (2 Persons in 1 Room)">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing (1 Persons in 1 Room)">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing ( )">Group Sharing</option>
                             </select>
 
                             <select name="INFO_P2" class="form-select">
                                 <option value="<?= $package->INFO_P2 ?>" selected><?= $package->INFO_P2 ?></option>
-                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
-                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
-                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
-                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
-                                <option value="Group Sharing">Group Sharing</option>
+                                <option value="Quad Sharing (4 Persons in 1 Room)">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing (3 Persons in 1 Room)">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing (2 Persons in 1 Room)">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing (1 Persons in 1 Room)">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing ( )">Group Sharing</option>
                             </select>
                             <select name="INFO_P3" class="form-select">
                                 <option value="<?= $package->INFO_P3 ?>" selected><?= $package->INFO_P3 ?></option>
-                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
-                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
-                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
-                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
-                                <option value="Group Sharing">Group Sharing</option>
+                                <option value="Quad Sharing (4 Persons in 1 Room)">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing (3 Persons in 1 Room)">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing (2 Persons in 1 Room)">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing (1 Persons in 1 Room)">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing ( )">Group Sharing</option>
                             </select>
                             <select name="INFO_P4" class="form-select">
                                 <option value="<?= $package->INFO_P4 ?>" selected><?= $package->INFO_P4 ?></option>
-                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
-                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
-                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
-                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
-                                <option value="Group Sharing">Group Sharing</option>
+                                <option value="Quad Sharing (4 Persons in 1 Room)">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing (3 Persons in 1 Room)">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing (2 Persons in 1 Room)">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing (1 Persons in 1 Room)">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing ( )">Group Sharing</option>
                             </select>
                             <select name="INFO_P5" class="form-select">
                                 <option value="<?= $package->INFO_P5 ?>" selected><?= $package->INFO_P5 ?></option>
-                                <option value="Quad Sharing">Quad Sharing (4 Persons in 1 Room)</option>
-                                <option value="Triple Sharing">Triple Sharing (3 Persons in 1 Room)</option>
-                                <option value="Double Sharing">Double Sharing (2 Persons in 1 Room)</option>
-                                <option value="Solo Sharing">Solo Sharing (1 Person in 1 Room)</option>
-                                <option value="Group Sharing">Group Sharing</option>
+                                <option value="Quad Sharing (4 Persons in 1 Room)">Quad Sharing (4 Persons in 1 Room)</option>
+                                <option value="Triple Sharing (3 Persons in 1 Room)">Triple Sharing (3 Persons in 1 Room)</option>
+                                <option value="Double Sharing (2 Persons in 1 Room)">Double Sharing (2 Persons in 1 Room)</option>
+                                <option value="Solo Sharing (1 Persons in 1 Room)">Solo Sharing (1 Person in 1 Room)</option>
+                                <option value="Group Sharing ( )">Group Sharing</option>
                             </select>
 
 
