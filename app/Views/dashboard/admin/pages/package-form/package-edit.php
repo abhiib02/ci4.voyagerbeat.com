@@ -268,7 +268,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-floating mb-3">
-                                <input class="form-control" type="number" id="BookingAmount" value="<?= $package->BOOKING_AMOUNT ?>" placeholder="BookingAmount"
+                                <input class="form-control" type="number" id="BookingAmount" value="<?= ($package->BOOKING_AMOUNT < 1) ? BOOKING_AMOUNT : $package->BOOKING_AMOUNT ?>" placeholder="BookingAmount"
                                     name="BOOKING_AMOUNT" />
                                 <label for="BookingAmount">Booking Amount (Default <?= BOOKING_AMOUNT ?>)</label>
                             </div>
