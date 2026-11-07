@@ -489,7 +489,7 @@
 
                                 <input class="form-control" type="number" id="BookingAmount" placeholder="BookingAmount"
 
-                                    name="BOOKING_AMOUNT" />
+                                    name="BOOKING_AMOUNT" value="<?= BOOKING_AMOUNT ?>" />
 
                                 <label for="BookingAmount">Booking Amount (Default <?= BOOKING_AMOUNT ?>)</label>
 
