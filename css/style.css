@@ -702,3 +702,23 @@ body {
     height: auto;
     aspect-ratio: 1 / 1;
 }
+    .json-input,
+    .json-input:focus {
+        width: 100%;
+        font-family: monospace;
+        border: 2px solid #ccc;
+        outline: none;
+        margin-bottom: 15px;
+        field-sizing: content;
+        background-color: #333;
+        color: #fff;
+    }
+
+    .json-invalid {
+        border-color: red !important;
+        background-color: #ffe6e6;
+    }
+
+    .json-valid {
+        border-color: green !important;
+    }

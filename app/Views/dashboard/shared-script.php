@@ -117,7 +117,31 @@
         document.getElementById(`output-dialog-${id}`).innerHTML = result;
     }
 </script>
+<script>
+    // Select all textareas with the class '.json-input'
+    const textareas = document.querySelectorAll('.json-input');
 
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', () => {
+            const value = textarea.value.trim();
+
+            // Clear styling if the specific textarea is empty
+            if (value === '') {
+                textarea.classList.remove('json-invalid', 'json-valid');
+                return;
+            }
+
+            try {
+                JSON.parse(value);
+                textarea.classList.remove('json-invalid');
+                textarea.classList.add('json-valid');
+            } catch (e) {
+                textarea.classList.remove('json-valid');
+                textarea.classList.add('json-invalid');
+            }
+        });
+    });
+</script>
 
 
 <?php if (isset($_SESSION['FlashMessage'])) : ?>

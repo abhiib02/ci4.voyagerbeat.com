@@ -135,6 +135,10 @@ $routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
     $routes->get('category-list', 'DashboardController::categoriesList');
     $routes->get('options-list', 'DashboardController::optionsList');
     $routes->get('all-bookings', 'DashboardController::BookingsList');
+    $routes->get('edit-booking/(:num)', 'BookingController::edit_booking_form/$1');
+    $routes->post('editBookingProcess', 'BookingController::update_booking_process');
+
+
     $routes->get('import', 'DashboardController::import_package_form');
 
     $routes->post('/option/(:alpha)', 'OptionsController::save/$1');

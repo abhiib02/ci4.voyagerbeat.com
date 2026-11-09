@@ -70,49 +70,8 @@
     </div>
 </div>
 <style>
-    .json-input,
-    .json-input:focus {
-        width: 100%;
-        font-family: monospace;
-        border: 2px solid #ccc;
-        outline: none;
-        margin-bottom: 15px;
-        field-sizing: content;
-        background-color: #333;
-        color: #fff;
-    }
 
-    .json-invalid {
-        border-color: red !important;
-        background-color: #ffe6e6;
-    }
-
-    .json-valid {
-        border-color: green !important;
-    }
 </style>
 <script>
-    // Select all textareas with the class '.json-input'
-    const textareas = document.querySelectorAll('.json-input');
 
-    textareas.forEach(textarea => {
-        textarea.addEventListener('input', () => {
-            const value = textarea.value.trim();
-
-            // Clear styling if the specific textarea is empty
-            if (value === '') {
-                textarea.classList.remove('json-invalid', 'json-valid');
-                return;
-            }
-
-            try {
-                JSON.parse(value);
-                textarea.classList.remove('json-invalid');
-                textarea.classList.add('json-valid');
-            } catch (e) {
-                textarea.classList.remove('json-valid');
-                textarea.classList.add('json-invalid');
-            }
-        });
-    });
 </script>

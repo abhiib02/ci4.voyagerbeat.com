@@ -154,6 +154,7 @@
 
                                 <ul class="dropdown-menu">
                                     <?php if (auth('Admin')): ?>
+                                        <li><a class="dropdown-item" href="/edit-booking/<?= $booking->ID ?>"> <i class='bx bx-edit-alt'></i> Edit Booking</a></li>
                                         <li><a class="dropdown-item" onclick="openModel('updatePoints-<?= $booking->user_id ?>')"> <i class='bx bx-plus-circle'></i> Update Points</a></li>
                                     <?php endif; ?>
                                     <?php if (auth('Admin', 'Employee')): ?>
@@ -304,6 +305,7 @@
                                 </div>
                             </div>
                         </dialog>
+
                     </td>
                 </tr>
 

@@ -107,6 +107,14 @@ class Booking extends Model
     {
         return $this->where('order_id', $orderId)->update(null, $data);
     }
+    public function updateConfirmedBookingByID(int $ID, array $data): bool
+    {
+        return $this->where('ID', $ID)->update(null, $data);
+    }
+    public function getBookingById(string $ID)
+    {
+        return $this->where('ID', $ID)->first();
+    }
     public function getBookingByOrderId(string $orderId)
     {
         return $this->where('order_id', $orderId)->first();

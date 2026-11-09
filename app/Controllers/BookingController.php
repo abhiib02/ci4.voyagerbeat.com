@@ -545,6 +545,65 @@ class BookingController extends BaseController
         $this->PointModel->UpdatePointsUsed($user_id, (int)$PointsUsed);
         return $PointsUsed;
     }
+
+    public function edit_Booking_Form(int $id)
+    {
+        $this->data['BookingData'] = $this->BookingModel->getBookingById($id);
+
+        return
+            view('dashboard/admin/layout/empty-header', $this->data) .
+            view('dashboard/admin/pages/booking-form/booking-edit', $this->data) .
+            view('dashboard/admin/layout/empty-footer', $this->data);
+    }
+    public function update_booking_process()
+    {
+        $rules = [
+            'ID' => 'required|integer',
+            'name' => 'required',
+            'email' => 'required|valid_email',
+            'gender' => 'required|in_list[Male,Female,Other]',
+            'contact_trip' => 'required|numeric|min_length[10]|max_length[10]',
+            'contact_alt' => 'required|numeric|min_length[10]|max_length[10]|differs[contact_trip]',
+            'address' => 'required',
+            'trip_type' => 'required|in_list[community,personalised]',
+            'date' => 'required',
+            'travelmode' => 'required',
+            'adults' => 'required',
+            'pax_details' => 'required',
+            'perPersonCost' => 'required',
+            'perPersonSharing' => 'required',
+            'amount' => 'required',
+            'total_package_cost' => 'required',
+        ];
+        if (! $this->validate($rules)) {
+            $this->session->setFlashdata('FlashMessage', [
+                'message' => 'Invalid Data Inserted',
+                'status'  => 'Danger'
+            ]);
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+        $ID = $this->request->getPost('ID');
+        $patchedData = [
+            'name' => $this->request->getPost('name'),
+            'email' => $this->request->getPost('email'),
+            'gender' => $this->request->getPost('gender'),
+            'contact_trip' => $this->request->getPost('contact_trip'),
+            'contact_alt' => $this->request->getPost('contact_alt'),
+            'address' => $this->request->getPost('address'),
+            'trip_type' => $this->request->getPost('trip_type'),
+            'date' => $this->request->getPost('date'),
+            'travelmode' => $this->request->getPost('travelmode'),
+            'adults' => $this->request->getPost('adults'),
+            'pax_details' => $this->request->getPost('pax_details'),
+            'perPersonCost' => $this->request->getPost('perPersonCost'),
+            'perPersonSharing' => $this->request->getPost('perPersonSharing'),
+            'amount' => $this->request->getPost('amount'),
+            'total_package_cost' => $this->request->getPost('total_package_cost'),
+        ];
+        $this->BookingModel->updateConfirmedBookingByID($ID, $patchedData);
+
+        return $this->RedirectWithtoast('Booking Edited', 'Success', '/dashboard/all-bookings');
+    }
     public function deleteBooking()
     {
         $rules = [
