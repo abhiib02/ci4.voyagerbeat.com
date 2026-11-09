@@ -56,7 +56,10 @@
 
             <div class="step active">
                 <div class="card">
-                    <div class="card-header">Basic Information</div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div>Basic Information</div>
+                        <a href="/dashboard/all-bookings" class="btn btn-outline-secondary"><i class='bx bx-x'></i></a>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6 col-md-12">
@@ -148,8 +151,10 @@
 
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer d-flex justify-content-between">
+                        <div></div>
                         <button type="button" class="btn btn-success next">Next</button>
+
                     </div>
                 </div>
             </div>
@@ -157,7 +162,10 @@
             <!-- Step 2: Package Information -->
             <div class="step">
                 <div class="card">
-                    <div class="card-header">Package Related Details</div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div>Package Related Details</div>
+                        <a href="/dashboard/all-bookings" class="btn btn-outline-secondary"><i class='bx bx-x'></i></a>
+                    </div>
                     <div class="card-body">
                         <div class="form-floating mb-3">
 
@@ -185,9 +193,13 @@
 
 
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer d-flex justify-content-between">
+
+
                         <button type="button" class="btn btn-secondary prev">Previous</button>
                         <button type="button" class="btn btn-primary next">Next</button>
+
+
                     </div>
                 </div>
 
@@ -195,7 +207,10 @@
             <!-- Step 4: Pax Details -->
             <div class="step">
                 <div class="card">
-                    <div class="card-header">Pax Important Details</div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div>Pax Important Details</div>
+                        <a href="/dashboard/all-bookings" class="btn btn-outline-secondary"><i class='bx bx-x'></i></a>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-md-4">
@@ -238,9 +253,12 @@
                         </div>
                         <textarea name="pax_details" class="form-control json-input" style="field-sizing: content;" id="codemirror-editor" required><?= $BookingData->pax_details ?></textarea>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer d-flex justify-content-between">
+
+
                         <button type="button" class="btn btn-secondary prev">Previous</button>
                         <button type="submit" id="submit" class="btn btn-success">Submit</button>
+
                     </div>
                 </div>
 
