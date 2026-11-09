@@ -142,7 +142,11 @@ class Package extends Model
 
     public function getAllPackagesForAdminDashboard(int $perPage = 15, string $group = 'default'): array
     {
-        return $this->select('PACKAGE_ID, SLUG, PACKAGE_NAME, LOCATION, VISIT_COUNT, DATES, updated_at')->orderBy('updated_at', 'DESC')->find(); //->paginate($perPage, $group);
+        return $this->select('PACKAGE_ID, SLUG, PACKAGE_NAME, LOCATION, VISIT_COUNT, DATES, updated_at')->where('HIDDEN', 0)->orderBy('updated_at', 'DESC')->find(); //->paginate($perPage, $group);
+    }
+    public function getAllHiddenPackagesForAdminDashboard(int $perPage = 15, string $group = 'default'): array
+    {
+        return $this->select('PACKAGE_ID, SLUG, PACKAGE_NAME, LOCATION, VISIT_COUNT, DATES, updated_at')->where('HIDDEN', 1)->orderBy('updated_at', 'DESC')->find(); //->paginate($perPage, $group);
     }
 
     public function getAllPackagesNameAndID(): array

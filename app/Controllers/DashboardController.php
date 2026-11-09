@@ -40,23 +40,6 @@ class DashboardController extends BaseController
     }
 
 
-    public function AutoDashboardRedirect()
-    {
-        $role = session()->get('role');
-        switch ($role) {
-            case '0':
-                return redirect()->to('/account');
-            case '1':
-                return redirect()->to('/dashboard');
-            case '2':
-                return redirect()->to('/employee-dashboard');
-            case '3':
-                return redirect()->to('/manager-dashboard');
-            default:
-                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-        }
-    }
-
     // ------------------- Pages -----------------------//
     protected function AdminPages(): array
     {
@@ -119,7 +102,9 @@ class DashboardController extends BaseController
                 $this->data['Options'] = $this->OptionModel->getAllOptions();
                 break;
             case 'packages-list':
-                $this->data['Packages'] = $this->PackageModel->getAllPackagesForAdminDashboard();
+                $hiddenPackages = $this->request->getGet('hidden');
+                $this->data['Packages'] = ($hiddenPackages !== null) ?  $this->PackageModel->getAllHiddenPackagesForAdminDashboard() : $this->PackageModel->getAllPackagesForAdminDashboard();
+                //$this->data['Packages'] = $this->PackageModel->getAllPackagesForAdminDashboard();
                 $this->data['pager'] = $this->PackageModel->pager;
                 break;
             case 'package-create':
@@ -131,12 +116,10 @@ class DashboardController extends BaseController
                 $this->data['Admins'] = $this->UserModel->getAllUserByRole(1);
                 $this->data['Employees'] = $this->UserModel->getAllUserByRole(2);
                 $this->data['Managers'] = $this->UserModel->getAllUserByRole(3);
+
                 $customer_id = $this->request->getGet('customerID');
-                if ($customer_id !== null) {
-                    $this->data['Customers'] = $this->UserModel->getCustomerwithPoints($customer_id);
-                } else {
-                    $this->data['Customers'] = $this->UserModel->getAllCustomerswithPoints();
-                }
+                $this->data['Customers'] = ($customer_id !== null) ?  $this->UserModel->getCustomerwithPoints($customer_id) : $this->UserModel->getAllCustomerswithPoints();
+
                 break;
             case 'all-bookings':
 

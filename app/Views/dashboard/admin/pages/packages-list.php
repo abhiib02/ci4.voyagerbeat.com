@@ -16,7 +16,7 @@
     <div class="card-body">
         <div>
             <a class="btn btn-sm btn-success" href="/dashboard/package-create">Add package</a>
-            <a class="btn btn-sm btn-secondary" href="/hidden">Hidden packages</a>
+            <a class="btn btn-sm btn-secondary" href="?hidden=1">Show Hidden packages</a>
         </div>
         <br>
         <div class="table-responsive border rounded">
