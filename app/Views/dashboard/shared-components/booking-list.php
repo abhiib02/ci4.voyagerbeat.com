@@ -28,6 +28,7 @@
                 <th>Payment Status</th>
                 <th>Note</th>
                 <th>Customer Filled Form</th>
+                <th>Last Updated</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -148,6 +149,7 @@
                         <?php endif; ?>
 
                     </td>
+                    <td><?= $booking->updated_at ?></td>
                     <td>
                         <div class="d-flex gap-1">
 
