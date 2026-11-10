@@ -202,19 +202,6 @@ class PackageController extends BaseController
 
         return $this->Render_Page('packages/packages', $this->data);
     }
-    public function hiddenPackages()
-    {
-
-        $this->data['packages'] = $this->PackageModel->getHiddenPackages();
-        $this->data["name"] = "Hidden";
-        $this->data["title"] = "Hidden Packages | Voyagers Beat | Live to Travel";
-        $this->data["meta_desc"] = "";
-        $this->data['noindex'] = 1;
-
-        return $this->Render_Page('packages/packages', $this->data);
-    }
-
-
     function TripTypeMeta(string $var)
     {
         $TripType = [
@@ -309,7 +296,7 @@ class PackageController extends BaseController
         $this->data['title'] = 'Weekend Packages | 2N/3D Packages | Voyagers Beat | Live to Travel';
         $this->data['name'] = 'Weekend';
         $this->data['meta_desc'] = 'Weekend Getaways, Budget Weekend Trips and Treks planned from major cities New Delhi , Travel with the community #voyagersbeat';
-        $this->data['canonical'] = 'weekend/';
+        $this->data['canonical'] = 'weekend';
 
         return $this->Render_Page('packages/packages', $this->data);
     }
@@ -325,10 +312,10 @@ class PackageController extends BaseController
         $pack_3n = $this->PackageModel->getPackagesByNights($nights3);
 
         $this->data['packages'] = array_merge($pack_5n, $pack_4n, $pack_3n);
-        $this->data["name"] = "Upcoming";
-        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
-        $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
-        $this->data["canonical"] = "upcoming";
+        $this->data["name"] = "Bagpacking Trips";
+        $this->data["title"] = "Bagpacking Trips Packages | Voyagers Beat | Live to Travel";
+        $this->data["meta_desc"] = "Master your gear with the ultimate bag packing guide from Voyager's Beat. Learn essential packing hacks, checklist items, and smart travel tips today!";
+        $this->data["canonical"] = "bagpacking";
 
         return $this->Render_Page('packages/packages', $this->data);
     }
