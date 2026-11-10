@@ -244,6 +244,7 @@ class DashboardController extends BaseController
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
             case 'booking-list':
+
                 $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['startdate'], $this->data['enddate']);
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
