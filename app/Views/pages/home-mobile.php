@@ -18,7 +18,7 @@
                     <?php foreach (json_decode($banners) as $index => $banner) : ?>
                         <div class="swiper-slide">
                             <a href="<?= $banner->BannerLink ?>" target="_blank">
-                                <img src="<?= gdriveImage($banner->BannerImageLink) ?>" alt="<?= $banner->BannerLink ?>" style="aspect-ratio: 3/2; width:100%; object-fit:cover;">
+                                <img fetchpriority="high" src="<?= gdriveImage($banner->BannerImageLink, 400) ?>" alt="<?= $banner->BannerLink ?>" style="aspect-ratio: 3/2; width:100%; object-fit:cover;">
                             </a>
                         </div>
                     <?php endforeach; ?>
