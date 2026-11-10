@@ -39,8 +39,13 @@
 
                                      <dialog class="border-1 rounded" id="travelers-dialog-<?= $tbbooking->ID ?>">
                                          <div class="card">
-                                             <div class="card-header">
-                                                 <div class="fw-bold"><?= $tbbooking->name; ?>'s Travel Buddies</div>
+                                             <div class="card-header d-flex justify-content-between">
+                                                 <div class=" align-content-center">
+                                                     <div class="fw-bold"><?= $tbbooking->name; ?>'s Travel Buddies</div>
+                                                 </div>
+                                                 <div>
+                                                     <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#travelers-dialog-<?= $tbbooking->ID ?>').close();"><i class='bx bx-x'></i></button>
+                                                 </div>
                                              </div>
                                              <div class="card-body">
                                                  <ol class="list-group list-group-numbered" id="output-dialog-<?= $tbbooking->ID ?>"></ol>

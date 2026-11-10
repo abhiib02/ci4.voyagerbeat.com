@@ -56,9 +56,15 @@
                             <button class="btn btn-sm btn-outline-dark" data-booking-id="<?= $booking->ID ?>" data-travelers="<?= esc($booking->pax_details, 'attr') ?>" onclick="showTravelersModel()">Show</button>
                             <dialog class="border-1 rounded" id="travelers-dialog-<?= $booking->ID; ?>">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <div class="fw-bold"><?= $booking->name ?>'s Travel Buddies</div>
+                                    <div class="card-header d-flex justify-content-between">
+                                        <div class=" align-content-center">
+                                            <div class="fw-bold"><?= $booking->name ?>'s Travel Buddies</div>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#travelers-dialog-<?= $booking->ID; ?>').close();"><i class='bx bx-x'></i></button>
+                                        </div>
                                     </div>
+
                                     <div class="card-body">
                                         <ol class="row" style="width: 80vw;list-style-type: none;" id="output-dialog-<?= $booking->ID; ?>"></ol>
                                     </div>
@@ -177,9 +183,15 @@
 
 
                             <div class="card">
-                                <div class="card-header">
-                                    Booking Details
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class=" align-content-center">
+                                        <div class="fw-bold">Booking Details</div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#BookingTableDetail<?= $booking->ID ?>').close();"><i class='bx bx-x'></i></button>
+                                    </div>
                                 </div>
+
                                 <div class="card-body">
 
                                     <div class="d-flex">
@@ -293,7 +305,15 @@
                         </dialog>
                         <dialog id="updatePoints-<?= $booking->user_id ?>" class="">
                             <div class="card">
-                                <div class="card-header">Update Points</div>
+
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class=" align-content-center">
+                                        <div class="fw-bold">Update Points</div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#updatePoints-<?= $booking->user_id ?>').close();"><i class='bx bx-x'></i></button>
+                                    </div>
+                                </div>
                                 <div class="card-body">
                                     <?= view('dashboard/admin/pages/points-partial/updatePointsForm', ['customer' => $booking]) ?>
                                 </div>

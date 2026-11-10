@@ -12,7 +12,12 @@
         <button type="button" class="waves-effect  btn btn-sm btn-success  white-text" onclick="openModel('codeCreate')">Create Code</button>
         <dialog id="codeCreate" class="">
             <div class="card">
-                <div class="card-header">Create Coupon Code</div>
+                <div class="card-header d-flex justify-content-between">
+                    <div class=" align-content-center">Create Coupon Code</div>
+                    <div>
+                        <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#codeCreate').close();"><i class='bx bx-x'></i></button>
+                    </div>
+                </div>
                 <div class="card-body">
                     <?= view('dashboard/admin/pages/coupon-partials/coupon-create') ?>
                 </div>
@@ -52,7 +57,12 @@
 
                                     <dialog id="codeupd<?php echo $coupon->Coupon_ID; ?>">
                                         <div class="card">
-                                            <div class="card-header">Update Coupon Code</div>
+                                            <div class="card-header d-flex justify-content-between">
+                                                <div class=" align-content-center">Update Coupon Code</div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#codeupd<?php echo $coupon->Coupon_ID; ?>').close();"><i class='bx bx-x'></i></button>
+                                                </div>
+                                            </div>
                                             <div class="card-body">
                                                 <?= view('dashboard/admin/pages/coupon-partials/coupon-update', ['coupon' => $coupon]) ?>
                                             </div>

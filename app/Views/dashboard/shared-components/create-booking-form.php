@@ -1,7 +1,13 @@
 <dialog class="border-1 rounded dw-50-mw-100" id="create-booking">
     <div class="card">
-        <div class="card-header">
-            <div class="fw-bold">Create New Booking</div>
+
+        <div class="card-header d-flex justify-content-between">
+            <div class=" align-content-center">
+                <div class="fw-bold">Create New Booking</div>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#create-booking').close();"><i class='bx bx-x'></i></button>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">

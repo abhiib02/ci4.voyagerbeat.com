@@ -104,6 +104,12 @@
                         
                         <dialog class="border-1 rounded" id="Trav-${traveler.contact}_${traveler.adhaar}">
                         <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                        <div class=" align-content-center">Adhaar Card / Goverment Provided ID </div>
+                        <div>
+                        <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#Trav-${traveler.contact}_${traveler.adhaar}').close();"><i class='bx bx-x'></i></button>
+                        </div>
+                        </div>
                         <img width="auto" height="500px" src="/upload/adhaar/${traveler.adhaarCard_file}">
                         <div class="card-footer">
                                     <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#Trav-${traveler.contact}_${traveler.adhaar}').close();">Close</button>

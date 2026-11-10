@@ -66,7 +66,12 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
                                         </div>
                                         <dialog id="makeEmployeedialog-<?= $customer->user_id ?>" class="">
                                             <div class="card">
-                                                <div class="card-header">Make Employee</div>
+                                                <div class="card-header d-flex justify-content-between">
+                                                    <div class=" align-content-center">Make Employee</div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#makeEmployeedialog-<?= $customer->user_id ?>').close();"><i class='bx bx-x'></i></button>
+                                                    </div>
+                                                </div>
                                                 <div class="card-body">
                                                     <form action="/makeEmployee" id="makeEmployeeform-<?= $customer->user_id ?>" method="post">
                                                         <input type="hidden" name="id" value="<?= $customer->user_id ?>" required>
@@ -86,7 +91,13 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
                                         </dialog>
                                         <dialog id="updatePoints-<?= $customer->user_id ?>" class="">
                                             <div class="card">
-                                                <div class="card-header">Update Points</div>
+
+                                                <div class="card-header d-flex justify-content-between">
+                                                    <div class=" align-content-center">Update Points</div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#updatePoints-<?= $customer->user_id ?>').close();"><i class='bx bx-x'></i></button>
+                                                    </div>
+                                                </div>
                                                 <div class="card-body">
                                                     <?= view('dashboard/admin/pages/points-partial/updatePointsForm', ['customer' => $customer]) ?>
                                                 </div>
@@ -256,7 +267,13 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
 </div>
 <dialog id="passwordChange">
     <div class="card">
-        <div class="card-header">Set New Password</div>
+
+        <div class="card-header d-flex justify-content-between">
+            <div class=" align-content-center">Set New Password</div>
+            <div>
+                <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#passwordChange').close();"><i class='bx bx-x'></i></button>
+            </div>
+        </div>
         <div class="card-body">
             <form action="/change-password" method="post" id="passwordChangeForm">
                 <label for="">User ID</label>
