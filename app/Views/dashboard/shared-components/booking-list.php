@@ -16,7 +16,7 @@
             <tr>
                 <!-- <th>ID</th> -->
                 <!-- <th>Order ID</th> -->
-                <th>Booking Date</th>
+                <th>Booking Date (UTC) </th>
                 <th>Agent</th>
                 <th>Name</th>
                 <th>Contact</th>
@@ -28,7 +28,7 @@
                 <th>Payment Status</th>
                 <th>Note</th>
                 <th>Customer Filled Form</th>
-                <th>Last Updated</th>
+                <th>Last Updated (UTC)</th>
                 <th>Actions</th>
             </tr>
         </thead>
