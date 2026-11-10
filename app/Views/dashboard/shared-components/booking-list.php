@@ -289,13 +289,14 @@
                                             </tr>
 
                                         </table>
+                                        <?php if (!empty($booking->pay_screenshot)): ?>
+                                            <div>
+                                                <label for=""><b>Payment Screenshot</b></label>
+                                                <img style="width:300px;height:fit-content;" src="/upload/bookings/payment_screenshot/<?= esc($booking->pay_screenshot) ?>" alt="">
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
-                                    <?php if (!empty($booking->pay_screenshot)): ?>
-                                        <div>
-                                            <label for=""><b>Payment Screenshot</b></label>
-                                            <img style="width:300px;height:fit-content;" src="/upload/bookings/payment_screenshot/<?= esc($booking->pay_screenshot) ?>" alt="">
-                                        </div>
-                                    <?php endif; ?>
+
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#BookingTableDetail<?= $booking->ID; ?>').close();">Close</button>
