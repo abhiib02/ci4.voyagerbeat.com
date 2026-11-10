@@ -9,6 +9,7 @@
 ?>
 <?php
 $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
+$rolesEmojis = ['🧳', '🧑‍💼', '👔', '👑'];
 ?>
 <div id="Users-list" class="card">
     <div class="card-header">
@@ -19,7 +20,7 @@ $roles = ['Customers', 'Employees', 'Managers', 'Admins'];
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <?php foreach ($roles as $index => $role): ?>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link <?= ($index == 0) ? 'active' : '' ?>" id="<?= $role ?>-tab" data-bs-toggle="tab" data-bs-target="#<?= $role ?>-tab-pane" type="button" role="tab"><?= $role ?> | <?= count($$role) ?></button>
+                    <button class="nav-link <?= ($index == 0) ? 'active' : '' ?>" id="<?= $role ?>-tab" data-bs-toggle="tab" data-bs-target="#<?= $role ?>-tab-pane" type="button" role="tab"><span class="fs-3"><?= $rolesEmojis[$index] ?></span><br><?= $role ?> | <span class="badge rounded-pill text-bg-primary"><?= count($$role) ?></span></button>
                 </li>
             <?php endforeach; ?>
 
