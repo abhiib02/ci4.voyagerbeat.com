@@ -23,6 +23,6 @@
 <link rel="stylesheet" href="/css/tinymce-reset.css?v=<?= $cssversion ?>" rel="preload">
 <link rel="stylesheet" href="/css/resets.css?v=<?= $cssversion ?>" rel="preload">
 <link rel="stylesheet" href="/css/animation.css?v=<?= $cssversion ?>" rel="preload">
-<link rel="stylesheet" href="/css/print.css?v=<?= $cssversion ?>" rel="preload">
+<link rel="stylesheet" href="/css/print.css?v=<?= $cssversion ?>" rel="preload" media="print">
 <link rel="stylesheet" href="/css/boxicons.css?v=<?= $cssversion ?>" rel="preload">
 <link rel="stylesheet" href="https://unpkg.com/swiper@14.0.1/swiper-bundle.min.css" />
