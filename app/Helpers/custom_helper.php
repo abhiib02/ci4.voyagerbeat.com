@@ -80,3 +80,24 @@ if (! function_exists("getRandomNumber")) {
         return mt_rand($from, $to);
     }
 }
+if (! function_exists("bundle")) {
+    function bundle(array $files, string $type): string
+    {
+        $root = $_SERVER['DOCUMENT_ROOT'];
+        $stamp = '';
+        foreach ($files as $f) $stamp .= filemtime($root . $f);
+
+        $name = substr(md5(implode('|', $files) . $stamp), 0, 12) . '.' . $type;
+        $out  = "$root/cache/$name";
+
+        if (!file_exists($out)) {
+            $buf = '';
+            foreach ($files as $f) {
+                $buf .= file_get_contents($root . $f) . ($type === 'js' ? ";\n" : "\n");
+            }
+            if (!is_dir("$root/cache")) mkdir("$root/cache", 0755, true);
+            file_put_contents($out, $buf, LOCK_EX);
+        }
+        return "/cache/$name";
+    }
+}

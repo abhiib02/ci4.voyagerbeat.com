@@ -10,7 +10,7 @@
 <link rel="shortcut icon" type="image/png" href="../../assets/logo-comp.png" fetchpriority="high" decoding="async" />
 
 <link href="https://unpkg.com/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-
+<!-- 
 <link rel="stylesheet" href="/css/fonts.css?v=<?= $cssversion ?>">
 <link rel="stylesheet" href="/css/ezToast.css?v=<?= $cssversion ?>">
 <link rel="stylesheet" href="/css/bootstrap-overrides.css?v=<?= $cssversion ?>">
@@ -24,5 +24,26 @@
 <link rel="stylesheet" href="/css/resets.css?v=<?= $cssversion ?>" rel="preload">
 <link rel="stylesheet" href="/css/animation.css?v=<?= $cssversion ?>" rel="preload">
 <link rel="stylesheet" href="/css/print.css?v=<?= $cssversion ?>" rel="preload" media="print">
-<link rel="stylesheet" href="/css/boxicons.css?v=<?= $cssversion ?>" rel="preload">
+<link rel="stylesheet" href="/css/boxicons.css?v=<?= $cssversion ?>" rel="preload"> -->
+
+<!-- Getting Bundled Css from Custom-helper :: bundle -->
+<link rel="stylesheet" href="<?= bundle(
+                                    [
+                                        '/css/fonts.css',
+                                        '/css/ezToast.css',
+                                        '/css/bootstrap-overrides.css',
+                                        '/css/megamenu.css',
+                                        '/css/style.css',
+                                        '/css/packageCard.css',
+                                        '/css/lenis.css',
+                                        '/css/packageCardSimple.css',
+                                        '/css/pagination.css',
+                                        '/css/tinymce-reset.css',
+                                        '/css/resets.css',
+                                        '/css/animation.css',
+                                        '/css/print.css',
+                                        '/css/boxicons.css'
+                                    ],
+                                    'css'
+                                ) ?>">
 <link rel="stylesheet" href="https://unpkg.com/swiper@14.0.1/swiper-bundle.min.css" />
