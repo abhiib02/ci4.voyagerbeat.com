@@ -106,7 +106,6 @@ Point the web server's document root to the `public/` folder, set `CI_ENVIRONMEN
 
 ## Contact
 
-**Voyagers Beat** – Aggarwal Plaza, Netaji Subhash Place, Pitampura, Delhi 110034
 Website: https://voyagersbeat.com
 
 ---
