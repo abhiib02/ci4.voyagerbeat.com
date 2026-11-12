@@ -76,11 +76,13 @@ class BookingController extends BaseController
         if (! in_array($field, $allowedFields, true)) {
             return $this->response->setStatusCode(422)->setJSON(['error' => 'Field not editable']);
         }
+
+        $orderID = $this->BookingModel->select('order_id')->find($bookingId)->order_id;
         $oldvalue = $this->BookingModel->select($field)->find($bookingId)->$field;
         $value = $this->sanitizeFieldValue($field, $value);
 
         //Logging Changes Activity
-        $this->BookingPatchChangesActivityLog($field, $oldvalue, $value);
+        $this->BookingPatchChangesActivityLog($orderID, $field, $oldvalue, $value);
 
         $updated = $this->BookingModel->update($bookingId, [$field => $value]);
 
@@ -107,7 +109,7 @@ class BookingController extends BaseController
                 return $value;
         }
     }
-    protected function BookingPatchChangesActivityLog(string $field, string $oldvalue, string $value)
+    protected function BookingPatchChangesActivityLog(string $orderID, string $field, string $oldvalue, string $value)
     {
         $path = WRITEPATH . 'logs/bookingchanges/';
 
@@ -133,7 +135,8 @@ class BookingController extends BaseController
 
             $logger = new Logger($config);
 
-            $logger->log('info', '{field} changed from {old} to {new} by {user_id} | {user_name}', [
+            $logger->log('info', 'In {orderID} => {field} changed from {old} to {new} by {user_id} | {user_name}', [
+                'orderID'   => $orderID,
                 'field'     => $field,
                 'old'       => $oldvalue,
                 'new'       => $value,
