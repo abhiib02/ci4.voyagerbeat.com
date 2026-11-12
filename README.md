@@ -1,69 +1,116 @@
-# CodeIgniter 4 Application Starter
+# Voyagers Beat (CodeIgniter 4)
 
-## What is CodeIgniter?
+The migrated CodeIgniter 4 version of the [Voyagers Beat](https://voyagersbeat.com) travel company website. Voyagers Beat is a Delhi-based travel company, active since 2017, that organises group departures, corporate trips, college trips, family trips, honeymoons and personalised trips to offbeat destinations across India.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+> **Status:** Migrated from the earlier version of the site to CodeIgniter 4.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+---
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Features
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### Public website
+- **Destination and package listings** – Himachal (Kasol, Manali, Spiti), Goa, Ladakh, Rajasthan, the North-East (Darjeeling, Shillong), Uttarakhand (Dehradun, Rishikesh) and more, with starting prices or "cost as per requirement"
+- **Trip categories** – fixed-departure group tours, corporate trips, college and educational trips, family trips, honeymoon trips, solo and backpacking trips
+- **Adventure activities** – trekking, camping, bike rides, road trips, river rafting, paragliding
+- **Blog / travel guides** – destination guides and trek write-ups
+- **About Us page** – company story and founder
+- **Careers page** – open roles (sales, tour leading), perks and application info
+- **Testimonials** – traveller reviews
+- **Contact and enquiry** – phone, email, office address and social links
+- **SEO-friendly pages** – structured data (company name, address, phone, social profiles)
 
-## Installation & updates
+### Technical
+- Built on **CodeIgniter 4** (MVC)
+- Clean routing, controllers, views and models
+- Environment-based configuration via `.env`
+- Responsive layout for mobile and desktop
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+> Please verify this list against the code and edit as needed: some items come from the live website rather than the source.
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+---
 
-## Setup
+## Tech Stack
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+| Layer | Technology |
+|-------|-----------|
+| Framework | CodeIgniter 4 |
+| Language | PHP 8.1+ |
+| Database | MySQL / MariaDB |
+| Frontend | HTML, CSS, JavaScript |
+| Dependencies | Composer |
 
-## Important Change with index.php
+---
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## Project Structure
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+```
+ci4.voyagerbeat.com/
+├── app/
+│   ├── Config/        # Routes, database, app config
+│   ├── Controllers/   # Page and feature controllers
+│   ├── Models/        # Database models
+│   └── Views/         # Templates
+├── public/            # Web root (index.php, assets)
+├── writable/          # Logs, cache, sessions
+├── .env               # Environment config (not committed)
+└── composer.json
+```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+---
 
-## Repository Management
+## Getting Started
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### Prerequisites
+- PHP 8.1 or newer, with the `intl`, `mbstring`, `json` and `mysqlnd` extensions
+- Composer
+- MySQL or MariaDB
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### Installation
 
-## Server Requirements
+```bash
+git clone https://github.com/abhiib02/ci4.voyagerbeat.com.git
+cd ci4.voyagerbeat.com
+composer install
+cp env .env
+```
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+Edit `.env`:
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+```ini
+CI_ENVIRONMENT = development
+app.baseURL = 'http://localhost:8080/'
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+database.default.hostname = localhost
+database.default.database = your_db
+database.default.username = your_user
+database.default.password = your_password
+database.default.DBDriver = MySQLi
+```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+Run migrations (if the project includes them) and start the dev server:
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+```bash
+php spark migrate
+php spark serve
+```
+
+Open http://localhost:8080.
+
+---
+
+## Deployment
+
+Point the web server's document root to the `public/` folder, set `CI_ENVIRONMENT = production` in `.env`, and make sure `writable/` is writable by the web server.
+
+---
+
+## Contact
+
+**Voyagers Beat** – Aggarwal Plaza, Netaji Subhash Place, Pitampura, Delhi 110034
+Website: https://voyagersbeat.com
+
+---
+
+## License
+
+Add your license here (e.g. MIT) or state that the project is proprietary.
