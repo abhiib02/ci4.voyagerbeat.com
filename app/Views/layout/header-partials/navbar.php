@@ -402,7 +402,7 @@
           <a class="list-group-item list-group-item-action" href="/about">
             Who We Are?
           </a>
-          <a class="list-group-item list-group-item-action" href="/write-for-us">
+          <a class="list-group-item list-group-item-action" href="/blogs/write-for-us">
             Write for Us
           </a>
           <a class="list-group-item list-group-item-action" href="/career">
