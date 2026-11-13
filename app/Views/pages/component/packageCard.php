@@ -72,13 +72,6 @@
             <div class="badge"><?= $package->BADGE ?></div>
         <?php endif; ?>
 
-        <?php // if($package->PACKAGE_PDF){ echo '<div class="btn pdf_btn"><a class="" aria-label="Download pdf of '.$package->PACKAGE_NAME.'" rel=”nofollow” href="../../pdf/'.$package->PACKAGE_PDF.'" download><i class="icon-file-pdf"></i></a></div>';}
-        ?>
-
-        <?php if (auth('Admin', 'Manager')): ?>
-            <a href="/voyagersbeat/download_json_package/<?= $package->PACKAGE_ID ?>" class="btn export_btn"><i class='bx bx-export'></i></a>
-        <?php endif; ?>
-
         <div class="btn dates_btn"><i class="bx bx-calendar"></i></div>
 
         <?php if ($package->FAVORITE_COUNT == 0): ?>
