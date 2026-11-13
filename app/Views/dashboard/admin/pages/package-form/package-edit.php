@@ -8,7 +8,7 @@
  */
 ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
+<?= view('pages/component/loading-overlay') ?>
 <style>
     .date_input_group {
         display: flex;
@@ -23,7 +23,10 @@
 </style>
 <div class="container">
     <h1 class="py-4">Editing <?= $package->PACKAGE_NAME ?> Package</h1>
-    <form action="/updatePackageProcess" method="post" enctype="multipart/form-data">
+    <form action="/updatePackageProcess" method="post" enctype="multipart/form-data"
+        data-loader
+        data-loader-title="Updating <?= $package->PACKAGE_NAME ?> Package"
+        data-loader-steps="Validating Inputs...|Checking for PDF....|Saving Data & Files....|Updating Changes to Database....|Almost done...">
         <input type="hidden" name="PACKAGE_ID" value="<?= $package->PACKAGE_ID ?>">
         <?= csrf_field() ?>
         <div class="p-1 sticky-top d-flex justify-content-between" style="top: -3px;">
@@ -629,3 +632,4 @@
 <script src="/js/json_util_script.js"></script>
 <script src="/js/itinerary_script.js"></script>
 <script src="/js/tags_badges_script.js"></script>
+<script src="/js/formSubmittingLoader.js"></script>

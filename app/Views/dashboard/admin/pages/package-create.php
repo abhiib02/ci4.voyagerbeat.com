@@ -23,7 +23,10 @@
 
 <div class="container">
 
-    <form action="/createPackageProcess" method="post" enctype="multipart/form-data">
+    <form action="/createPackageProcess" method="post" enctype="multipart/form-data"
+        data-loader
+        data-loader-title="Creating New Package"
+        data-loader-steps="Validating Inputs...|Checking for PDF....|Saving Data & Files....|Adding Changes to Database....|Almost done...">
 
         <div class="p-1 sticky-top d-flex justify-content-between" style="top: -2px;">
 

@@ -106,7 +106,7 @@
     </div>
 </div>
 </div>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
@@ -123,7 +123,7 @@
     });
 </script>
 
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
 <script>
     function togglePass() {
         let password = document.querySelector('#password');
