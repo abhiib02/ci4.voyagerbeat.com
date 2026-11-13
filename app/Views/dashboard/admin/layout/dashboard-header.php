@@ -9,7 +9,6 @@
 
 <body>
     <?= view('pages/component/loading-overlay') ?>
-
     <div class="">
         <div class="d-flex">
             <?= view('dashboard/admin/layout/component/sidebar', ['data' => $this->data]) ?>
