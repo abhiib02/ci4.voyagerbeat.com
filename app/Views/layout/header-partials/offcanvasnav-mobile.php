@@ -338,9 +338,9 @@
                         <a href="https://www.facebook.com/voyagersBeat/" class="btn fb-bg text-white fs-2"><i class="bx bxl-facebook-circle"></i></a>
                         <a href="https://wa.me/918448591315?text=Hey!%20Voyagers%20Beat%20I%20am%20interested%20in%20your%20trip" class="btn whatsapp-bg fs-2"><i class="bx bxl-whatsapp"></i></a>
                         <a href="https://www.instagram.com/voyagersbeat/" class="btn insta-bg text-white fs-2"><i class="bx bxl-instagram"></i></a>
-                        <a href="https://www.youtube.com/@voyagersbeat2534" class="btn youtube-bg text-white fs-2"><i class="bx bxl-youtube"></i></a>
+                        <a href="https://www.youtube.com/@voyagersbeat" class="btn youtube-bg text-white fs-2"><i class="bx bxl-youtube"></i></a>
                         <a href="https://www.snapchat.com/add/voyagersbeat" class="btn snapchat-bg text-white fs-2"><i class="bx bxl-snapchat"></i></a>
-                        <a href="https://in.linkedin.com/company/voyagers" class="btn linkedin-bg text-white fs-2"><i class="bx bxl-linkedin"></i></a>
+                        <a href="https://www.linkedin.com/company/voyagersbeat07" class="btn linkedin-bg text-white fs-2"><i class="bx bxl-linkedin"></i></a>
                     </div>
                 </div>
             </li>

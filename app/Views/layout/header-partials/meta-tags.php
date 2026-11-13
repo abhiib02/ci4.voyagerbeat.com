@@ -108,7 +108,7 @@ $canonical = (isset($canonical)) ? $canonical : '';
 
   gtag('config', 'G-45Y01Q8SRL');
 </script>
-<script>
+<!-- <script>
   (function(w, d, s, l, i) {
     w[l] = w[l] || [];
     w[l].push({
@@ -143,7 +143,7 @@ $canonical = (isset($canonical)) ? $canonical : '';
       'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
     f.parentNode.insertBefore(j, f);
   })(window, document, 'script', 'dataLayer', 'GTM-PBTL27NW');
-</script>
+</script> -->
 
 
 
@@ -164,8 +164,8 @@ $canonical = (isset($canonical)) ? $canonical : '';
     "sameAs": [
       "https://www.instagram.com/voyagersbeat/",
       "https://www.facebook.com/voyagersBeat/",
-      "https://www.youtube.com/@voyagersbeat2534",
-      "https://in.linkedin.com/company/voyagers"
+      "https://www.youtube.com/@voyagersbeat",
+      "https://www.linkedin.com/company/voyagersbeat07"
     ]
   }
 </script>
@@ -208,8 +208,8 @@ $canonical = (isset($canonical)) ? $canonical : '';
     "sameAs": [
       "https://www.facebook.com/voyagersBeat/",
       "https://www.instagram.com/voyagersbeat/",
-      "https://www.youtube.com/@voyagersbeat2534",
-      "https://in.linkedin.com/company/voyagersbeat07",
+      "https://www.youtube.com/@voyagersbeat",
+      "https://www.linkedin.com/company/voyagersbeat07",
       "https://voyagersbeat.com/"
     ]
   }
