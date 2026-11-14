@@ -151,7 +151,7 @@ class Package extends Model
 
     public function getAllPackagesNameAndID(): array
     {
-        return $this->select('PACKAGE_ID, PACKAGE_NAME, PACKAGE_IMAGE')->where('HIDDEN', 0)->orderBy('PACKAGE_ID', 'DESC')->findAll();
+        return $this->select('PACKAGE_ID, PACKAGE_NAME, PACKAGE_IMAGE, SLUG')->where('HIDDEN', 0)->orderBy('PACKAGE_ID', 'DESC')->findAll();
     }
     public function getAllPackagesCount(): int
     {

@@ -96,7 +96,7 @@
         packagesListCount.innerHTML = `<p class='list-count'>${packages.length} results found</p>`;
 
         packages.forEach((package) => {
-            generatedList += `<a href="/packageid/${package.PACKAGE_ID}" class="list-group-item list-group-item-action text-capitalize">${package.PACKAGE_NAME}</a>`;
+            generatedList += `<a href="/package/${package.SLUG}" class="list-group-item list-group-item-action text-capitalize">${package.PACKAGE_NAME}</a>`;
         })
         packagesLists.forEach((packagesList) => {
             packagesList.innerHTML = generatedList;
