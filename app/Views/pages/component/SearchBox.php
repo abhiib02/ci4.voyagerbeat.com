@@ -42,6 +42,7 @@
         return {
             PACKAGE_ID: obj.PACKAGE_ID,
             PACKAGE_NAME: obj.PACKAGE_NAME.toLowerCase(),
+            SLUG: obj.SLUG.toLowerCase(),
         };
     })
 </script>

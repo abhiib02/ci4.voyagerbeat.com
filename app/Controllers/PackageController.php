@@ -791,4 +791,9 @@ class PackageController extends BaseController
         $this->data['packageDates'] = $this->PackageModel->getPackageDatesByID($id);
         return $this->response->setJSON($this->data['packageDates']);
     }
+    public function packageDataJSON()
+    {
+        $this->data['packageData'] = $this->PackageModel->getAllPackagesNameAndID();
+        return $this->response->setJSON($this->data['packageData']);
+    }
 }

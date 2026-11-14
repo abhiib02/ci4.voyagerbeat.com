@@ -99,6 +99,8 @@ $routes->group('api', static function ($routes) {
     $routes->get('increasePackageVisitCount/(:num)/visit', 'PackageController::increasePackageVisitCount/$1');
 
     // Data
+
+    $routes->get('packageDataJSON', 'PackageController::packageDataJSON');
     $routes->get('packageDatesJSON/(:num)', 'PackageController::packageDatesJSON/$1');
     $routes->get('packagesByLocationJSON/(:segment)', 'PackageController::packagesByLocationJSON/$1');
 });
