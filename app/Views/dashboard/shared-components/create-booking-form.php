@@ -33,7 +33,7 @@
                                             min="1"
                                             step="1"
                                             required
-                                            readonly>
+                                            style="pointer-events:none;">
                                     </div>
                                     <p class="m-0" id="package_name"></p>
                                 </div>
@@ -134,9 +134,9 @@
                 <div class="form-group">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">₹</span>
-                        <input type="number" class="form-control" placeholder="Traveler Cost" name="perPersonCost[]">
-                        <select class="form-select" name="perPersonSharing[]">
-                        <option selected Disabled>Choose...</option>
+                        <input type="number" class="form-control" placeholder="Traveler Cost" name="perPersonCost[]" required>
+                        <select class="form-select" name="perPersonSharing[]" required>
+                        <option value="" selected disabled>Choose...</option>
                         <option value="Quad Sharing">Quad Sharing</option>
                         <option value="Triple Sharing">Triple Sharing</option>
                         <option value="Double Sharing">Double Sharing</option>
