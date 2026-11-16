@@ -16,7 +16,7 @@
                     <h4 class="text-theme">Contact Us</h4>
                     <ul class="list-unstyled">
                         <li><a class="text-light" href="tel:+919667711660">+91 9667711660</a></li>
-                        <li><a class="text-light" href="tel:+919667711662">+91 9667711660</a></li>
+                        <li><a class="text-light" href="tel:+919667711662">+91 9667711662</a></li>
                         <li><a class="text-light" href="tel:+918448591315">+91 8448591315</a></li>
                         <li><a class="text-light" href="tel:+919266352828">+91 9266352828</a></li>
                         <li><a class="text-light" href="mailto:info@voyagersbeat.com">info@voyagersbeat.com</a></li>
