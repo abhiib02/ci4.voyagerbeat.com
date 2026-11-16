@@ -14,7 +14,7 @@
     const isMobile = window.matchMedia("(pointer: coarse)").matches;
     let scrollYVar;
     if (isMobile) {
-        scrollYVar = window.innerHeight / 6;
+        scrollYVar = window.innerHeight / 2;
     } else {
         scrollYVar = window.innerHeight - (window.innerHeight * 0.35);
     }
@@ -64,7 +64,7 @@
         TravelersData.forEach((traveler) => {
 
             result += `
-                  <li class="col-3 border rounded-3">
+                  <li class="col-sm-12 col-md-3 border rounded-3">
                      <div class="ms-2 me-auto">
                       <table class="table table-sm table-borderless">
                       <tr>

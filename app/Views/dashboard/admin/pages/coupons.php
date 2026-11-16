@@ -5,11 +5,12 @@
  */
 ?>
 <div id="coupons" class="card">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between">
         <div class="fw-bold">Coupons</div>
+        <button type="button" class="waves-effect  btn btn-sm btn-success  white-text" onclick="openModel('codeCreate')">Create Code</button>
     </div>
     <div class="card-body">
-        <button type="button" class="waves-effect  btn btn-sm btn-success  white-text" onclick="openModel('codeCreate')">Create Code</button>
+
         <dialog id="codeCreate" class="">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">

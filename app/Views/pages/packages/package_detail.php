@@ -10,6 +10,7 @@
 // Data Formatting
 $TAGS = explode(',', $package->TAGS);
 ?>
+<?= view('pages/packages/component/schema-structured-data', ['package' => $package]) ?>
 <div>
 
     <div itemscope itemtype="<?= base_url(); ?>">

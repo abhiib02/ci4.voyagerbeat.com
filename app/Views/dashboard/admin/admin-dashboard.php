@@ -17,7 +17,7 @@
             <main class="card-body">
                 <p class="display-3">Welcome, <?= esc($name ?? 'Employee') ?></p>
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-6 col-lg-2">
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
@@ -33,7 +33,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-6 col-lg-2">
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
