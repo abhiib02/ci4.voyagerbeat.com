@@ -26,6 +26,7 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
     const employeeBookingColors = employeeBooking_month_data.map(item => getRandomRgbaColor());
     const employeeBookingData = employeeBooking_month_data.map(item => parseInt(item.total_bookings));
     const employeeBookedPaxData = employeeBooking_month_data.map(item => parseInt(item.total_pax));
+    const employeeBookedRevenueGenerated = employeeBooking_month_data.map(item => parseInt(item.revenue_generated));
 
 
     var EmployeesBookingsCtx = document.getElementById("Employees-Bookings").getContext("2d");
@@ -34,18 +35,29 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
         data: {
             labels: employeeBookingLabels,
             datasets: [{
-                label: 'Total Bookings',
-                data: employeeBookingData,
-                backgroundColor: employeeBookingColors,
-                borderColor: employeeBookingColors,
-                borderWidth: 1,
-            }, {
-                label: 'Total Pax',
-                data: employeeBookedPaxData,
-                backgroundColor: employeeBookingColors,
-                borderColor: employeeBookingColors,
-                borderWidth: 1,
-            }],
+                    label: 'Total Bookings',
+                    data: employeeBookingData,
+                    backgroundColor: employeeBookingColors,
+                    borderColor: employeeBookingColors,
+                    borderWidth: 1,
+                    yAxisID: 'y',
+                }, {
+                    label: 'Total Pax',
+                    data: employeeBookedPaxData,
+                    backgroundColor: employeeBookingColors,
+                    borderColor: employeeBookingColors,
+                    borderWidth: 1,
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'Revenue Generated ₹',
+                    data: employeeBookedRevenueGenerated,
+                    backgroundColor: employeeBookingColors,
+                    borderColor: employeeBookingColors,
+                    borderWidth: 1,
+                    yAxisID: 'y1',
+                }
+            ],
 
         },
         options: {
@@ -56,8 +68,18 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
             },
             scales: {
                 y: {
+                    type: 'linear',
+                    position: 'left',
                     beginAtZero: true
-                }
+                },
+                y1: {
+                    type: 'linear',
+                    position: 'right',
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false // Prevents grid lines from overlapping and cluttering the chart
+                    }
+                },
             }
         },
     });
