@@ -35,7 +35,7 @@
         "name": "<?= $package->PACKAGE_NAME ?>",
         "description": "<?= $package->META_DESC ?>",
         "touristType": [
-            "<?= $package->PACKAGE_TYPE ?>",
+            "<?= $package->PACKAGE_TYPE ?>"
         ],
         "tripOrigin": {
             "@type": "Place",
@@ -43,8 +43,8 @@
         },
         "itinerary": {
             "@type": "ItemList",
+            <?php $itiArr = json_decode($package->PACK_IT) ?> "numberOfItems": <?= count($itiArr) ?>,
             "itemListElement": [
-                <?php $itiArr = json_decode($package->PACK_IT) ?> "numberOfItems": <?= count($itiArr) ?>,
                 <?php foreach ($itiArr as $index => $day): ?> {
                         "@type": "ListItem",
                         "position": <?= $index + 1 ?>,
@@ -53,7 +53,11 @@
                             "name": "<?= $day->dayTitle ?>",
                             "description": "<?= $day->dayTitle ?>"
                         }
-                    },
+                    }
+                    <?php if (($index + 1) == count($itiArr)): ?>
+
+                    <?php else: ?>,
+                    <?php endif; ?>
                 <?php endforeach; ?>
             ]
         }
