@@ -43,8 +43,9 @@
         },
         "itinerary": {
             "@type": "ItemList",
-            <?php $itiArr = json_decode($package->PACK_IT) ?> "numberOfItems": <?= count($itiArr) ?>,
-            <?php foreach ($itiArr as $index => $day): ?> "itemListElement": [{
+            "itemListElement": [
+                <?php $itiArr = json_decode($package->PACK_IT) ?> "numberOfItems": <?= count($itiArr) ?>,
+                <?php foreach ($itiArr as $index => $day): ?> {
                         "@type": "ListItem",
                         "position": <?= $index + 1 ?>,
                         "item": {
@@ -54,7 +55,7 @@
                         }
                     },
                 <?php endforeach; ?>
-                ]
+            ]
         }
     }
 </script>
