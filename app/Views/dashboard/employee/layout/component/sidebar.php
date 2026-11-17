@@ -23,7 +23,7 @@
     </ul>
     <div class="dropdown border-top"> <a href="#" class="d-flex align-items-center justify-content-center p-3 link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="rounded-circle bg-warning text-dark grid-center fw-bold fs-5 me-2 flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                <?= esc(substr($name ?? 'A', 0, 1)) ?>
+                <?= esc(substr($name ?? '👤', 0, 1)) ?>
             </div>
 
         </a>
@@ -33,7 +33,7 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center me-2 overflow-hidden">
                             <div class="rounded-circle bg-warning text-dark grid-center fw-bold fs-5 me-2 flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                <?= esc(substr($name ?? 'A', 0, 1)) ?>
+                                <?= esc(substr($name ?? '👤', 0, 1)) ?>
                             </div>
                             <div class="lh-sm overflow-hidden">
                                 <h6 class="mb-0 fw-bold text-truncate" title="<?= esc($name ?? '') ?>">
