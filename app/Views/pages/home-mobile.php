@@ -28,10 +28,6 @@
         </div>
         <div class="d-flex flex-wrap gap-1">
             <div class="border-sq-button flex-fill p-2 text-center" style="--circle-color:var(--maincolor);">
-                70,000+<br>
-                Followers
-            </div>
-            <div class="border-sq-button flex-fill p-2 text-center" style="--circle-color:var(--maincolor);">
                 4.6 ⭐<br>
                 700+ Google
                 Reviews
@@ -41,7 +37,7 @@
                 Itineraries
             </div>
             <div class="border-sq-button flex-fill p-2 text-center" style="--circle-color:var(--maincolor);">
-                45k+<br>
+                70k+<br>
                 Happy Travelers
             </div>
         </div>

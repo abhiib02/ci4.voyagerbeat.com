@@ -5,7 +5,7 @@
 
             <div class="card theme-card p-4 dw-50-mw-100 mx-auto">
                 <div class="text-center">
-                    <img src="<?= env('app.logoPath') ?>" width="100px" alt="voyagersBeatlogo">
+                    <img src="<?= env('app.logoPath') ?>" width="100px" alt="Voyagers Beat">
                     <hr>
                     <h4 class="fw-bold">Reset Password</h4>
 

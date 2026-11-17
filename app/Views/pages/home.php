@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                <em>Since 2016 · 70,000+ travellers · 4.6★ Google · 45K Happy Travelers · 300+ itineraries.</em>
+                <em>Since 2017 · 4.6★ Google · 70k Happy Travelers · 300+ itineraries.</em>
             </div>
 
         </div>
@@ -292,7 +292,7 @@
                 </div>
                 <div class="pt-3">
                     <ul class="list-unstyled">
-                        <li>✨Est. 2016 | 15K+ Trips & Counting</li>
+                        <li>✨Est. 2017 | 15K+ Trips & Counting</li>
                         <li>🤝Group Trips | Corporate |Custom Trips</li>
                         <li>🦺Trusted Travel Community</li>
                         <li>🏔️Travel.Explore.Create Stories.</li>
@@ -366,7 +366,7 @@
                         </p>
                         <p class="fs-5">Happy Clients</p>
                         <hr>
-                        <p class="style-font fs-2">21000+</p>
+                        <p class="style-font fs-2">70,000+</p>
                     </div>
                 </div>
             </div>

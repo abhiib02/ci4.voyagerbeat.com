@@ -1,7 +1,7 @@
 <?php
 $OGtitle = isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let us do the rest.';
 $OGmetadesc = isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.';
-$OGimage = isset($image) ? $image : 'http://voyagersbeat.com/assets/logo.png';
+$OGimage = isset($image) ? $image : 'https://voyagersbeat.com/assets/logo.png';
 $robotState = (isset($noindex) && $noindex == 1) ? 1 : 0;
 $OGurl = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";;
 $OGtype = 'Travel and Tourism';
@@ -151,7 +151,7 @@ $canonical = (isset($canonical)) ? $canonical : '';
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Voyagersbeat",
+    "name": "Voyagers Beat",
     "url": "https://voyagersbeat.com/",
     "logo": "https://voyagersbeat.com/assets/logo-comp.png",
     "contactPoint": {
@@ -174,7 +174,7 @@ $canonical = (isset($canonical)) ? $canonical : '';
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Voyagersbeat",
+    "name": "Voyagers Beat",
     "image": "https://voyagersbeat.com/assets/logo-comp.png",
     "@id": "",
     "url": "https://voyagersbeat.com/",

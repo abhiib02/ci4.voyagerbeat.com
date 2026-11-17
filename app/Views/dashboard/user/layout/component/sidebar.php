@@ -1,6 +1,6 @@
 <div class="sidebar d-flex flex-column flex-shrink-0 bg-body-tertiary position-sticky shadow-sm hide-on-mobile" style="top:0; width: 4.5rem;height:100vh;z-index:1;">
     <a href="/" class="d-block p-3 link-body-emphasis text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Home">
-        <img src="<?= env('appLogoPath') ?>" class="w-100" alt="Voyagersbeat">
+        <img src="<?= env('appLogoPath') ?>" class="w-100" alt="Voyagers Beat">
     </a>
     <a href="/userdashboard" class="d-block p-3 link-body-emphasis text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Dashboard">
         <i class='bx bxs-dashboard fs-5'></i>

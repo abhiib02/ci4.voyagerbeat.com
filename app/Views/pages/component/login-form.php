@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <div class="text-center">
-            <img src="<?= env('app.LogoPath') ?>" width="100px" alt="voyagersbeatlogo">
+            <img src="<?= env('app.LogoPath') ?>" width="100px" alt="Voyagers Beat">
             <hr>
             <h4 class="fw-bold">Sign in to your Account</h4>
         </div>
