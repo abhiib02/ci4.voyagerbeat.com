@@ -39,7 +39,7 @@
                     <!-- <td><?= $booking->ID ?></td> -->
                     <!-- <td><?= substr($booking->order_id, 0, 20) ?></td> -->
                     <td><?= $booking->created_at ?></td>
-                    <td><?= $booking->agent_name ?></td>
+                    <td><?= (!empty($booking->agent_name)) ? $booking->agent_name : '<b>Online</b>'  ?></td>
                     <td><?= $booking->name ?></td>
 
                     <td><?php if (auth('Admin', 'Manager')): ?>
