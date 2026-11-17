@@ -101,7 +101,7 @@ class PackageController extends BaseController
         $this->data['title'] = $this->data['package']->PACKAGE_NAME;
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
-        $this->data['image'] = base_url() . 'upload/package_images/' . $this->data['package']->PACKAGE_IMAGE;
+        $this->data['image'] = gdriveImage($this->data['package']->PACKAGE_IMAGE);
         $this->data['noindex'] = "";
         if (isMobileDevice()) {
             return $this->Render_Page('packages/package_detail_mobile', $this->data);
@@ -120,7 +120,7 @@ class PackageController extends BaseController
         $this->data['title'] = $this->data['package']->PACKAGE_NAME;
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
-        $this->data['image'] = base_url() . 'upload/package_images/' . $this->data['package']->PACKAGE_IMAGE;
+        $this->data['image'] = gdriveImage($this->data['package']->PACKAGE_IMAGE);
         $this->data['noindex'] = "";
         if (isMobileDevice()) {
             return $this->Render_Page('packages/package_detail_mobile', $this->data);
