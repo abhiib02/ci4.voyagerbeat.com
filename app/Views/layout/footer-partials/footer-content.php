@@ -7,9 +7,9 @@
             <div class="row">
                 <div class="col-lg-3 ">
                     <h4 class="text-theme">Address</h4>
-                    <h6>Head Office</h6>
+                    <h5>Head Office</h5>
                     <address>2nd Floor, C 2/13, Phase 2, Ashok Vihar, Delhi, 110052 </address>
-                    <h6>Branch Office</h6>
+                    <h5>Branch Office</h5>
                     <address>H7, 210 2nd Floor, Aggrawal Plaza Netaji Subhash Place, Delhi 110033</address>
                 </div>
                 <div class="col-lg-3">

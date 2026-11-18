@@ -102,7 +102,7 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="weekend-1n-pane" role="tabpanel" tabindex="0">
-                <h3>Quick Routine Breaker Trips</h3>
+                <h4>Quick Routine Breaker Trips</h4>
                 <div class="flex_wrap_section">
                     <?php foreach ($packages_1n ?? [] as $index => $Package): ?>
                         <?= view('pages/component/packageCard', ['package' => $Package]) ?>
@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="weekend-2n-pane" role="tabpanel" tabindex="0">
-                <h3>Life Refreshing Trips</h3>
+                <h4>Life Refreshing Trips</h4>
                 <div class="flex_wrap_section">
                     <?php foreach ($packages_2n ?? [] as $index => $Package): ?>
                         <?= view('pages/component/packageCard', ['package' => $Package]) ?>
@@ -118,7 +118,7 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="weekend-3n-pane" role="tabpanel" tabindex="0">
-                <h3>Memory Creation Trips</h3>
+                <h4>Memory Creation Trips</h4>
                 <div class="flex_wrap_section">
                     <?php foreach ($packages_3n ?? [] as $index => $Package): ?>
                         <?= view('pages/component/packageCard', ['package' => $Package]) ?>

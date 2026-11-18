@@ -25,7 +25,7 @@
                         name="password" required>
                     <label for="password">Password</label>
                 </div>
-                <a class="btn btn-light grid-center" onclick="togglePass()"><i class='bx bx-show'></i> </a>
+                <button class="btn btn-light grid-center" onclick="togglePass()"><i class='bx bx-show'></i> </button>
             </div>
         </form>
         <!-- <hr>
