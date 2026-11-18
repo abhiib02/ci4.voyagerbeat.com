@@ -1077,7 +1077,10 @@
 <script src="/js/tinymce_init_script.js"></script>
 <script src="/js/date_input_script.js"></script>
 <script src="/js/slug_script.js"></script>
-<script src="/js/selling_price_script.js"></script>
+<script for="selling_price_script">
+    var BOOKING_AMOUNT = <?= BOOKING_AMOUNT ?>;
+</script>
+<script id="selling_price_script" src="/js/selling_price_script.js"></script>
 <script src="/js/faq_script.js"></script>
 <script src="/js/json_util_script.js"></script>
 <script src="/js/itinerary_script.js"></script>

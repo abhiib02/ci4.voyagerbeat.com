@@ -72,7 +72,7 @@
             <div class="badge"><?= $package->BADGE ?></div>
         <?php endif; ?>
 
-        <div class="btn dates_btn"><i class="bx bx-calendar"></i></div>
+        <!-- <div class="btn dates_btn"><i class="bx bx-calendar"></i></div> -->
 
         <?php if ($package->FAVORITE_COUNT == 0): ?>
             <div class="chip-btn like"
@@ -96,7 +96,7 @@
             </div>
         <?php endif; ?>
 
-        <div class="dates">
+        <!--<div class="dates">
             <ul style="display: grid;place-items: center;">
 
                 <?php
@@ -113,16 +113,16 @@
 
             </ul>
 
-        </div>
+        </div>-->
     </section>
     <?php
     $price = (int)$package->PRICE_1;
     $s_price = (int)$package->S_PRICE_1;
     $diffrence = $s_price - $price;
-    if ($s_price - $price == 2500) {
+    if ($s_price - $price == BOOKING_AMOUNT) {
         $percent = ($price / (($s_price)) - 1) * 100;
     } else {
-        $percent = ($price / (($price + 2500)) - 1) * 100;
+        $percent = ($price / (($price + BOOKING_AMOUNT)) - 1) * 100;
     }
 
     ?>

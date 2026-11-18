@@ -54,9 +54,9 @@
 
                         <td><?= ($package->S_PRICE_1) ? '<del>₹' . $package->S_PRICE_1 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_1; ?></b></td>
 
-                        <?php if ($package->WT_PRICE_1 != 0): ?><td><?= ($package->WT_PRICE_1 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_1 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_1; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT_PRICE_1 != 0): ?><td><?= ($package->WT_PRICE_1 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_1 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT_PRICE_1; ?></b></td><?php endif; ?>
 
-                        <?php if ($package->WT2_PRICE_1 != 0): ?><td><?= ($package->WT2_PRICE_1 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_1 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_1; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT2_PRICE_1 != 0): ?><td><?= ($package->WT2_PRICE_1 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_1 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT2_PRICE_1; ?></b></td><?php endif; ?>
 
                     </tr>
 
@@ -70,9 +70,9 @@
 
                         <td><?= ($package->S_PRICE_2) ? '<del>₹' . $package->S_PRICE_2 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_2; ?></b></td>
 
-                        <?php if ($package->WT_PRICE_2 != 0): ?><td><?= ($package->WT_PRICE_2 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_2 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_2; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT_PRICE_2 != 0): ?><td><?= ($package->WT_PRICE_2 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_2 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT_PRICE_2; ?></b></td><?php endif; ?>
 
-                        <?php if ($package->WT2_PRICE_2 != 0): ?><td><?= ($package->WT2_PRICE_2 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_2 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_2; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT2_PRICE_2 != 0): ?><td><?= ($package->WT2_PRICE_2 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_2 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT2_PRICE_2; ?></b></td><?php endif; ?>
 
                     </tr>
 
@@ -86,9 +86,9 @@
 
                         <td><?= ($package->S_PRICE_3) ? '<del>₹' . $package->S_PRICE_3 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_3; ?></b></td>
 
-                        <?php if ($package->WT_PRICE_3 != 0): ?><td><?= ($package->WT_PRICE_3 == 0) ? "Not Available" : '<del>' . ((int)$package->WT_PRICE_3 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_3; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT_PRICE_3 != 0): ?><td><?= ($package->WT_PRICE_3 == 0) ? "Not Available" : '<del>' . ((int)$package->WT_PRICE_3 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT_PRICE_3; ?></b></td><?php endif; ?>
 
-                        <?php if ($package->WT2_PRICE_3 != 0): ?><td><?= ($package->WT2_PRICE_3 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_3 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_3; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT2_PRICE_3 != 0): ?><td><?= ($package->WT2_PRICE_3 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_3 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT2_PRICE_3; ?></b></td><?php endif; ?>
 
                     </tr>
 
@@ -102,9 +102,9 @@
 
                         <td><?= ($package->S_PRICE_4) ? '<del>₹' . $package->S_PRICE_4 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_4; ?></b></td>
 
-                        <?php if ($package->WT_PRICE_4 != 0): ?><td><?= ($package->WT_PRICE_4 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_4 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_4; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT_PRICE_4 != 0): ?><td><?= ($package->WT_PRICE_4 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_4 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT_PRICE_4; ?></b></td><?php endif; ?>
 
-                        <?php if ($package->WT2_PRICE_4 != 0): ?><td><?= ($package->WT2_PRICE_4 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_4 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_4; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT2_PRICE_4 != 0): ?><td><?= ($package->WT2_PRICE_4 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_4 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT2_PRICE_4; ?></b></td><?php endif; ?>
 
                     </tr>
 
@@ -118,9 +118,9 @@
 
                         <td><?= ($package->S_PRICE_5) ? '<del>₹' . $package->S_PRICE_5 . '</del>' : ''; ?><b><?= ' ₹' . $package->PRICE_5; ?></b></td>
 
-                        <?php if ($package->WT_PRICE_5 != 0): ?><td><?= ($package->WT_PRICE_5 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_5 + 2500) . '</del> ' . '<b>₹' . $package->WT_PRICE_5; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT_PRICE_5 != 0): ?><td><?= ($package->WT_PRICE_5 == 0) ? "Not Available" : '<del>₹' . ((int)$package->WT_PRICE_5 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT_PRICE_5; ?></b></td><?php endif; ?>
 
-                        <?php if ($package->WT2_PRICE_5 != 0): ?><td><?= ($package->WT2_PRICE_5 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_5 + 2500) . '</del> ' . '<b>₹' . $package->WT2_PRICE_5; ?></b></td><?php endif; ?>
+                        <?php if ($package->WT2_PRICE_5 != 0): ?><td><?= ($package->WT2_PRICE_5 == 0) ? "" : '<del>₹' . ((int)$package->WT2_PRICE_5 + BOOKING_AMOUNT) . '</del> ' . '<b>₹' . $package->WT2_PRICE_5; ?></b></td><?php endif; ?>
 
                     </tr>
 

@@ -27,5 +27,5 @@ p5.addEventListener('input', () => {
 })
 
 function addSellingPrice(p, s) {
-    s.value = parseInt(p.value) + 2500;
+    s.value = parseInt(p.value) + BOOKING_AMOUNT;
 }

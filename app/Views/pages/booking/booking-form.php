@@ -314,7 +314,7 @@
                                                         </aside>
                                                         <section>
                                                             <h2>Flat ₹{{ c.Coupon_Worth }} off your booking</h2>
-                                                            <p>Applies to bookings of ₹{{ Number(c.Coupon_Worth) + 2500 }} or more.</p>
+                                                            <p>Applies to bookings of ₹{{ Number(c.Coupon_Worth) + pkg.BOOKING_AMOUNT }} or more.</p>
                                                             <div>
                                                                 <code>{{ c.Coupon_Code }}</code>
                                                                 <button type="button" @click="selectCoupon(c.Coupon_Code)" data-code="{{ c.Coupon_Code }}">Apply</button>
@@ -687,7 +687,7 @@
             function sharingSellPrice(sharingIndex, tmode) {
                 // Mirrors the original page's "strike-through" price used to show savings.
                 if (tmode === 3) return sellPriceArr[sharingIndex] || 0;
-                return (wtPriceArr[sharingIndex] || wt2PriceArr[sharingIndex] || 0) + 2500;
+                return (wtPriceArr[sharingIndex] || wt2PriceArr[sharingIndex] || 0) + BOOKING_AMOUNT;
             }
 
             function travelerCost(t) {
