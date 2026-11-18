@@ -108,6 +108,8 @@ class MainController extends BaseController
             'nights/1',
             'nights/2',
             'nights/3',
+            'recognition',
+            'blogs',
         ];
         $sitemap = new Sitemap();
 
@@ -116,9 +118,6 @@ class MainController extends BaseController
         }
         foreach ($packages as $package) {
             $sitemap->add(base_url() . 'package/' . $package->SLUG, date('c'), '1.0', 'weekly');
-        }
-        foreach ($packageTypes as $packageType) {
-            $sitemap->add(base_url() . 'type/' . $packageType, date('c'), '1.0', 'weekly');
         }
         foreach ($packageTypes as $packageType) {
             $sitemap->add(base_url() . 'type/' . $packageType, date('c'), '1.0', 'weekly');

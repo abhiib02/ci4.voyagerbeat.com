@@ -5,7 +5,7 @@
                 <div class="circle  grid-center">
                     <img loading="lazy" class="" src="/assets/img/traveler-icon.png" alt="" />
                 </div>
-                <div class="">21000 +<br>Travelers</div>
+                <div class="">70000 +<br>Travelers</div>
 
             </div>
         </div>

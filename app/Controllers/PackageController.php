@@ -11,6 +11,7 @@ class PackageController extends BaseController
 {
 
     public array $data = [];
+    public string $brandSuffix = '| Voyagers Beat | Pack your bags & Let us do the rest';
     public Package $PackageModel;
     public Option $OptionModel;
     // public Booking $BookingModel;
@@ -21,7 +22,7 @@ class PackageController extends BaseController
         helper('json');
         $this->PackageModel = new Package();
         $this->data['States'] = $this->PackageModel->getAllDistinctStates();
-        $this->data['TotalPackageCount'] = $this->PackageModel->getAllShowPackagesCount();
+        //$this->data['TotalPackageCount'] = $this->PackageModel->getAllShowPackagesCount();
         $this->data['Countries'] = $this->PackageModel->getAllDistinctCountry();
     }
 
@@ -37,7 +38,7 @@ class PackageController extends BaseController
         if (!empty($locationVar)) {
             $packages = $this->PackageModel->getPackagesByDestination($locationVar);
             $name = $locationVar;
-            $title = "{$locationVar} Packages | Voyagers Beat | Live to Travel";
+            $title = "{$locationVar} Packages " . $this->brandSuffix;
             $metaDesc = "{$locationVar} Packages | Voyagers Beat | {$locationVar} is the best location to travel with Voyagers beat";
             $canonical = "packages/" . $locationVar;
         }
@@ -45,7 +46,7 @@ class PackageController extends BaseController
         elseif (is_numeric($keyword)) {
             $packages = $this->PackageModel->getPackageByIDForSearch($keyword);
             $name = "Package ID " . $keyword;
-            $title = "{$keyword} Package ID | Voyagers Beat | Live to Travel";
+            $title = "{$keyword} Package ID " . $this->brandSuffix;
             $metaDesc = "Package ID {$keyword} | Voyagers Beat | we take you to the best possible destination for travel with best services on affordable prices";
             $canonical = "packages";
         }
@@ -53,7 +54,7 @@ class PackageController extends BaseController
         elseif (!empty($keyword)) {
             $packages = $this->PackageModel->getPackagesByName($keyword);
             $name = "Search Result For " . $keyword;
-            $title = "{$keyword} Packages | Voyagers Beat | Live to Travel";
+            $title = "{$keyword} Packages " . $this->brandSuffix;
             $metaDesc = "{$keyword} Packages | Voyagers Beat | {$keyword} is the best location to travel with Voyagers beat";
             $canonical = "search?q=" . urlencode($keyword);
         }
@@ -62,7 +63,7 @@ class PackageController extends BaseController
             $packages = $this->PackageModel->getAllPackages();
             $this->data['pager'] = $this->PackageModel->pager;
             $name = "All";
-            $title = "All Packages | Voyagers Beat | Live to Travel";
+            $title = "All Packages " . $this->brandSuffix;
             $metaDesc = "Explore all available travel packages with Voyagers Beat.";
             $canonical = "packages";
         }
@@ -83,7 +84,7 @@ class PackageController extends BaseController
         $this->data["packages"] = $this->PackageModel->getPackagesByUpcoming();
         $this->data['pager'] = $this->PackageModel->pager;
         $this->data["name"] = "Upcoming";
-        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
+        $this->data["title"] = "Upcoming Packages $this->brandSuffix";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
         $this->data["canonical"] = "upcoming";
 
@@ -98,7 +99,7 @@ class PackageController extends BaseController
 
         $this->data['package'] = $this->PackageModel->getPackageByID($ID);
         $this->data['similarPackages'] = $this->PackageModel->getSimilarPackages($this->data['package']->LOCATION, $this->data['package']->PACKAGE_TYPE);
-        $this->data['title'] = $this->data['package']->PACKAGE_NAME;
+        $this->data['title'] = "{$this->data['package']->PACKAGE_NAME} $this->brandSuffix";
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
         $this->data['image'] = gdriveImage($this->data['package']->PACKAGE_IMAGE);
@@ -117,7 +118,7 @@ class PackageController extends BaseController
 
         $this->data['package'] = $this->PackageModel->getPackageBySlug($slug);
         $this->data['similarPackages'] = $this->PackageModel->getSimilarPackages($this->data['package']->LOCATION, $this->data['package']->PACKAGE_TYPE);
-        $this->data['title'] = $this->data['package']->PACKAGE_NAME;
+        $this->data['title'] = "{$this->data['package']->PACKAGE_NAME} $this->brandSuffix";
         $this->data['meta_desc'] = $this->data['package']->META_DESC;
         $this->data['canonical'] = 'package/' . $this->data['package']->SLUG;
         $this->data['image'] = gdriveImage($this->data['package']->PACKAGE_IMAGE);
@@ -147,8 +148,8 @@ class PackageController extends BaseController
         $searchString = htmlspecialchars(strip_tags($this->request->getVar('keyword')));
 
         $this->data['packages'] = $this->PackageModel->getPackagesByName($searchString);
-        $this->data["name"] = "Upcoming";
-        $this->data["title"] = "Upcoming Packages | Voyagers Beat | Live to Travel";
+        $this->data["name"] = "Searched";
+        $this->data["title"] = "Search Results for $searchString $this->brandSuffix";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
         $this->data["canonical"] = "upcoming";
 
@@ -159,7 +160,7 @@ class PackageController extends BaseController
 
         $this->data['packages'] = $this->PackageModel->getPackagesByCategory($Category);
         $this->data["name"] = $Category;
-        $this->data["title"] = $Category . " Packages | Voyagers Beat | Live to Travel";
+        $this->data["title"] = "$Category Packages $this->brandSuffix";
         $this->data["meta_desc"] = $Category . " Packages | Voyagers Beat | " . $Category . " Package best to travel with Voyagers beat";
         $this->data["canonical"] = "category/" . $Category;
 
@@ -169,7 +170,7 @@ class PackageController extends BaseController
     {
 
         $this->data['packages'] = $this->PackageModel->getPackagesByBadge($Badge);
-        $this->data['title'] = $Badge . ' Packages | Voyagers Beat | Live to Travel';
+        $this->data['title'] = "$Badge Packages $this->brandSuffix";
         $this->data['name'] = $Badge;
         $this->data['meta_desc'] = $Badge . " Packages. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";;
         $this->data['canonical'] = '';
@@ -184,7 +185,7 @@ class PackageController extends BaseController
 
         $this->data['packages'] = $this->PackageModel->getPackagesByState($State);
         $this->data["name"] = $State;
-        $this->data["title"] = "$State Packages | Voyagers Beat | Live to Travel";
+        $this->data["title"] = "$State Packages $this->brandSuffix";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
         $this->data["canonical"] = "state/$State";
 

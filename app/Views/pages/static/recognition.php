@@ -7,31 +7,31 @@
     <h1>Recognitions By Govt.</h1>
     <div class="d-flex gap-2" style="width: fit-content;animation: slide 30s linear infinite alternate;">
         <div class="square card grid-center">
-            <img src="/assets/recog/1.png" alt="1">
+            <img src="/assets/recog/1.png" alt="startupindia">
         </div>
         <div class="square card grid-center">
-            <img src="/assets/recog/2.png" alt="2">
+            <img src="/assets/recog/2.png" alt="msme">
         </div>
         <div class="square card grid-center">
-            <img src="/assets/recog/3.png" alt="3">
+            <img src="/assets/recog/3.png" alt="trip advisor">
         </div>
         <div class="square card grid-center">
-            <img src="/assets/recog/4.png" alt="4">
+            <img src="/assets/recog/4.png" alt="uttar pradesh tourism">
         </div>
         <div class="square card grid-center">
-            <img src="/assets/recog/5.png" alt="5">
+            <img src="/assets/recog/5.png" alt="atoai">
         </div>
         <div class="square card grid-center">
-            <img src="/assets/recog/6.png" alt="6">
+            <img src="/assets/recog/6.png" alt="business standard">
         </div>
         <div class="square card grid-center">
-            <img src="/assets/recog/7.png" alt="7">
+            <img src="/assets/recog/7.png" alt="iimb">
         </div>
         <div class="square card grid-center">
-            <img src="/assets/recog/8.png" alt="8">
+            <img src="/assets/recog/8.png" alt="uttar pradesh tourism">
         </div>
         <div class="square card grid-center">
-            <img src="/assets/recog/9.png" alt="9">
+            <img src="/assets/recog/9.png" alt="Bengal tourism">
         </div>
     </div>
     <hr>

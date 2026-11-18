@@ -16,19 +16,19 @@ $canonical = (isset($canonical)) ? $canonical : '';
 
 <meta name="p:domain_verify" content="4d8b4adf78ab58b1c006fbcc8a1c6e6e" />
 <meta name="facebook-domain-verification" content="xmc5nhcysb61ozaj9kez66sv9cmgl4" />
-<meta name="description" content="<?= $OGmetadesc ?>">
 
 <!-- HTML Meta Tags -->
 <title><?= $OGtitle ?></title>
-
 <meta name="description" content="<?= $OGmetadesc ?>">
 
 <!-- Facebook Meta Tags (1173x759px, 298.3 KB) -->
+<!-- Meta Tags Generated via OpenGraph Preview Extension -->
 <meta property="og:url" content="<?= $OGurl ?>">
 <meta property="og:type" content="<?= $OGtype ?>">
 <meta property="og:title" content="<?= $OGtitle ?>">
 <meta property="og:description" content="<?= $OGmetadesc ?>">
 <meta property="og:image" content="<?= $OGimage ?>">
+<meta property="og:logo" content="<?= $OGimage ?>" />
 
 <!-- Twitter Meta Tags (1173x759px, 298.3 KB) -->
 <meta name="twitter:card" content="summary_large_image">
@@ -38,25 +38,7 @@ $canonical = (isset($canonical)) ? $canonical : '';
 <meta name="twitter:description" content="<?= $OGmetadesc ?>">
 <meta name="twitter:image" content="<?= $OGimage ?>">
 
-<!-- Meta Tags Generated via OpenGraph Preview Extension -->
-
-
-<meta property="og:url" content="<?= $OGurl ?>" />
-<meta property="og:type" content="<?= $OGtype ?>" />
-<meta property="og:title" content="<?= $OGtitle ?>" />
-<meta property="og:description" content="<?= $OGmetadesc ?>" />
-<meta property="og:image" content="<?= $OGimage ?>" />
-<meta property="og:logo" content="<?= $OGimage ?>" />
-
-
-<meta name="twitter:title" content="<?= $OGtitle ?>">
-<meta name="twitter:description" content="<?= $OGmetadesc ?>">
-<meta name="twitter:image" content="<?= $OGimage ?>">
-<meta name="twitter:card" content="<?= $OGurl ?>">
 <link rel="canonical" href="<?= $OGurl ?><?= $canonical ?>" />
-<?php if ($robotState): ?>
-  <meta name="robots" content="noindex" />
-<?php endif; ?>
 
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icon-192x192.png">
@@ -64,12 +46,11 @@ $canonical = (isset($canonical)) ? $canonical : '';
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
+<?php if ($robotState): ?>
+  <meta name="robots" content="noindex" />
+<?php endif; ?>
+
 <!-------Meta Tags----------->
-
-
-
-
-
 
 <script>
   ! function(f, b, e, v, n, t, s) {
@@ -108,44 +89,6 @@ $canonical = (isset($canonical)) ? $canonical : '';
 
   gtag('config', 'G-45Y01Q8SRL');
 </script>
-<!-- <script>
-  (function(w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({
-      'gtm.start': new Date().getTime(),
-      event: 'gtm.js'
-    });
-    var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s),
-      dl = l != 'dataLayer' ? '&l=' + l : '';
-    j.async = true;
-    j.src =
-      'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-    f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', 'GTM-K3J5QC5J');
-</script>
-
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K3J5QC5J"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
-<script>
-  (function(w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({
-      'gtm.start': new Date().getTime(),
-      event: 'gtm.js'
-    });
-    var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s),
-      dl = l != 'dataLayer' ? '&l=' + l : '';
-    j.async = true;
-    j.src =
-      'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-    f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', 'GTM-PBTL27NW');
-</script> -->
-
-
 
 <script type="application/ld+json">
   {
