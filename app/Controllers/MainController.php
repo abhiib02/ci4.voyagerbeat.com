@@ -97,6 +97,7 @@ class MainController extends BaseController
         $States       = $this->PackageModel->getAllDistinctStates();
         $Countries    = $this->PackageModel->getAllDistinctCountry();
         $staticPages = [
+            '',
             'packages',
             'about',
             'career',
