@@ -3,7 +3,8 @@ $OGtitle = isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let
 $OGmetadesc = isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.';
 $OGimage = isset($image) ? $image : 'https://voyagersbeat.com/assets/logo.png';
 $robotState = (isset($noindex) && $noindex == 1) ? 1 : 0;
-$OGurl = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";;
+$OGurl = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
 $OGtype = 'Travel and Tourism';
 $canonical = (isset($canonical)) ? $canonical : '';
 ?>
@@ -38,7 +39,7 @@ $canonical = (isset($canonical)) ? $canonical : '';
 <meta name="twitter:description" content="<?= $OGmetadesc ?>">
 <meta name="twitter:image" content="<?= $OGimage ?>">
 
-<link rel="canonical" href="<?= $OGurl ?><?= $canonical ?>" />
+<link rel="canonical" href="<?= base_url() ?><?= $canonical ?>" />
 
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icon-192x192.png">
