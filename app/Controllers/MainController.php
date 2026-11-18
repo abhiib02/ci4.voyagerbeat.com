@@ -92,14 +92,11 @@ class MainController extends BaseController
     }
     public function sitemapGenerate()
     {
-        // Set the content type header to XML
-        header('Content-Type: application/xml; charset=utf-8');
-        $packages = $this->PackageModel->getAllPackagesInMobile();
+        $packages     = $this->PackageModel->getAllPackagesInMobile();
         $packageTypes = $this->PackageModel->getAllDistinctType();
-        $States = $this->PackageModel->getAllDistinctStates();
-        $Countries = $this->PackageModel->getAllDistinctCountry();
+        $States       = $this->PackageModel->getAllDistinctStates();
+        $Countries    = $this->PackageModel->getAllDistinctCountry();
         $staticPages = [
-            '',
             'packages',
             'about',
             'career',
@@ -111,6 +108,7 @@ class MainController extends BaseController
             'recognition',
             'blogs',
         ];
+
         $sitemap = new Sitemap();
 
         foreach ($staticPages as $staticPage) {
@@ -128,8 +126,16 @@ class MainController extends BaseController
         foreach ($Countries as $Country) {
             $sitemap->add(base_url() . 'country/' . $Country, date('c'), '1.0', 'weekly');
         }
-        // Generates and prints the compliant XML string
-        echo $sitemap->renderXml();
+
+        $xml = trim($sitemap->renderXml());
+
+        // Discard anything already echoed (whitespace, notices, etc.)
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        header('Content-Type: application/xml; charset=utf-8');
+        echo $xml;
         exit;
     }
 }
