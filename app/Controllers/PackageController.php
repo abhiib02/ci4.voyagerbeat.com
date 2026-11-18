@@ -186,7 +186,7 @@ class PackageController extends BaseController
         $this->data["name"] = $State;
         $this->data["title"] = "$State Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "upcoming weekends, road trips and treks from Delhi. Join upcoming group trips from INDIA and experience seamless travel itineraries.#voyagersbeat";
-        $this->data["canonical"] = "/state/$State";
+        $this->data["canonical"] = "state/$State";
 
         return $this->Render_Page('packages/packages', $this->data);
     }
@@ -198,7 +198,7 @@ class PackageController extends BaseController
         $this->data["name"] = $Country;
         $this->data["title"] = "$Country Packages | Voyagers Beat | Live to Travel";
         $this->data["meta_desc"] = "#voyagersbeat";
-        $this->data["canonical"] = "/country/$Country";
+        $this->data["canonical"] = "country/$Country";
 
         return $this->Render_Page('packages/packages', $this->data);
     }

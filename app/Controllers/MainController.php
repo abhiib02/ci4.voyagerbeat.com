@@ -26,9 +26,9 @@ class MainController extends BaseController
     {
         helper('useragentstring');
 
-        $this->data["title"] = 'Voyagers Beat | Offbeat Himalayan & Adventure Tour Packages';
+        $this->data["title"] = 'Voyagers Beat | Offbeat Group Tours | Pack your bags & Let us do the rest';
         $this->data["meta_desc"] = 'Discover offbeat destinations, river rafting, paragliding & custom tour packages with Voyagers Beat. Just pack your bags let us do the rest!';
-        $this->data["canonical"] = '/';
+        $this->data["canonical"] = '';
         $this->data["OGurl"] = '/';
 
 
@@ -52,42 +52,42 @@ class MainController extends BaseController
     {
         $this->data["title"] = 'About Us | Voyagers Beat Travel & Adventure Agency';
         $this->data["meta_desc"] = 'At Voyagers Beat, we handle every detail of your trip—from hidden stays to thrilling adventures. Discover our mission and why travelers trust our journeys';
-        $this->data["canonical"] = '/about';
+        $this->data["canonical"] = 'about';
         return $this->Render_Page('static/about', $this->data);
     }
     public function career(): string
     {
         $this->data["title"] = 'Careers at Voyagers Beat | Join Our Travel Team';
         $this->data["meta_desc"] = 'Turn your passion for travel into a career. Explore open roles in trip planning, operations & marketing at Voyagers Beat and help craft unforgettable journeys.';
-        $this->data["canonical"] = '/career';
+        $this->data["canonical"] = 'career';
         return $this->Render_Page('static/career', $this->data);
     }
     public function privacypolicy(): string
     {
         $this->data["title"] = 'Privacy Policy | Voyagers Beat Travel Agency';
         $this->data["meta_desc"] = 'Read Voyagers Beats Privacy Policy to understand how we collect, use, and protect your personal information when you browse or book tour packages with us.';
-        $this->data["canonical"] = '/privacy-policy';
+        $this->data["canonical"] = 'privacy-policy';
         return $this->Render_Page('static/privacypolicy', $this->data);
     }
     public function termsnconditions(): string
     {
         $this->data["title"] = 'Terms and Conditions | Voyagers Beat Travel Agency';
         $this->data["meta_desc"] = 'Review the Terms and Conditions for booking tour packages with Voyagers Beat. Read our policies on trip reservations, payments, cancellations, and refunds.';
-        $this->data["canonical"] = '/term-conditions';
+        $this->data["canonical"] = 'term-conditions';
         return $this->Render_Page('static/termsnconditions', $this->data);
     }
     public function cancellationPolicy(): string
     {
         $this->data["title"] = 'Cancellation & Refund Policy | Voyagers Beat Tours';
         $this->data["meta_desc"] = 'Review Voyagers Beats Cancellation and Refund Policy. Get clear details on trip cancellations, rescheduling timelines, refund eligibility, and booking terms.';
-        $this->data["canonical"] = '/cancellation-policy';
+        $this->data["canonical"] = 'cancellation-policy';
         return $this->Render_Page('static/cancellation-policy', $this->data);
     }
     public function recognition(): string
     {
         $this->data["title"] = 'Awards & Recognition | Voyagers Beat Travel Agency';
         $this->data["meta_desc"] = 'Explore Voyagers Beats official certifications, tourism affiliations, and industry recognition. See why travelers trust our accredited adventure tour agency.';
-        $this->data["canonical"] = '/recognition';
+        $this->data["canonical"] = 'recognition';
         return $this->Render_Page('static/recognition', $this->data);
     }
     public function sitemapGenerate()
