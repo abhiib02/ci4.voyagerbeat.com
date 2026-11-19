@@ -147,6 +147,19 @@
                                     <label for="address">Agent</label>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+
+                                    <input
+                                        value="<?= $BookingData->package_id ?>"
+                                        type="number"
+                                        class="form-control"
+                                        id="package_id"
+                                        name="package_id"
+                                        required>
+                                    <label for="address">Package ID</label>
+                                </div>
+                            </div>
 
 
                         </div>
