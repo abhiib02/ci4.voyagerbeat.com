@@ -173,6 +173,19 @@
                                     <label for="address">Package Name</label>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+
+                                    <input
+                                        value="<?= $BookingData->gst_include ?>"
+                                        type="text"
+                                        class="form-control"
+                                        id="gst_include"
+                                        name="gst_include"
+                                        required>
+                                    <label for="address">gst_include</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
