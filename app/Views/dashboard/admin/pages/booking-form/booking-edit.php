@@ -175,14 +175,13 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-floating mb-3">
+                                    <select class="form-select" id="gst_include"
+                                        name="gst_include" required>
+                                        <option value="<?= $BookingData->gst_include ?>" selected><?= $BookingData->gst_include ?></option>
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
 
-                                    <input
-                                        value="<?= $BookingData->gst_include ?>"
-                                        type="text"
-                                        class="form-control"
-                                        id="gst_include"
-                                        name="gst_include"
-                                        required>
                                     <label for="address">gst_include</label>
                                 </div>
                             </div>
