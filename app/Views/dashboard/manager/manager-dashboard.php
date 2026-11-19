@@ -41,7 +41,7 @@
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Persons Sent to Trip in <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
+                                    <div class="fw-bold">Total Pax Sent to Trip in <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
 
                                 </div>
                             </div>
