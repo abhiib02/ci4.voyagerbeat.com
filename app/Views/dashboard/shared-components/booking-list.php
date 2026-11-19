@@ -200,7 +200,7 @@
                                         <table class="table">
                                             <tr>
                                                 <th>Order ID</th>
-                                                <td><?= $booking->order_id ?></td>
+                                                <td><a target="_blank" href="/thanks?order_id=<?= $booking->order_id ?>"><?= $booking->order_id ?></a></td>
                                             </tr>
                                             <tr>
                                                 <th>User ID</th>
