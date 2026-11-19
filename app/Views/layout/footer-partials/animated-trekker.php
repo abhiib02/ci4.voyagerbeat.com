@@ -11,7 +11,7 @@
         width: 94px;
         overflow: clip;
         height: 100px;
-        background: url(/assets/anim/trekker-illustration.gif);
+
         background-size: cover;
         background-position: 0px 0px;
         animation: walk 55s infinite linear;
@@ -30,6 +30,11 @@
 </style>
 <div class="trekker">
     <div class="img-wrapper">
-
+        <lord-icon
+            src="/assets/anim/wired-flat-661-person-hiking.json"
+            trigger="loop"
+            style="width: 100px; height: 100px;">
+        </lord-icon>
     </div>
 </div>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
