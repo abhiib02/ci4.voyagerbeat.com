@@ -160,6 +160,19 @@
                                     <label for="address">Package ID</label>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-floating mb-3">
+
+                                    <input
+                                        value="<?= $BookingData->package_name ?>"
+                                        type="text"
+                                        class="form-control"
+                                        id="package_name"
+                                        name="package_name"
+                                        required>
+                                    <label for="address">Package Name</label>
+                                </div>
+                            </div>
 
 
                         </div>

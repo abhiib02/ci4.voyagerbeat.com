@@ -563,6 +563,7 @@ class BookingController extends BaseController
         $rules = [
             'ID' => 'required|integer',
             'package_id' => 'required|integer',
+            'package_name' => 'required',
             'name' => 'required',
             'email' => 'required|valid_email',
             'gender' => 'required|in_list[Male,Female,Other]',
@@ -592,6 +593,7 @@ class BookingController extends BaseController
             'email' => $this->request->getPost('email'),
             'gender' => $this->request->getPost('gender'),
             'package_id' => $this->request->getPost('package_id'),
+            'package_name' => $this->request->getPost('package_name'),
             'contact_trip' => $this->request->getPost('contact_trip'),
             'contact_alt' => $this->request->getPost('contact_alt'),
             'address' => $this->request->getPost('address'),
