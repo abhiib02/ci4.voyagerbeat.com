@@ -71,7 +71,7 @@ if (! function_exists('gdriveImage')) {
             return $driveLink;
         }
         $id = explode('/', $driveLink)[5];
-        return "https://lh3.googleusercontent.com/d/$id=w$width";
+        return "https://lh3.googleusercontent.com/d/$id=w$width-rw";
     }
 }
 if (! function_exists("getRandomNumber")) {

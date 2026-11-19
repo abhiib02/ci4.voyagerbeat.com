@@ -11,7 +11,7 @@ if (! function_exists('imageLinkType')) {
                 break;
             case (strpos($link, 'drive.google.com') > 0):
                 $gid = explode('/', $link)[5];
-                return "<img src=https://lh3.googleusercontent.com/d/$gid=w640 />";
+                return "<img src=https://lh3.googleusercontent.com/d/$gid=w640-rw />";
                 break;
             case ($link != null):
                 return "<img src=$link/>";

@@ -51,7 +51,7 @@ input[type="radio"] {
 }
 /* Default (Light) Styles  */
 :root {
-  --font-family: "Roboto Condensed", sans-serif;
+  --font-family: "Roboto Condensed",system-ui, sans-serif;
   --style-font: "Story Script", sans-serif;
   --font-size: 14px;
   --maincolor: #ffd600;
