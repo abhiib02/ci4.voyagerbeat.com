@@ -37,4 +37,4 @@
         </lord-icon>
     </div>
 </div>
-<script src="/js/lordicons.js"></script>
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
