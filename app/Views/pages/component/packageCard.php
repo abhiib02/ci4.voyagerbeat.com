@@ -11,8 +11,7 @@
             <img
                 src="<?= gdriveImage($package->PACKAGE_IMAGE, 400) ?>"
                 title="<?= strtoupper($package->PACKAGE_NAME); ?>"
-                alt="<?= $package->PACKAGE_ID; ?>|<?= strtoupper($package->PACKAGE_NAME); ?>"
-                loading="lazy">
+                alt="<?= $package->PACKAGE_ID; ?>|<?= strtoupper($package->PACKAGE_NAME); ?>">
         </a>
 
         <?php
