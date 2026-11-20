@@ -113,82 +113,83 @@ foreach ($Destinations as $index => $dest) {
         opacity: 0.5;
     }
 </style>
-
-<div class="marquee-container">
-    <div class="marquee marquee-slow">
-        <div class="marquee-track text-marquee">
-            <?php foreach ($firstArr as $index => $item): ?>
-                <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none">
-                    <span class="text-marquee-item ">
-                        <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
-                        <?= $item->LOCATION ?>
-                    </span>
-                </a>
-                <span class="text-marquee-separator">*</span>
-            <?php endforeach; ?>
-        </div>
-        <div class="marquee-track text-marquee" aria-hidden="true">
-            <?php foreach ($firstArr as $index => $item): ?>
-                <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none">
-                    <span class="text-marquee-item ">
-                        <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
-                        <?= $item->LOCATION ?>
-                    </span>
-                </a>
-                <span class="text-marquee-separator">*</span>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</div>
-<div class="marquee-container">
-    <div class="marquee marquee-slow" style="--direction:reverse;">
-        <div class="marquee-track text-marquee">
-            <?php foreach ($secondArr as $index => $item): ?>
-                <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none">
-                    <span class="text-marquee-item ">
-                        <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
-                        <?= $item->LOCATION ?>
-                    </span>
-                </a>
-                <span class="text-marquee-separator">*</span>
-            <?php endforeach; ?>
-        </div>
-        <div class="marquee-track text-marquee" aria-hidden="true">
-            <?php foreach ($secondArr as $index => $item): ?>
-                <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none">
-                    <span class="text-marquee-item ">
-                        <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
-                        <?= $item->LOCATION ?>
-                    </span>
-                </a>
-                <span class="text-marquee-separator">*</span>
-            <?php endforeach; ?>
+<section class="marquees">
+    <div class="marquee-container">
+        <div class="marquee marquee-slow">
+            <div class="marquee-track text-marquee">
+                <?php foreach ($firstArr as $index => $item): ?>
+                    <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none text-capitalize">
+                        <span class="text-marquee-item ">
+                            <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
+                            <?= $item->LOCATION ?>
+                        </span>
+                    </a>
+                    <span class="text-marquee-separator">*</span>
+                <?php endforeach; ?>
+            </div>
+            <div class="marquee-track text-marquee" aria-hidden="true">
+                <?php foreach ($firstArr as $index => $item): ?>
+                    <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none text-capitalize">
+                        <span class="text-marquee-item ">
+                            <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
+                            <?= $item->LOCATION ?>
+                        </span>
+                    </a>
+                    <span class="text-marquee-separator">*</span>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
-</div>
-<div class="marquee-container">
-    <div class="marquee marquee-slow">
-        <div class="marquee-track text-marquee">
-            <?php foreach ($thirdArr as $index => $item): ?>
-                <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none">
-                    <span class="text-marquee-item ">
-                        <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
-                        <?= $item->LOCATION ?>
-                    </span>
-                </a>
-                <span class="text-marquee-separator">*</span>
-            <?php endforeach; ?>
-        </div>
-        <div class="marquee-track text-marquee" aria-hidden="true">
-            <?php foreach ($thirdArr as $index => $item): ?>
-                <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none">
-                    <span class="text-marquee-item ">
-                        <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
-                        <?= $item->LOCATION ?>
-                    </span>
-                </a>
-                <span class="text-marquee-separator">*</span>
-            <?php endforeach; ?>
+    <div class="marquee-container">
+        <div class="marquee marquee-slow" style="--direction:reverse;">
+            <div class="marquee-track text-marquee">
+                <?php foreach ($secondArr as $index => $item): ?>
+                    <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none text-capitalize">
+                        <span class="text-marquee-item ">
+                            <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
+                            <?= $item->LOCATION ?>
+                        </span>
+                    </a>
+                    <span class="text-marquee-separator">*</span>
+                <?php endforeach; ?>
+            </div>
+            <div class="marquee-track text-marquee" aria-hidden="true">
+                <?php foreach ($secondArr as $index => $item): ?>
+                    <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none text-capitalize">
+                        <span class="text-marquee-item ">
+                            <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
+                            <?= $item->LOCATION ?>
+                        </span>
+                    </a>
+                    <span class="text-marquee-separator">*</span>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
-</div>
+    <div class="marquee-container">
+        <div class="marquee marquee-slow">
+            <div class="marquee-track text-marquee">
+                <?php foreach ($thirdArr as $index => $item): ?>
+                    <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none text-capitalize">
+                        <span class="text-marquee-item ">
+                            <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
+                            <?= $item->LOCATION ?>
+                        </span>
+                    </a>
+                    <span class="text-marquee-separator">*</span>
+                <?php endforeach; ?>
+            </div>
+            <div class="marquee-track text-marquee" aria-hidden="true">
+                <?php foreach ($thirdArr as $index => $item): ?>
+                    <a href="/packages/<?= $item->LOCATION ?>" class="text-decoration-none text-capitalize">
+                        <span class="text-marquee-item ">
+                            <img class="text-marquee-image" loading="lazy" src="<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 200)) ?>" alt="">
+                            <?= $item->LOCATION ?>
+                        </span>
+                    </a>
+                    <span class="text-marquee-separator">*</span>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</section>
