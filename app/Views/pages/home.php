@@ -228,23 +228,7 @@
         </div>
     </div>
     <div>
-
-        <div class="slider-curves">
-            <div class="slider-wrapper">
-
-                <?php foreach ($domesticDests ?? [] as $index => $item): ?>
-                    <a class="slider-image text-decoration-none text-white style-font" href="/packages/<?= $item->LOCATION; ?>" style="--url:url('<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 400)) ?>');">
-                        <p class="text-center fs-2"><?= $item->LOCATION ?? ''; ?></p>
-                    </a>
-                <?php endforeach; ?>
-                <?php foreach ($domesticDests ?? [] as $index => $item): ?>
-                    <a class="slider-image text-decoration-none text-white style-font" href="/packages/<?= $item->LOCATION; ?>" style="--url:url('<?= str_replace("\n", "", gdriveImage($item->PACKAGE_IMAGE, 400)) ?>');">
-                        <p class="text-center fs-2"><?= $item->LOCATION ?? ''; ?></p>
-                    </a>
-                <?php endforeach; ?>
-
-            </div>
-        </div>
+        <?= view('pages/component/infinite-marquee', ['Destinations' => $domesticDests]) ?>
     </div>
 
 </section>
