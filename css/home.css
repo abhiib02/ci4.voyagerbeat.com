@@ -190,3 +190,66 @@ display: flex;
 .radial-bg{
     background: radial-gradient(circle at top right,var(--radial-bg-color) 0%, rgba(255, 255, 255, 0) 100%);
 }
+
+
+.top-layer {
+            position: relative;
+            z-index: 2;
+            pointer-events: auto;
+        }
+
+        .layers-container {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .layers {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .custom-bg {
+            background: var(--url);
+            background-size: cover;
+            background-repeat: repeat-x;
+            background-position: calc(var(--x) * var(--y, 1) * 1px);
+            animation: x-val 300s linear infinite , timing-opacity 0.3s ease forwards;
+        }
+
+        @keyframes x-val {
+            0% {
+                background-position: calc(var(--x, 0) * var(--mul, 1) * 1px) calc(var(--top, 0) * 1px);
+            }
+
+            100% {
+                background-position: calc(var(--x, -1920000) * var(--mul, 1) * 1px) calc(var(--top, 0)* 1px);
+            }
+        }
+
+        
+        @keyframes timing-opacity {
+            0%{
+                opacity: 0;
+            }
+
+            100%{
+                opacity: 1;
+            }
+        }

@@ -9,17 +9,7 @@
 <link rel="stylesheet" href="/css/home.css">
 <link rel="stylesheet" href="/css/destination_3d_card.css">
 <section id="hero">
-
     <div class="perspective">
-        <div class="img-cylinder" id="img-cylinder-home">
-            <?php foreach ($AllPackagesNameAndID as $index => $Package): ?>
-                <?php if ($index < 90): ?>
-                    <img class="image" style="--i:<?= $index ?>" src="<?= gdriveImage($Package->PACKAGE_IMAGE, 256) ?>" alt="" width="256" height="256" decoding="async">
-                <?php endif; ?>
-            <?php endforeach; ?>
-
-        </div>
-        <div class="overlayLayer"></div>
         <div class="content">
             <div class="grid-center text-white">
                 <div class="text-center">
@@ -34,14 +24,43 @@
                     </div>
                 </div>
                 <em>Since 2017 · 4.6★ Google · 70k Happy Travelers · 300+ itineraries.</em>
+                <?= date('G') ?>
             </div>
+        </div>
+        <div class="layers">
+
+            <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/blue-sky.jpg'); --mul:0;"></div>
+            <div class="layer custom-bg timing-opacity" style="--delay:100;--url:url('/assets/backgrounds/clouds.webp');--mul:0.005;background-size:600px;background-repeat:repeat;"></div>
+            <?php
+            $winterMonthArr = [11, 12, 1, 2, 3];
+            $summerMonthArr = [4, 5, 6, 7, 8, 9, 10];
+            $nightTimeArr = [19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6];
+            $dayTimeArr = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+            ?>
+
+            <?php if (in_array(date('m'), $winterMonthArr)): ?>
+                <?php if (in_array(date('G'), $nightTimeArr)): ?>
+                    <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/winter-spiti-night-layer.webp'); --mul:0;"></div>
+                <?php else: ?>
+                    <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/winter-spiti-layer.webp'); --mul:0;"></div>
+                <?php endif; ?>
+            <?php else: ?>
+                <?php if (in_array(date('G'), $nightTimeArr)): ?>
+                    <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/spiti-night-layer.webp'); --mul:0;"></div>
+                <?php else: ?>
+                    <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/spiti-layer.webp'); --mul:0;"></div>
+                <?php endif; ?>
+            <?php endif; ?>
 
         </div>
+        <div class="overlayLayer"></div>
+
 
     </div>
 
 
 </section>
+
 <section id="explore" class="pt-5">
     <div class="container">
         <div class="">
