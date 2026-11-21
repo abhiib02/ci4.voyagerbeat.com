@@ -4,7 +4,7 @@
  * @var string $cssversion
  */
 ?>
-<?php $cssversion = $cssversion ?? 'latest'; ?>
+<?php $cssversion = 2.4; ?>
 <link rel="manifest" href="../../manifest.webmanifest" fetchpriority="high" decoding="async">
 <link rel="apple-touch-icon" href="../../assets/logo.png" fetchpriority="high" decoding="async">
 <link rel="shortcut icon" type="image/png" href="../../assets/logo-comp.png" fetchpriority="high" decoding="async" />
