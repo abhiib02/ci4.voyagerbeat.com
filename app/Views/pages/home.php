@@ -25,7 +25,6 @@
                     </div>
                 </div>
                 <em>Since 2017 · 4.6★ Google · 70k Happy Travelers · 300+ itineraries.</em>
-                <?= date('G') ?>
             </div>
         </div>
         <div class="layers">
@@ -37,16 +36,18 @@
             $summerMonthArr = [4, 5, 6, 7, 8, 9, 10];
             $nightTimeArr = [17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6];
             $dayTimeArr = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+            $dt = new DateTime('now', new DateTimeZone('Asia/Kolkata'));
+            $isthour = $dt->format('G');
             ?>
 
             <?php if (in_array(date('m'), $winterMonthArr)): ?>
-                <?php if (in_array(date('G'), $nightTimeArr)): ?>
+                <?php if (in_array($isthour, $nightTimeArr)): ?>
                     <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/winter-spiti-night-layer.webp'); --mul:0;"></div>
                 <?php else: ?>
                     <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/winter-spiti-layer.webp'); --mul:0;"></div>
                 <?php endif; ?>
             <?php else: ?>
-                <?php if (in_array(date('G'), $nightTimeArr)): ?>
+                <?php if (in_array($isthour, $nightTimeArr)): ?>
                     <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/spiti-night-layer.webp'); --mul:0;"></div>
                 <?php else: ?>
                     <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/spiti-layer.webp'); --mul:0;"></div>
