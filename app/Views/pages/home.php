@@ -3,11 +3,12 @@
 /**
  * @var array $AllPackagesNameAndID
  * @var array $domesticDests
+ * @var string $cssversion
  */
 ?>
-<link rel="stylesheet" href="/css/bg3dwall.css">
-<link rel="stylesheet" href="/css/home.css">
-<link rel="stylesheet" href="/css/destination_3d_card.css">
+<link rel="stylesheet" href="/css/bg3dwall.css?v=<?= $cssversion ?>">
+<link rel="stylesheet" href="/css/home.css?v=<?= $cssversion ?>">
+<link rel="stylesheet" href="/css/destination_3d_card.css?v=<?= $cssversion ?>">
 <section id="hero">
     <div class="perspective">
         <div class="content">
