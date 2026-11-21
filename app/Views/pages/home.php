@@ -30,7 +30,7 @@
         </div>
         <div class="layers">
 
-            <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/blue-sky.jpg'); --mul:0;"></div>
+            <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/blue-sky.webp'); --mul:0;"></div>
             <div class="layer custom-bg timing-opacity" style="--delay:100;--url:url('/assets/backgrounds/clouds.webp');--mul:0.005;background-size:600px;background-repeat:repeat;"></div>
             <?php
             $winterMonthArr = [11, 12, 1, 2, 3];
@@ -71,30 +71,30 @@
             </p>
         </div>
         <div class="explore-container">
-            <a href="/weekend" class="Weekend text-decoration-none">
+            <a href="/weekend" class="Weekend text-decoration-none" style="--url:url('/assets/img/weekend-mascot.webp');">
                 <h3 class="style-font ">Weekend Trips</h3>
                 <p class="m-0">These Trips are Quick Routine Breaker • Life Refreshing • Memory Creation</p>
             </a>
-            <a href="/type/Bike" class="Bike text-decoration-none">
+            <a href="/type/Bike" class="Bike text-decoration-none" style="--url:url('/assets/img/bike-mascot.webp');">
                 <h3 class="style-font ">Bike Trips</h3>
             </a>
-            <a href="/type/Treks" class="Treks text-decoration-none">
+            <a href="/type/Treks" class="Treks text-decoration-none" style="--url:url('/assets/img/trek-mascot.webp');">
                 <h3 class="style-font ">Treks</h3>
             </a>
-            <a href="/type/Party" class="Party text-decoration-none">
+            <a href="/type/Party" class="Party text-decoration-none" style="--url:url('/assets/img/party-mascot.webp');">
                 <h3 class="style-font ">Party Trips</h3>
             </a>
-            <a href="/type/Backpack" class="Backpacking text-decoration-none">
+            <a href="/type/Backpack" class="Backpacking text-decoration-none" style="--url:url('/assets/img/backpack-mascot.webp');">
                 <h3 class="style-font ">Backpacking Trips</h3>
             </a>
-            <a href="/type/family-trip" class="Family text-decoration-none">
+            <a href="/type/family-trip" class="Family text-decoration-none" style="--url:url('/assets/img/family-mascot.webp');">
                 <h3 class="style-font ">Family Trips</h3>
                 <p class="m-0">Start the journey with your family .#voyagersbeat</p>
             </a>
-            <a href="/type/honeymoon" class="Honeymoon text-decoration-none">
+            <a href="/type/honeymoon" class="Honeymoon text-decoration-none" style="--url:url('/assets/img/honeymoon-mascot.webp');">
                 <h3 class="style-font ">Honeymoon Trips</h3>
             </a>
-            <a href="/type/Corporate" class="Corporate text-decoration-none">
+            <a href="/type/Corporate" class="Corporate text-decoration-none" style="--url:url('/assets/img/corporate-mascot.webp');">
                 <h3 class="style-font ">Corporate Trips</h3>
             </a>
         </div>

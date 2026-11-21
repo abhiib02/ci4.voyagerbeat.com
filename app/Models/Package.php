@@ -254,9 +254,9 @@ class Package extends Model
     {
         return $this->like('STAY', $nights)->where('HIDDEN', 0)->findAll();
     }
-    public function getPackagesByNightsWeekend(string $nights): array
+    public function getPackagesByNightsWeekend(string $nights, int $limit = 6): array
     {
-        return $this->like('STAY', $nights)->where('WEEKEND', 'Yes')->where('HIDDEN', 0)->findAll();
+        return $this->like('STAY', $nights)->where('WEEKEND', 'Yes')->where('HIDDEN', 0)->limit($limit)->find();
     }
     public function getPackagesByNightsandLocation(string $nights, string $location): array
     {

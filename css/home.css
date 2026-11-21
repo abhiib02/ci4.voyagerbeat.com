@@ -33,36 +33,36 @@ background-position: center;
 
 
 .Weekend { grid-area: Weekend;
---url:url('/assets/img/weekend-mascot.jpg');
+
 }
 
 .Bike { grid-area: Bike; 
---url: url('/assets/img/bike-mascot.jpg');
+
 }
 
 .Treks { grid-area: Treks;
-    --url: url('/assets/img/trek-mascot.jpg');
+
  }
 
 .Party { grid-area: Party; 
-    --url:url('/assets/img/party-mascot.jpg');    
+
 }
 
 .Backpacking { grid-area: Backpacking;
-   --url:url('/assets/img/backpack-mascot.jpg');    
+
  }
 
 .Family { grid-area: Family;
-    --url:url('/assets/img/family-mascot.webp');  
+
 
  }
 
 .Honeymoon { grid-area: Honeymoon; 
---url:url('/assets/img/honeymoon-mascot.jpg');  
+
 }
 
 .Corporate { grid-area: Corporate; 
---url:url('/assets/img/corporate-mascot.jpg');  
+
 }
 
 
