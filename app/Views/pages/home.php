@@ -330,7 +330,7 @@
                         <?php foreach ($instaSecVideos as $video): ?>
                             <div class="swiper-slide">
                                 <a class="square " href="https://www.instagram.com/voyagersbeat/">
-                                    <video width="100%" height="auto" style="object-fit: contain;" class="rounded-3" autoplay loop muted>
+                                    <video width="100%" height="auto" style="object-fit: contain;" class="rounded-3" loading="lazy" autoplay loop muted>
                                         <source src="<?= $video ?>" type="video/mp4">
                                     </video>
                                 </a>
