@@ -162,7 +162,7 @@
                 <a href="/packages/leh" class="flex-item relative" style="--url:url('/assets/img/ladakh.webp');">
                     <p class="fw-bolder style-font">Ladakh</p>
                 </a>
-                <a href="/packages/spiti" class="flex-item relative" style="--url:url('/assets/img/spiti.jpg');">
+                <a href="/packages/spiti" class="flex-item relative" style="--url:url('/assets/img/spiti.webp');">
                     <p class="fw-bolder style-font">Spiti</p>
                 </a>
             </div>

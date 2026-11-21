@@ -53,7 +53,7 @@ background-position: center;
  }
 
 .Family { grid-area: Family;
-    --url:url('/assets/img/family-mascot.jpg');  
+    --url:url('/assets/img/family-mascot.webp');  
 
  }
 
