@@ -4,13 +4,14 @@
  * @var string $cssversion
  */
 ?>
-<?php $cssversion = 2.5; //$cssversion ?? date('his'); 
+<?php $cssversion = $cssversion ?? date('his');
 ?>
 <link rel="manifest" href="../../manifest.webmanifest" fetchpriority="high" decoding="async">
 <link rel="apple-touch-icon" href="../../assets/logo.png" fetchpriority="high" decoding="async">
 <link rel="shortcut icon" type="image/png" href="../../assets/logo-comp.png" fetchpriority="high" decoding="async" />
 
-<link href="https://unpkg.com/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+<link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
 <link rel="stylesheet" href="/css/fonts.css?v=<?= $cssversion ?>">
 <link rel="stylesheet" href="/css/ezToast.css?v=<?= $cssversion ?>">
@@ -27,4 +28,4 @@
 <link rel="stylesheet" href="/css/print.css?v=<?= $cssversion ?>" rel="preload" media="print">
 <link rel="stylesheet" href="/css/boxicons.css?v=<?= $cssversion ?>" rel="preload">
 
-<link rel="stylesheet" href="https://unpkg.com/swiper@14.0.1/swiper-bundle.min.css" />
+<link rel="stylesheet" href="/css/swiper-bundle.min.css" />

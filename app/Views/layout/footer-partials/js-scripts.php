@@ -13,3 +13,4 @@
 <script src="https://unpkg.com/swiper@14.0.1/swiper-bundle.min.js" defer></script>
 <script src="/js/swiperInit.js" defer></script>
 <script src="/js/lenisInit.js" defer></script>
+<script src="/js/pageProgress.js" defer></script>
