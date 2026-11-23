@@ -10,7 +10,7 @@
     all: revert;
     box-sizing: border-box;
     color: var(--text-color) !important;
-    background: none; !important;
+    background: none !important;
   }
 
   & p {

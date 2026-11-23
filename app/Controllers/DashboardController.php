@@ -80,6 +80,7 @@ class DashboardController extends BaseController
     protected function ManagerPages(): array
     {
         return [
+            ['link' => 'packages-list', 'title' => 'Packages', 'icon' => 'bx bx-collection', 'mobile-visible' => 1],
             ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-calendar-check', 'mobile-visible' => 1],
             ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-history', 'mobile-visible' => 1],
         ];
@@ -243,6 +244,12 @@ class DashboardController extends BaseController
         $this->data['year'] = $this->request->getGet('year') ?? date('Y');
         $this->data['pagename'] = $pageName;
         switch ($pageName) {
+            case 'packages-list':
+                $hiddenPackages = $this->request->getGet('hidden');
+                $this->data['Packages'] = ($hiddenPackages !== null) ?  $this->PackageModel->getAllHiddenPackagesForAdminDashboard() : $this->PackageModel->getAllPackagesForAdminDashboard();
+                //$this->data['Packages'] = $this->PackageModel->getAllPackagesForAdminDashboard();
+                $this->data['pager'] = $this->PackageModel->pager;
+                break;
             case 'booking-list':
 
                 $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['startdate'], $this->data['enddate']);
