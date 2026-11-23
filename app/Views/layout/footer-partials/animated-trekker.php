@@ -37,4 +37,17 @@
         </lord-icon>
     </div>
 </div>
-<script src="https://cdn.lordicon.com/lordicon.js"></script>
+<script>
+    var lordLoaded = false;
+    var io = new IntersectionObserver(function(entries) {
+        if (lordLoaded || !entries.some(e => e.isIntersecting)) return;
+        lordLoaded = true;
+        var s = document.createElement('script');
+        s.src = 'https://cdn.lordicon.com/lordicon.js';
+        document.body.appendChild(s);
+        io.disconnect();
+    });
+    document.querySelectorAll('lord-icon').forEach(function(el) {
+        io.observe(el);
+    });
+</script>
