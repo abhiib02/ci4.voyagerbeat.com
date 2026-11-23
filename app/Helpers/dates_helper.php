@@ -18,9 +18,9 @@ if (! function_exists('isCurrentDateNearRange')) {
             $diff = $currentDate->diff($startDate);
 
             // %r outputs '-' if $startDate is in the past, otherwise empty string
-            return $diff->format('%r%a');
+            return (int)$diff->format('%r%a');
         } else {
-            return 'Not In Correct Format';
+            return 'Wrong Format';
         }
     }
 }

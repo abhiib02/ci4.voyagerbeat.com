@@ -28,6 +28,7 @@
                         <th>NAME</th>
                         <th>DESTINATION</th>
                         <th>Dates</th>
+                        <th>Custom Dates</th>
                         <th>Last Updated</th>
                         <th>VISITS</th>
                         <th>Action</th>
@@ -45,7 +46,8 @@
                             $lastkey = array_key_last($datesArr);
                             $lastDate = $datesArr[$lastkey] ?? null;
                             ?>
-                            <td class="condition-bg" style="--days:<?= isCurrentDateNearRange($lastDate, 1) ?>;"><?= isCurrentDateNearRange($lastDate, 1) ?> Days</td>
+                            <td class="condition-bg" style="--days:<?= isCurrentDateNearRange($lastDate, 1) ?>;"><?= isCurrentDateNearRange($lastDate, 1) ?><?= (is_int(isCurrentDateNearRange($lastDate, 1))) ? ' Days' : '' ?> </td>
+                            <td><?= ($package->CUSTOM_TRIP == 1) ? "✅" : "❌" ?></td>
                             <td><?= esc($package->updated_at); ?></td>
                             <td><?= esc($package->VISIT_COUNT); ?></td>
                             <td><a class="btn btn-sm btn-outline-dark" href="/package-edit/<?= esc($package->PACKAGE_ID); ?>?Adminlist=1" title="Edit"><i class='bx bxs-edit-alt'></i></a></td>
