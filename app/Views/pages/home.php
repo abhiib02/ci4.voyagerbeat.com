@@ -6,9 +6,156 @@
  * @var string $cssversion
  */
 ?>
+<?php
+$winterMonthArr = [11, 12, 1, 2, 3];
+$summerMonthArr = [4, 5, 6, 7, 8, 9, 10];
+$nightTimeArr = [17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6];
+$dayTimeArr = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+$dt = new DateTime('now', new DateTimeZone('Asia/Kolkata'));
+$isthour = $dt->format('G');
+?>
 <link rel="stylesheet" href="/css/bg3dwall.css?v=<?= $cssversion ?>">
 <link rel="stylesheet" href="/css/home.css?v=<?= $cssversion ?>">
 <link rel="stylesheet" href="/css/destination_3d_card.css?v=<?= $cssversion ?>">
+<?php if (in_array(date('m'), $winterMonthArr)): ?>
+    <section id="screenEffect">
+        <style>
+            #screenEffect {
+                pointer-events: none;
+            }
+
+            #snowfall {
+                position: fixed;
+                top: 0%;
+                left: 0%;
+                width: 100vw;
+                height: 100vh;
+                z-index: 100;
+                mix-blend-mode: lighten;
+                pointer-events: none;
+            }
+        </style>
+        <canvas id="snowfall"></canvas>
+        <script>
+            // gets the canvas element
+            const canvas = document.querySelector('#snowfall');
+
+            // gets the width and height of browser viewport
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            //   set the width and height of canvas equal to browser viewport
+            canvas.width = width;
+            canvas.height = height;
+
+            //   call the getContext method to draw 2d shape
+            const ctx = canvas.getContext('2d');
+
+            // create Ball class
+            class Ball {
+                constructor(x, y, velx, vely, size, color) {
+                    this.x = x; // horizontal position of the ball
+                    this.y = y; // vertical position of the ball
+                    this.velx = velx; // velocity x added to coordinate x when we animate our ball
+                    this.vely = vely; // velocity y added to coordinate y
+                    this.size = size; // size is a radius of the ball
+                    this.color = color; // fill ball shape with given color
+                }
+
+                // create draw func
+                drawBall() {
+                    ctx.beginPath(); // start drawing
+                    ctx.fillStyle = this.color; // fill ball shape with given color
+
+                    // x and y is center of the ball
+                    // size is radius of the ball
+                    // 0 is a start point of degree around radius of the ball
+                    // 2 * Math.PI is an end point which is equivalent to 360 degree
+                    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+                    ctx.fill(); // finish drawing
+                }
+
+                // create update func
+                updateBall() {
+                    // if x and y position is greater than or less than
+                    // browser viewport than balls turn another direction
+
+                    if (this.x + this.size >= width) {
+                        this.x = 0;
+                    }
+
+                    if (this.y + this.size >= height) {
+                        this.y = 0;
+                    }
+
+
+                    /*if (this.x + this.size >= width || this.x - this.size <= 0) {
+                      this.velx = -this.velx;
+                    }
+
+                    if (this.y + this.size >= height || this.y - this.size <= 0) {
+                      this.vely = -this.vely;
+                    }*/
+
+                    // x and y velocity added to x and y coordinate
+                    // everytime updateBall func is called
+                    this.x += this.velx;
+                    this.y += this.vely;
+                }
+            }
+
+            //   create random number generator func
+            function random(min, max) {
+                const num = Math.floor(Math.random() * (max - min + 1)) + min;
+                return num;
+            }
+
+            function randomFloat(min, max) {
+                const num = (Math.random() * (max - min + 1)) + min;
+                return num;
+            }
+
+            //   create some balls and store in an array
+            const balls = [];
+
+            while (balls.length < 300) {
+                let size = randomFloat(0.01, 0.9);
+
+                // create a new instance of Ball class
+                // now replace static number with random number
+                const ball = new Ball(
+                    random(size, width - size),
+                    random(size, height - size),
+                    random(1, 5),
+                    randomFloat(0.5, 0.9),
+                    size,
+                    `rgb(${random(253,255)}, ${random(253,255)}, ${random(253,255)})`
+                );
+
+                balls.push(ball);
+            }
+
+            //   create loop func
+            function loop() {
+                // cover the previous frame's drawing before the next one is drawn
+                ctx.fillStyle = 'rgb(0,0,0)';
+                ctx.fillRect(0, 0, width, height);
+                // run necessary func
+                for (let i = 0; i < balls.length; i++) {
+                    balls[i].drawBall();
+                    balls[i].updateBall();
+                }
+
+                // lets calls loop func itself over and over again
+                //  and make animation smooth
+                requestAnimationFrame(loop);
+            }
+
+            // finaly call the loop func once ot start
+            loop();
+        </script>
+    </section>
+<?php endif; ?>
 <section id="hero">
     <div class="perspective">
         <div class="content">
@@ -31,14 +178,7 @@
 
             <div class="layer custom-bg timing-opacity" style="--delay:0;--url:url('/assets/backgrounds/blue-sky.webp'); --mul:0;"></div>
             <div class="layer custom-bg timing-opacity" style="--delay:100;--url:url('/assets/backgrounds/clouds.webp');--mul:0.005;background-size:600px;background-repeat:repeat;"></div>
-            <?php
-            $winterMonthArr = [11, 12, 1, 2, 3];
-            $summerMonthArr = [4, 5, 6, 7, 8, 9, 10];
-            $nightTimeArr = [17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6];
-            $dayTimeArr = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-            $dt = new DateTime('now', new DateTimeZone('Asia/Kolkata'));
-            $isthour = $dt->format('G');
-            ?>
+
 
             <?php if (in_array(date('m'), $winterMonthArr)): ?>
                 <?php if (in_array($isthour, $nightTimeArr)): ?>
