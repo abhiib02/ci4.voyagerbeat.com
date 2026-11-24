@@ -110,6 +110,7 @@ class DashboardController extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
+        $this->data['todaydate'] = $this->request->getGet('start') ?? date('Y-m-d');
         $this->data['startdate'] = $this->request->getGet('start') ?? date('Y-m-01'); // Default to 1st of month if not provided
         $this->data['enddate'] = $this->request->getGet('end') ?? date('Y-m-t'); // Default to end of current month if not provided
         $this->data['month'] = $this->request->getGet('month') ?? date('m');
@@ -155,7 +156,7 @@ class DashboardController extends BaseController
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             case 'departures':
-                $this->data['Departures'] = $this->BookingModel->getBookingsByDepartureDates($this->data['startdate']);
+                $this->data['Departures'] = $this->BookingModel->getBookingsByDepartureDates($this->data['todaydate']);
                 break;
 
             case 'points-giveaway':
@@ -203,6 +204,7 @@ class DashboardController extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
+
         $this->data['startdate'] = $this->request->getGet('start') ?? date('Y-m-01'); // Default to 1st of month if not provided
         $this->data['enddate'] = $this->request->getGet('end') ?? date('Y-m-t'); // Default to end of current month if not provided
         $this->data['month'] = $this->request->getGet('month') ?? date('m');
@@ -245,6 +247,7 @@ class DashboardController extends BaseController
                 throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             }
         }
+        $this->data['todaydate'] = $this->request->getGet('start') ?? date('Y-m-d');
         $this->data['startdate'] = $this->request->getGet('start') ?? date('Y-m-01'); // Default to 1st of month if not provided
         $this->data['enddate'] = $this->request->getGet('end') ?? date('Y-m-t'); // Default to end of current month if not provided
         $this->data['month'] = $this->request->getGet('month') ?? date('m');
@@ -258,12 +261,16 @@ class DashboardController extends BaseController
                 $this->data['pager'] = $this->PackageModel->pager;
                 break;
             case 'booking-list':
-
-                $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['startdate'], $this->data['enddate']);
+                $customer_id = $this->request->getGet('customer_id');
+                if ($customer_id !== null) {
+                    $this->data['Bookings'] = $this->BookingModel->getBookingsByCustomerID($customer_id, $this->data['startdate'], $this->data['enddate']);
+                } else {
+                    $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['startdate'], $this->data['enddate']);
+                }
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
             case 'departures':
-                $this->data['Departures'] = $this->BookingModel->getBookingsByDepartureDates($this->data['startdate']);
+                $this->data['Departures'] = $this->BookingModel->getBookingsByDepartureDates($this->data['todaydate']);
                 break;
             default:
                 $statuses = ['Pending', 'Complete', 'Complete_no_points'];

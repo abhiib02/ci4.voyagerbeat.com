@@ -2,11 +2,17 @@
 
 /**
  * @var array $Departures
+ * @var string $todaydate
  */
 ?>
 <div class="d-flex justify-content-between">
     <div>
-        <?= view('dashboard/shared-components/custom-from-to-date-selector') ?>
+        <form method="get" class="d-flex">
+            <div class="mb-3">
+                <label for="">Start Date</label>
+                <input type="date" class="form-control" value="<?= esc($todaydate) ?>" name="start" id="" onchange="this.form.submit()">
+            </div>
+        </form>
     </div>
 </div>
 
@@ -15,10 +21,13 @@
         <thead class="table-light">
             <tr>
                 <th>Start - End Date</th>
+                <th>Package Name</th>
+                <th>Pick and Drop (Ignore first number)</th>
                 <th>Name</th>
                 <th>Contact</th>
                 <th>Adults</th>
                 <th>Pax Details</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +36,8 @@
                 <?php foreach (($Departures ?? []) as $departure) : ?>
                     <tr>
                         <td><?= $departure->date ?></td>
+                        <td><?= $departure->package_name ?></td>
+                        <td><?= $departure->travelmode ?></td>
                         <td><?= $departure->name ?></td>
                         <td><?= $departure->contact ?></td>
                         <td><?= $departure->adults ?></td>
@@ -57,10 +68,21 @@
                             <?php endif; ?>
 
                         </td>
+                        <?php if (auth('Admin')): ?>
+                            <td><a class="btn btn-sm btn-outline-dark" href="/dashboard/all-bookings?customer_id=<?= $departure->user_id ?>">See Booking</a></td>
+                        <?php endif; ?>
+                        <?php if (auth('Manager')): ?>
+                            <td><a class="btn btn-sm btn-outline-dark" href="/manager-dashboard/bookings-list?customer_id=<?= $departure->user_id ?>">See Booking</a></td>
+                        <?php endif; ?>
+
+
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
+                    <td>Nothing</td>
+                    <td>Nothing</td>
+                    <td>Nothing</td>
                     <td>Nothing</td>
                     <td>Nothing</td>
                     <td>Nothing</td>
