@@ -46,7 +46,7 @@
     </ul>
     <ul class="navbar-nav mb-2 mb-lg-0">
       <li class="nav-item ">
-        <button class="nav-link" data-bs-toggle="modal" data-bs-target="#SearchBox">
+        <button class="nav-link" data-bs-toggle="modal" aria-label="open searchbox" data-bs-target="#SearchBox">
           <i class='fs-4 bx bx-search'></i>
         </button>
       </li>
