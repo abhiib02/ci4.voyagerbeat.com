@@ -22,9 +22,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <?php if (!empty($Departures)): ?>
-                    <?php foreach (($Departures ?? []) as $departure) : ?>
+
+            <?php if (!empty($Departures)): ?>
+                <?php foreach (($Departures ?? []) as $departure) : ?>
+                    <tr>
                         <td><?= $departure->date ?></td>
                         <td><?= $departure->name ?></td>
                         <td><?= $departure->contact ?></td>
@@ -56,11 +57,14 @@
                             <?php endif; ?>
 
                         </td>
-                    <?php endforeach; ?>
-                <?php else: ?>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
                     <td colspan="5">No records found</td>
-                <?php endif; ?>
-            </tr>
+                </tr>
+            <?php endif; ?>
+
         </tbody>
     </table>
 </div>
