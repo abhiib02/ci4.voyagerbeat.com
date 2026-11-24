@@ -11,7 +11,7 @@
 </div>
 
 <div class="table-responsive border rounded">
-    <table class="table table-hover" id="" data-order='[[ 0, "desc" ]]'>
+    <table class="table table-hover" id="datatable" data-order='[[ 0, "desc" ]]'>
         <thead class="table-light">
             <tr>
                 <th>Start - End Date</th>
