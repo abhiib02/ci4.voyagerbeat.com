@@ -7,7 +7,7 @@
     <header>
         <h1>Cancellation, Rescheduling &amp; Wallet Credit Policy</h1>
         <p><strong>Brand:</strong> Voyagers Beat – Live to Travel</p>
-        <p><strong>Website:</strong> <a href="https://voyagersbeat.com" target="_blank" rel="noopener">https://voyagersbeat.com</a></p>
+        <p><strong>Website:</strong> <a aria-label="go to homepage" href="https://voyagersbeat.com" target="_blank" rel="noopener">https://voyagersbeat.com</a></p>
         <p>At Voyagers Beat, every trip booking involves advance arrangements for accommodation, transportation, activities, and other travel services. To ensure smooth trip operations and fair arrangements for all travellers, we follow the cancellation and rescheduling policy outlined below.</p>
         <p>Please read the following terms carefully before confirming your travel booking.</p>
     </header>
@@ -75,7 +75,7 @@
             <p>For cancellation requests, wallet credit assistance, or changes to your group booking, please contact our team:</p>
             <address>
                 <p><strong>Brand:</strong> Voyagers Beat</p>
-                <p><strong>Website:</strong> <a href="https://voyagersbeat.com" target="_blank" rel="noopener">https://voyagersbeat.com</a></p>
+                <p><strong>Website:</strong> <a aria-label="go to homepage" href="https://voyagersbeat.com" target="_blank" rel="noopener">https://voyagersbeat.com</a></p>
                 <p><strong>Email:</strong> <a href="mailto:info@voyagersbeat.com">info@voyagersbeat.com</a></p>
                 <p><strong>Phone/WhatsApp:</strong> <a href="tel:+919811571315">+91 9811571315</a></p>
             </address>

@@ -10,7 +10,7 @@
         <?php if (!empty($pagenames)): ?>
 
             <?php foreach ($pagenames as $index => $page): ?>
-                <li class="nav-item"> <a href="/dashboard/<?= esc($page['link']) ?>" class="nav-link p-1 border-bottom rounded-0"
+                <li class="nav-item"> <a aria-label="open dashboard" href="/dashboard/<?= esc($page['link']) ?>" class="nav-link p-1 border-bottom rounded-0"
                         data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<?= esc($page['title']) ?>">
                         <i class="<?= esc($page['icon']) ?> fs-5"></i>
                     </a> </li>
@@ -53,7 +53,7 @@
             <li>
                 <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-bg-danger" href="/logout">Sign out</a></li>
+            <li><a aria-label="Logout" class="dropdown-item text-bg-danger" href="/logout">Sign out</a></li>
         </ul>
     </div>
 </div>
@@ -74,7 +74,7 @@
             <?php foreach ($pagenames as $page): ?>
                 <?php if ($page['mobile-visible']): ?>
                     <li class="nav-item text-center" role="presentation">
-                        <a href="/dashboard/<?= esc($page['link']) ?>" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
+                        <a aria-label="dashboard" href="/dashboard/<?= esc($page['link']) ?>" class="nav-link rounded-3 lh-1" id="home-tab2" aria-selected="true">
                             <i class='<?= esc($page['icon']) ?> fs-5'></i>
                             <br>
                             <sub class="text-capitalize"><?= esc($page['title']) ?></sub>
@@ -84,7 +84,7 @@
             <?php endforeach; ?>
         <?php endif; ?>
         <li class="nav-item text-center" role="presentation">
-            <a href="/logout" class="nav-link rounded-3 lh-1  text-danger" id="home-tab2" aria-selected="true">
+            <a aria-label="logout" href="/logout" class="nav-link rounded-3 lh-1  text-danger" id="home-tab2" aria-selected="true">
                 <i class='bx bx-log-out fs-5'></i>
                 <br>
                 <sub class="text-capitalize">Logout</sub>

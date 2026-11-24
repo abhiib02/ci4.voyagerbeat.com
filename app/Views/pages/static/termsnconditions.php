@@ -7,7 +7,7 @@
     <header>
         <h1>Terms &amp; Conditions, Travel Disclaimer &amp; Cancellation Policy</h1>
         <p><strong>Brand:</strong> Voyagers Beat – Live to Travel</p>
-        <p><strong>Website:</strong> <a href="https://voyagersbeat.com" target="_blank" rel="noopener">https://voyagersbeat.com</a></p>
+        <p><strong>Website:</strong> <a aria-label="go to homepage" href="https://voyagersbeat.com" target="_blank" rel="noopener">https://voyagersbeat.com</a></p>
         <p>By enquiring about, booking, or participating in any trip or travel package organised by Voyagers Beat, customers agree to the following Terms &amp; Conditions, Disclaimer, and Cancellation Policy.</p>
     </header>
 
@@ -139,7 +139,7 @@
             <p>For booking-related queries, cancellation requests, payment assistance, or clarification regarding our travel policies, please contact us:</p>
             <address>
                 <p><strong>Brand:</strong> Voyagers Beat</p>
-                <p><strong>Website:</strong> <a href="https://voyagersbeat.com" target="_blank" rel="noopener">https://voyagersbeat.com</a></p>
+                <p><strong>Website:</strong> <a aria-label="go to homepage" href="https://voyagersbeat.com" target="_blank" rel="noopener">https://voyagersbeat.com</a></p>
                 <p><strong>Email:</strong> <a href="mailto:info@voyagersbeat.com">info@voyagersbeat.com</a></p>
                 <p><strong>Phone/WhatsApp:</strong> <a href="tel:+919811571315">+91 9811571315</a></p>
             </address>

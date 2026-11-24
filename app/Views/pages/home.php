@@ -213,30 +213,30 @@ $isthour = $dt->format('G');
         </div>
         <div class="explore-container">
             <a href="/weekend" class="Weekend text-decoration-none" style="--url:url('/assets/img/weekend-mascot.webp');">
-                <h3 class="style-font ">Weekend Trips</h3>
+                <p class="style-font fs-3 m-0">Weekend Trips</p>
                 <p class="m-0">These Trips are Quick Routine Breaker • Life Refreshing • Memory Creation</p>
             </a>
             <a href="/type/Bike" class="Bike text-decoration-none" style="--url:url('/assets/img/bike-mascot.webp');">
-                <h3 class="style-font ">Bike Trips</h3>
+                <p class="style-font fs-3 m-0">Bike Trips</p>
             </a>
             <a href="/type/Treks" class="Treks text-decoration-none" style="--url:url('/assets/img/trek-mascot.webp');">
-                <h3 class="style-font ">Treks</h3>
+                <p class="style-font fs-3 m-0">Treks</p>
             </a>
             <a href="/type/Party" class="Party text-decoration-none" style="--url:url('/assets/img/party-mascot.webp');">
-                <h3 class="style-font ">Party Trips</h3>
+                <p class="style-font fs-3 m-0">Party Trips</p>
             </a>
             <a href="/type/Backpack" class="Backpacking text-decoration-none" style="--url:url('/assets/img/backpack-mascot.webp');">
-                <h3 class="style-font ">Backpacking Trips</h3>
+                <p class="style-font fs-3 m-0">Backpacking Trips</p>
             </a>
             <a href="/type/family-trip" class="Family text-decoration-none" style="--url:url('/assets/img/family-mascot.webp');">
-                <h3 class="style-font ">Family Trips</h3>
+                <p class="style-font fs-3 m-0">Family Trips</p>
                 <p class="m-0">Start the journey with your family .#voyagersbeat</p>
             </a>
             <a href="/type/honeymoon" class="Honeymoon text-decoration-none" style="--url:url('/assets/img/honeymoon-mascot.webp');">
-                <h3 class="style-font ">Honeymoon Trips</h3>
+                <p class="style-font fs-3 m-0">Honeymoon Trips</p>
             </a>
             <a href="/type/Corporate" class="Corporate text-decoration-none" style="--url:url('/assets/img/corporate-mascot.webp');">
-                <h3 class="style-font ">Corporate Trips</h3>
+                <p class="style-font fs-3 m-0">Corporate Trips</p>
             </a>
         </div>
     </div>
@@ -263,7 +263,7 @@ $isthour = $dt->format('G');
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="weekend-1n-pane" role="tabpanel" tabindex="0">
-                <h4>Quick Routine Breaker Trips</h4>
+                <p class="fs-4 style-font m-0">Quick Routine Breaker Trips</p>
                 <div class="flex_wrap_section">
                     <?php foreach ($packages_1n ?? [] as $index => $Package): ?>
                         <?= view('pages/component/packageCard', ['package' => $Package]) ?>
@@ -271,7 +271,7 @@ $isthour = $dt->format('G');
                 </div>
             </div>
             <div class="tab-pane fade" id="weekend-2n-pane" role="tabpanel" tabindex="0">
-                <h4>Life Refreshing Trips</h4>
+                <p class="fs-4 style-font m-0">Life Refreshing Trips</p>
                 <div class="flex_wrap_section">
                     <?php foreach ($packages_2n ?? [] as $index => $Package): ?>
                         <?= view('pages/component/packageCard', ['package' => $Package]) ?>
@@ -279,7 +279,7 @@ $isthour = $dt->format('G');
                 </div>
             </div>
             <div class="tab-pane fade" id="weekend-3n-pane" role="tabpanel" tabindex="0">
-                <h4>Memory Creation Trips</h4>
+                <p class="fs-4 style-font m-0">Memory Creation Trips</p>
                 <div class="flex_wrap_section">
                     <?php foreach ($packages_3n ?? [] as $index => $Package): ?>
                         <?= view('pages/component/packageCard', ['package' => $Package]) ?>
@@ -454,7 +454,7 @@ $isthour = $dt->format('G');
                         </div>
                     </div>
                     <hr>
-                    <a href="https://www.instagram.com/voyagersbeat/" class="btn btn-lg insta-bg rounded-pill text-white" style="background-size: 130%;background-repeat: no-repeat;background-position: center;">Follow @voyagersbeat</a>
+                    <a href="https://www.instagram.com/voyagersbeat/" aria-label="open instagram" class="btn btn-lg insta-bg rounded-pill text-white" style="background-size: 130%;background-repeat: no-repeat;background-position: center;">Follow @voyagersbeat</a>
                 </div>
             </div>
             <div class="col-lg-9 col-6">
@@ -470,7 +470,7 @@ $isthour = $dt->format('G');
                     <div class="swiper-wrapper">
                         <?php foreach ($instaSecVideos as $video): ?>
                             <div class="swiper-slide">
-                                <a class="square " href="https://www.instagram.com/voyagersbeat/">
+                                <a class="square" aria-label="open Instagram" href="https://www.instagram.com/voyagersbeat/">
                                     <video width="100%" height="auto" style="object-fit: contain;" class="rounded-3" loading="lazy" autoplay loop muted>
                                         <source src="<?= $video ?>" type="video/mp4">
                                     </video>

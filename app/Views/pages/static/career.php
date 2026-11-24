@@ -123,7 +123,7 @@
         </div>
     </div>
     <div class="text-center">
-        <a href="https://forms.office.com/r/FyYzdgXATt">
+        <a aria-label="open job form" href="https://forms.office.com/r/FyYzdgXATt">
             <img src="/assets/img/applynow.webp" width="300px" style="mix-blend-mode: darken;" alt="">
         </a>
     </div>

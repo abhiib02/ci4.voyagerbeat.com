@@ -15,31 +15,31 @@
                 <div class="col-lg-3">
                     <h4 class="text-theme">Contact Us</h4>
                     <ul class="list-unstyled">
-                        <li><a class="text-light" href="tel:+919667711660">+91 9667711660</a></li>
-                        <li><a class="text-light" href="tel:+919667711662">+91 9667711662</a></li>
-                        <li><a class="text-light" href="tel:+918448591315">+91 8448591315</a></li>
-                        <li><a class="text-light" href="tel:+919266352828">+91 9266352828</a></li>
-                        <li><a class="text-light" href="mailto:info@voyagersbeat.com">info@voyagersbeat.com</a></li>
+                        <li class="p-2"><a aria-label="Call Destination Expert" class="text-light" href="tel:+919667711660">+91 9667711660</a></li>
+                        <li class="p-2"><a aria-label="Call Destination Expert" class="text-light" href="tel:+919667711662">+91 9667711662</a></li>
+                        <li class="p-2"><a aria-label="Call Destination Expert" class="text-light" href="tel:+918448591315">+91 8448591315</a></li>
+                        <li class="p-2"><a aria-label="Call Destination Expert" class="text-light" href="tel:+919266352828">+91 9266352828</a></li>
+                        <li class="p-2"><a class="text-light" href="mailto:info@voyagersbeat.com">info@voyagersbeat.com</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3">
                     <h4 class="text-theme">Resource</h4>
                     <ul class="list-unstyled">
-                        <li><a class="text-light" href="/privacy-policy">Privacy Policy</a> </li>
-                        <li><a class="text-light" href="/term-conditions">Terms and Conditions</a></li>
-                        <li><a class="text-light" href="/blogs/write-for-us">Write for Us</a></li>
+                        <li class="p-2"><a aria-label="open privacy Policy" class="text-light" href="/privacy-policy">Privacy Policy</a> </li>
+                        <li class="p-2"><a aria-label="open terms & condition" class="text-light" href="/term-conditions">Terms and Conditions</a></li>
+                        <li class="p-2"><a aria-label="open write for us" class="text-light" href="/blogs/write-for-us">Write for Us</a></li>
                         <!-- <li><a class="text-light" data-bs-toggle="modal" data-bs-target="#cancellationModal">Cancellation Policy</a></li> -->
-                        <li><a class="text-light" href="/cancellation-policy">Cancellation Policy</a></li>
-                        <li><a class="text-light" href="/sitemap.xml">Sitemap</a></li>
-                        <li><a class="text-light" href="/blogs">Blogs</a></li>
+                        <li class="p-2"><a aria-label="open Cancellation Policy" class="text-light" href="/cancellation-policy">Cancellation Policy</a></li>
+                        <li class="p-2"><a aria-label="open Sitemap" class="text-light" href="/sitemap.xml">Sitemap</a></li>
+                        <li class="p-2"><a aria-label="open Blogs" class="text-light" href="/blogs">Blogs</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3">
                     <h4 class="text-theme">Important Links</h4>
                     <ul class="list-unstyled">
-                        <li><a class="text-light" href="/about">Introduction</a></li>
-                        <li><a class="text-light" href="/career">Join the team</a></li>
-                        <li><a class="text-light" href="/about">Who are we?</a></li>
+                        <li class="p-2"><a aria-label="open Introduction" class="text-light" href="/about">Introduction</a></li>
+                        <li class="p-2"><a aria-label="open Career Page" class="text-light" href="/career">Join the team</a></li>
+                        <li class="p-2"><a aria-label="open Who We are?" class="text-light" href="/about">Who are we?</a></li>
                         <?= view('layout/footer-partials/role-based-navigation') ?>
                     </ul>
                 </div>

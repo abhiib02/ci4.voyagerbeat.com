@@ -22,22 +22,22 @@
 
             <ul class="navbar-nav d-flex flex-row gap-1">
                 <li class="">
-                    <a class="btn btn-sm btn-outline-dark rounded-5" href="tel:+91<?= $defaultContact ?>"><i class='bx bxs-phone-call'></i> <?= $defaultContact ?></a>
+                    <a class="btn btn-sm btn-outline-dark rounded-5" aria-label="contact" href="tel:+91<?= $defaultContact ?>"><i class='bx bxs-phone-call'></i> <?= $defaultContact ?></a>
                 </li>
                 <li class="">
-                    <a class="btn btn-sm btn-outline-dark rounded-5" href="mail:<?= $defaultmails ?>"><i class='bx bxs-envelope'></i> <?= $defaultmails ?></a>
+                    <a class="btn btn-sm btn-outline-dark rounded-5" aria-label="open mail" href="mail:<?= $defaultmails ?>"><i class='bx bxs-envelope'></i> <?= $defaultmails ?></a>
                 </li>
                 <li class="">
-                    <a class="btn btn-sm btn-outline-dark rounded-5" href="https://www.instagram.com/voyagersbeat/"><i class='bx bxl-instagram-alt'></i> @voyagersbeat</a>
+                    <a class="btn btn-sm btn-outline-dark rounded-5" aria-label="open instagram" href="https://www.instagram.com/voyagersbeat/"><i class='bx bxl-instagram-alt'></i> @voyagersbeat</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav d-flex flex-row gap-1">
                 <li class="">
-                    <a class="btn btn-sm btn-outline-dark rounded-5 animated-promo-btn" href="<?= esc($AnnouncementLink) ?>"><?= esc($AnnouncementText) ?></a>
+                    <a class="btn btn-sm btn-outline-dark rounded-5 animated-promo-btn" aria-label="<?= esc($AnnouncementText) ?>" href="<?= esc($AnnouncementLink) ?>"><?= esc($AnnouncementText) ?></a>
                 </li>
                 <li class="">
-                    <a class="btn btn-sm btn-outline-dark rounded-5" href="tel:+91<?= $defaultContact ?>"><i class='bx bxs-phone-call'></i> Call Now</a>
+                    <a class="btn btn-sm btn-outline-dark rounded-5" aria-label="contact" href="tel:+91<?= $defaultContact ?>"><i class='bx bxs-phone-call'></i> Call Now</a>
                 </li>
             </ul>
 

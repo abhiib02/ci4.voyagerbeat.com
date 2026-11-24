@@ -15,10 +15,10 @@
                 <?php if (!$package->REQUEST_PRICE): ?>
                     <a href="/book/<?= $package->PACKAGE_ID ?>" type="button" class="btn btn-lg btn-theme btn-success w-100" style="width:250px;">Book Now <i class='bx bx-right-arrow-alt'></i></a>
                 <?php else: ?>
-                    <a href="https://wa.me/91<?= $defaultContact ?>?text=Hey! Voyagers Beat I am interested in your trip id <?= $package->PACKAGE_ID; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type=" button" class="btn btn-lg btn-theme btn-success w-100" style="width:250px;">Book Now on WhatsApp<i class='bx bx-right-arrow-alt'></i></a>
+                    <a aria-label="open whatsapp" href="https://wa.me/91<?= $defaultContact ?>?text=Hey! Voyagers Beat I am interested in your trip id <?= $package->PACKAGE_ID; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type=" button" class="btn btn-lg btn-theme btn-success w-100" style="width:250px;">Book Now on WhatsApp<i class='bx bx-right-arrow-alt'></i></a>
                 <?php endif; ?>
             <?php else: ?>
-                <button class="btn btn-lg btn-theme btn-success w-100" data-bs-toggle="modal" data-bs-target="#LoginPopup">
+                <button aria-label="Book this package now" class="btn btn-lg btn-theme btn-success w-100" data-bs-toggle="modal" data-bs-target="#LoginPopup">
                     Book Now <i class='bx bx-right-arrow-alt'></i>
                 </button>
             <?php endif; ?>
@@ -37,8 +37,8 @@
                 ?>
                 <a href="tel:+<?= $ExtractedphoneNumber ?>" type="button" class="w-100 btn btn-theme btn-warning d-flex justify-content-center gap-2"><i class='bx bxs-phone-call fs-4'></i>Call Expert</a>
             <?php else: ?>
-                <a href="https://wa.me/91<?= $defaultContact ?>?text=Hey! Voyagers Beat I am interested in your trip id <?= $package->PACKAGE_ID; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type="button" class="w-100 btn btn-outline-whatsapp d-flex justify-content-center gap-2"><i class='bx bxl-whatsapp fs-4'></i> Chat with Expert</a>
-                <a href="tel:+91<?= $defaultContact ?>" type="button" class="w-100 btn btn-outline-dark  d-flex justify-content-center gap-2"><i class='bx bxs-phone-call fs-4'></i>Call Expert</a>
+                <a aria-label="open whatsapp" href="https://wa.me/91<?= $defaultContact ?>?text=Hey! Voyagers Beat I am interested in your trip id <?= $package->PACKAGE_ID; ?> | https://voyagersbeat.com/package/<?= $package->SLUG; ?>" type="button" class="w-100 btn btn-outline-whatsapp d-flex justify-content-center gap-2"><i class='bx bxl-whatsapp fs-4'></i> Chat with Expert</a>
+                <a aria-label="call us" href="tel:+91<?= $defaultContact ?>" type="button" class="w-100 btn btn-outline-dark  d-flex justify-content-center gap-2"><i class='bx bxs-phone-call fs-4'></i>Call Expert</a>
             <?php endif; ?>
         </div>
 
