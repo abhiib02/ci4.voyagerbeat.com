@@ -167,7 +167,7 @@ class DashboardController extends BaseController
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year'], $statuses);
                 // Booking Collection with total person
                 $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'adults');
-                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete_no_points', 'total_package_cost');
+                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'total_package_cost');
                 // Charts Data 
 
 
@@ -261,7 +261,7 @@ class DashboardController extends BaseController
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year'], $statuses);
                 // Booking Collection with total person
                 $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'adults');
-                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete_no_points', 'total_package_cost');
+                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'total_package_cost');
                 // Charts Data 
 
 
