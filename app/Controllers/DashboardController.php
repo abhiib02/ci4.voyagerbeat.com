@@ -60,6 +60,7 @@ class DashboardController extends BaseController
     {
         return [
             ['link' => 'all-bookings', 'title' => 'Bookings', 'icon' => 'bx bx-calendar-check', 'mobile-visible' => 1],
+            ['link' => 'departures', 'title' => 'Departures', 'icon' => 'bx bx-bus', 'mobile-visible' => 1],
             ['link' => 'packages-list', 'title' => 'Packages', 'icon' => 'bx bx-collection', 'mobile-visible' => 1],
             ['link' => 'package-create', 'title' => 'New Package', 'icon' => 'bx bx-plus', 'mobile-visible' => 0],
             ['link' => 'users-list', 'title' => 'Users', 'icon' => 'bx bx-group', 'mobile-visible' => 1],
@@ -75,6 +76,7 @@ class DashboardController extends BaseController
     {
         return [
             ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-calendar-check', 'mobile-visible' => 1],
+
         ];
     }
     protected function ManagerPages(): array
@@ -82,6 +84,7 @@ class DashboardController extends BaseController
         return [
             ['link' => 'packages-list', 'title' => 'Packages', 'icon' => 'bx bx-collection', 'mobile-visible' => 1],
             ['link' => 'booking-list', 'title' => 'Booking List', 'icon' => 'bx bx-calendar-check', 'mobile-visible' => 1],
+            ['link' => 'departures', 'title' => 'Departures', 'icon' => 'bx bx-bus', 'mobile-visible' => 1],
             ['link' => 'booking-changes-log', 'title' => 'Booking Changes Log', 'icon' => 'bx bx-history', 'mobile-visible' => 1],
         ];
     }
@@ -151,6 +154,10 @@ class DashboardController extends BaseController
                 }
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
+            case 'departures':
+                $this->data['Departures'] = $this->BookingModel->getBookingsByDepartureDates($this->data['startdate']);
+                break;
+
             case 'points-giveaway':
                 $packageFilter = urldecode($this->request->getGet('package') ?? '');
                 $dateFilter = urldecode($this->request->getGet('date') ?? '');
@@ -166,8 +173,8 @@ class DashboardController extends BaseController
                 // Booking Counts
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year'], $statuses);
                 // Booking Collection with total person
-                $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'adults');
-                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'total_package_cost');
+                $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn($this->data['month'], $this->data['year'], $statuses, 'adults');
+                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn($this->data['month'], $this->data['year'], $statuses, 'total_package_cost');
                 // Charts Data 
 
 
@@ -209,13 +216,13 @@ class DashboardController extends BaseController
             default:
                 $agentID = $userID;
                 // Booking Counts
-                $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountofAgent($agentID, $this->data['month'], $this->data['year']);
-                // Booking Collection with total person
-                $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn_Agent($agentID, $this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'adults');
-                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Agent($agentID, $this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'total_package_cost');
-                // Charts Data 
                 $statuses = ['Pending', 'Complete', 'Complete_no_points'];
 
+                $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountofAgent($agentID, $this->data['month'], $this->data['year']);
+                // Booking Collection with total person
+                $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn($this->data['month'], $this->data['year'], $statuses, 'adults', $agentID,);
+                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn($this->data['month'], $this->data['year'], $statuses, 'total_package_cost', $agentID,);
+                // Charts Data  
                 $this->data['Annual_Revenue'] = $this->BookingModel->getAnnualSalesRevenue($agentID, $this->data['year'], $statuses);
                 $this->data['Annual_Pax'] = $this->BookingModel->getAnnualPax($agentID, $this->data['year'], $statuses);
                 $this->data['Annual_Booking'] = $this->BookingModel->getAnnualBookings($agentID, $this->data['year'], $statuses);
@@ -255,13 +262,16 @@ class DashboardController extends BaseController
                 $this->data['Bookings'] = $this->BookingModel->getAllBookingsForAdminDashboard($this->data['startdate'], $this->data['enddate']);
                 $this->data['pager'] = $this->BookingModel->pager;
                 break;
+            case 'departures':
+                $this->data['Departures'] = $this->BookingModel->getBookingsByDepartureDates($this->data['startdate']);
+                break;
             default:
                 $statuses = ['Pending', 'Complete', 'Complete_no_points'];
                 // Booking Counts
                 $this->data['BookingsCount_Month'] = $this->BookingModel->getAllBookingsCountAdmin($this->data['month'], $this->data['year'], $statuses);
                 // Booking Collection with total person
-                $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'adults');
-                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn_Admin($this->data['month'], $this->data['year'], 'Pending,Complete,Complete_no_points', 'total_package_cost');
+                $this->data['TotalPersons_Month'] = $this->BookingModel->getSumofColumn($this->data['month'], $this->data['year'], $statuses, 'adults');
+                $this->data['TotalRevenue_Month'] = $this->BookingModel->getSumofColumn($this->data['month'], $this->data['year'], $statuses, 'total_package_cost');
                 // Charts Data 
 
 

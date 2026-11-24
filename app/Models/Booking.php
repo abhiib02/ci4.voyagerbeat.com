@@ -286,42 +286,50 @@ class Booking extends Model
             ->where('agent', $agentID)->where('status', $status)->countAllResults();
     }
 
-
-
-
-
-
-
-    //--------------- collection & total person queries -------------------------------//
-
-    public function getSumofColumn_Agent(int $agentID, string $month, string $year, string $status, string $columName): int
+    public function getBookingsByDepartureDates(string $date): array
     {
-        $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
-        $startDate = $MonthDuration['startDate'];
-        $endDate = $MonthDuration['endDate'];
-        $statusArray = array_map('trim', explode(',', $status));
-        $result = $this
-            ->selectSum($columName)
-            ->where('agent', $agentID)
-            ->whereIn('status', $statusArray)
-            ->where('created_at >=', $startDate)
-            ->where('created_at <=', $endDate)
-            ->first();
-        return (int) $result->$columName;
+        // Validate Y-m-d
+        $d = \DateTime::createFromFormat('Y-m-d', $date);
+        if (! $d || $d->format('Y-m-d') !== $date) {
+            return [];
+        }
+
+        // First date of the range, with any "|number" suffix removed
+        $first = "TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(`date`, ' - ', 1), '|', 1))";
+
+        // Handles yyyy-mm-dd, dd-mm-yyyy and dd/mm/yyyy
+        $departure = "CASE
+        WHEN $first REGEXP '^[0-9]{4}-'
+            THEN STR_TO_DATE($first, '%Y-%m-%d')
+        ELSE STR_TO_DATE(REPLACE($first, '-', '/'), '%d/%m/%Y')
+    END";
+
+        return $this
+            ->where("($departure) = " . $this->db->escape($date), null, false)
+            ->findAll();
     }
-    public function getSumofColumn_Admin(string $month, string $year, string $status, string $columName): int
+    //--------------- collection & total person queries -------------------------------//
+    public function getSumofColumn(string $month, string $year, array $status, string $columName, ?int $agentID = null): int
     {
+        if (empty($status)) {
+            return 0;
+        }
+
         $MonthDuration = $this->getMonthStartToEndTimeStamp($month, $year);
-        $startDate = $MonthDuration['startDate'];
-        $endDate = $MonthDuration['endDate'];
-        $statusArray = array_map('trim', explode(',', $status));
-        $result = $this
+
+        $builder = $this
             ->selectSum($columName)
-            ->whereIn('status', $statusArray)
-            ->where('created_at >=', $startDate)
-            ->where('created_at <=', $endDate)
-            ->first();
-        return (int) $result->$columName;
+            ->whereIn('status', $status)
+            ->where('created_at >=', $MonthDuration['startDate'])
+            ->where('created_at <=', $MonthDuration['endDate']);
+
+        if ($agentID !== null) {
+            $builder->where('agent', $agentID);
+        }
+
+        $result = $builder->first();
+
+        return (int) ($result->$columName ?? 0);
     }
     public function getAnnualSalesRevenue(int $agentID, string $year, array $statuses): array
     {
