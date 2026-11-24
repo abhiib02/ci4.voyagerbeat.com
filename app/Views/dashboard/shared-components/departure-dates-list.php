@@ -61,7 +61,11 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="5">No records found</td>
+                    <td>Nothing</td>
+                    <td>Nothing</td>
+                    <td>Nothing</td>
+                    <td>Nothing</td>
+                    <td>Nothing</td>
                 </tr>
             <?php endif; ?>
 
