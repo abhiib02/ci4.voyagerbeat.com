@@ -24,12 +24,12 @@
         if (tripType.value === 'community') {
             batchDate.classList.remove('hide');
             customDate.classList.add('hide');
-            enableField(batchDate, 'batch_date');
+            enableField(batchDate, 'date');
             disableField(customDate);
         } else if (tripType.value === 'personalised') {
             customDate.classList.remove('hide');
             batchDate.classList.add('hide');
-            enableField(customDate, 'custom_date');
+            enableField(customDate, 'date');
             disableField(batchDate);
         }
     });
