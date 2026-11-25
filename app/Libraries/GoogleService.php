@@ -6,7 +6,7 @@ use App\Models\User;
 
 class GoogleService
 {
-    function sendDatatoGoogleSheet(array $data)
+    public function sendDatatoGoogleSheet(array $data)
     {
         $UserModel = new User();
         $agentData = $UserModel->getUserByID($data['agent']);

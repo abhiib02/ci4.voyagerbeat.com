@@ -4,7 +4,7 @@ namespace App\Libraries;
 
 use App\Models\Booking;
 use App\Models\Coupon;
-use Services;
+use \Config\Services;
 
 class EmailService
 {
@@ -36,8 +36,8 @@ class EmailService
     }
     public function sendBookingConfirmationEmail(string $order_id)
     {
-        $email = \Config\Services::email();
-        $session = \Config\Services::session();
+        $email = Services::email();
+        $session = Services::session();
         $BookingModel = new Booking();
         $CouponModel = new Coupon();
         $Bookingdata = $BookingModel->getBookingByOrderId($order_id);
