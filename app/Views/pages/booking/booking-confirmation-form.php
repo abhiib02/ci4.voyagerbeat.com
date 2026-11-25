@@ -149,7 +149,7 @@
                             <label for="place">Trip Type</label>
                         </div>
 
-                        <div class="form-floating hide" id="custom-date">
+                        <div class="form-floating hide mb-3" id="custom-date">
                             <input type="date" class="form-control" name="date" min="<?= date("Y-m-d"); ?>" required>
                             <label for="Date">Date</label>
                         </div>

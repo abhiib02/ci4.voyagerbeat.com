@@ -10,7 +10,8 @@
             customDate.querySelector('input').removeAttribute('required');
             customDate.querySelector('input').removeAttribute('name');
 
-        } else {
+        }
+        if (tripType.value === 'personalised') {
             batchDate.classList.add('hide');
             batchDate.querySelector('input').removeAttribute('required');
             batchDate.querySelector('input').removeAttribute('name');
