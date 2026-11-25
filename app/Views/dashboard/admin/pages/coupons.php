@@ -29,7 +29,7 @@
 
         </dialog>
         <div class="">
-            <div class="table-responsive border rounded">
+            <div class="border rounded">
                 <table class="sortable table table-hover" id="datatable" data-order='[[ 4, "desc" ]]'>
                     <thead class="table-light">
                         <tr>

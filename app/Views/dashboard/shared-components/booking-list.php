@@ -10,7 +10,7 @@
         <?= view('dashboard/shared-components/custom-from-to-date-selector') ?>
     </div>
 </div>
-<div class="table-responsive border rounded">
+<div class="border rounded">
     <table class="table table-hover" id="datatable" data-order='[[ 0, "desc" ]]'>
         <thead class="table-light">
             <tr>

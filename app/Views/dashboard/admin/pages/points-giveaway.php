@@ -46,7 +46,7 @@
                 </div>
 
                 <!-- Scrollable Customer List Table inside Modal -->
-                <div class="table-responsive border rounded">
+                <div class="border rounded">
                     <table class="table table-striped table-hover mb-0" id="datatable">
                         <thead class="table-light">
                             <tr class="text-center">

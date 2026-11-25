@@ -4,7 +4,7 @@
  * @var array $Packages
  */
 ?>
-<div class="table-responsive border rounded">
+<div class="border rounded">
     <table id="datatable" class="sortable table table-hover" data-order='[[ 5, "desc" ]]'>
         <thead class="table-light">
             <tr>
