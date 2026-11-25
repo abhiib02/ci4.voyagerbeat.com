@@ -330,14 +330,15 @@
                             </select>
                             <label for="heard">Where did you hear about us?</label>
                         </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkDefault" required>
+                            <label class="form-check-label" for="checkDefault">
+                                <span>I agree to <a href="#" data-bs-toggle="modal" data-bs-target="#tncmodal">Terms and Conditions</a>.</span>
+                            </label>
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checkDefault" required>
-                        <label class="form-check-label" for="checkDefault">
-                            <span>I agree to <a href="#" data-bs-toggle="modal" data-bs-target="#tncmodal">Terms and Conditions</a>.</span>
-                        </label>
-                        </label>
-                    </div>
+
                     <div class="card-footer">
                         <button type="button" class="btn btn-secondary prev">Previous</button>
                         <button type="submit" id="submit" class="btn btn-success">Submit</button>
