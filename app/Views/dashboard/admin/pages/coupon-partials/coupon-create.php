@@ -1,5 +1,6 @@
 <form action="/createCoupon" method="post"
-    style="height:100%;display:flex;flex-direction:column;justify-content:space-between;">
+    style="height:100%;display:flex;flex-direction:column;justify-content:space-between;"
+    id="internal_form">
     <div>
 
         <div>

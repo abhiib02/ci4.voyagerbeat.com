@@ -23,7 +23,7 @@
 
 <div class="container">
 
-    <form action="/createPackageProcess" method="post" enctype="multipart/form-data"
+    <form action="/createPackageProcess" method="post" id="internal_form" enctype="multipart/form-data"
         data-loader
         data-loader-title="Creating New Package"
         data-loader-steps="Validating Inputs...|Checking for PDF....|Saving Data & Files....|Adding Changes to Database....|Almost done...">
@@ -722,7 +722,7 @@
 
                             <summary>Open Dates Textarea</summary>
 
-                            <textarea required name="DATES" class="dates_string form-control " style="height: auto;" rows="2"
+                            <textarea required name="DATES" class="dates_string form-control " style="height: auto;field-sizing:content;" rows="2"
 
                                 cols="24"></textarea>
 
@@ -767,10 +767,10 @@
 
 
                             <input list="SharingsList" class="form-select" name="INFO_P1" required autocomplete="off" />
-                            <input list="SharingsList" class="form-select" name="INFO_P2" required autocomplete="off" />
-                            <input list="SharingsList" class="form-select" name="INFO_P3" required autocomplete="off" />
-                            <input list="SharingsList" class="form-select" name="INFO_P4" required autocomplete="off" />
-                            <input list="SharingsList" class="form-select" name="INFO_P5" required autocomplete="off" />
+                            <input list="SharingsList" class="form-select" name="INFO_P2" autocomplete="off" />
+                            <input list="SharingsList" class="form-select" name="INFO_P3" autocomplete="off" />
+                            <input list="SharingsList" class="form-select" name="INFO_P4" autocomplete="off" />
+                            <input list="SharingsList" class="form-select" name="INFO_P5" autocomplete="off" />
 
                             <datalist id="SharingsList">
                                 <option value="Quad Sharing (4 Persons in 1 Room)"></option>
@@ -855,17 +855,17 @@
 
                         <div class="col-lg-3">
 
-                            <label for="HEAD_PRICE">Self Travel Price *</label>
+                            <label for="HEAD_PRICE">Prices 1*</label>
 
                             <input class="form-control" type="text" placeholder="Column Name" value="0"
 
-                                name="HEAD_WTPRICE" required>
+                                name="HEAD_WTPRICE">
 
 
 
                             <input class="form-control" type="number" placeholder="WT_PRICE_1 " value="0"
 
-                                name="WT_PRICE_1" required>
+                                name="WT_PRICE_1">
 
 
 
@@ -899,7 +899,7 @@
 
                         <div class="col-lg-2">
 
-                            <label for="HEAD_PRICE">Self Travel Price 2 </label>
+                            <label for="HEAD_PRICE">Prices 2 </label>
 
                             <input class="form-control" type="text" placeholder="Column Name" value=""
 

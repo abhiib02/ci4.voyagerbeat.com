@@ -48,7 +48,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <form action="/option-create" method="post">
+        <form action="/option-create" id="internal_form" method="post">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Option Name</span>
                 <input type="text" class="form-control" placeholder="Option Name" name="name" required aria-label="Option Name" aria-describedby="basic-addon1">

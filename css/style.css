@@ -677,3 +677,6 @@ body {
     .json-valid {
         border-color: green !important;
     }
+    #internal_form [required] {
+        outline: 1px solid var(--secondaryColor);
+    }

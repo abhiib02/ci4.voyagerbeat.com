@@ -23,7 +23,7 @@
 </style>
 <div class="container">
     <h1 class="py-4">Editing <?= $package->PACKAGE_NAME ?> Package</h1>
-    <form action="/updatePackageProcess" method="post" enctype="multipart/form-data"
+    <form action="/updatePackageProcess" method="post" id="internal_form" enctype="multipart/form-data"
         data-loader
         data-loader-title="Updating <?= $package->PACKAGE_NAME ?> Package"
         data-loader-steps="Validating Inputs...|Checking for PDF....|Saving Data & Files....|Updating Changes to Database....|Almost done...">
@@ -404,7 +404,7 @@
                         <div class="date_input_group"></div>
                         <details>
                             <summary>Open Dates Textarea</summary>
-                            <textarea name="DATES" required="" class="dates_string form-control" style="height: auto;" rows="2" cols="24"><?= $package->DATES ?></textarea>
+                            <textarea name="DATES" required="" class="dates_string form-control" style="height: auto;field-sizing:content;" rows="2" cols="24"><?= $package->DATES ?></textarea>
                         </details>
                     </div>
                     <br>
@@ -423,14 +423,15 @@
                     <br>
                     <div class="row">
                         <div class="col-lg-2">
-                            <label for="">Disabled</label>
-                            <input class="form-control" type="text" disabled>
+                            <label for="">Sharing</label>
+                            <input class="form-control" type="text" disabled style="visibility: hidden;">
+
 
                             <input list="SharingsList" class="form-select" name="INFO_P1" required value="<?= $package->INFO_P1 ?>" autocomplete="off" />
-                            <input list="SharingsList" class="form-select" name="INFO_P2" required value="<?= $package->INFO_P2 ?>" autocomplete="off" />
-                            <input list="SharingsList" class="form-select" name="INFO_P3" required value="<?= $package->INFO_P3 ?>" autocomplete="off" />
-                            <input list="SharingsList" class="form-select" name="INFO_P4" required value="<?= $package->INFO_P4 ?>" autocomplete="off" />
-                            <input list="SharingsList" class="form-select" name="INFO_P5" required value="<?= $package->INFO_P5 ?>" autocomplete="off" />
+                            <input list="SharingsList" class="form-select" name="INFO_P2" value="<?= $package->INFO_P2 ?>" autocomplete="off" />
+                            <input list="SharingsList" class="form-select" name="INFO_P3" value="<?= $package->INFO_P3 ?>" autocomplete="off" />
+                            <input list="SharingsList" class="form-select" name="INFO_P4" value="<?= $package->INFO_P4 ?>" autocomplete="off" />
+                            <input list="SharingsList" class="form-select" name="INFO_P5" value="<?= $package->INFO_P5 ?>" autocomplete="off" />
 
                             <datalist id="SharingsList">
                                 <option value="Quad Sharing (4 Persons in 1 Room)"></option>
@@ -445,7 +446,7 @@
                         </div>
                         <div class="col-lg-2">
                             <label for="">Selling Price</label>
-                            <input class="form-control" type="text" placeholder="Selling Price" name="" disabled>
+                            <input class="form-control" type="text" placeholder="Selling Price" name="" disabled style="visibility: hidden;">
 
                             <input class="form-control" type="number" id="s1" placeholder="S_PRICE_1" name="S_PRICE_1" value="<?= $package->S_PRICE_1 ?>">
 
@@ -478,12 +479,12 @@
                             <input class="form-control" type="number" id="p5" placeholder="PRICE_5" name="PRICE_5" value="<?= $package->PRICE_5 ?>">
                         </div>
                         <div class="col-lg-3">
-                            <label for="HEAD_PRICE">Self Travel Price *</label>
+                            <label for="HEAD_PRICE">Prices 1*</label>
                             <input class="form-control" type="text" placeholder="Column Name" value="<?= $package->HEAD_WTPRICE ?>"
-                                name="HEAD_WTPRICE" required>
+                                name="HEAD_WTPRICE">
 
                             <input class="form-control" type="number" placeholder="WT_PRICE_1 " value="<?= $package->WT_PRICE_1 ?>"
-                                name="WT_PRICE_1" required>
+                                name="WT_PRICE_1">
 
                             <input class="form-control" type="number" placeholder="WT_PRICE_2" value="<?= $package->WT_PRICE_2 ?>"
                                 name="WT_PRICE_2">
@@ -500,7 +501,7 @@
 
                         </div>
                         <div class="col-lg-2">
-                            <label for="HEAD_PRICE">Self Travel Price 2 </label>
+                            <label for="HEAD_PRICE">Prices 2*</label>
                             <input class="form-control" type="text" placeholder="Column Name" value="<?= $package->HEAD_WT2PRICE ?>"
                                 name="HEAD_WT2PRICE">
 
