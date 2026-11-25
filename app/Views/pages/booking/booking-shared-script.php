@@ -1,24 +1,38 @@
 <script id="trip-type-dates">
     const tripType = document.getElementById('trip_type');
-    let customDate = document.getElementById('custom-date');
-    let batchDate = document.getElementById('batch-date');
+    const customDate = document.getElementById('custom-date');
+    const batchDate = document.getElementById('batch-date');
+
+    const getField = (wrapper) => wrapper.querySelector('input, select, textarea');
+
+    function enableField(wrapper, name) {
+        const field = getField(wrapper);
+        if (!field) return;
+        field.setAttribute('required', '');
+        field.setAttribute('name', name);
+        field.disabled = false;
+    }
+
+    function disableField(wrapper) {
+        const field = getField(wrapper);
+        if (!field) return;
+        field.removeAttribute('required');
+        field.disabled = true; // disabled fields aren't submitted
+    }
 
     tripType.addEventListener('change', () => {
         if (tripType.value === 'community') {
             batchDate.classList.remove('hide');
             customDate.classList.add('hide');
-            customDate.querySelector('input').removeAttribute('required');
-            customDate.querySelector('input').removeAttribute('name');
-
-        }
-        if (tripType.value === 'personalised') {
-            batchDate.classList.add('hide');
-            batchDate.querySelector('input').removeAttribute('required');
-            batchDate.querySelector('input').removeAttribute('name');
+            enableField(batchDate, 'batch_date');
+            disableField(customDate);
+        } else if (tripType.value === 'personalised') {
             customDate.classList.remove('hide');
-
+            batchDate.classList.add('hide');
+            enableField(customDate, 'custom_date');
+            disableField(batchDate);
         }
-    })
+    });
 </script>
 
 <script>
