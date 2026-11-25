@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Config\BaseService;
 use App\Libraries\EmailService;
+use App\Libraries\GoogleService;
 
 /**
  * Services Configuration file.
@@ -37,5 +38,13 @@ class Services extends BaseService
         }
 
         return new EmailService();
+    }
+    public static function googleService($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('googleService');
+        }
+
+        return new GoogleService();
     }
 }
