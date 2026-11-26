@@ -383,6 +383,12 @@ class PackageController extends BaseController
     }
     public function increasePackageVisitCount(int $PACKAGE_ID)
     {
+        if (auth('Admin', 'Manager', 'Employee')) {
+            return $this->response->setJSON([
+                "package_id" => $PACKAGE_ID,
+                "message" => "Visit Count Skipped",
+            ]);
+        }
         $this->PackageModel->increaseVisitCount($PACKAGE_ID);
         return $this->response->setJSON([
             "package_id" => $PACKAGE_ID,
