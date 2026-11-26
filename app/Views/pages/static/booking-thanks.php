@@ -195,27 +195,27 @@
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <span class="text-muted">Name</span>
-                                                <span><?= $pax->name ?></span>
+                                                <span><?= $pax->name ?? '' ?></span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <span class="text-muted">Contact</span>
-                                                <span><?= $pax->contact  ?></span>
+                                                <span><?= $pax->contact ?? ''  ?></span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <span class="text-muted">Gender</span>
-                                                <span><?= $pax->gender ?></span>
+                                                <span><?= $pax->gender ?? '' ?></span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <span class="text-muted">Sharing</span>
-                                                <span><?= $pax->sharing ?></span>
+                                                <span><?= $pax->sharing ?? '' ?></span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <span class="text-muted">Adhaar Number</span>
-                                                <span><?= $pax->adhaar ?></span>
+                                                <span><?= $pax->adhaar ?? '' ?></span>
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <span class="text-muted">Cost </span>
-                                                <span><?= $pax->cost ?></span>
+                                                <span><?= $pax->cost ?? '' ?></span>
                                             </li>
                                         </ul>
                                     </div>

@@ -508,10 +508,15 @@ class PackageController extends BaseController
         if ($this->PackageModel->isSlugExist($this->request->getPost('slug'))) {
             $DataArr['SLUG'] = $this->request->getPost('slug') . date('his');
         }
-        $this->PackageModel->insertPackage($DataArr);
+        if ($this->PackageModel->insertPackage($DataArr)) {
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Package Added Sucessfully.', 'status' => 'success']);
+            return redirect()->to('/dashboard/packages-list');
+        } else {
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Package Addition Unsuccessful.', 'status' => 'danger']);
+            return redirect()->back();
+        }
         //print_r($this->PackageModel->errors());
-        $this->session->setFlashdata('FlashMessage', ['message' => 'Package Added Sucessfully.', 'status' => 'success']);
-        return redirect()->to('/dashboard/packages-list');
+
     }
     public function update_package_process()
     {
@@ -625,14 +630,17 @@ class PackageController extends BaseController
                     unlink($oldpdfPath);
                 }
             }
-        }
-
-        $this->PackageModel->UpdatePackage($ID, $DataArr);
-        $this->session->setFlashdata('FlashMessage', ['message' => 'Package ID:' . $ID . ' Update', 'status' => 'info']);
-        if ($this->request->getGet('Adminlist') == '1') {
-            return redirect()->to('/dashboard/packages-list');
+        };
+        if ($this->PackageModel->UpdatePackage($ID, $DataArr)) {
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Package ID:' . $ID . ' Update', 'status' => 'info']);
+            if ($this->request->getGet('Adminlist') == '1') {
+                return redirect()->to('/dashboard/packages-list');
+            } else {
+                return redirect()->to('/packageid/' . $ID);
+            }
         } else {
-            return redirect()->to('/packageid/' . $ID);
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Package Update Unsuccessful.', 'status' => 'danger']);
+            return redirect()->back();
         }
     }
     public function duplicate_package_process(int $PACKAGE_ID)
@@ -643,8 +651,12 @@ class PackageController extends BaseController
         unset($packageData['PACKAGE_ID']);
         $packageData['SLUG'] =  $packageData['SLUG'] . '-' . date("hidmy");
         $packageData['PACKAGE_NAME']  =  $packageData['PACKAGE_NAME']  . '-copy';
-        $this->PackageModel->insertPackage($packageData);
-        return redirect()->to('/package/' . $packageData['SLUG']);
+        if ($this->PackageModel->insertPackage($packageData)) {
+            return redirect()->to('/package/' . $packageData['SLUG']);
+        } else {
+            $this->session->setFlashdata('FlashMessage', ['message' => 'Package Duplication Unsuccessful.', 'status' => 'danger']);
+            return redirect()->back();
+        }
     }
 
     public function delete_package_process()

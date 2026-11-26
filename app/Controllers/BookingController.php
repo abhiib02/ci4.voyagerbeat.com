@@ -251,8 +251,11 @@ class BookingController extends BaseController
     }
     public function BookingConfirmationProcess()
     {
+
         $rules = [
+            'order_id' => 'required',
             'name' => 'required',
+            'email' => 'required|valid_email|max_length[255]',
             'contact_trip' => 'required|numeric|min_length[10]|max_length[10]',
             'contact_alt' => 'required|numeric|min_length[10]|max_length[10]|differs[contact_trip]',
             'gender' => 'required|in_list[Male,Female,Other]',
@@ -273,8 +276,8 @@ class BookingController extends BaseController
                 'uploaded[payment_screenshot_file]',
                 'is_image[payment_screenshot_file]',
                 'mime_in[payment_screenshot_file,image/jpg,image/jpeg,image/png,image/webp,image/heif,image/heic]',
-                'ext_in[adhaarCard_file,jpg,jpeg,jfif,png,webp,heif,heic]',
-                'max_size[adhaarCard_file,4096]',
+                'ext_in[payment_screenshot_file,jpg,jpeg,jfif,png,webp,heif,heic]',
+                'max_size[payment_screenshot_file,4096]',
             ],
         ];
         if (! $this->validate($rules)) {
@@ -285,13 +288,19 @@ class BookingController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $orderId = $this->request->getPost('order_id');
+        $bookingData = $this->BookingModel->getBookingByOrderId($orderId);
+
+        if (empty($bookingData) || !$bookingData->customer_access) {
+            return $this->RedirectWithtoast('Link Expired', 'Danger', '/');
+        }
+
         $user_id = $this->createUserAccountifNotExist($this->request->getPost('email'), $this->request->getPost('name'), $this->request->getPost('contact_trip'));
 
         $paymentScreenShot = $this->request->getFile('payment_screenshot_file');
 
 
         if ($paymentScreenShot->getSize() > 0) {
-
             $paymentScreenShotFileName = $this->request->getPost('order_id') . '-' . str_replace(' ', '-', $this->request->getPost('name')) . '.' . $paymentScreenShot->getExtension();
             $paymentScreenShot->move('upload/bookings/payment_screenshot', $paymentScreenShotFileName);
         } else {
@@ -299,8 +308,6 @@ class BookingController extends BaseController
         }
         $this->BookingModel->skipValidation(true);
 
-        $orderId = $this->request->getPost('order_id');
-        $bookingData = $this->BookingModel->getBookingByOrderId($orderId);
 
         $paxJSON = $this->request->getPost('pax_details');
         $costJSON = $bookingData->perPersonCost;
@@ -354,6 +361,7 @@ class BookingController extends BaseController
     public function createUserAccountifNotExist(string $email, string $name, string $contact)
     {
         $user = $this->UserModel->getUser($email);
+
         if (!$user) {
             $generatedPassword = $this->generateRandomPassword();
             $AccountData = [

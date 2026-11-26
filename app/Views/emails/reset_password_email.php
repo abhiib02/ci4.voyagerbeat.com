@@ -183,7 +183,7 @@
                                                         <tr>
                                                             <td class="pad" style="padding-top:5px">
                                                                 <div style="font-family:sans-serif">
-                                                                    <a href="<?= $url ?>" class style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#000;line-height:1.2">
+                                                                    <a href="<?= esc($url) ?>" class style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#000;line-height:1.2">
                                                                         <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px">
                                                                             <span style="font-size:16px;">Simply click on the button to set a new password!</span>
                                                                         </p>
@@ -215,7 +215,7 @@
                                                             <td class="pad" style="text-align:center">
                                                                 <div class="alignment" align="center">
 
-                                                                    <a href="<?= $url ?>" target="_blank" style="background-color:#0068a5;border-bottom:0px solid transparent;border-left:0px solid transparent;border-radius:4px;border-right:0px solid transparent;border-top:0px solid transparent;color:#ffffff;display:inline-block;font-family:Roboto, Tahoma, Verdana, Segoe, sans-serif;font-size:14px;font-weight:400;mso-border-alt:none;padding-bottom:5px;padding-top:5px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;"><span style="padding-left:30px;padding-right:30px;font-size:14px;display:inline-block;letter-spacing:normal;"><span style="word-break: break-word; line-height: 28px;">Set a New Password</span></span></a>
+                                                                    <a href="<?= esc($url) ?>" target="_blank" style="background-color:#0068a5;border-bottom:0px solid transparent;border-left:0px solid transparent;border-radius:4px;border-right:0px solid transparent;border-top:0px solid transparent;color:#ffffff;display:inline-block;font-family:Roboto, Tahoma, Verdana, Segoe, sans-serif;font-size:14px;font-weight:400;mso-border-alt:none;padding-bottom:5px;padding-top:5px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;"><span style="padding-left:30px;padding-right:30px;font-size:14px;display:inline-block;letter-spacing:normal;"><span style="word-break: break-word; line-height: 28px;">Set a New Password</span></span></a>
 
                                                                 </div>
                                                             </td>

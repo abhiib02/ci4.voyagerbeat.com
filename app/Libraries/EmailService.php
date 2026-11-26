@@ -87,4 +87,32 @@ class EmailService
             return 0;
         }
     }
+    public function resetPasswordEmail(string $token, string $email)
+    {
+        $session = Services::session();
+        $to = $email;
+        $from = env('no_reply_email');
+        $subject = env('app.name') . ' | Reset Password Link';
+
+        $url = base_url() . 'resetform?token=' . $token;
+
+        $message = view('emails/reset_password_email', ['url' => $url, 'name' => env('app.name'), 'logo' => env('app.logoPath')]);
+
+        $email = Services::email();
+        $email->setTo($to);
+
+        $email->setFrom($from, env('app.name'));
+
+        $email->setSubject($subject);
+        $email->setMessage($message);
+        if ($email->send()) {
+            $session->setFlashdata('FlashMessage', ['message' => 'Reset Password Link Sent to Mail', 'status' => 'Success']);
+            return 1;
+        } else {
+            // $data = $email->printDebugger(['headers']);
+            // print_r($data);
+            $session->setFlashdata('FlashMessage', ['message' => 'Some Error Occured', 'status' => 'Danger']);
+            return 0;
+        }
+    }
 }

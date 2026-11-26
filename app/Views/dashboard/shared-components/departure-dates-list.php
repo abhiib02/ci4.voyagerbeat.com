@@ -72,7 +72,7 @@
                             <td><a class="btn btn-sm btn-outline-dark" href="/dashboard/all-bookings?customer_id=<?= $departure->user_id ?>">See Booking</a></td>
                         <?php endif; ?>
                         <?php if (auth('Manager')): ?>
-                            <td><a class="btn btn-sm btn-outline-dark" href="/manager-dashboard/bookings-list?customer_id=<?= $departure->user_id ?>">See Booking</a></td>
+                            <td><a class="btn btn-sm btn-outline-dark" href="/manager-dashboard/booking-list?customer_id=<?= $departure->user_id ?>">See Booking</a></td>
                         <?php endif; ?>
 
 

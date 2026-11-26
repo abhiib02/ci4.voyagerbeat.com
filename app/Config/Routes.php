@@ -32,7 +32,7 @@ $routes->get('cancellation-policy', 'MainController::cancellationPolicy');
 */
 // Login
 $routes->get('login', 'LoginController::index');
-$routes->post('login', 'LoginController::googleloginValidation');
+// $routes->post('login', 'LoginController::googleloginValidation');
 $routes->post('login-validation', 'LoginController::loginValidation');
 $routes->get('logout', 'LoginController::logout');
 
@@ -125,9 +125,6 @@ $routes->get('payment-failed', 'RazorpayController::Paymentfailed');
 $routes->post('payment-failed', 'RazorpayController::Paymentfailed');
 $routes->get('max-amount', 'RazorpayController::MaximumAmount');
 
-// Transactional mail
-$routes->post('booking-mail-process', 'EmailController::sendBookingConfirmation');
-$routes->post('resetpassword-mail-process', 'EmailController::reset_password_mail');
 
 /*
 |--------------------------------------------------------------------------
@@ -204,7 +201,6 @@ $routes->group('', ['filter' => 'Role:ADMIN'], static function ($routes) {
     // ---- Points & gifts ----
     $routes->post('updatePoints', 'PointsController::updatePointsProcess');
     $routes->post('giveaway-points-process', 'PointsController::giveawayPointsProcess');
-    $routes->post('gift', 'EmailController::sendGiftPointsEmail');
 
     // ---- Coupons ----
     $routes->post('createCoupon', 'CouponController::createCoupon');

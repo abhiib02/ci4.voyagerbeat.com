@@ -104,52 +104,52 @@ class LoginController extends BaseController
         return $this->RedirectToDashboard($LoggedInData);
     }
 
-    public function googleloginValidation()
-    {
-        /*---------------------------------------------------------------------------------------*/
-        //  to make new id token use this url                                                   //                    
-        //  https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid       //
-        /*--------------------------------------------------------------------------------------*/
-        $this->session = Services::session();
-        $UserModel = new User();
-        $queryData = [
-            "CREDENTIAL" => $this->request->getPost('credential')
-        ];
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://oauth2.googleapis.com/tokeninfo?id_token=' . $queryData['CREDENTIAL'] . '');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $data = json_decode($response);
-        $InvalidTokenerror = $data->error ?? 0;
-        //print_r($data->email);
-        if ($InvalidTokenerror) {
-            $this->session->setFlashdata('FlashMessage', ['message' => $data->error, 'status' => 'danger']);
-            return redirect()->to('/login');
-        }
-        $email = $data->email;
-        $user = $this->UserModel->getUser($email);
-        // check user exist
-        if (!$user) {
-            $this->session->setFlashdata('FlashMessage', ['message' => 'User Does not Exist', 'status' => 'danger']);
-            return redirect()->to('/login');
-        }
+    // public function googleloginValidation()
+    // {
+    //     /*---------------------------------------------------------------------------------------*/
+    //     //  to make new id token use this url                                                   //                    
+    //     //  https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid       //
+    //     /*--------------------------------------------------------------------------------------*/
+    //     $this->session = Services::session();
+    //     $UserModel = new User();
+    //     $queryData = [
+    //         "CREDENTIAL" => $this->request->getPost('credential')
+    //     ];
+    //     $ch = curl_init();
+    //     curl_setopt($ch, CURLOPT_URL, 'https://oauth2.googleapis.com/tokeninfo?id_token=' . $queryData['CREDENTIAL'] . '');
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    //     $response = curl_exec($ch);
+    //     curl_close($ch);
+    //     $data = json_decode($response);
+    //     $InvalidTokenerror = $data->error ?? 0;
+    //     //print_r($data->email);
+    //     if ($InvalidTokenerror) {
+    //         $this->session->setFlashdata('FlashMessage', ['message' => $data->error, 'status' => 'danger']);
+    //         return redirect()->to('/login');
+    //     }
+    //     $email = $data->email;
+    //     $user = $this->UserModel->getUser($email);
+    //     // check user exist
+    //     if (!$user) {
+    //         $this->session->setFlashdata('FlashMessage', ['message' => 'User Does not Exist', 'status' => 'danger']);
+    //         return redirect()->to('/login');
+    //     }
 
-        $LoggedInData = [
-            'id' => $user->user_id,
-            'name' => $user->user_name,
-            'email' => $user->user_email,
-            'contact' => $user->user_contact,
-            'gender' => $user->user_gender,
-            'logged_in' => true,
-            'role' => (int)$user->role,
-        ];
+    //     $LoggedInData = [
+    //         'id' => $user->user_id,
+    //         'name' => $user->user_name,
+    //         'email' => $user->user_email,
+    //         'contact' => $user->user_contact,
+    //         'gender' => $user->user_gender,
+    //         'logged_in' => true,
+    //         'role' => (int)$user->role,
+    //     ];
 
-        $this->session->set($LoggedInData);
+    //     $this->session->set($LoggedInData);
 
-        return $this->RedirectToDashboard($LoggedInData);
-    }
+    //     return $this->RedirectToDashboard($LoggedInData);
+    // }
 
     public function logout()
     {

@@ -92,6 +92,9 @@ class MainController extends BaseController
     }
     public function sitemapGenerate()
     {
+        date_default_timezone_set('Asia/Kolkata'); // Sets timezone to IST
+
+
         $packages     = $this->PackageModel->getAllPackagesInMobile();
         $packageTypes = $this->PackageModel->getAllDistinctType();
         $States       = $this->PackageModel->getAllDistinctStates();
@@ -113,19 +116,19 @@ class MainController extends BaseController
         $sitemap = new Sitemap();
 
         foreach ($staticPages as $staticPage) {
-            $sitemap->add(base_url() . $staticPage, date('c'), '1.0', 'weekly');
+            $sitemap->add(base_url() . $staticPage, null, '1.0', 'weekly');
         }
         foreach ($packages as $package) {
-            $sitemap->add(base_url() . 'package/' . $package->SLUG, date('c'), '1.0', 'weekly');
+            $sitemap->add(base_url() . 'package/' . $package->SLUG, date('c', strtotime($package->updated_at)), '1.0', 'weekly');
         }
         foreach ($packageTypes as $packageType) {
-            $sitemap->add(base_url() . 'type/' . $packageType, date('c'), '1.0', 'weekly');
+            $sitemap->add(base_url() . 'type/' . $packageType, null, '1.0', 'weekly');
         }
         foreach ($States as $State) {
-            $sitemap->add(base_url() . 'state/' . $State, date('c'), '1.0', 'weekly');
+            $sitemap->add(base_url() . 'state/' . $State, null, '1.0', 'weekly');
         }
         foreach ($Countries as $Country) {
-            $sitemap->add(base_url() . 'country/' . $Country, date('c'), '1.0', 'weekly');
+            $sitemap->add(base_url() . 'country/' . $Country, null, '1.0', 'weekly');
         }
 
         $xml = trim($sitemap->renderXml());

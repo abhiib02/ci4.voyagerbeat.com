@@ -189,7 +189,7 @@ class Package extends Model
     }
     public function getPackagesByDestination(string $destination): array
     {
-        return $this->where('LOCATION', $destination)->findAll();
+        return $this->where('HIDDEN', 0)->where('LOCATION', $destination)->findAll();
     }
     public function getHiddenPackages(string $direction = 'ASC'): array
     {
@@ -206,11 +206,11 @@ class Package extends Model
     }
     public function getPackageByIDForSearch(int $ID): array
     {
-        return $this->where('PACKAGE_ID', $ID)->findAll();
+        return $this->where('HIDDEN', 0)->where('PACKAGE_ID', $ID)->findAll();
     }
     public function getPackagesByName(string $name): array
     {
-        return $this->like('PACKAGE_NAME', $name)->findAll();
+        return $this->where('HIDDEN', 0)->like('PACKAGE_NAME', $name)->findAll();
     }
     public function getPackagesByUpcoming(string $direction = 'DESC', int $perPage = 15, string $group = 'default'): array
     {

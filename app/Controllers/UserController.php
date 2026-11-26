@@ -127,20 +127,8 @@ class UserController extends BaseController
 
     public function sendResetPasswordEmail(string $email, string $generatedToken)
     {
-
-        $client = service('curlrequest');
-
-        $response = $client->post(base_url('resetpassword-mail-process'), [
-            'http_errors' => false, // don't throw on 4xx/5xx
-            'timeout'     => 30,
-            'form_params' => [
-                'email'          => $email,
-                'token'          => $generatedToken,
-                // 'order_id'    => $order_id, // If order_id is needed in the body
-            ],
-        ]);
-
-        return $response->getBody();
+        $emailService = service('emailService');
+        return $emailService->resetPasswordEmail($generatedToken, $email);
     }
     public function resetform()
     {
