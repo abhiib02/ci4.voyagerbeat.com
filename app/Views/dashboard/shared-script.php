@@ -110,7 +110,9 @@
                         <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#Trav-${traveler.contact}_${traveler.adhaar}').close();"><i class='bx bx-x'></i></button>
                         </div>
                         </div>
-                        <img width="auto" height="500px" src="/upload/adhaar/${traveler.adhaarCard_file}">
+                        <div class="adhaar-zoom">
+                            <img class="adhaar-img" loading="lazy" height="500" src="/upload/adhaar/${traveler.adhaarCard_file}" alt="Adhaar card">
+                        </div>
                         <div class="card-footer">
                                     <button class="btn btn-sm btn-outline-dark" onclick="document.querySelector('#Trav-${traveler.contact}_${traveler.adhaar}').close();">Close</button>
                                 </div>
@@ -148,7 +150,26 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('mousemove', (e) => {
+        const box = e.target.closest('.adhaar-zoom');
+        if (!box) return;
+        const img = box.querySelector('.adhaar-img');
 
+        const rect = box.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+        img.style.transformOrigin = `${x}% ${y}%`;
+        img.style.transform = 'scale(3)';
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        const box = e.target.closest('.adhaar-zoom');
+        if (!box || box.contains(e.relatedTarget)) return;
+        box.querySelector('.adhaar-img').style.transform = 'scale(1)';
+    });
+</script>
 
 <?php if (isset($_SESSION['FlashMessage'])) : ?>
     <script>

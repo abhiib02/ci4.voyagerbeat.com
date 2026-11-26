@@ -680,3 +680,14 @@ body {
     #internal_form [required] {
         outline: 1px solid var(--secondaryColor);
     }
+    .adhaar-zoom {
+  display: inline-block;
+  overflow: hidden;
+  line-height: 0;
+  cursor: zoom-in;
+}
+
+.adhaar-img {
+  transition: transform 0.15s ease;
+  will-change: transform;
+}
