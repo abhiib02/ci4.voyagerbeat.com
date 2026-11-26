@@ -1,3 +1,11 @@
+<?php
+
+/**
+ * @var string $name
+ * @var string $url
+ * @var string $logo
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +41,7 @@
 
         .desktop_hide,
         .desktop_hide table {
-            mso-hide: all;
+
             display: none;
             max-height: 0;
             overflow: hidden
@@ -83,27 +91,27 @@
 </head>
 
 <body class="body" style="background-color:#e9e9e9;margin:0;padding:0;-webkit-text-size-adjust:none;text-size-adjust:none">
-    <table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;background-color:#e9e9e9">
+    <table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#e9e9e9">
         <tbody>
             <tr>
                 <td>
                     <table class="row row-1" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#0068a5">
+                        style="background-color:#0068a5">
                         <tbody>
                             <tr>
                                 <td>
-                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;background-color:#fff;color:#000;width:750px;margin:0 auto" width="750">
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#fff;color:#000;width:750px;margin:0 auto" width="750">
                                         <tbody>
                                             <tr>
                                                 <td class="column column-1" width="100%"
-                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:20px;padding-top:20px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
-                                                    <table class="text_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                    style="font-weight:400;text-align:left;padding-bottom:20px;padding-top:20px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="text_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="word-break:break-word">
                                                         <tr>
                                                             <td class="pad">
                                                                 <div style="font-family:sans-serif">
                                                                     <div class
-                                                                        style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#0068a5;line-height:1.2">
-                                                                        <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px"><span style="font-size:24px;"><strong><?= $name ?></strong></span></p>
+                                                                        style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;color:#0068a5;line-height:1.2">
+                                                                        <p style="margin:0;font-size:14px;text-align:center;"><span style="font-size:24px;"><strong><?= $name ?></strong></span></p>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -118,16 +126,16 @@
                         </tbody>
                     </table>
                     <table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#0068a5">
+                        style="background-color:#0068a5">
                         <tbody>
                             <tr>
                                 <td>
-                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;background-color:#fff;border-radius:0;color:#000;width:750px;margin:0 auto" width="750">
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#fff;border-radius:0;color:#000;width:750px;margin:0 auto" width="750">
                                         <tbody>
                                             <tr>
                                                 <td class="column column-1" width="100%"
-                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:30px;padding-top:30px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
-                                                    <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0">
+                                                    style="font-weight:400;text-align:left;padding-bottom:30px;padding-top:30px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
                                                         <tr>
                                                             <td class="pad" style="width:100%">
                                                                 <div class="alignment" align="center" style="line-height:10px">
@@ -146,45 +154,45 @@
                         </tbody>
                     </table>
                     <table class="row row-3" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#0068a5">
+                        style="background-color:#0068a5">
                         <tbody>
                             <tr>
                                 <td>
-                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;background-color:#fff;border-radius:0;color:#000;width:750px;margin:0 auto" width="750">
+                                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#fff;border-radius:0;color:#000;width:750px;margin:0 auto" width="750">
                                         <tbody>
                                             <tr>
                                                 <td class="column column-1" width="100%"
-                                                    style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
-                                                    <table class="text_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                    style="font-weight:400;text-align:left;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="text_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="word-break:break-word">
                                                         <tr>
                                                             <td class="pad">
                                                                 <div style="font-family:sans-serif">
                                                                     <div class
-                                                                        style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#0068a5;line-height:1.2">
-                                                                        <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px"><span style="font-size:26px;"><strong>FORGOT YOUR password</strong></span></p>
+                                                                        style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;;color:#0068a5;line-height:1.2">
+                                                                        <p style="margin:0;font-size:14px;text-align:center;"><span style="font-size:26px;"><strong>FORGOT YOUR password</strong></span></p>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                    <table class="text_block block-2" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                    <table class="text_block block-2" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="word-break:break-word">
                                                         <tr>
                                                             <td class="pad" style="padding-top:15px">
                                                                 <div style="font-family:sans-serif">
-                                                                    <div class style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#000;line-height:1.2">
-                                                                        <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px"><span style="font-size:16px;">We have received a request to reset your password.&nbsp;We’re here to help!&nbsp;</span></p>
+                                                                    <div class style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;;color:#000;line-height:1.2">
+                                                                        <p style="margin:0;font-size:14px;text-align:center;"><span style="font-size:16px;">We have received a request to reset your password.&nbsp;We’re here to help!&nbsp;</span></p>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                     <table class="text_block block-3" width="100%"
-                                                        border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;word-break:break-word">
+                                                        border="0" cellpadding="0" cellspacing="0" role="presentation" style="word-break:break-word">
                                                         <tr>
                                                             <td class="pad" style="padding-top:5px">
                                                                 <div style="font-family:sans-serif">
-                                                                    <a href="<?= esc($url) ?>" class style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#000;line-height:1.2">
-                                                                        <p style="margin:0;font-size:14px;text-align:center;mso-line-height-alt:16.8px">
+                                                                    <a href="<?= esc($url) ?>" class style="font-size:14px;font-family:Roboto,Tahoma,Verdana,Segoe,sans-serif;;color:#000;line-height:1.2">
+                                                                        <p style="margin:0;font-size:14px;text-align:center;">
                                                                             <span style="font-size:16px;">Simply click on the button to set a new password!</span>
                                                                         </p>
                                                                     </a>
@@ -200,17 +208,16 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0;mso-table-rspace:0;background-color:#0068a5">
+                    <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#0068a5">
                         <tbody>
                             <tr>
                                 <td>
                                     <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                        style="mso-table-lspace:0;mso-table-rspace:0;background-color:#fff;border-radius:0;color:#000;width:750px;margin:0 auto" width="750">
+                                        style="background-color:#fff;border-radius:0;color:#000;width:750px;margin:0 auto" width="750">
                                         <tbody>
                                             <tr>
-                                                <td class="column column-1" width="100%" style="mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:30px;padding-top:30px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
-                                                    <table class="button_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                        style="mso-table-lspace:0;mso-table-rspace:0">
+                                                <td class="column column-1" width="100%" style="font-weight:400;text-align:left;padding-bottom:30px;padding-top:30px;vertical-align:top;border-top:0;border-right:0;border-bottom:0;border-left:0">
+                                                    <table class="button_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation">
                                                         <tr>
                                                             <td class="pad" style="text-align:center">
                                                                 <div class="alignment" align="center">

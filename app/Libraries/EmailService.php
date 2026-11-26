@@ -11,7 +11,7 @@ class EmailService
     public function sendPointsEmail(array $data)
     {
 
-        $email = \Config\Services::email();
+        $email = Services::email();
         switch ($data["type"]) {
             case 'gift':
                 $email->setSubject('Diwali Gift Points Added to Your Account');
