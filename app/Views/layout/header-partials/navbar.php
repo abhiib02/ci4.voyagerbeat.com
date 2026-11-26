@@ -397,7 +397,7 @@
         <ul class="list-group">
 
           <a class="list-group-item list-group-item-action" href="/about" aria-label="introduction">
-            introduction
+            Introduction
           </a>
           <a class="list-group-item list-group-item-action" href="/about" aria-label="Who We Are?">
             Who We Are?
