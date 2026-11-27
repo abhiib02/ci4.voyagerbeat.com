@@ -5,10 +5,10 @@
     <div class="card-body">
         <form action="/roleChange" method="post">
             <label for="">User ID</label>
-            <input type="number" name="user_id" class="form-control mb-2" id="">
+            <input type="number" name="user_id" class="form-control mb-2">
 
             <label for="Role">Role</label>
-            <select name="role" class="form-select mb-2" id="">
+            <select name="role" class="form-select mb-2">
                 <option value="" selected disabled>Choose Role</option>
                 <option value="0">User (Customer)</option>
                 <option value="1">Admin</option>

@@ -41,7 +41,7 @@
         <input type="hidden" name="bookingamount" :value="pkg.BOOKING_AMOUNT" required>
         <input type="hidden" name="amounttopay" :value="payNowAmount" required>
         <input type="hidden" name="points_used" :value="usePoints ? pointsDiscount : 0" required>
-        <textarea name="pax_details" hidden id="" required>{{paxDetailsJson}}</textarea>
+        <textarea name="pax_details" hidden required>{{paxDetailsJson}}</textarea>
 
         <div class="container mb-5">
             <div class="row g-2">

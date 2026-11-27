@@ -75,7 +75,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-floating mb-3">
-                                <select name="days" class="form-select" id="" required>
+                                <select name="days" class="form-select" required>
                                     <option value="<?= $package->PACKAGE_DAYS ?>" selected><?= $package->PACKAGE_DAYS ?></option>
                                     <hr>
                                     <?php for ($i = 1; $i <= 15; $i++): ?>

@@ -62,7 +62,7 @@
                                 <div class=" mb-3">
                                     <label for="floatingInput">Gender</label>
                                     <div class="form-group">
-                                        <select name="gender" id="" class="form-select" required>
+                                        <select name="gender" class="form-select" required>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                             <option value="Other">Other</option>

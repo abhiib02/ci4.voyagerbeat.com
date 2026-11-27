@@ -280,7 +280,7 @@ $rolesEmojis = ['🧳', '🧑‍💼', '👔', '👑'];
                 <label for="">User ID</label>
                 <input type="text" class="form-control" name="user_id" id="passwordChange-user_id" readonly required>
                 <label for="">New Password</label>
-                <input type="text" class="form-control" name="password" id="" required>
+                <input type="text" class="form-control" name="password" required>
             </form>
         </div>
         <div class="card-footer d-flex justify-content-between">

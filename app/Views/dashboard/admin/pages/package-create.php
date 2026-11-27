@@ -112,7 +112,7 @@
 
                             <div class="form-floating mb-3">
 
-                                <select name="days" class="form-select" id="" required>
+                                <select name="days" class="form-select" required>
 
                                     <option value="" disabled selected>---- Select Days ----</option>
 

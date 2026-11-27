@@ -21,11 +21,11 @@
     <?php endforeach; ?>
     <div class="mb-3">
         <label for="">Start Date</label>
-        <input type="date" class="form-control" value="<?= esc($startdate) ?>" name="start" id="" onchange="this.form.submit()">
+        <input type="date" class="form-control" value="<?= esc($startdate) ?>" name="start" onchange="this.form.submit()">
     </div>
     <div class="mb-3">
         <label for="">End Date</label>
-        <input type="date" class="form-control" value="<?= esc($enddate) ?>" name="end" id="" onchange="this.form.submit()">
+        <input type="date" class="form-control" value="<?= esc($enddate) ?>" name="end" onchange="this.form.submit()">
     </div>
 
 </form>

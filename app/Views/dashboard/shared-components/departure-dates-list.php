@@ -10,7 +10,7 @@
         <form method="get" class="d-flex">
             <div class="mb-3">
                 <label for="">Start Date</label>
-                <input type="date" class="form-control" value="<?= esc($todaydate) ?>" name="start" id="" onchange="this.form.submit()">
+                <input type="date" class="form-control" value="<?= esc($todaydate) ?>" name="start" onchange="this.form.submit()">
             </div>
         </form>
     </div>

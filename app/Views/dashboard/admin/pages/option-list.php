@@ -55,7 +55,7 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Option Datatype</span>
-                <select name="datatype" class="form-select" id="">
+                <select name="datatype" class="form-select">
                     <option value="TEXT">Text</option>
                     <option value="JSON">JSON</option>
                     <option value="NUMBER">Number</option>

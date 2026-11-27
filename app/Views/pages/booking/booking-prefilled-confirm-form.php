@@ -58,7 +58,7 @@
             <input type="hidden" name="order_id" value="<?= esc($BookingData->order_id) ?>">
             <input type="hidden" name="prefill" value="1">
             <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-            <textarea name="pax_details" id="" hidden><?= esc($BookingData->pax_details) ?></textarea>
+            <textarea name="pax_details" hidden><?= esc($BookingData->pax_details) ?></textarea>
             <!-- Step 1: Basic Information -->
 
             <div class="step active">
@@ -250,7 +250,7 @@
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-floating mb-3">
-                                                <input type="text" class="form-control adhaar_number" minlength="12" maxlength="12" id="" required>
+                                                <input type="text" class="form-control adhaar_number" minlength="12" maxlength="12" required>
                                                 <label for="place">Adhaar Card Number</label>
                                             </div>
                                         </div>

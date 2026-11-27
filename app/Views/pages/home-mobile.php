@@ -9,7 +9,7 @@
 <div class="container scroll-margin pt-2">
 
     <section id="mobile-hero" class="mb-3">
-        <p class="display-5 text-center mt-2">Pack your <span class="style-font display-4 text-warning">Bags</span><br> Let us do the <span class="style-font display-4 text-warning">Rest</span></p>
+        <p class="display-5 text-center mt-2">Pack your <span class="style-font display-4">Bags</span><br> Let us do the <span class="style-font display-4 ">Rest</span></p>
 
         <!-- Swiper -->
         <div class="swiper package_images rounded-3 mt-2 mb-3">
