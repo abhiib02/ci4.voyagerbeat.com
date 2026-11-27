@@ -3,8 +3,8 @@ $OGtitle = isset($title) ? $title : 'Voyagers Beat | You Just pack your bags let
 $OGmetadesc = isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency which offers off beat destinations in Himachal Pradesh like kasol, Manali also like Rishikesh with river rafting & paragliding.';
 $OGimage = isset($image) ? $image : 'https://voyagersbeat.com/assets/logo.png';
 $robotState = (isset($noindex) && $noindex == 1) ? 1 : 0;
-$OGurl = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$OGdomain = (empty($_SERVER['HTTPS']) ? '' : '') . "$_SERVER[HTTP_HOST]";
+$OGurl = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$OGdomain = "$_SERVER[HTTP_HOST]";
 $OGtype = 'website';
 $canonical = (isset($canonical)) ? $canonical : '';
 ?>
