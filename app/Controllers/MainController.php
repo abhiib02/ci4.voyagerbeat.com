@@ -35,7 +35,7 @@ class MainController extends BaseController
         if (isMobileDevice()) {
             $this->data['banners'] = $this->OptionModel->getOptionValue('HomeBanner');
             $this->data['packages'] = $this->PackageModel->getAllPackagesInMobile();
-            $this->data['pager'] = $this->PackageModel->pager;
+            //$this->data['pager'] = $this->PackageModel->pager;
             return $this->Render_Page('home-mobile', $this->data);
         } else {
             $this->data['packages_1n'] = $this->PackageModel->getPackagesByNightsWeekend('1N');
