@@ -200,6 +200,11 @@ class Package extends Model
     {
         return $this->find($ID);
     }
+    public function getLastUpdatedPackage()
+    {
+        return $this->orderBy('updated_at', 'DESC')->first();
+    }
+
     public function getPackageDatesByID(int $ID)
     {
         return $this->select('DATES')->find($ID);

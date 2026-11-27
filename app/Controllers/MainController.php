@@ -26,7 +26,7 @@ class MainController extends BaseController
     {
         helper('useragentstring');
 
-        $this->data["title"] = 'Voyagers Beat | Offbeat Group Tours | Pack your bags & Let us do the rest';
+        $this->data["title"] = 'VoyagersBeat | Pack Your Bags, We Plan the Adventure';
         $this->data["meta_desc"] = 'Discover offbeat destinations, river rafting, paragliding & custom tour packages with Voyagers Beat. Just pack your bags let us do the rest!';
         $this->data["canonical"] = '';
         $this->data["OGurl"] = '/';
@@ -50,45 +50,52 @@ class MainController extends BaseController
 
     public function about(): string
     {
-        $this->data["title"] = 'About Us | Voyagers Beat Travel & Adventure Agency';
+        $this->data["title"] = 'About Us | VoyagersBeat Travel & Adventure Agency';
         $this->data["meta_desc"] = 'At Voyagers Beat, we handle every detail of your trip—from hidden stays to thrilling adventures. Discover our mission and why travelers trust our journeys';
         $this->data["canonical"] = 'about';
         return $this->Render_Page('static/about', $this->data);
     }
     public function career(): string
     {
-        $this->data["title"] = 'Careers at Voyagers Beat | Join Our Travel Team';
+        $this->data["title"] = 'Careers at VoyagersBeat | Travel Jobs & Opportunities';
         $this->data["meta_desc"] = 'Turn your passion for travel into a career. Explore open roles in trip planning, operations & marketing at Voyagers Beat and help craft unforgettable journeys.';
         $this->data["canonical"] = 'career';
         return $this->Render_Page('static/career', $this->data);
     }
     public function privacypolicy(): string
     {
-        $this->data["title"] = 'Privacy Policy | Voyagers Beat Travel Agency';
+        $this->data["title"] = 'Privacy Policy | VoyagersBeat Travel Agency';
         $this->data["meta_desc"] = 'Read Voyagers Beats Privacy Policy to understand how we collect, use, and protect your personal information when you browse or book tour packages with us.';
         $this->data["canonical"] = 'privacy-policy';
         return $this->Render_Page('static/privacypolicy', $this->data);
     }
     public function termsnconditions(): string
     {
-        $this->data["title"] = 'Terms and Conditions | Voyagers Beat Travel Agency';
+        $this->data["title"] = 'Terms & Conditions | VoyagersBeat Travel Agency';
         $this->data["meta_desc"] = 'Review the Terms and Conditions for booking tour packages with Voyagers Beat. Read our policies on trip reservations, payments, cancellations, and refunds.';
         $this->data["canonical"] = 'term-conditions';
         return $this->Render_Page('static/termsnconditions', $this->data);
     }
     public function cancellationPolicy(): string
     {
-        $this->data["title"] = 'Cancellation & Refund Policy | Voyagers Beat Tours';
+        $this->data["title"] = 'Cancellation & Refund Policy | VoyagersBeat Tours';
         $this->data["meta_desc"] = 'Review Voyagers Beats Cancellation and Refund Policy. Get clear details on trip cancellations, rescheduling timelines, refund eligibility, and booking terms.';
         $this->data["canonical"] = 'cancellation-policy';
         return $this->Render_Page('static/cancellation-policy', $this->data);
     }
     public function recognition(): string
     {
-        $this->data["title"] = 'Awards & Recognition | Voyagers Beat Travel Agency';
+        $this->data["title"] = 'Awards & Recognition | VoyagersBeat Travel Agency';
         $this->data["meta_desc"] = 'Explore Voyagers Beats official certifications, tourism affiliations, and industry recognition. See why travelers trust our accredited adventure tour agency.';
         $this->data["canonical"] = 'recognition';
         return $this->Render_Page('static/recognition', $this->data);
+    }
+
+    private function getLastMod(string $filename)
+    {
+        $path = __DIR__ . '/../Views/pages/static/' . $filename;
+        $lastmod = date("c", filemtime($path));
+        return $lastmod;
     }
     public function sitemapGenerate()
     {
@@ -99,37 +106,46 @@ class MainController extends BaseController
         $packageTypes = $this->PackageModel->getAllDistinctType();
         $States       = $this->PackageModel->getAllDistinctStates();
         $Countries    = $this->PackageModel->getAllDistinctCountry();
+        $lastUpdatedPackage = $this->PackageModel->getLastUpdatedPackage()->updated_at;
+        $lastMod = date('c', strtotime($lastUpdatedPackage));
         $staticPages = [
-            '',
-            'packages',
             'about',
             'career',
+            'recognition',
+        ];
+        $staticPagesWithDynamicContent = [
+            '',
             'upcoming',
             'travelerFavorites',
             'nights/1',
             'nights/2',
             'nights/3',
-            'recognition',
+            'packages',
             'blogs',
         ];
 
+
         $sitemap = new Sitemap();
 
-        foreach ($staticPages as $staticPage) {
-            $sitemap->add(base_url() . $staticPage, null, '1.0', 'weekly');
+        foreach ($staticPagesWithDynamicContent as $item) {
+            $sitemap->add(base_url() . $item, $lastMod, '0.8', 'weekly');
         }
         foreach ($packages as $package) {
             $sitemap->add(base_url() . 'package/' . $package->SLUG, date('c', strtotime($package->updated_at)), '1.0', 'weekly');
         }
         foreach ($packageTypes as $packageType) {
-            $sitemap->add(base_url() . 'type/' . $packageType, null, '1.0', 'weekly');
+            $sitemap->add(base_url() . 'type/' . urlencode($packageType), $lastMod, '0.9', 'weekly');
         }
         foreach ($States as $State) {
-            $sitemap->add(base_url() . 'state/' . $State, null, '1.0', 'weekly');
+            $sitemap->add(base_url() . 'state/' . urlencode($State), $lastMod, '0.5', 'weekly');
         }
         foreach ($Countries as $Country) {
-            $sitemap->add(base_url() . 'country/' . $Country, null, '1.0', 'weekly');
+            $sitemap->add(base_url() . 'country/' . urlencode($Country), $lastMod, '0.5', 'weekly');
         }
+        foreach ($staticPages as $staticPage) {
+            $sitemap->add(base_url() . urlencode($staticPage), $this->getLastMod($staticPage . '.php'), '0.8', 'weekly');
+        }
+
 
         $xml = trim($sitemap->renderXml());
 

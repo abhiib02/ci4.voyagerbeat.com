@@ -230,10 +230,10 @@
           <a class="list-group-item list-group-item-action" href="/nights/2/manali" aria-label="Manali solang sissu">
             Manali solang sissu
           </a>
-          <a class="list-group-item list-group-item-action" href="/nights/2/Kasol" aria-label="Kasol tosh manikaran">
+          <a class="list-group-item list-group-item-action" href="/nights/2/kasol" aria-label="Kasol tosh manikaran">
             Kasol tosh manikaran
           </a>
-          <a class="list-group-item list-group-item-action" href="/nights/2/Kasol" aria-label="Kasol kheerganga">
+          <a class="list-group-item list-group-item-action" href="/nights/2/kasol" aria-label="Kasol kheerganga">
             Kasol kheerganga
           </a>
           <a class="list-group-item list-group-item-action" href="/nights/2/mcleodganj" aria-label="Mcleodganj triund">

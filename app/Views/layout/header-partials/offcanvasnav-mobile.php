@@ -116,10 +116,10 @@
                                 <a class="list-group-item list-group-item-action" href="/nights/2/manali">
                                     Manali solang sissu
                                 </a>
-                                <a class="list-group-item list-group-item-action" href="/nights/2/Kasol">
+                                <a class="list-group-item list-group-item-action" href="/nights/2/kasol">
                                     Kasol tosh manikaran
                                 </a>
-                                <a class="list-group-item list-group-item-action" href="/nights/2/Kasol">
+                                <a class="list-group-item list-group-item-action" href="/nights/2/kasol">
                                     Kasol kheerganga
                                 </a>
                                 <a class="list-group-item list-group-item-action" href="/nights/2/mcleodganj">
@@ -321,7 +321,7 @@
                             <a class="list-group-item list-group-item-action" href="/login">
                                 Login
                             </a>
-                            <a class="list-group-item list-group-item-action" href="/Signup">
+                            <a class="list-group-item list-group-item-action" href="/signup">
                                 Signup
                             </a>
                         <?php endif; ?>

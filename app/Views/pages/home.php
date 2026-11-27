@@ -497,8 +497,7 @@ $isthour = $dt->format('G');
                         <p class="fs-5 style-font m-0">
                             <i class='bx bxs-map'></i>
                         </p>
-                        <p class="fs-5">Location</p>
-                        <hr>
+                        <p class="fs-5 m-0">Location</p>
                         <p class="style-font fs-2">700+</p>
                     </div>
                 </div>
@@ -509,8 +508,7 @@ $isthour = $dt->format('G');
                         <p class="fs-5 style-font m-0">
                             <i class='bx bxs-user-check'></i>
                         </p>
-                        <p class="fs-5">Happy Clients</p>
-                        <hr>
+                        <p class="fs-5 m-0">Happy Clients</p>
                         <p class="style-font fs-2">70,000+</p>
                     </div>
                 </div>
@@ -521,8 +519,8 @@ $isthour = $dt->format('G');
                         <p class="fs-5 style-font m-0">
                             <i class='bx bxs-briefcase-alt'></i>
                         </p>
-                        <p class="fs-5">Trips Done</p>
-                        <hr>
+                        <p class="fs-5 m-0">Trips Done</p>
+
                         <p class="style-font fs-2">1500+</p>
                     </div>
                 </div>
@@ -533,8 +531,8 @@ $isthour = $dt->format('G');
                         <p class="fs-5 style-font m-0">
                             <i class='bx bx-user-circle'></i>
                         </p>
-                        <p class="fs-5">Experienced</p>
-                        <hr>
+                        <p class="fs-5 m-0">Experienced</p>
+
                         <p class="style-font fs-2">Tour Guide</p>
                     </div>
                 </div>
@@ -545,8 +543,8 @@ $isthour = $dt->format('G');
                         <p class="fs-5 style-font m-0">
                             <i class='bx bxs-check-shield'></i>
                         </p>
-                        <p class="fs-5">Quality</p>
-                        <hr>
+                        <p class="fs-5 m-0">Quality</p>
+
                         <p class="style-font fs-2">Assurance</p>
                     </div>
                 </div>
@@ -557,8 +555,8 @@ $isthour = $dt->format('G');
                         <p class="fs-5 style-font m-0">
                             <i class='bx bxs-phone-call'></i>
                         </p>
-                        <p class="fs-5">Support</p>
-                        <hr>
+                        <p class="fs-5 m-0">Support</p>
+
                         <p class="style-font fs-2">24 * 7</p>
                     </div>
                 </div>

@@ -42,7 +42,9 @@ $TAGS = explode(',', $package->TAGS);
                             <a href="/type/<?= urlencode($package->PACKAGE_TYPE) ?>"><span class=" badge rounded-pill text-bg-light"><?= $package->PACKAGE_TYPE ?></span></a>
                             <a href="/badge/<?= urlencode($package->BADGE) ?>" class="text-decoration-none"><span class="badge rounded-pill text-bg-warning"><?= $package->BADGE ?></span></a>
                             <?php foreach ($TAGS as $tag): ?>
-                                <a href="/tag/<?= $tag ?>" class="text-decoration-none"><span class="badge rounded-pill">#<?= $tag ?></span></a>
+                                <?php if (!empty($tag)): ?>
+                                    <a href="/tag/<?= $tag ?>" class="text-decoration-none"><span class="badge rounded-pill">#<?= $tag ?></span></a>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
 

@@ -4,8 +4,8 @@ $OGmetadesc = isset($meta_desc) ? $meta_desc : 'Voyagers beat is a travel agency
 $OGimage = isset($image) ? $image : 'https://voyagersbeat.com/assets/logo.png';
 $robotState = (isset($noindex) && $noindex == 1) ? 1 : 0;
 $OGurl = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-$OGtype = 'Travel and Tourism';
+$OGdomain = (empty($_SERVER['HTTPS']) ? '' : '') . "$_SERVER[HTTP_HOST]";
+$OGtype = 'website';
 $canonical = (isset($canonical)) ? $canonical : '';
 ?>
 <!-------Meta Tags----------->
@@ -33,7 +33,7 @@ $canonical = (isset($canonical)) ? $canonical : '';
 
 <!-- Twitter Meta Tags (1173x759px, 298.3 KB) -->
 <meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:domain" content="<?= $OGurl ?>">
+<meta property="twitter:domain" content="<?= $OGdomain ?>">
 <meta property="twitter:url" content="<?= $OGurl ?>">
 <meta name="twitter:title" content="<?= $OGtitle ?>">
 <meta name="twitter:description" content="<?= $OGmetadesc ?>">
