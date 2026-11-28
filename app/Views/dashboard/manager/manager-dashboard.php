@@ -89,13 +89,22 @@
                                 <canvas id="booking-status"></canvas>
                             </div>
                         </div>
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <div class="fw-bold">Heard From in <?= $year ?? '' ?></div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="heard-status"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <?= view('dashboard/shared-dashboard-script', [
                     'EmployeeBooking_Month' => $EmployeeBooking_Month ?? [],
                     'Annual_Revenue' => $Annual_Revenue ?? [],
                     'Annual_Pax' => $Annual_Pax ?? [],
-                    'BookingCountByStatus' => $BookingCountByStatus ?? []
+                    'BookingCountByStatus' => $BookingCountByStatus ?? [],
+                    'BookingCountByHeard' => $BookingCountByHeard ?? []
                 ]) ?>
             <?php endif; ?>
 
