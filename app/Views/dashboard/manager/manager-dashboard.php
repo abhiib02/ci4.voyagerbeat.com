@@ -10,13 +10,12 @@
     <?php else: ?>
         <div class="card my-2">
             <div class="card-header d-flex justify-content-between">
-                <div class="fw-bold">Dashboard</div>
+                <div class="fw-bold" style="align-content:center;">Dashboard | Welcome, <?= esc($name ?? 'manager') ?></div>
                 <div>
                     <?= view('dashboard/shared-components/month-year-selector') ?>
                 </div>
             </div>
             <div class="card-body">
-                <p class="display-3">Welcome, <?= esc($name ?? 'manager') ?></p>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="card">
