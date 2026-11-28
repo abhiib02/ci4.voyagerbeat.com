@@ -230,6 +230,7 @@ class DashboardController extends BaseController
                 $this->data['Annual_Pax'] = $this->BookingModel->getAnnualPax($agentID, $this->data['year'], $statuses);
                 $this->data['Annual_Booking'] = $this->BookingModel->getAnnualBookings($agentID, $this->data['year'], $statuses);
                 $this->data['BookingCountByStatus'] = $this->BookingModel->getBookingsStatusCounts($agentID, $this->data['month'], $this->data['year']);
+                $this->data['BookingCountByHeard'] = $this->BookingModel->getAnnualBookingsHeardCountsAdmin($this->data['year']);
                 break;
         }
         return $this->Render_Page_dashboard('employee-dashboard', $this->data, 'employee');
