@@ -196,7 +196,7 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
             responsive: true,
             maintainAspectRatio: true, // Allows you to set custom height via CSS wrapper
             // OR if you want to keep the aspect ratio but make it wider/narrower:
-            aspectRatio: 2, // Default is 1 (square). Higher numbers make it wider.
+            aspectRatio: 5, // Default is 1 (square). Higher numbers make it wider.
             plugins: {
                 legend: {
                     position: 'none',

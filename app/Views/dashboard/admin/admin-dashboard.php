@@ -16,23 +16,11 @@
             </div>
             <main class="card-body">
                 <div class="row">
-                    <div class="col-6 col-lg-2">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="d-flex justify-content-between">
-                                    <div class="fw-bold">Total Booking of <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?><span title="Showing Booking With Pending,Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="">
-                                    <h1 class="card-title"><?= $BookingsCount_Month ?? '' ?></h1>
-                                    <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- <div class="col-6 col-lg-2">
+                       
+                    </div> -->
 
-                    <div class="col-6 col-lg-2">
+                    <div class="col-6 col-lg-3">
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
@@ -47,8 +35,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <div class="fw-bold">Total Booking of <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?><span title="Showing Booking With Pending,Completed and Completed with No Points Status"><i class='bx bx-info-circle'></i></span></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="">
+                                    <h1 class="card-title"><?= $BookingsCount_Month ?? '' ?></h1>
+                                    <p class="fs-6  fst-italic m-0"><?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
@@ -62,9 +63,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-2">
-
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="fw-bold">Bookings By Status | <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
@@ -74,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="fw-bold">Heard From in <?= $year ?? '' ?></div>
