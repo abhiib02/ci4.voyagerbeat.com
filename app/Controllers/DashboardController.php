@@ -184,6 +184,7 @@ class DashboardController extends BaseController
                 $this->data['Annual_Pax'] = $this->BookingModel->getAnnualPaxAdmin($this->data['year'], $statuses);
                 $this->data['Annual_Booking'] = $this->BookingModel->getAnnualBookingsAdmin($this->data['year'], $statuses);
                 $this->data['BookingCountByStatus'] = $this->BookingModel->getBookingsStatusCountsAdmin($this->data['month'], $this->data['year']);
+                $this->data['BookingCountByHeard'] = $this->BookingModel->getAnnualBookingsHeardCountsAdmin($this->data['year']);
                 break;
         }
 

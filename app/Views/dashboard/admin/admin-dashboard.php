@@ -9,13 +9,12 @@
     <?php else: ?>
         <div class="card my-2">
             <div class="card-header d-flex justify-content-between">
-                <div class="fw-bold">Dashboard</div>
+                <div class="fw-bold" style="align-content: center;">Dashboard | Welcome, <?= esc($name ?? 'Employee') ?></div>
                 <div>
                     <?= view('dashboard/shared-components/month-year-selector') ?>
                 </div>
             </div>
             <main class="card-body">
-                <p class="display-3">Welcome, <?= esc($name ?? 'Employee') ?></p>
                 <div class="row">
                     <div class="col-6 col-lg-2">
                         <div class="card">
@@ -64,7 +63,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-2">
+
                         <div class="card mb-2">
                             <div class="card-header">
                                 <div class="fw-bold">Bookings By Status | <?= get_Month_Full($month ?? '') ?> <?= $year ?? '' ?></div>
@@ -74,6 +74,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-4">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <div class="fw-bold">Heard From in <?= $year ?? '' ?></div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="heard-status"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col-lg-6">

@@ -497,6 +497,10 @@ class Booking extends Model
 
         return $query->getResultArray();
     }
+    public function getAnnualBookingsHeardCountsAdmin(string $year): array
+    {
+        return $this->select('heard,count(*) AS count')->groupBy('heard')->where('YEAR(created_at)', $year)->get()->getResultArray();
+    }
 
     public function getEmployeesBookingsCountwithPaxMonthAdmin(string $month, string $year, array $statuses): array
     {

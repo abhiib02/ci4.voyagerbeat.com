@@ -6,6 +6,7 @@
  * @var array $Annual_Booking
  * @var array $BookingCountByStatus
  * @var array $EmployeeBooking_Month
+ * @var array $BookingCountByHeard
  */
 ?>
 <script src="
@@ -193,16 +194,66 @@ https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Allows you to set custom height via CSS wrapper
+            maintainAspectRatio: true, // Allows you to set custom height via CSS wrapper
             // OR if you want to keep the aspect ratio but make it wider/narrower:
-            aspectRatio: 3.7, // Default is 1 (square). Higher numbers make it wider.
+            aspectRatio: 2, // Default is 1 (square). Higher numbers make it wider.
             plugins: {
                 legend: {
-                    position: 'left',
+                    position: 'none',
                 },
                 title: {
                     display: false,
                     text: 'Bookings By Status'
+                }
+            }
+        },
+    });
+</script>
+<script>
+    let BookingCountByHeard = <?= json_encode($BookingCountByHeard) ?>;
+
+    // Extract labels and numbers dynamically from your array
+    const heardstatusLabels = BookingCountByHeard.map(item => item.heard);
+    const heardstatusData = BookingCountByHeard.map(item => parseInt(item.count));
+
+    var heardstatusctx = document.getElementById("heard-status").getContext("2d");
+    const heardchart = new Chart(heardstatusctx, {
+        type: 'bar',
+        data: {
+            labels: heardstatusLabels,
+            datasets: [{
+
+                data: heardstatusData,
+                backgroundColor: [
+                    'rgba(85, 83, 84, 0.3)',
+                    'rgba(193, 53, 132,0.3)',
+                    'rgba(185, 14, 14, 0.3)',
+                    'rgba(27, 129, 197, 0.3)',
+                    'rgba(255, 206, 86, 0.3)',
+                    'rgba(10, 187, 211, 0.3)'
+                ],
+                borderColor: [
+                    'rgba(85, 83, 84, 0.7)',
+                    'rgba(193, 53, 132,0.7)',
+                    'rgba(185, 14, 14, 0.7)',
+                    'rgba(27, 129, 197, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(10, 187, 211, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            elements: {
+                bar: {
+                    borderWidth: 2,
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // hides all dataset labels
                 }
             }
         },
