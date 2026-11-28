@@ -11,7 +11,7 @@
             <div class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-<?= $index ?>" aria-expanded="false" aria-controls="collapseOne">
                     <div class="d-flex">
-                        <h2 class="fw-bold">Day <?= $index ?>: </h2>
+                        <p class="fw-bold">Day <?= $index ?>: </p>
                         <div> <?= trim(explode(':', $day->dayTitle, 2)[1] ?? $day->dayTitle) ?></div>
                     </div>
 
